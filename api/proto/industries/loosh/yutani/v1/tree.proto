@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+import "industries/loosh/yutani/v1/types.proto";
+
+// TreeService provides operations for TreeView widgets
+service TreeService {
+  // Set the root node
+  rpc SetRoot(SetTreeRootRequest) returns (SetTreeRootResponse);
+
+  // Add a child node
+  rpc AddChild(AddTreeChildRequest) returns (AddTreeChildResponse);
+
+  // Remove a node
+  rpc RemoveNode(RemoveTreeNodeRequest) returns (RemoveTreeNodeResponse);
+
+  // Expand or collapse a node
+  rpc SetExpanded(SetExpandedRequest) returns (SetExpandedResponse);
+
+  // Get the currently selected node
+  rpc GetSelected(GetTreeSelectedRequest) returns (GetTreeSelectedResponse);
+
+  // Set the selected node
+  rpc SetSelected(SetTreeSelectedRequest) returns (SetTreeSelectedResponse);
+
+  // Get a node's children
+  rpc GetChildren(GetChildrenRequest) returns (GetChildrenResponse);
+}
+
+// Tree node identifier
+message TreeNodeId {
+  string id = 1;
+}
+
+// Tree node definition
+message TreeNode {
+  string text = 1;
+  optional Color color = 2;
+  optional bool selectable = 3;
+  optional bool expanded = 4;
+  optional string reference = 5;  // Application-specific reference
+}
+
+// SetRoot
+
+message SetTreeRootRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  TreeNode node = 3;
+}
+
+message SetTreeRootResponse {
+  bool success = 1;
+  TreeNodeId node_id = 2;
+}
+
+// AddChild
+
+message AddTreeChildRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  TreeNodeId parent_id = 3;
+  TreeNode node = 4;
+}
+
+message AddTreeChildResponse {
+  bool success = 1;
+  TreeNodeId node_id = 2;
+}
+
+// RemoveNode
+
+message RemoveTreeNodeRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  TreeNodeId node_id = 3;
+}
+
+message RemoveTreeNodeResponse {
+  bool success = 1;
+}
+
+// SetExpanded
+
+message SetExpandedRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  TreeNodeId node_id = 3;
+  bool expanded = 4;
+}
+
+message SetExpandedResponse {
+  bool success = 1;
+}
+
+// GetSelected
+
+message GetTreeSelectedRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message GetTreeSelectedResponse {
+  TreeNodeId node_id = 1;
+  string text = 2;
+  string reference = 3;
+}
+
+// SetSelected
+
+message SetTreeSelectedRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  TreeNodeId node_id = 3;
+}
+
+message SetTreeSelectedResponse {
+  bool success = 1;
+}
+
+// GetChildren
+
+message GetChildrenRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  TreeNodeId node_id = 3;
+}
+
+message GetChildrenResponse {
+  repeated TreeNodeInfo children = 1;
+}
+
+message TreeNodeInfo {
+  TreeNodeId node_id = 1;
+  string text = 2;
+  string reference = 3;
+  bool expanded = 4;
+}
+

@@ -1,0 +1,15 @@
+# Yutani Display Server Configuration
+# Copy this file to .yutani.conf and customize as needed
+
+# Server settings
+YUTANI_ADDRESS=:7755
+YUTANI_MAX_SESSIONS=100
+
+# TUI settings
+YUTANI_MOUSE=true
+YUTANI_PASTE=true
+
+# Logging settings
+# Options: debug, info, warn, error
+YUTANI_LOG_LEVEL=info
+

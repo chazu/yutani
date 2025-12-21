@@ -1,0 +1,162 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+import "industries/loosh/yutani/v1/types.proto";
+
+// WidgetService provides high-level widget operations
+service WidgetService {
+  // Create a new widget
+  rpc CreateWidget(CreateWidgetRequest) returns (CreateWidgetResponse);
+
+  // Delete a widget
+  rpc DeleteWidget(DeleteWidgetRequest) returns (DeleteWidgetResponse);
+
+  // Set widget properties
+  rpc SetProperties(SetPropertiesRequest) returns (SetPropertiesResponse);
+
+  // Get widget properties
+  rpc GetProperties(GetPropertiesRequest) returns (GetPropertiesResponse);
+
+  // Set widget as root (display it)
+  rpc SetRoot(SetRootRequest) returns (SetRootResponse);
+
+  // Add child to container widget
+  rpc AddChild(AddChildRequest) returns (AddChildResponse);
+
+  // Remove child from container
+  rpc RemoveChild(RemoveChildRequest) returns (RemoveChildResponse);
+
+  // Set focus to widget
+  rpc SetFocus(SetFocusRequest) returns (SetFocusResponse);
+
+  // Get currently focused widget
+  rpc GetFocus(GetFocusRequest) returns (GetFocusResponse);
+
+  // List all widgets for session
+  rpc ListWidgets(ListWidgetsRequest) returns (ListWidgetsResponse);
+}
+
+// CreateWidget messages
+
+message CreateWidgetRequest {
+  SessionId session_id = 1;
+  WidgetType type = 2;
+  optional WidgetProperties properties = 3;
+}
+
+message CreateWidgetResponse {
+  WidgetId widget_id = 1;
+  bool success = 2;
+}
+
+// DeleteWidget messages
+
+message DeleteWidgetRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message DeleteWidgetResponse {
+  bool success = 1;
+}
+
+// SetProperties messages
+
+message SetPropertiesRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  WidgetProperties properties = 3;
+}
+
+message SetPropertiesResponse {
+  bool success = 1;
+}
+
+// GetProperties messages
+
+message GetPropertiesRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message GetPropertiesResponse {
+  WidgetProperties properties = 1;
+}
+
+// SetRoot messages
+
+message SetRootRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message SetRootResponse {
+  bool success = 1;
+}
+
+// AddChild messages
+
+message AddChildRequest {
+  SessionId session_id = 1;
+  WidgetId parent_id = 2;
+  WidgetId child_id = 3;
+  optional int32 index = 4;  // Position in parent's children, -1 or omitted for append
+}
+
+message AddChildResponse {
+  bool success = 1;
+}
+
+// RemoveChild messages
+
+message RemoveChildRequest {
+  SessionId session_id = 1;
+  WidgetId parent_id = 2;
+  WidgetId child_id = 3;
+}
+
+message RemoveChildResponse {
+  bool success = 1;
+}
+
+// SetFocus messages
+
+message SetFocusRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message SetFocusResponse {
+  bool success = 1;
+}
+
+// GetFocus messages
+
+message GetFocusRequest {
+  SessionId session_id = 1;
+}
+
+message GetFocusResponse {
+  optional WidgetId widget_id = 1;
+}
+
+// ListWidgets messages
+
+message ListWidgetsRequest {
+  SessionId session_id = 1;
+}
+
+message ListWidgetsResponse {
+  repeated WidgetInfo widgets = 1;
+}
+
+message WidgetInfo {
+  WidgetId widget_id = 1;
+  WidgetType type = 2;
+  optional WidgetId parent_id = 3;
+  repeated WidgetId children = 4;
+}
+

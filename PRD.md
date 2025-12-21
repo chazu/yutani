@@ -621,14 +621,18 @@ yutani/
 │   │   ├── tcell.go          # tcell adapter
 │   │   └── tview.go          # tview adapter
 │   └── proto/
-│       └── yutani/
-│           ├── session.proto
-│           ├── screen.proto
-│           ├── widget.proto
-│           ├── event.proto
-│           └── types.proto
+│       └── yutani/           # Generated Go code
 ├── api/
-│   └── proto/                # Proto definitions
+│   └── proto/
+│       └── industries/
+│           └── loosh/
+│               └── yutani/
+│                   └── v1/
+│                       ├── session.proto
+│                       ├── screen.proto
+│                       ├── widget.proto
+│                       ├── event.proto
+│                       └── types.proto
 ├── go.mod
 └── go.sum
 ```
@@ -804,21 +808,37 @@ This allows tools like `grpcurl` and `grpcui` to introspect and interact with th
 
 ## 9. Configuration
 
-Server configuration via YAML or environment variables:
+Server configuration follows a three-tier override system:
+1. `.yutani.conf` file (lowest priority)
+2. Environment variables (middle priority)
+3. Command-line flags (highest priority)
 
-```yaml
-server:
-  address: ":7755"           # gRPC listen address
-  max_sessions: 100          # Maximum concurrent sessions
+Configuration file format (`.yutani.conf`):
 
-tui:
-  mouse: true                # Enable mouse support
-  paste: true                # Enable paste support
+```conf
+# Server settings
+YUTANI_ADDRESS=:7755
+YUTANI_MAX_SESSIONS=100
 
-logging:
-  level: info                # debug, info, warn, error
-  format: json               # json, text
+# TUI settings
+YUTANI_MOUSE=true
+YUTANI_PASTE=true
+
+# Logging settings
+YUTANI_LOG_LEVEL=info
 ```
+
+Command-line flags:
+```bash
+yutani-server \
+  --address=:7755 \
+  --max-sessions=100 \
+  --mouse=true \
+  --paste=true \
+  --log-level=info
+```
+
+Environment variables use the `YUTANI_` prefix and match the flag names in uppercase.
 
 ---
 
@@ -860,11 +880,13 @@ logging:
 - [ ] EventService with key/mouse/resize events
 - [ ] Basic client library
 
-### Phase 3: Widget System
-- [ ] WidgetService core operations
-- [ ] Box, TextView, InputField widgets
-- [ ] Button, Checkbox widgets
-- [ ] Focus management
+### Phase 3: Widget System ✅
+- [x] WidgetService core operations
+- [x] Box, TextView, InputField widgets
+- [x] Button, Checkbox widgets
+- [x] Focus management
+- [x] Widget hierarchy infrastructure
+- [x] Widget event emission
 
 ### Phase 4: Complex Widgets
 - [ ] List, Table, TreeView services
@@ -880,20 +902,32 @@ logging:
 
 ---
 
-## 13. Open Questions
+## 13. Implementation Decisions
 
-1. **Multi-client widget sharing**: Should widgets be shareable across sessions, or strictly owned by their creator?
-Answer: strictly owned by their creator
+1. **Multi-client widget sharing**: Widgets are strictly owned by their creator session.
 
-2. **Custom drawing**: How should clients perform custom drawing within widgets? Callback mechanism or dedicated drawing service?
-Answer: Clients should be able to batch calls to set cell values and attributes, or to draw lines, rectangles, fill rectangles, erase, et cetera. This is not a goal for MVP
+2. **Custom drawing**: Clients can batch calls to set cell values and attributes, or to draw lines, rectangles, fill rectangles, erase, etc. This is not a goal for MVP.
 
-3. **Widget-level event filtering**: Should clients be able to subscribe to events for specific widgets only?
-Yes
-4. **State synchronization**: Should the server push widget state changes, or only respond to client queries?
-Clients should be able to subscribe to state changes for widgets and receive updates
-5. **Error handling**: How granular should error reporting be? Per-operation errors vs. connection-level?
-lets keep it simple for now - less is more. if we need more granular later we can add it.
+3. **Widget-level event filtering**: Clients can subscribe to events for specific widgets only.
+
+4. **State synchronization**: Clients can subscribe to state changes for widgets and receive updates.
+
+5. **Error handling**: Keep it simple - per-operation errors. More granular error reporting can be added later if needed.
+
+6. **Proto package naming**: Use `industries.loosh.yutani.v1` for protobuf package namespace.
+
+7. **Default port**: gRPC server listens on `:7755` by default.
+
+8. **Configuration**: Three-tier system: `.yutani.conf` file → environment variables → command-line flags.
+
+9. **Logging**: Use Go's standard `log/slog` package.
+
+10. **Testing**: Unit tests implemented in Phase 2 and beyond, focused on business logic.
+
+11. **Widget Event Emission**: Interactive widgets (Button, Checkbox, InputField) automatically emit events through the EventDispatcher when user interactions occur.
+
+12. **Widget Hierarchy**: Parent-child relationships tracked in WidgetRegistry. Container widgets (Flex, Grid) will be implemented in Phase 4.
+
 ---
 
 ## 14. References

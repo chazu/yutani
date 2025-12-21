@@ -1,0 +1,270 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+// Core geometric types
+
+message Position {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message Size {
+  int32 width = 1;
+  int32 height = 2;
+}
+
+message Rect {
+  int32 x = 1;
+  int32 y = 2;
+  int32 width = 3;
+  int32 height = 4;
+}
+
+// Color and style types
+
+message Color {
+  oneof color {
+    string name = 1;      // Named color: "red", "blue", etc.
+    int32 index = 2;      // 256-color palette index
+    RGB rgb = 3;          // True color
+  }
+}
+
+message RGB {
+  int32 r = 1;
+  int32 g = 2;
+  int32 b = 3;
+}
+
+message Style {
+  Color foreground = 1;
+  Color background = 2;
+  repeated Attribute attributes = 3;
+}
+
+enum Attribute {
+  ATTR_NONE = 0;
+  ATTR_BOLD = 1;
+  ATTR_ITALIC = 2;
+  ATTR_UNDERLINE = 3;
+  ATTR_REVERSE = 4;
+  ATTR_BLINK = 5;
+  ATTR_DIM = 6;
+  ATTR_STRIKETHROUGH = 7;
+}
+
+message Cell {
+  string rune = 1;        // UTF-8 character
+  Style style = 2;
+}
+
+// Session and Widget identifiers
+
+message SessionId {
+  string id = 1;
+}
+
+message WidgetId {
+  string id = 1;
+}
+
+// Widget types and properties
+
+enum WidgetType {
+  WIDGET_BOX = 0;
+  WIDGET_TEXT_VIEW = 1;
+  WIDGET_INPUT_FIELD = 2;
+  WIDGET_TEXT_AREA = 3;
+  WIDGET_BUTTON = 4;
+  WIDGET_CHECKBOX = 5;
+  WIDGET_DROPDOWN = 6;
+  WIDGET_LIST = 7;
+  WIDGET_TABLE = 8;
+  WIDGET_TREE_VIEW = 9;
+  WIDGET_FORM = 10;
+  WIDGET_FLEX = 11;
+  WIDGET_GRID = 12;
+  WIDGET_PAGES = 13;
+  WIDGET_MODAL = 14;
+  WIDGET_IMAGE = 15;
+}
+
+enum Alignment {
+  ALIGN_LEFT = 0;
+  ALIGN_CENTER = 1;
+  ALIGN_RIGHT = 2;
+}
+
+message Padding {
+  int32 top = 1;
+  int32 bottom = 2;
+  int32 left = 3;
+  int32 right = 4;
+}
+
+// Widget properties
+
+message WidgetProperties {
+  // Common properties (from Box)
+  optional Rect rect = 1;
+  optional bool border = 2;
+  optional string title = 3;
+  optional Alignment title_align = 4;
+  optional Color background_color = 5;
+  optional Color border_color = 6;
+  optional Color title_color = 7;
+  optional Padding padding = 8;
+
+  // Type-specific properties
+  oneof type_properties {
+    TextViewProperties text_view = 20;
+    InputFieldProperties input_field = 21;
+    ButtonProperties button = 22;
+    CheckboxProperties checkbox = 23;
+    ListProperties list = 24;
+    TableProperties table = 25;
+    FlexProperties flex = 26;
+    GridProperties grid = 27;
+    TreeProperties tree = 28;
+    FormProperties form = 29;
+    PagesProperties pages = 30;
+  }
+}
+
+// Widget-specific property messages
+
+message TextViewProperties {
+  optional string text = 1;
+  optional bool dynamic_colors = 2;
+  optional bool word_wrap = 3;
+  optional bool scrollable = 4;
+  optional int32 max_lines = 5;
+  optional Color text_color = 6;
+}
+
+message InputFieldProperties {
+  optional string label = 1;
+  optional string placeholder = 2;
+  optional string text = 3;
+  optional int32 field_width = 4;
+  optional bool masked = 5;
+  optional string mask_character = 6;
+  optional Color label_color = 7;
+  optional Color field_text_color = 8;
+  optional Color field_background_color = 9;
+}
+
+message ButtonProperties {
+  optional string label = 1;
+  optional Color label_color = 2;
+  optional Color background_color = 3;
+  optional Color activated_color = 4;
+}
+
+message CheckboxProperties {
+  optional string label = 1;
+  optional bool checked = 2;
+  optional Color label_color = 3;
+  optional Color checked_color = 4;
+}
+
+message ListProperties {
+  optional bool show_secondary_text = 1;
+  optional Color main_text_color = 2;
+  optional Color secondary_text_color = 3;
+  optional Color selected_text_color = 4;
+  optional Color selected_background_color = 5;
+}
+
+message TableProperties {
+  optional bool borders = 1;
+  optional bool fixed_columns = 2;
+  optional bool selectable = 3;
+  optional Color borders_color = 4;
+}
+
+message FlexProperties {
+  optional FlexDirection direction = 1;
+  optional bool full_screen = 2;
+}
+
+enum FlexDirection {
+  FLEX_ROW = 0;
+  FLEX_COLUMN = 1;
+}
+
+message GridProperties {
+  optional int32 rows = 1;
+  optional int32 columns = 2;
+  optional int32 min_width = 3;
+  optional int32 min_height = 4;
+}
+
+message TreeProperties {
+  optional Color node_text_color = 1;
+  optional Color selected_text_color = 2;
+  optional Color selected_background_color = 3;
+  optional string top_level_prefix = 4;
+  optional bool show_graphics = 5;
+}
+
+message FormProperties {
+  optional int32 label_width = 1;
+  optional int32 field_width = 2;
+  optional Color label_color = 3;
+  optional Color field_text_color = 4;
+  optional Color field_background_color = 5;
+  optional Color button_background_color = 6;
+  optional Color button_text_color = 7;
+  optional bool horizontal = 8;
+}
+
+message PagesProperties {
+  optional bool show_page_names = 1;
+  optional Color page_name_color = 2;
+}
+
+// Key and modifier enums for events (Phase 2)
+
+enum Key {
+  KEY_RUNE = 0;              // Regular character (check rune field)
+  KEY_UP = 1;
+  KEY_DOWN = 2;
+  KEY_LEFT = 3;
+  KEY_RIGHT = 4;
+  KEY_ENTER = 5;
+  KEY_ESCAPE = 6;
+  KEY_TAB = 7;
+  KEY_BACKTAB = 8;
+  KEY_BACKSPACE = 9;
+  KEY_DELETE = 10;
+  KEY_INSERT = 11;
+  KEY_HOME = 12;
+  KEY_END = 13;
+  KEY_PGUP = 14;
+  KEY_PGDN = 15;
+  KEY_F1 = 16;
+  KEY_F2 = 17;
+  KEY_F3 = 18;
+  KEY_F4 = 19;
+  KEY_F5 = 20;
+  KEY_F6 = 21;
+  KEY_F7 = 22;
+  KEY_F8 = 23;
+  KEY_F9 = 24;
+  KEY_F10 = 25;
+  KEY_F11 = 26;
+  KEY_F12 = 27;
+}
+
+enum Modifier {
+  MOD_NONE = 0;
+  MOD_SHIFT = 1;
+  MOD_CTRL = 2;
+  MOD_ALT = 3;
+  MOD_META = 4;
+}
+

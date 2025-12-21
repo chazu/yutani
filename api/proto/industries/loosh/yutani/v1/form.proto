@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+import "industries/loosh/yutani/v1/types.proto";
+
+// FormService provides operations for Form widgets
+service FormService {
+  // Add a form field (InputField, Checkbox, DropDown, etc.)
+  rpc AddField(AddFieldRequest) returns (AddFieldResponse);
+
+  // Add a button to the form
+  rpc AddButton(AddButtonRequest) returns (AddButtonResponse);
+
+  // Get a field's value
+  rpc GetFieldValue(GetFieldValueRequest) returns (GetFieldValueResponse);
+
+  // Set a field's value
+  rpc SetFieldValue(SetFieldValueRequest) returns (SetFieldValueResponse);
+
+  // Clear all form fields
+  rpc Clear(ClearFormRequest) returns (ClearFormResponse);
+
+  // Get the number of form items
+  rpc GetItemCount(GetFormItemCountRequest) returns (GetFormItemCountResponse);
+}
+
+// Form field types
+enum FormFieldType {
+  FORM_FIELD_INPUT = 0;
+  FORM_FIELD_PASSWORD = 1;
+  FORM_FIELD_CHECKBOX = 2;
+  FORM_FIELD_DROPDOWN = 3;
+}
+
+// AddField
+
+message AddFieldRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  string label = 3;
+  FormFieldType field_type = 4;
+  optional int32 field_width = 5;
+  optional string initial_value = 6;
+  repeated string dropdown_options = 7;  // For dropdown fields
+}
+
+message AddFieldResponse {
+  bool success = 1;
+  int32 field_index = 2;
+}
+
+// AddButton
+
+message AddButtonRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  string label = 3;
+}
+
+message AddButtonResponse {
+  bool success = 1;
+  int32 button_index = 2;
+}
+
+// GetFieldValue
+
+message GetFieldValueRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  int32 field_index = 3;
+}
+
+message GetFieldValueResponse {
+  string value = 1;
+}
+
+// SetFieldValue
+
+message SetFieldValueRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  int32 field_index = 3;
+  string value = 4;
+}
+
+message SetFieldValueResponse {
+  bool success = 1;
+}
+
+// Clear
+
+message ClearFormRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message ClearFormResponse {
+  bool success = 1;
+}
+
+// GetItemCount
+
+message GetFormItemCountRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message GetFormItemCountResponse {
+  int32 count = 1;
+}
+

@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+import "industries/loosh/yutani/v1/types.proto";
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+// EventService handles event streaming from server to client
+service EventService {
+  // Subscribe to events (server-streaming)
+  rpc Subscribe(SubscribeRequest) returns (stream Event);
+
+  // Inject a synthetic event (for testing)
+  rpc InjectEvent(InjectEventRequest) returns (InjectEventResponse);
+
+  // Configure event filtering
+  rpc SetEventFilter(SetEventFilterRequest) returns (SetEventFilterResponse);
+}
+
+// Subscribe
+
+message SubscribeRequest {
+  SessionId session_id = 1;
+  optional EventFilter filter = 2;
+}
+
+message EventFilter {
+  bool receive_key_events = 1;
+  bool receive_mouse_events = 2;
+  bool receive_resize_events = 3;
+  bool receive_focus_events = 4;
+  bool receive_widget_events = 5;
+  
+  // Optional: filter by specific widget IDs
+  repeated string widget_ids = 6;
+}
+
+// InjectEvent
+
+message InjectEventRequest {
+  SessionId session_id = 1;
+  Event event = 2;
+}
+
+message InjectEventResponse {
+  bool success = 1;
+}
+
+// SetEventFilter
+
+message SetEventFilterRequest {
+  SessionId session_id = 1;
+  EventFilter filter = 2;
+}
+
+message SetEventFilterResponse {
+  bool success = 1;
+}
+
+// Event types
+
+message Event {
+  SessionId session_id = 1;
+  int64 timestamp = 2;
+
+  oneof event {
+    KeyEvent key = 10;
+    MouseEvent mouse = 11;
+    ResizeEvent resize = 12;
+    FocusEvent focus = 13;
+    WidgetEvent widget = 14;
+  }
+}
+
+message KeyEvent {
+  optional WidgetId widget_id = 1;
+  Key key = 2;
+  string rune = 3;           // UTF-8 character if printable
+  repeated Modifier modifiers = 4;
+}
+
+enum MouseAction {
+  MOUSE_CLICK = 0;
+  MOUSE_DOUBLE_CLICK = 1;
+  MOUSE_RIGHT_CLICK = 2;
+  MOUSE_MIDDLE_CLICK = 3;
+  MOUSE_SCROLL_UP = 4;
+  MOUSE_SCROLL_DOWN = 5;
+  MOUSE_DRAG = 6;
+  MOUSE_RELEASE = 7;
+  MOUSE_MOVE = 8;
+}
+
+message MouseEvent {
+  optional WidgetId widget_id = 1;
+  MouseAction action = 2;
+  Position position = 3;       // Relative to widget (if widget_id set)
+  Position screen_position = 4; // Absolute screen position
+  repeated Modifier modifiers = 5;
+}
+
+message ResizeEvent {
+  Size new_size = 1;
+}
+
+message FocusEvent {
+  optional WidgetId old_widget = 1;
+  optional WidgetId new_widget = 2;
+}
+
+message WidgetEvent {
+  WidgetId widget_id = 1;
+  WidgetEventType type = 2;
+  map<string, string> data = 3;  // Event-specific key-value data
+}
+
+enum WidgetEventType {
+  WIDGET_SELECTED = 0;      // Item selected (List, Table, Tree)
+  WIDGET_CHANGED = 1;       // Value changed (Input, Checkbox)
+  WIDGET_SUBMITTED = 2;     // Form submitted, button pressed
+  WIDGET_CANCELLED = 3;     // Escape pressed
+  WIDGET_DONE = 4;          // Input complete (Enter pressed)
+}
+

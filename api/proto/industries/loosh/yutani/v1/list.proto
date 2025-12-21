@@ -1,0 +1,118 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+import "industries/loosh/yutani/v1/types.proto";
+
+// ListService provides operations for List widgets
+service ListService {
+  // Add an item to the list
+  rpc AddItem(AddItemRequest) returns (AddItemResponse);
+
+  // Remove an item from the list
+  rpc RemoveItem(RemoveItemRequest) returns (RemoveItemResponse);
+
+  // Clear all items from the list
+  rpc Clear(ClearListRequest) returns (ClearListResponse);
+
+  // Get the number of items in the list
+  rpc GetItemCount(GetItemCountRequest) returns (GetItemCountResponse);
+
+  // Get the currently selected item index
+  rpc GetSelected(GetSelectedRequest) returns (GetSelectedResponse);
+
+  // Set the selected item index
+  rpc SetSelected(SetSelectedRequest) returns (SetSelectedResponse);
+
+  // Get an item's text
+  rpc GetItem(GetItemRequest) returns (GetItemResponse);
+}
+
+// AddItem
+
+message AddItemRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  string main_text = 3;
+  string secondary_text = 4;
+  optional string shortcut = 5;
+}
+
+message AddItemResponse {
+  bool success = 1;
+  int32 index = 2;  // Index of the added item
+}
+
+// RemoveItem
+
+message RemoveItemRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  int32 index = 3;
+}
+
+message RemoveItemResponse {
+  bool success = 1;
+}
+
+// Clear
+
+message ClearListRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message ClearListResponse {
+  bool success = 1;
+}
+
+// GetItemCount
+
+message GetItemCountRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message GetItemCountResponse {
+  int32 count = 1;
+}
+
+// GetSelected
+
+message GetSelectedRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message GetSelectedResponse {
+  int32 index = 1;  // -1 if no selection
+}
+
+// SetSelected
+
+message SetSelectedRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  int32 index = 3;
+}
+
+message SetSelectedResponse {
+  bool success = 1;
+}
+
+// GetItem
+
+message GetItemRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  int32 index = 3;
+}
+
+message GetItemResponse {
+  string main_text = 1;
+  string secondary_text = 2;
+  string shortcut = 3;
+}
+

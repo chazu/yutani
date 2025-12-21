@@ -1,0 +1,152 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+import "industries/loosh/yutani/v1/types.proto";
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+// ScreenService provides low-level screen/cell operations (tcell layer)
+service ScreenService {
+  // Get screen dimensions
+  rpc GetSize(GetSizeRequest) returns (GetSizeResponse);
+
+  // Clear the screen or region
+  rpc Clear(ClearRequest) returns (ClearResponse);
+
+  // Force screen sync/refresh
+  rpc Sync(SyncRequest) returns (SyncResponse);
+
+  // Set a single cell
+  rpc SetCell(SetCellRequest) returns (SetCellResponse);
+
+  // Set multiple cells (batch)
+  rpc SetCells(SetCellsRequest) returns (SetCellsResponse);
+
+  // Fill a region with a cell
+  rpc Fill(FillRequest) returns (FillResponse);
+
+  // Draw text at position
+  rpc DrawText(DrawTextRequest) returns (DrawTextResponse);
+
+  // Draw a box/border
+  rpc DrawBox(DrawBoxRequest) returns (DrawBoxResponse);
+
+  // Get cell content at position
+  rpc GetCell(GetCellRequest) returns (GetCellResponse);
+}
+
+// GetSize
+
+message GetSizeRequest {
+  SessionId session_id = 1;
+}
+
+message GetSizeResponse {
+  Size size = 1;
+}
+
+// Clear
+
+message ClearRequest {
+  SessionId session_id = 1;
+  
+  // Optional: clear only a specific region
+  optional Rect region = 2;
+  
+  // Optional: style to use for cleared cells
+  optional Style style = 3;
+}
+
+message ClearResponse {
+  bool success = 1;
+}
+
+// Sync
+
+message SyncRequest {
+  SessionId session_id = 1;
+}
+
+message SyncResponse {
+  bool success = 1;
+}
+
+// SetCell
+
+message SetCellRequest {
+  SessionId session_id = 1;
+  Position position = 2;
+  Cell cell = 3;
+}
+
+message SetCellResponse {
+  bool success = 1;
+}
+
+// SetCells
+
+message CellPosition {
+  Position position = 1;
+  Cell cell = 2;
+}
+
+message SetCellsRequest {
+  SessionId session_id = 1;
+  repeated CellPosition cells = 2;
+}
+
+message SetCellsResponse {
+  bool success = 1;
+  int32 cells_set = 2;
+}
+
+// Fill
+
+message FillRequest {
+  SessionId session_id = 1;
+  Rect region = 2;
+  Cell cell = 3;
+}
+
+message FillResponse {
+  bool success = 1;
+}
+
+// DrawText
+
+message DrawTextRequest {
+  SessionId session_id = 1;
+  Position position = 2;
+  string text = 3;
+  optional Style style = 4;
+}
+
+message DrawTextResponse {
+  bool success = 1;
+  int32 chars_drawn = 2;
+}
+
+// DrawBox
+
+message DrawBoxRequest {
+  SessionId session_id = 1;
+  Rect rect = 2;
+  optional Style style = 3;
+  optional bool filled = 4;  // If true, fill the box interior
+}
+
+message DrawBoxResponse {
+  bool success = 1;
+}
+
+// GetCell
+
+message GetCellRequest {
+  SessionId session_id = 1;
+  Position position = 2;
+}
+
+message GetCellResponse {
+  Cell cell = 1;
+}

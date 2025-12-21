@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+import "industries/loosh/yutani/v1/types.proto";
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+// SessionService manages client sessions and server lifecycle
+service SessionService {
+  // Create a new session
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse);
+
+  // End a session and cleanup its resources
+  rpc DestroySession(DestroySessionRequest) returns (DestroySessionResponse);
+
+  // Get server information
+  rpc GetServerInfo(GetServerInfoRequest) returns (GetServerInfoResponse);
+
+  // Ping for health check
+  rpc Ping(PingRequest) returns (PingResponse);
+}
+
+// CreateSession
+
+message CreateSessionRequest {
+  // Optional client identifier
+  string client_name = 1;
+  
+  // Optional session preferences
+  SessionPreferences preferences = 2;
+}
+
+message SessionPreferences {
+  // Event filtering preferences (for Phase 2)
+  bool receive_mouse_events = 1;
+  bool receive_key_events = 2;
+  bool receive_resize_events = 3;
+}
+
+message CreateSessionResponse {
+  SessionId session_id = 1;
+  string server_version = 2;
+}
+
+// DestroySession
+
+message DestroySessionRequest {
+  SessionId session_id = 1;
+}
+
+message DestroySessionResponse {
+  bool success = 1;
+}
+
+// GetServerInfo
+
+message GetServerInfoRequest {
+  // Empty for now
+}
+
+message GetServerInfoResponse {
+  string version = 1;
+  int32 active_sessions = 2;
+  int32 max_sessions = 3;
+  Size screen_size = 4;
+  ServerCapabilities capabilities = 5;
+}
+
+message ServerCapabilities {
+  bool mouse_support = 1;
+  bool paste_support = 2;
+  bool true_color = 3;
+  repeated string supported_widgets = 4;
+}
+
+// Ping
+
+message PingRequest {
+  int64 timestamp = 1;
+}
+
+message PingResponse {
+  int64 timestamp = 1;
+  int64 server_timestamp = 2;
+}
+

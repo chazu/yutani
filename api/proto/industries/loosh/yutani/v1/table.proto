@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+import "industries/loosh/yutani/v1/types.proto";
+
+// TableService provides operations for Table widgets
+service TableService {
+  // Set a single cell's content
+  rpc SetCell(SetTableCellRequest) returns (SetTableCellResponse);
+
+  // Get a single cell's content
+  rpc GetCell(GetTableCellRequest) returns (GetTableCellResponse);
+
+  // Set multiple cells (batch operation)
+  rpc SetCells(SetTableCellsRequest) returns (SetTableCellsResponse);
+
+  // Clear the table
+  rpc Clear(ClearTableRequest) returns (ClearTableResponse);
+
+  // Get table dimensions (rows, columns)
+  rpc GetDimensions(GetDimensionsRequest) returns (GetDimensionsResponse);
+
+  // Get current selection
+  rpc GetSelection(GetSelectionRequest) returns (GetSelectionResponse);
+
+  // Set current selection
+  rpc SetSelection(SetSelectionRequest) returns (SetSelectionResponse);
+
+  // Set fixed rows/columns (headers)
+  rpc SetFixed(SetFixedRequest) returns (SetFixedResponse);
+}
+
+// Table cell definition
+message TableCell {
+  string text = 1;
+  optional Color color = 2;
+  optional Alignment align = 3;
+  optional bool selectable = 4;
+  optional int32 expansion = 5;  // Column expansion factor
+}
+
+// SetCell
+
+message SetTableCellRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  int32 row = 3;
+  int32 column = 4;
+  TableCell cell = 5;
+}
+
+message SetTableCellResponse {
+  bool success = 1;
+}
+
+// GetCell
+
+message GetTableCellRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  int32 row = 3;
+  int32 column = 4;
+}
+
+message GetTableCellResponse {
+  TableCell cell = 1;
+}
+
+// SetCells
+
+message SetTableCellsRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  repeated TableCellUpdate cells = 3;
+}
+
+message TableCellUpdate {
+  int32 row = 1;
+  int32 column = 2;
+  TableCell cell = 3;
+}
+
+message SetTableCellsResponse {
+  bool success = 1;
+  int32 cells_set = 2;
+}
+
+// Clear
+
+message ClearTableRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message ClearTableResponse {
+  bool success = 1;
+}
+
+// GetDimensions
+
+message GetDimensionsRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message GetDimensionsResponse {
+  int32 rows = 1;
+  int32 columns = 2;
+}
+
+// GetSelection
+
+message GetSelectionRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message GetSelectionResponse {
+  int32 row = 1;
+  int32 column = 2;
+}
+
+// SetSelection
+
+message SetSelectionRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  int32 row = 3;
+  int32 column = 4;
+}
+
+message SetSelectionResponse {
+  bool success = 1;
+}
+
+// SetFixed
+
+message SetFixedRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  int32 fixed_rows = 3;
+  int32 fixed_columns = 4;
+}
+
+message SetFixedResponse {
+  bool success = 1;
+}
+

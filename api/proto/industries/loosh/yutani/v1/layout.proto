@@ -1,0 +1,156 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+import "industries/loosh/yutani/v1/types.proto";
+
+// LayoutService provides operations for layout containers (Flex, Grid, Pages)
+service LayoutService {
+  // Flex operations
+  rpc FlexAddItem(FlexAddItemRequest) returns (FlexAddItemResponse);
+  rpc FlexRemoveItem(FlexRemoveItemRequest) returns (FlexRemoveItemResponse);
+  rpc FlexSetDirection(FlexSetDirectionRequest) returns (FlexSetDirectionResponse);
+
+  // Grid operations
+  rpc GridAddItem(GridAddItemRequest) returns (GridAddItemResponse);
+  rpc GridRemoveItem(GridRemoveItemRequest) returns (GridRemoveItemResponse);
+  rpc GridSetRows(GridSetRowsRequest) returns (GridSetRowsResponse);
+  rpc GridSetColumns(GridSetColumnsRequest) returns (GridSetColumnsResponse);
+
+  // Pages operations
+  rpc PagesAddPage(PagesAddPageRequest) returns (PagesAddPageResponse);
+  rpc PagesRemovePage(PagesRemovePageRequest) returns (PagesRemovePageResponse);
+  rpc PagesShowPage(PagesShowPageRequest) returns (PagesShowPageResponse);
+  rpc PagesGetCurrentPage(PagesGetCurrentPageRequest) returns (PagesGetCurrentPageResponse);
+}
+
+// Flex operations
+
+message FlexAddItemRequest {
+  SessionId session_id = 1;
+  WidgetId flex_id = 2;
+  WidgetId item_id = 3;
+  int32 proportion = 4;  // 0 for fixed size, >0 for proportional
+  int32 fixed_size = 5;  // Used when proportion is 0
+  bool focus = 6;
+}
+
+message FlexAddItemResponse {
+  bool success = 1;
+}
+
+message FlexRemoveItemRequest {
+  SessionId session_id = 1;
+  WidgetId flex_id = 2;
+  WidgetId item_id = 3;
+}
+
+message FlexRemoveItemResponse {
+  bool success = 1;
+}
+
+message FlexSetDirectionRequest {
+  SessionId session_id = 1;
+  WidgetId flex_id = 2;
+  FlexDirection direction = 3;
+}
+
+message FlexSetDirectionResponse {
+  bool success = 1;
+}
+
+// Grid operations
+
+message GridAddItemRequest {
+  SessionId session_id = 1;
+  WidgetId grid_id = 2;
+  WidgetId item_id = 3;
+  int32 row = 4;
+  int32 column = 5;
+  int32 row_span = 6;
+  int32 column_span = 7;
+  int32 min_width = 8;
+  int32 min_height = 9;
+  bool focus = 10;
+}
+
+message GridAddItemResponse {
+  bool success = 1;
+}
+
+message GridRemoveItemRequest {
+  SessionId session_id = 1;
+  WidgetId grid_id = 2;
+  WidgetId item_id = 3;
+}
+
+message GridRemoveItemResponse {
+  bool success = 1;
+}
+
+message GridSetRowsRequest {
+  SessionId session_id = 1;
+  WidgetId grid_id = 2;
+  repeated int32 row_sizes = 3;  // Negative for proportional, positive for fixed
+}
+
+message GridSetRowsResponse {
+  bool success = 1;
+}
+
+message GridSetColumnsRequest {
+  SessionId session_id = 1;
+  WidgetId grid_id = 2;
+  repeated int32 column_sizes = 3;  // Negative for proportional, positive for fixed
+}
+
+message GridSetColumnsResponse {
+  bool success = 1;
+}
+
+// Pages operations
+
+message PagesAddPageRequest {
+  SessionId session_id = 1;
+  WidgetId pages_id = 2;
+  string page_name = 3;
+  WidgetId item_id = 4;
+  bool resize = 5;
+  bool visible = 6;
+}
+
+message PagesAddPageResponse {
+  bool success = 1;
+}
+
+message PagesRemovePageRequest {
+  SessionId session_id = 1;
+  WidgetId pages_id = 2;
+  string page_name = 3;
+}
+
+message PagesRemovePageResponse {
+  bool success = 1;
+}
+
+message PagesShowPageRequest {
+  SessionId session_id = 1;
+  WidgetId pages_id = 2;
+  string page_name = 3;
+}
+
+message PagesShowPageResponse {
+  bool success = 1;
+}
+
+message PagesGetCurrentPageRequest {
+  SessionId session_id = 1;
+  WidgetId pages_id = 2;
+}
+
+message PagesGetCurrentPageResponse {
+  string page_name = 1;
+}
+
