@@ -1,0 +1,904 @@
+# Yutani - Terminal Display Server
+## Product Requirements Document
+
+---
+
+## 1. Executive Summary
+
+**Yutani** is a Go-based terminal display server that provides networked, widget-based windowing capabilities for text-mode applications. Inspired by TWIN, Yutani uses gRPC for client-server communication and leverages tcell/tview for the underlying TUI rendering. Clients can control the terminal UI through both low-level cell operations and high-level widget abstractions.
+
+### Goals
+- Provide a networked terminal UI server accessible via gRPC
+- Support both low-level drawing (cells, styles) and high-level widgets (forms, lists, tables)
+- Enable multiple clients to interact with and control the UI
+- Expose all services via gRPC reflection for easy introspection and tooling
+
+### Non-Goals (Initial Release)
+- Multi-display/multi-head support
+- Built-in terminal emulator (clients handle their own PTY if needed)
+- Compression (gRPC handles this at transport level)
+
+---
+
+## 2. Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         YUTANI SERVER                           │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐  │
+│  │ gRPC Server  │◄──►│ Widget       │◄──►│ tview/tcell      │  │
+│  │              │    │ Registry     │    │ Application      │  │
+│  │ - Screen     │    │              │    │                  │  │
+│  │ - Widget     │    │ ID → Widget  │    │ - Event Loop     │  │
+│  │ - Event      │    │ mapping      │    │ - Rendering      │  │
+│  │ - Session    │    │              │    │ - Input          │  │
+│  └──────────────┘    └──────────────┘    └──────────────────┘  │
+│         ▲                                         │             │
+│         │                                         ▼             │
+│         │                                 ┌──────────────┐      │
+│         │                                 │   Terminal   │      │
+│         │                                 │   (stdout)   │      │
+└─────────┼─────────────────────────────────┴──────────────┴──────┘
+          │
+          │ gRPC (TCP)
+          │
+┌─────────┴─────────┐
+│   YUTANI CLIENT   │
+│                   │
+│ - Create widgets  │
+│ - Handle events   │
+│ - Draw content    │
+└───────────────────┘
+```
+
+---
+
+## 3. Core Concepts
+
+### 3.1 Sessions
+A **Session** represents a client connection to the server. Each session:
+- Has a unique session ID
+- Owns widgets it creates
+- Receives events for its widgets
+- Can be configured with preferences (e.g., event filtering)
+
+### 3.2 Widgets
+Widgets are UI elements with unique IDs. The server maintains a registry mapping IDs to tview primitives:
+
+| Widget Type | tview Primitive | Description |
+|-------------|-----------------|-------------|
+| Box | Box | Base container with border/title |
+| TextView | TextView | Scrollable text display |
+| InputField | InputField | Single-line text input |
+| TextArea | TextArea | Multi-line text editor |
+| Button | Button | Clickable button |
+| Checkbox | Checkbox | Boolean toggle |
+| DropDown | DropDown | Selection dropdown |
+| List | List | Navigable item list |
+| Table | Table | 2D tabular data |
+| TreeView | TreeView | Hierarchical tree |
+| Form | Form | Form container |
+| Flex | Flex | Flexbox layout |
+| Grid | Grid | Grid layout |
+| Pages | Pages | Stacked pages/tabs |
+| Modal | Modal | Dialog overlay |
+| Image | Image | Terminal image display |
+
+### 3.3 Events
+Events flow from server to client via gRPC streaming:
+- **KeyEvent** - Keyboard input (key, modifiers, rune)
+- **MouseEvent** - Mouse actions (click, drag, scroll, position)
+- **ResizeEvent** - Terminal resize
+- **FocusEvent** - Widget focus changes
+- **WidgetEvent** - Widget-specific (selection, change, submit)
+
+### 3.4 Styles
+Styling uses tcell's color and attribute system:
+- Foreground/background colors (named, 256-color, true-color)
+- Attributes: bold, italic, underline, reverse, blink, dim, strikethrough
+
+---
+
+## 4. gRPC Services
+
+### 4.1 SessionService
+Manages client sessions and server lifecycle.
+
+```protobuf
+service SessionService {
+  // Create a new session
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse);
+
+  // End a session and cleanup its resources
+  rpc DestroySession(DestroySessionRequest) returns (DestroySessionResponse);
+
+  // Get server information
+  rpc GetServerInfo(GetServerInfoRequest) returns (GetServerInfoResponse);
+
+  // Ping for health check
+  rpc Ping(PingRequest) returns (PingResponse);
+}
+```
+
+### 4.2 ScreenService
+Low-level screen/cell operations (tcell layer).
+
+```protobuf
+service ScreenService {
+  // Get screen dimensions
+  rpc GetSize(GetSizeRequest) returns (GetSizeResponse);
+
+  // Set a single cell
+  rpc SetCell(SetCellRequest) returns (SetCellResponse);
+
+  // Set multiple cells (batch)
+  rpc SetCells(SetCellsRequest) returns (SetCellsResponse);
+
+  // Fill a region with a cell
+  rpc Fill(FillRequest) returns (FillResponse);
+
+  // Clear the screen or region
+  rpc Clear(ClearRequest) returns (ClearResponse);
+
+  // Draw text at position
+  rpc DrawText(DrawTextRequest) returns (DrawTextResponse);
+
+  // Draw a box/border
+  rpc DrawBox(DrawBoxRequest) returns (DrawBoxResponse);
+
+  // Force screen sync/refresh
+  rpc Sync(SyncRequest) returns (SyncResponse);
+
+  // Get cell content at position
+  rpc GetCell(GetCellRequest) returns (GetCellResponse);
+}
+```
+
+### 4.3 WidgetService
+High-level widget operations (tview layer).
+
+```protobuf
+service WidgetService {
+  // Create a widget
+  rpc CreateWidget(CreateWidgetRequest) returns (CreateWidgetResponse);
+
+  // Delete a widget
+  rpc DeleteWidget(DeleteWidgetRequest) returns (DeleteWidgetResponse);
+
+  // Set widget properties
+  rpc SetProperties(SetPropertiesRequest) returns (SetPropertiesResponse);
+
+  // Get widget properties
+  rpc GetProperties(GetPropertiesRequest) returns (GetPropertiesResponse);
+
+  // Set widget as root (display it)
+  rpc SetRoot(SetRootRequest) returns (SetRootResponse);
+
+  // Add child to container widget
+  rpc AddChild(AddChildRequest) returns (AddChildResponse);
+
+  // Remove child from container
+  rpc RemoveChild(RemoveChildRequest) returns (RemoveChildResponse);
+
+  // Set focus to widget
+  rpc SetFocus(SetFocusRequest) returns (SetFocusResponse);
+
+  // Get currently focused widget
+  rpc GetFocus(GetFocusRequest) returns (GetFocusResponse);
+
+  // List all widgets for session
+  rpc ListWidgets(ListWidgetsRequest) returns (ListWidgetsResponse);
+}
+```
+
+### 4.4 EventService
+Event streaming from server to client.
+
+```protobuf
+service EventService {
+  // Subscribe to events (server-streaming)
+  rpc Subscribe(SubscribeRequest) returns (stream Event);
+
+  // Inject a synthetic event (for testing)
+  rpc InjectEvent(InjectEventRequest) returns (InjectEventResponse);
+
+  // Configure event filtering
+  rpc SetEventFilter(SetEventFilterRequest) returns (SetEventFilterResponse);
+}
+```
+
+### 4.5 TextViewService
+Operations specific to TextView widgets.
+
+```protobuf
+service TextViewService {
+  // Set text content
+  rpc SetText(SetTextRequest) returns (SetTextResponse);
+
+  // Append text (streaming input)
+  rpc Write(stream WriteRequest) returns (WriteResponse);
+
+  // Get current text
+  rpc GetText(GetTextRequest) returns (GetTextResponse);
+
+  // Scroll to position
+  rpc ScrollTo(ScrollToRequest) returns (ScrollToResponse);
+
+  // Set/get regions and highlights
+  rpc SetHighlight(SetHighlightRequest) returns (SetHighlightResponse);
+
+  // Clear content
+  rpc Clear(ClearRequest) returns (ClearResponse);
+}
+```
+
+### 4.6 ListService
+Operations specific to List widgets.
+
+```protobuf
+service ListService {
+  // Add item to list
+  rpc AddItem(AddItemRequest) returns (AddItemResponse);
+
+  // Remove item
+  rpc RemoveItem(RemoveItemRequest) returns (RemoveItemResponse);
+
+  // Clear all items
+  rpc Clear(ClearRequest) returns (ClearResponse);
+
+  // Get item count
+  rpc GetItemCount(GetItemCountRequest) returns (GetItemCountResponse);
+
+  // Get/set selected item
+  rpc GetSelected(GetSelectedRequest) returns (GetSelectedResponse);
+  rpc SetSelected(SetSelectedRequest) returns (SetSelectedResponse);
+
+  // Get item text
+  rpc GetItem(GetItemRequest) returns (GetItemResponse);
+}
+```
+
+### 4.7 TableService
+Operations specific to Table widgets.
+
+```protobuf
+service TableService {
+  // Set cell content
+  rpc SetCell(SetCellRequest) returns (SetCellResponse);
+
+  // Get cell content
+  rpc GetCell(GetCellRequest) returns (GetCellResponse);
+
+  // Set multiple cells (batch)
+  rpc SetCells(SetCellsRequest) returns (SetCellsResponse);
+
+  // Clear table
+  rpc Clear(ClearRequest) returns (ClearResponse);
+
+  // Get row/column count
+  rpc GetDimensions(GetDimensionsRequest) returns (GetDimensionsResponse);
+
+  // Get/set selection
+  rpc GetSelection(GetSelectionRequest) returns (GetSelectionResponse);
+  rpc SetSelection(SetSelectionRequest) returns (SetSelectionResponse);
+
+  // Configure fixed rows/columns (headers)
+  rpc SetFixed(SetFixedRequest) returns (SetFixedResponse);
+}
+```
+
+### 4.8 FormService
+Operations specific to Form widgets.
+
+```protobuf
+service FormService {
+  // Add form field
+  rpc AddField(AddFieldRequest) returns (AddFieldResponse);
+
+  // Add button
+  rpc AddButton(AddButtonRequest) returns (AddButtonResponse);
+
+  // Get field value
+  rpc GetFieldValue(GetFieldValueRequest) returns (GetFieldValueResponse);
+
+  // Set field value
+  rpc SetFieldValue(SetFieldValueRequest) returns (SetFieldValueResponse);
+
+  // Clear form
+  rpc Clear(ClearRequest) returns (ClearResponse);
+
+  // Get form item count
+  rpc GetItemCount(GetItemCountRequest) returns (GetItemCountResponse);
+}
+```
+
+### 4.9 TreeService
+Operations specific to TreeView widgets.
+
+```protobuf
+service TreeService {
+  // Set root node
+  rpc SetRoot(SetRootRequest) returns (SetRootResponse);
+
+  // Add child node
+  rpc AddChild(AddChildRequest) returns (AddChildResponse);
+
+  // Remove node
+  rpc RemoveNode(RemoveNodeRequest) returns (RemoveNodeResponse);
+
+  // Expand/collapse node
+  rpc SetExpanded(SetExpandedRequest) returns (SetExpandedResponse);
+
+  // Get/set selected node
+  rpc GetSelected(GetSelectedRequest) returns (GetSelectedResponse);
+  rpc SetSelected(SetSelectedRequest) returns (SetSelectedResponse);
+
+  // Get node children
+  rpc GetChildren(GetChildrenRequest) returns (GetChildrenResponse);
+}
+```
+
+### 4.10 LayoutService
+Operations for layout containers (Flex, Grid, Pages).
+
+```protobuf
+service LayoutService {
+  // Flex operations
+  rpc FlexAddItem(FlexAddItemRequest) returns (FlexAddItemResponse);
+  rpc FlexRemoveItem(FlexRemoveItemRequest) returns (FlexRemoveItemResponse);
+  rpc FlexSetDirection(FlexSetDirectionRequest) returns (FlexSetDirectionResponse);
+
+  // Grid operations
+  rpc GridAddItem(GridAddItemRequest) returns (GridAddItemResponse);
+  rpc GridRemoveItem(GridRemoveItemRequest) returns (GridRemoveItemResponse);
+  rpc GridSetRows(GridSetRowsRequest) returns (GridSetRowsResponse);
+  rpc GridSetColumns(GridSetColumnsRequest) returns (GridSetColumnsResponse);
+
+  // Pages operations
+  rpc PagesAddPage(PagesAddPageRequest) returns (PagesAddPageResponse);
+  rpc PagesRemovePage(PagesRemovePageRequest) returns (PagesRemovePageResponse);
+  rpc PagesSwitchTo(PagesSwitchToRequest) returns (PagesSwitchToResponse);
+  rpc PagesGetCurrent(PagesGetCurrentRequest) returns (PagesGetCurrentResponse);
+}
+```
+
+---
+
+## 5. Message Types
+
+### 5.1 Core Types
+
+```protobuf
+message WidgetId {
+  string id = 1;
+}
+
+message SessionId {
+  string id = 1;
+}
+
+message Position {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message Size {
+  int32 width = 1;
+  int32 height = 2;
+}
+
+message Rect {
+  int32 x = 1;
+  int32 y = 2;
+  int32 width = 3;
+  int32 height = 4;
+}
+
+message Color {
+  oneof color {
+    string name = 1;      // Named color: "red", "blue", etc.
+    int32 index = 2;      // 256-color palette index
+    RGB rgb = 3;          // True color
+  }
+}
+
+message RGB {
+  int32 r = 1;
+  int32 g = 2;
+  int32 b = 3;
+}
+
+message Style {
+  Color foreground = 1;
+  Color background = 2;
+  repeated Attribute attributes = 3;
+}
+
+enum Attribute {
+  ATTR_NONE = 0;
+  ATTR_BOLD = 1;
+  ATTR_ITALIC = 2;
+  ATTR_UNDERLINE = 3;
+  ATTR_REVERSE = 4;
+  ATTR_BLINK = 5;
+  ATTR_DIM = 6;
+  ATTR_STRIKETHROUGH = 7;
+}
+
+message Cell {
+  string rune = 1;        // UTF-8 character
+  Style style = 2;
+}
+```
+
+### 5.2 Widget Types
+
+```protobuf
+enum WidgetType {
+  WIDGET_BOX = 0;
+  WIDGET_TEXT_VIEW = 1;
+  WIDGET_INPUT_FIELD = 2;
+  WIDGET_TEXT_AREA = 3;
+  WIDGET_BUTTON = 4;
+  WIDGET_CHECKBOX = 5;
+  WIDGET_DROPDOWN = 6;
+  WIDGET_LIST = 7;
+  WIDGET_TABLE = 8;
+  WIDGET_TREE_VIEW = 9;
+  WIDGET_FORM = 10;
+  WIDGET_FLEX = 11;
+  WIDGET_GRID = 12;
+  WIDGET_PAGES = 13;
+  WIDGET_MODAL = 14;
+  WIDGET_IMAGE = 15;
+}
+
+message WidgetProperties {
+  // Common properties (from Box)
+  optional Rect rect = 1;
+  optional bool border = 2;
+  optional string title = 3;
+  optional Alignment title_align = 4;
+  optional Color background_color = 5;
+  optional Color border_color = 6;
+  optional Color title_color = 7;
+  optional Padding padding = 8;
+
+  // Type-specific properties
+  oneof type_properties {
+    TextViewProperties text_view = 20;
+    InputFieldProperties input_field = 21;
+    ButtonProperties button = 22;
+    CheckboxProperties checkbox = 23;
+    ListProperties list = 24;
+    TableProperties table = 25;
+    FlexProperties flex = 26;
+    GridProperties grid = 27;
+  }
+}
+
+message Padding {
+  int32 top = 1;
+  int32 bottom = 2;
+  int32 left = 3;
+  int32 right = 4;
+}
+
+enum Alignment {
+  ALIGN_LEFT = 0;
+  ALIGN_CENTER = 1;
+  ALIGN_RIGHT = 2;
+}
+```
+
+### 5.3 Event Types
+
+```protobuf
+message Event {
+  SessionId session_id = 1;
+  int64 timestamp = 2;
+
+  oneof event {
+    KeyEvent key = 10;
+    MouseEvent mouse = 11;
+    ResizeEvent resize = 12;
+    FocusEvent focus = 13;
+    WidgetEvent widget = 14;
+  }
+}
+
+message KeyEvent {
+  WidgetId widget_id = 1;
+  Key key = 2;
+  string rune = 3;           // UTF-8 character if printable
+  repeated Modifier modifiers = 4;
+}
+
+enum Key {
+  KEY_RUNE = 0;              // Regular character (check rune field)
+  KEY_UP = 1;
+  KEY_DOWN = 2;
+  KEY_LEFT = 3;
+  KEY_RIGHT = 4;
+  KEY_ENTER = 5;
+  KEY_ESCAPE = 6;
+  KEY_TAB = 7;
+  KEY_BACKTAB = 8;
+  KEY_BACKSPACE = 9;
+  KEY_DELETE = 10;
+  KEY_INSERT = 11;
+  KEY_HOME = 12;
+  KEY_END = 13;
+  KEY_PGUP = 14;
+  KEY_PGDN = 15;
+  KEY_F1 = 16;
+  KEY_F2 = 17;
+  // ... F3-F12
+}
+
+enum Modifier {
+  MOD_NONE = 0;
+  MOD_SHIFT = 1;
+  MOD_CTRL = 2;
+  MOD_ALT = 3;
+  MOD_META = 4;
+}
+
+message MouseEvent {
+  WidgetId widget_id = 1;
+  MouseAction action = 2;
+  Position position = 3;       // Relative to widget
+  Position screen_position = 4; // Absolute screen position
+  repeated Modifier modifiers = 5;
+}
+
+enum MouseAction {
+  MOUSE_CLICK = 0;
+  MOUSE_DOUBLE_CLICK = 1;
+  MOUSE_RIGHT_CLICK = 2;
+  MOUSE_MIDDLE_CLICK = 3;
+  MOUSE_SCROLL_UP = 4;
+  MOUSE_SCROLL_DOWN = 5;
+  MOUSE_DRAG = 6;
+  MOUSE_RELEASE = 7;
+  MOUSE_MOVE = 8;
+}
+
+message ResizeEvent {
+  Size new_size = 1;
+}
+
+message FocusEvent {
+  WidgetId old_widget = 1;
+  WidgetId new_widget = 2;
+}
+
+message WidgetEvent {
+  WidgetId widget_id = 1;
+  WidgetEventType type = 2;
+  map<string, string> data = 3;  // Event-specific key-value data
+}
+
+enum WidgetEventType {
+  WIDGET_SELECTED = 0;      // Item selected (List, Table, Tree)
+  WIDGET_CHANGED = 1;       // Value changed (Input, Checkbox)
+  WIDGET_SUBMITTED = 2;     // Form submitted, button pressed
+  WIDGET_CANCELLED = 3;     // Escape pressed
+  WIDGET_DONE = 4;          // Input complete (Enter pressed)
+}
+```
+
+---
+
+## 6. Server Implementation
+
+### 6.1 Component Structure
+
+```
+yutani/
+├── cmd/
+│   └── yutani-server/
+│       └── main.go           # Server entry point
+├── pkg/
+│   ├── server/
+│   │   ├── server.go         # gRPC server setup
+│   │   ├── session.go        # Session management
+│   │   └── registry.go       # Widget registry
+│   ├── services/
+│   │   ├── session.go        # SessionService impl
+│   │   ├── screen.go         # ScreenService impl
+│   │   ├── widget.go         # WidgetService impl
+│   │   ├── event.go          # EventService impl
+│   │   ├── textview.go       # TextViewService impl
+│   │   ├── list.go           # ListService impl
+│   │   ├── table.go          # TableService impl
+│   │   ├── form.go           # FormService impl
+│   │   ├── tree.go           # TreeService impl
+│   │   └── layout.go         # LayoutService impl
+│   ├── bridge/
+│   │   ├── tcell.go          # tcell adapter
+│   │   └── tview.go          # tview adapter
+│   └── proto/
+│       └── yutani/
+│           ├── session.proto
+│           ├── screen.proto
+│           ├── widget.proto
+│           ├── event.proto
+│           └── types.proto
+├── api/
+│   └── proto/                # Proto definitions
+├── go.mod
+└── go.sum
+```
+
+### 6.2 Thread Safety
+
+tview is not thread-safe. All gRPC handlers must:
+1. Queue updates via `app.QueueUpdate()` or `app.QueueUpdateDraw()`
+2. Use channels to communicate with the main event loop
+3. Never directly modify tview primitives from gRPC goroutines
+
+```go
+// Example: Safe widget property update
+func (s *WidgetService) SetProperties(ctx context.Context, req *pb.SetPropertiesRequest) (*pb.SetPropertiesResponse, error) {
+    done := make(chan error, 1)
+
+    s.app.QueueUpdate(func() {
+        widget, ok := s.registry.Get(req.WidgetId)
+        if !ok {
+            done <- ErrWidgetNotFound
+            return
+        }
+
+        if err := applyProperties(widget, req.Properties); err != nil {
+            done <- err
+            return
+        }
+        done <- nil
+    })
+
+    if err := <-done; err != nil {
+        return nil, err
+    }
+
+    return &pb.SetPropertiesResponse{Success: true}, nil
+}
+```
+
+### 6.3 Event Dispatch
+
+Events captured by tview must be forwarded to subscribed clients:
+
+```go
+type EventDispatcher struct {
+    subscribers map[string]chan *pb.Event  // sessionId -> event channel
+    mu          sync.RWMutex
+}
+
+func (d *EventDispatcher) Dispatch(sessionId string, event *pb.Event) {
+    d.mu.RLock()
+    defer d.mu.RUnlock()
+
+    if ch, ok := d.subscribers[sessionId]; ok {
+        select {
+        case ch <- event:
+        default:
+            // Channel full, drop event or log warning
+        }
+    }
+}
+```
+
+### 6.4 Widget Registry
+
+```go
+type WidgetRegistry struct {
+    widgets   map[string]tview.Primitive  // widgetId -> primitive
+    owners    map[string]string           // widgetId -> sessionId
+    mu        sync.RWMutex
+}
+
+func (r *WidgetRegistry) Register(sessionId string, widget tview.Primitive) string {
+    r.mu.Lock()
+    defer r.mu.Unlock()
+
+    id := uuid.New().String()
+    r.widgets[id] = widget
+    r.owners[id] = sessionId
+    return id
+}
+
+func (r *WidgetRegistry) Get(id string) (tview.Primitive, bool) {
+    r.mu.RLock()
+    defer r.mu.RUnlock()
+    return r.widgets[id]
+}
+
+func (r *WidgetRegistry) DeleteBySession(sessionId string) {
+    r.mu.Lock()
+    defer r.mu.Unlock()
+
+    for id, owner := range r.owners {
+        if owner == sessionId {
+            delete(r.widgets, id)
+            delete(r.owners, id)
+        }
+    }
+}
+```
+
+---
+
+## 7. Client Library
+
+A Go client library will be provided for convenient server interaction:
+
+```go
+package yutani
+
+type Client struct {
+    conn      *grpc.ClientConn
+    session   pb.SessionServiceClient
+    screen    pb.ScreenServiceClient
+    widget    pb.WidgetServiceClient
+    event     pb.EventServiceClient
+    // ... other service clients
+
+    sessionId string
+    events    <-chan *pb.Event
+}
+
+// Connect to Yutani server
+func Connect(address string) (*Client, error)
+
+// Close connection
+func (c *Client) Close() error
+
+// Create widgets
+func (c *Client) NewTextView() (*TextView, error)
+func (c *Client) NewList() (*List, error)
+func (c *Client) NewTable() (*Table, error)
+func (c *Client) NewForm() (*Form, error)
+func (c *Client) NewFlex() (*Flex, error)
+// ... etc
+
+// Event handling
+func (c *Client) Events() <-chan *pb.Event
+
+// Screen operations
+func (c *Client) ScreenSize() (width, height int, err error)
+func (c *Client) SetCell(x, y int, r rune, style Style) error
+func (c *Client) DrawText(x, y int, text string, style Style) error
+```
+
+---
+
+## 8. gRPC Reflection
+
+All services will have gRPC reflection enabled:
+
+```go
+import "google.golang.org/grpc/reflection"
+
+func main() {
+    server := grpc.NewServer()
+
+    // Register services
+    pb.RegisterSessionServiceServer(server, &sessionService{})
+    pb.RegisterScreenServiceServer(server, &screenService{})
+    pb.RegisterWidgetServiceServer(server, &widgetService{})
+    // ... etc
+
+    // Enable reflection
+    reflection.Register(server)
+
+    server.Serve(listener)
+}
+```
+
+This allows tools like `grpcurl` and `grpcui` to introspect and interact with the server without pre-compiled stubs.
+
+---
+
+## 9. Configuration
+
+Server configuration via YAML or environment variables:
+
+```yaml
+server:
+  address: ":7755"           # gRPC listen address
+  max_sessions: 100          # Maximum concurrent sessions
+
+tui:
+  mouse: true                # Enable mouse support
+  paste: true                # Enable paste support
+
+logging:
+  level: info                # debug, info, warn, error
+  format: json               # json, text
+```
+
+---
+
+## 10. Security Considerations
+
+### Initial Release
+- No authentication (local use assumed)
+- Session IDs provide basic isolation
+
+### Future Considerations
+- TLS for encrypted connections
+- Token-based authentication
+- Per-session permissions/capabilities
+- Rate limiting
+
+---
+
+## 11. Success Metrics
+
+- Widget creation latency < 5ms
+- Event delivery latency < 10ms
+- Support 10+ concurrent sessions
+- Full tview widget coverage
+- Clean session cleanup on disconnect
+
+---
+
+## 12. Implementation Phases
+
+### Phase 1: Foundation
+- [ ] Project structure and build system
+- [ ] Proto definitions for core types
+- [ ] SessionService implementation
+- [ ] Basic ScreenService (size, clear, sync)
+- [ ] gRPC server with reflection
+
+### Phase 2: Low-Level API
+- [ ] Complete ScreenService (cells, text, box drawing)
+- [ ] EventService with key/mouse/resize events
+- [ ] Basic client library
+
+### Phase 3: Widget System
+- [ ] WidgetService core operations
+- [ ] Box, TextView, InputField widgets
+- [ ] Button, Checkbox widgets
+- [ ] Focus management
+
+### Phase 4: Complex Widgets
+- [ ] List, Table, TreeView services
+- [ ] Form service
+- [ ] Layout services (Flex, Grid, Pages)
+- [ ] Modal support
+
+### Phase 5: Polish
+- [ ] Complete client library
+- [ ] Documentation
+- [ ] Example applications
+- [ ] Performance optimization
+
+---
+
+## 13. Open Questions
+
+1. **Multi-client widget sharing**: Should widgets be shareable across sessions, or strictly owned by their creator?
+Answer: strictly owned by their creator
+
+2. **Custom drawing**: How should clients perform custom drawing within widgets? Callback mechanism or dedicated drawing service?
+Answer: Clients should be able to batch calls to set cell values and attributes, or to draw lines, rectangles, fill rectangles, erase, et cetera. This is not a goal for MVP
+
+3. **Widget-level event filtering**: Should clients be able to subscribe to events for specific widgets only?
+Yes
+4. **State synchronization**: Should the server push widget state changes, or only respond to client queries?
+Clients should be able to subscribe to state changes for widgets and receive updates
+5. **Error handling**: How granular should error reporting be? Per-operation errors vs. connection-level?
+lets keep it simple for now - less is more. if we need more granular later we can add it.
+---
+
+## 14. References
+
+- [TWIN Protocol Analysis](./wish_report.md)
+- [tview Documentation](https://github.com/rivo/tview/wiki)
+- [tcell Documentation](https://pkg.go.dev/github.com/gdamore/tcell/v2)
+- [gRPC Go Documentation](https://grpc.io/docs/languages/go/)
