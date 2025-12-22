@@ -1,7 +1,7 @@
 package server
 
 import (
-	"log/slog"
+	"fmt"
 	"sync"
 
 	"github.com/gdamore/tcell/v2"
@@ -72,7 +72,7 @@ func NewTestServer(maxSessions int) (*Server, error) {
 	return s, nil
 }
 
-// Start starts the TUI event loop in a goroutine
+// Start initializes the TUI (does not block)
 func (s *Server) Start() error {
 	s.mu.Lock()
 	if s.running {
@@ -82,53 +82,71 @@ func (s *Server) Start() error {
 	s.running = true
 	s.mu.Unlock()
 
-	var screen tcell.Screen
-	var err error
-
-	// Use simulation screen for testing
+	// For test mode, create and initialize a simulation screen
 	if s.testMode {
-		screen = tcell.NewSimulationScreen("UTF-8")
+		screen := tcell.NewSimulationScreen("UTF-8")
 		if err := screen.Init(); err != nil {
 			return err
 		}
-		// Set a reasonable default size for testing
 		screen.SetSize(80, 24)
-	} else {
-		// Initialize the real screen
-		screen, err = tcell.NewScreen()
-		if err != nil {
-			return err
-		}
-
-		if err := screen.Init(); err != nil {
-			return err
-		}
+		s.screen = screen
+		s.app.SetScreen(screen)
 	}
+	// For normal mode, let tview create and manage the screen in Run()
 
-	// Configure screen
-	screen.EnableMouse()
-	screen.EnablePaste()
-	screen.Clear()
+	// Create a placeholder widget to show when no client is connected
+	placeholder := tview.NewTextView().
+		SetText("[yellow::b]Yutani Display Server[-::-]\n\n" +
+			"Waiting for client connections...\n\n" +
+			"Server is running on " + "localhost:7755" + "\n" +
+			"Press [red::b]Ctrl+C[-::-] to exit").
+		SetDynamicColors(true).
+		SetTextAlign(tview.AlignCenter)
+	placeholder.SetBorder(true).SetTitle(" Yutani v" + Version + " ")
 
-	s.screen = screen
-	s.app.SetScreen(screen)
+	// Set the placeholder as the initial root
+	s.app.SetRoot(placeholder, true)
 
-	// Set up input capture for event dispatching
-	s.app.SetInputCapture(s.handleInputEvent)
-
-	// Start the application in a goroutine
-	go func() {
-		slog.Info("Starting tview application event loop")
-		if err := s.app.Run(); err != nil {
-			slog.Error("Application error", "error", err)
+	// Set up input capture for event dispatching AND Ctrl+C handling
+	s.app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+		// Handle Ctrl+C to allow graceful shutdown
+		if event.Key() == tcell.KeyCtrlC {
+			s.app.Stop()
+			return nil
 		}
-		slog.Info("tview application event loop stopped")
-	}()
-
-	// Start event polling for mouse and resize events
-	go s.pollScreenEvents()
+		// Dispatch other key events
+		return s.handleInputEvent(event)
+	})
 
 	return nil
+}
+
+// Run starts the TUI application (blocking call)
+// This should be called from the main goroutine
+func (s *Server) Run() error {
+	s.mu.Lock()
+	if !s.running {
+		s.mu.Unlock()
+		return fmt.Errorf("server not started")
+	}
+	s.mu.Unlock()
+
+	// Set a callback to capture the screen after tview initializes it
+	// This is needed for event polling
+	s.app.SetBeforeDrawFunc(func(screen tcell.Screen) bool {
+		if s.screen == nil && !s.testMode {
+			s.mu.Lock()
+			s.screen = screen
+			s.mu.Unlock()
+			// Start event polling now that we have the screen
+			go s.pollScreenEvents()
+		}
+		return false
+	})
+
+	// Run the application (blocks until app.Stop() is called)
+	// tview will create and initialize the screen automatically
+	return s.app.Run()
 }
 
 // Stop stops the server
@@ -140,7 +158,6 @@ func (s *Server) Stop() {
 		return
 	}
 
-	slog.Info("Stopping server")
 	s.running = false
 
 	// Close stop channel (only if not already closed)
@@ -160,7 +177,7 @@ func (s *Server) Stop() {
 		func() {
 			defer func() {
 				if r := recover(); r != nil {
-					slog.Debug("Screen Fini() panic (expected in test mode)", "error", r)
+					// Ignore panic - expected in test mode
 				}
 			}()
 			s.screen.Fini()

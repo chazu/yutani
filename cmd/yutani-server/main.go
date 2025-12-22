@@ -4,8 +4,6 @@ import (
 	"log/slog"
 	"net"
 	"os"
-	"os/signal"
-	"syscall"
 
 	"github.com/chazu/yutani/pkg/config"
 	pb "github.com/chazu/yutani/pkg/proto/yutani"
@@ -24,8 +22,27 @@ func main() {
 	}
 
 	// Configure logging
+	// IMPORTANT: Logging is disabled when TUI is running to avoid interfering with the display
+	// To enable logging, set YUTANI_LOG_FILE environment variable to a file path
 	logLevel := parseLogLevel(cfg.LogLevel)
-	logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
+
+	var logWriter *os.File
+	logFile := os.Getenv("YUTANI_LOG_FILE")
+	if logFile != "" {
+		var err error
+		logWriter, err = os.OpenFile(logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+		if err != nil {
+			slog.Error("Failed to open log file", "error", err)
+			os.Exit(1)
+		}
+		defer logWriter.Close()
+	} else {
+		// Discard logs when no log file is specified (TUI mode)
+		logWriter, _ = os.Open(os.DevNull)
+		defer logWriter.Close()
+	}
+
+	logger := slog.New(slog.NewTextHandler(logWriter, &slog.HandlerOptions{
 		Level: logLevel,
 	}))
 	slog.SetDefault(logger)
@@ -43,7 +60,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Start the TUI event loop
+	// Start the TUI (initializes screen and widgets)
 	if err := yutaniServer.Start(); err != nil {
 		slog.Error("Failed to start server", "error", err)
 		os.Exit(1)
@@ -87,24 +104,17 @@ func main() {
 
 	slog.Info("gRPC server listening", "address", cfg.Address)
 
-	// Handle graceful shutdown
-	sigCh := make(chan os.Signal, 1)
-	signal.Notify(sigCh, os.Interrupt, syscall.SIGTERM)
-
 	// Start gRPC server in a goroutine
-	errCh := make(chan error, 1)
 	go func() {
 		if err := grpcServer.Serve(listener); err != nil {
-			errCh <- err
+			// Server stopped
 		}
 	}()
 
-	// Wait for shutdown signal or error
-	select {
-	case <-sigCh:
-		slog.Info("Received shutdown signal")
-	case err := <-errCh:
-		slog.Error("gRPC server error", "error", err)
+	// Run the TUI application (blocks until Ctrl+C or app.Stop())
+	// This MUST run in the main goroutine
+	if err := yutaniServer.Run(); err != nil {
+		slog.Error("TUI error", "error", err)
 	}
 
 	// Graceful shutdown

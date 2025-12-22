@@ -240,18 +240,18 @@ func demoList(ctx context.Context, sessionID *pb.SessionId, widgetClient pb.Widg
 	listID := listResp.WidgetId
 	log.Println("✓ List widget created")
 
-	// Add list to container
+	// Add list to container (with focus so it's interactive)
 	_, err = layoutClient.FlexAddItem(ctx, &pb.FlexAddItemRequest{
 		SessionId:  sessionID,
 		FlexId:     containerID,
 		ItemId:     listID,
 		Proportion: 1,
-		Focus:      false,
+		Focus:      true, // Set focus to make it interactive
 	})
 	if err != nil {
 		return err
 	}
-	log.Println("✓ List added to layout")
+	log.Println("✓ List added to layout (with focus)")
 
 	// Add items to list
 	items := []struct {

@@ -1,4 +1,4 @@
-.PHONY: proto clean build run install-tools
+.PHONY: proto clean build build-server build-test-client build-phase4-demo run demo install-tools dev fmt tidy
 
 # Proto compilation
 proto:
@@ -13,11 +13,15 @@ proto:
 		api/proto/industries/loosh/yutani/v1/*.proto
 	@echo "Proto compilation complete"
 
-# Build server
-build: proto
+# Build server only
+build-server: proto
 	@echo "Building yutani-server..."
 	go build -o bin/yutani-server ./cmd/yutani-server
 	@echo "Build complete: bin/yutani-server"
+
+# Build all binaries (server and clients)
+build: build-server build-test-client build-phase4-demo
+	@echo "All builds complete!"
 
 # Build test client
 build-test-client: proto
@@ -25,8 +29,14 @@ build-test-client: proto
 	go build -o bin/test-client ./cmd/test-client
 	@echo "Build complete: bin/test-client"
 
+# Build phase4 demo
+build-phase4-demo: proto
+	@echo "Building phase4-demo..."
+	go build -o bin/phase4-demo ./cmd/phase4-demo
+	@echo "Build complete: bin/phase4-demo"
+
 # Run server
-run: build
+run: build-server
 	./bin/yutani-server
 
 # Clean generated files
@@ -45,8 +55,12 @@ install-tools:
 	@echo "  macOS: brew install protobuf"
 	@echo "  Linux: apt-get install protobuf-compiler"
 
+# Run demo (builds everything and runs demo client - server must be running separately)
+demo: build-phase4-demo
+	./bin/phase4-demo
+
 # Development helpers
-dev: clean build run
+dev: clean build-server run
 
 # Format code
 fmt:

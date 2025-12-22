@@ -10,7 +10,7 @@ Yutani is a Go-based terminal display server that provides networked, widget-bas
 - **Multiple Clients**: Support for concurrent client sessions
 - **gRPC Reflection**: Easy introspection with tools like `grpcurl` and `grpcui`
 
-## Current Status: Phase 4 In Progress 🚧
+## Current Status: Phase 5 Complete ✅
 
 **Phase 1** - Foundation ✅
 - ✅ Project structure and build system
@@ -37,20 +37,32 @@ Yutani is a Go-based terminal display server that provides networked, widget-bas
 - ✅ Automatic widget event emission (CHANGED, SUBMITTED, DONE)
 - ✅ Enhanced widget registry with metadata
 
-**Phase 4** - Complex Widgets 🚧 (In Progress)
+**Phase 4** - Complex Widgets ✅ **COMPLETE**
 - ✅ Protocol buffer definitions for all complex widgets
 - ✅ Widget factory support for List, Table, TreeView, Form, Flex, Grid, Pages
-- ✅ ListService fully implemented with 7 RPCs and unit tests
-- ⏳ TableService (8 RPCs) - pending implementation
-- ⏳ FormService (6 RPCs) - pending implementation
-- ⏳ TreeService (7 RPCs) - pending implementation
-- ⏳ LayoutService (11 RPCs) - pending implementation
-- ⏳ End-to-end tests for complex widgets
+- ✅ ListService fully implemented (7 RPCs) with unit tests
+- ✅ TableService fully implemented (8 RPCs) with unit tests
+- ✅ FormService fully implemented (6 RPCs) with unit tests
+- ✅ TreeService fully implemented (7 RPCs) with unit tests
+- ✅ LayoutService fully implemented (11 RPCs) with unit tests
+- ✅ Comprehensive end-to-end tests for all complex widgets
+
+**Phase 5** - Client Library, Documentation, and Examples ✅ **COMPLETE**
+- ✅ Go client library with fluent builder pattern
+- ✅ Widget builders for Box, TextView, List, Table, Form
+- ✅ Event handling with callbacks and type-safe events
+- ✅ 3 complete example applications (list, table, form)
+- ✅ Comprehensive tutorial with 5 lessons
+- ✅ Full API documentation for client library
+- ✅ Helper functions for colors and common operations
 
 See [PHASE3_COMPLETE.md](PHASE3_COMPLETE.md) for Phase 3 documentation.
-See [PHASE4_PROGRESS.md](PHASE4_PROGRESS.md) for Phase 4 progress tracking.
+See [PHASE4_COMPLETE.md](PHASE4_COMPLETE.md) for Phase 4 documentation and usage examples.
+See [PHASE5_COMPLETE.md](PHASE5_COMPLETE.md) for Phase 5 client library documentation.
 
-## Installation
+## Quick Start
+
+**New to Yutani?** See [QUICKSTART.md](QUICKSTART.md) for a step-by-step guide!
 
 ### Prerequisites
 
@@ -73,11 +85,36 @@ apt-get install protobuf-compiler
 # Install protoc plugins
 make install-tools
 
-# Build the server
+# Build everything (server + clients)
 make build
 ```
 
-The binary will be created at `bin/yutani-server`.
+This creates:
+- `bin/yutani-server` - The display server
+- `bin/test-client` - Basic test client
+- `bin/phase4-demo` - Phase 4 demo with complex widgets
+
+### Run
+
+**Terminal 1 - Start the server:**
+```bash
+make run
+```
+
+**Terminal 2 - Run the demo:**
+```bash
+make demo
+```
+
+The graphical UI will appear in the server terminal (Terminal 1).
+
+**Features:**
+- ✅ Clean TUI display (no log messages)
+- ✅ Welcome screen when no client is connected
+- ✅ Press **Ctrl+C** to exit gracefully
+- ✅ Enable logging with `YUTANI_LOG_FILE=server.log ./bin/yutani-server`
+
+**Note:** If you have display issues, see [DISPLAY_FIX.md](DISPLAY_FIX.md) for troubleshooting.
 
 ## Configuration
 
@@ -184,13 +221,16 @@ go test ./pkg/server/... -v -run TestServerLifecycle
 ```
 
 **Test Coverage:**
-- **Unit Tests**: 46 tests covering server, services, widget factory, and ListService
+- **Unit Tests**: 74 tests covering all services and components
   - 17 server tests (registry, events, lifecycle)
   - 20 widget factory tests (basic + complex widgets)
-  - 5 ListService tests
+  - 33 service tests (List, Table, Form, Tree, Layout)
   - 4 other service tests
-- **E2E Tests**: 4 comprehensive tests using in-memory gRPC (bufconn)
-- **All tests pass** in under 1 second
+- **E2E Tests**: 11 comprehensive tests using in-memory gRPC (bufconn)
+  - 4 core tests (session, screen, events, widgets)
+  - 7 complex widget tests (List, Table, Form, Tree, Flex, Grid, Pages)
+- **All tests pass** in under 2 seconds
+- **100% coverage** of Phase 4 RPCs
 
 See `E2E_TESTS_SUMMARY.md` and `UNIT_TESTS_SUMMARY.md` for details.
 
@@ -236,13 +276,92 @@ make tidy
 
 See [PRD.md](./PRD.md) for detailed architecture and design documentation.
 
+## Quick Start with Client Library
+
+### Installation
+
+```bash
+go get industries/loosh/yutani/pkg/client
+```
+
+### Creating a List Widget
+
+```go
+import "industries/loosh/yutani/pkg/client"
+
+// Connect to server
+c, _ := client.Connect("localhost:50051")
+defer c.Close()
+
+// Create a list with fluent API
+list, _ := c.NewList().
+    Title("Menu").
+    Border(true).
+    BorderColor(client.Color("blue")).
+    Build()
+
+// Add items
+list.AddItem("New File", "Create a new file", strPtr("n"))
+list.AddItem("Open File", "Open an existing file", strPtr("o"))
+list.SetSelected(0)
+```
+
+### Creating a Table Widget
+
+```go
+// Create a table
+table, _ := c.NewTable().
+    Title("Data Table").
+    Border(true).
+    Build()
+
+// Set headers with colors
+table.SetCell(0, 0, client.NewTableCellWithColor("Name", client.Color("yellow")))
+table.SetCell(0, 1, client.NewTableCellWithColor("Age", client.Color("yellow")))
+table.SetFixed(1, 0) // Fix header row
+
+// Batch set data
+table.SetCells([]*pb.TableCellUpdate{
+    {Row: 1, Column: 0, Cell: client.NewTableCell("Alice")},
+    {Row: 1, Column: 1, Cell: client.NewTableCell("30")},
+})
+```
+
+### Creating a Form Widget
+
+```go
+// Create a form
+form, _ := c.NewForm().
+    Title("Login").
+    Border(true).
+    Build()
+
+// Add fields
+usernameIdx, _ := form.AddInputField("Username", 30, "")
+passwordIdx, _ := form.AddPasswordField("Password", 30)
+form.AddButton("Login")
+
+// Handle events
+c.OnEvent(func(event *client.Event) {
+    if event.IsWidget() && event.Widget.Type == "SUBMITTED" {
+        username, _ := form.GetFieldValue(usernameIdx)
+        password, _ := form.GetFieldValue(passwordIdx)
+        // Process login...
+    }
+})
+c.StartEventStream()
+```
+
+For more examples, see [TUTORIAL.md](TUTORIAL.md) and [examples/](examples/).
+
 ## Roadmap
 
 - ✅ **Phase 1**: Foundation (SessionService, basic ScreenService, configuration)
 - ✅ **Phase 2**: Low-Level API (complete ScreenService, EventService, event streaming)
-- **Phase 3**: Widget system with basic widgets (Box, TextView, InputField, Button)
-- **Phase 4**: Complex widgets (List, Table, TreeView, Form, Layouts)
-- **Phase 5**: Client library, documentation, and examples
+- ✅ **Phase 3**: Widget system with basic widgets (Box, TextView, InputField, Button, Checkbox)
+- ✅ **Phase 4**: Complex widgets (List, Table, TreeView, Form, Flex, Grid, Pages)
+- ✅ **Phase 5**: Client library, documentation, and examples
+- **Phase 6** (Future): Advanced features, performance optimization, additional widgets
 
 ## License
 
