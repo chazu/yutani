@@ -62,10 +62,13 @@ type Client struct {
 	layoutClient  pb.LayoutServiceClient
 
 	// Event handling
-	eventHandlers []EventHandler
-	eventMu       sync.RWMutex
-	eventStream   pb.EventService_SubscribeClient
-	eventDone     chan struct{}
+	eventHandlers   []EventHandler
+	eventMiddleware []EventMiddleware
+	eventFilters    []*EventFilter
+	eventRecorder   *EventRecorder
+	eventMu         sync.RWMutex
+	eventStream     pb.EventService_SubscribeClient
+	eventDone       chan struct{}
 
 	// Widget registry
 	widgets   map[string]Widget
@@ -160,6 +163,91 @@ func (c *Client) OnEvent(handler EventHandler) {
 	c.eventHandlers = append(c.eventHandlers, handler)
 }
 
+// OnEventFiltered registers an event handler with a filter.
+func (c *Client) OnEventFiltered(handler EventHandler, filter *EventFilter) {
+	c.eventMu.Lock()
+	defer c.eventMu.Unlock()
+
+	// Wrap handler with filter
+	wrappedHandler := func(event *Event) {
+		if filter.Matches(event) {
+			handler(event)
+		}
+	}
+	c.eventHandlers = append(c.eventHandlers, wrappedHandler)
+}
+
+// OnWidgetEvent registers a handler for events from a specific widget.
+func (c *Client) OnWidgetEvent(widgetID string, handler EventHandler) {
+	filter := &EventFilter{
+		Types:     []EventType{EventTypeWidget},
+		WidgetIDs: []string{widgetID},
+	}
+	c.OnEventFiltered(handler, filter)
+}
+
+// OnEventType registers a handler for specific event types.
+func (c *Client) OnEventType(eventType EventType, handler EventHandler) {
+	filter := &EventFilter{
+		Types: []EventType{eventType},
+	}
+	c.OnEventFiltered(handler, filter)
+}
+
+// AddEventMiddleware adds middleware to the event processing pipeline.
+func (c *Client) AddEventMiddleware(middleware EventMiddleware) {
+	c.eventMu.Lock()
+	defer c.eventMu.Unlock()
+	c.eventMiddleware = append(c.eventMiddleware, middleware)
+}
+
+// EnableEventRecording enables event recording with the specified max events.
+func (c *Client) EnableEventRecording(maxEvents int) {
+	c.eventMu.Lock()
+	defer c.eventMu.Unlock()
+	c.eventRecorder = NewEventRecorder(maxEvents)
+}
+
+// GetEventRecorder returns the event recorder if enabled.
+func (c *Client) GetEventRecorder() *EventRecorder {
+	c.eventMu.RLock()
+	defer c.eventMu.RUnlock()
+	return c.eventRecorder
+}
+
+// SetServerEventFilter updates the server-side event filter.
+// This controls which events are sent from the server to the client.
+func (c *Client) SetServerEventFilter(filter *pb.EventFilter) error {
+	_, err := c.eventClient.SetEventFilter(c.ctx, &pb.SetEventFilterRequest{
+		SessionId: c.sessionID,
+		Filter:    filter,
+	})
+	return err
+}
+
+// SetServerEventFilterSimple is a convenience method to set basic event type filters.
+func (c *Client) SetServerEventFilterSimple(key, mouse, resize, focus, widget bool) error {
+	return c.SetServerEventFilter(&pb.EventFilter{
+		ReceiveKeyEvents:    key,
+		ReceiveMouseEvents:  mouse,
+		ReceiveResizeEvents: resize,
+		ReceiveFocusEvents:  focus,
+		ReceiveWidgetEvents: widget,
+	})
+}
+
+// SetServerWidgetFilter sets the server to only send events for specific widgets.
+func (c *Client) SetServerWidgetFilter(widgetIDs []string) error {
+	return c.SetServerEventFilter(&pb.EventFilter{
+		ReceiveKeyEvents:    true,
+		ReceiveMouseEvents:  true,
+		ReceiveResizeEvents: true,
+		ReceiveFocusEvents:  true,
+		ReceiveWidgetEvents: true,
+		WidgetIds:           widgetIDs,
+	})
+}
+
 // StartEventStream starts listening for events from the server.
 func (c *Client) StartEventStream() error {
 	stream, err := c.eventClient.Subscribe(c.ctx, &pb.SubscribeRequest{
@@ -198,12 +286,34 @@ func (c *Client) StartEventStream() error {
 // dispatchEvent sends an event to all registered handlers.
 func (c *Client) dispatchEvent(event *Event) {
 	c.eventMu.RLock()
+
+	// Apply middleware
+	processedEvent := event
+	shouldContinue := true
+	for _, middleware := range c.eventMiddleware {
+		var cont bool
+		processedEvent, cont = middleware(processedEvent)
+		if !cont {
+			shouldContinue = false
+			break
+		}
+	}
+
+	// Record event if recorder is enabled
+	if c.eventRecorder != nil {
+		c.eventRecorder.Record(processedEvent)
+	}
+
 	handlers := make([]EventHandler, len(c.eventHandlers))
 	copy(handlers, c.eventHandlers)
 	c.eventMu.RUnlock()
 
+	if !shouldContinue {
+		return
+	}
+
 	for _, handler := range handlers {
-		handler(event)
+		handler(processedEvent)
 	}
 }
 

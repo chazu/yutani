@@ -56,6 +56,28 @@ Yutani is a Go-based terminal display server that provides networked, widget-bas
 - ✅ Full API documentation for client library
 - ✅ Helper functions for colors and common operations
 
+**Phase 6.1** - Additional Widget Builders ✅ **COMPLETE**
+- ✅ TreeView widget builder with fluent API
+- ✅ Flex layout widget builder
+- ✅ Grid layout widget builder
+- ✅ Pages layout widget builder
+- ✅ InputField widget builder
+- ✅ Button widget builder
+- ✅ Checkbox widget builder
+- ✅ Comprehensive tests for all new builders
+- ✅ Updated documentation with examples
+
+**Phase 6.2** - Advanced Event Handling ✅ **COMPLETE**
+- ✅ Event filtering by widget ID
+- ✅ Event filtering by event type
+- ✅ Custom event filters with predicates
+- ✅ Event middleware/interceptor pipeline
+- ✅ Event batching for high-frequency events
+- ✅ Event recording and replay for debugging
+- ✅ Server-side event filtering
+- ✅ Comprehensive tests (10 test cases)
+- ✅ Updated documentation with examples
+
 See [PHASE3_COMPLETE.md](PHASE3_COMPLETE.md) for Phase 3 documentation.
 See [PHASE4_COMPLETE.md](PHASE4_COMPLETE.md) for Phase 4 documentation and usage examples.
 See [PHASE5_COMPLETE.md](PHASE5_COMPLETE.md) for Phase 5 client library documentation.

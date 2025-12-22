@@ -73,18 +73,22 @@ func strPtr(s string) *string { return &s }
 
 - **Box** - Simple container with border and title
 - **TextView** - Display text with word wrap and dynamic colors
+- **Button** - Clickable button with label and colors
+- **Checkbox** - Boolean toggle with label
+- **InputField** - Single-line text input with label and placeholder
 
 ### Complex Widgets
 
 - **List** - Scrollable list with items and shortcuts
 - **Table** - Grid of cells with headers and selection
 - **Form** - Form with input fields, checkboxes, dropdowns, and buttons
+- **TreeView** - Hierarchical tree structure with expandable nodes
 
 ### Layout Widgets
 
-- **Flex** - Flexible box layout (coming soon)
-- **Grid** - Grid layout with cells (coming soon)
-- **Pages** - Multi-page container (coming soon)
+- **Flex** - Flexible box layout (row or column)
+- **Grid** - Grid layout with cells and spans
+- **Pages** - Multi-page container with page switching
 
 ## Widget Examples
 
@@ -159,26 +163,313 @@ textView, _ := c.NewTextView().
 textView.SetText("Updated text")
 ```
 
+### Button Widget
+
+```go
+button, _ := c.NewButton().
+    Title("Action").
+    Border(true).
+    Label("Click Me!").
+    LabelColor(client.Color("white")).
+    BackgroundColor(client.Color("blue")).
+    ActivatedColor(client.Color("green")).
+    Build()
+
+button.SetLabel("Clicked!")
+```
+
+### Checkbox Widget
+
+```go
+checkbox, _ := c.NewCheckbox().
+    Title("Options").
+    Border(true).
+    Label("Enable feature").
+    Checked(false).
+    LabelColor(client.Color("yellow")).
+    CheckedColor(client.Color("green")).
+    Build()
+
+checkbox.SetChecked(true)
+checkbox.SetLabel("Feature enabled")
+```
+
+### InputField Widget
+
+```go
+input, _ := c.NewInputField().
+    Title("User Input").
+    Border(true).
+    Label("Name: ").
+    Placeholder("Enter your name").
+    FieldWidth(30).
+    LabelColor(client.Color("cyan")).
+    Build()
+
+input.SetText("John Doe")
+input.SetLabel("Full Name: ")
+```
+
+### TreeView Widget
+
+```go
+tree, _ := c.NewTreeView().
+    Title("File Browser").
+    Border(true).
+    NodeTextColor(client.Color("white")).
+    SelectedTextColor(client.Color("black")).
+    SelectedBackgroundColor(client.Color("blue")).
+    ShowGraphics(true).
+    Build()
+
+// Create root node
+rootNode := client.NewTreeNode("Root")
+rootID, _ := tree.SetRoot(rootNode)
+
+// Add children
+child1 := client.TreeNodeWithColor("Documents", client.Color("yellow"))
+child1ID, _ := tree.AddChild(rootID, child1)
+
+child2 := client.NewTreeNode("Pictures")
+tree.AddChild(rootID, child2)
+
+// Expand/collapse nodes
+tree.SetExpanded(rootID, true)
+
+// Get selected node
+nodeID, text, ref, _ := tree.GetSelected()
+```
+
+### Flex Layout Widget
+
+```go
+flex, _ := c.NewFlex().
+    Title("Layout").
+    Border(true).
+    Direction(pb.FlexDirection_FLEX_COLUMN).
+    Build()
+
+// Create child widgets
+header, _ := c.NewTextView().Title("Header").Build()
+content, _ := c.NewTextView().Title("Content").Build()
+footer, _ := c.NewTextView().Title("Footer").Build()
+
+// Add items with proportions
+flex.AddItem(header, 0, 3, false)  // Fixed 3 lines
+flex.AddItem(content, 1, 0, true)  // Proportional, takes remaining space
+flex.AddItem(footer, 0, 1, false)  // Fixed 1 line
+```
+
+### Grid Layout Widget
+
+```go
+grid, _ := c.NewGrid().
+    Title("Dashboard").
+    Border(true).
+    Rows(2).
+    Columns(2).
+    Build()
+
+// Create widgets for grid cells
+topLeft, _ := c.NewTextView().Title("CPU").Build()
+topRight, _ := c.NewTextView().Title("Memory").Build()
+bottomLeft, _ := c.NewTextView().Title("Disk").Build()
+bottomRight, _ := c.NewTextView().Title("Network").Build()
+
+// Add items to grid (row, column, rowSpan, columnSpan, minWidth, minHeight, focus)
+grid.AddItem(topLeft, 0, 0, 1, 1, 0, 0, false)
+grid.AddItem(topRight, 0, 1, 1, 1, 0, 0, false)
+grid.AddItem(bottomLeft, 1, 0, 1, 1, 0, 0, false)
+grid.AddItem(bottomRight, 1, 1, 1, 1, 0, 0, false)
+```
+
+### Pages Layout Widget
+
+```go
+pages, _ := c.NewPages().
+    Title("Multi-Page App").
+    Border(true).
+    ShowPageNames(true).
+    PageNameColor(client.Color("cyan")).
+    Build()
+
+// Create pages
+page1, _ := c.NewTextView().Text("Page 1 content").Build()
+page2, _ := c.NewTextView().Text("Page 2 content").Build()
+page3, _ := c.NewTextView().Text("Page 3 content").Build()
+
+// Add pages
+pages.AddPage("home", page1, true, true)
+pages.AddPage("settings", page2, true, false)
+pages.AddPage("about", page3, true, false)
+
+// Switch pages
+pages.ShowPage("settings")
+
+// Get current page
+currentPage, _ := pages.GetCurrentPage()
+```
+
 ## Event Handling
+
+### Basic Event Handling
 
 ```go
 c.OnEvent(func(event *client.Event) {
     switch {
     case event.IsKey():
         log.Printf("Key: %s (rune: %c)", event.Key.Key, event.Key.Rune)
-        
+
     case event.IsMouse():
         log.Printf("Mouse: (%d,%d) button: %d", event.Mouse.X, event.Mouse.Y, event.Mouse.Button)
-        
+
     case event.IsWidget():
         log.Printf("Widget %s: %s", event.Widget.WidgetID, event.Widget.Type)
-        
+
     case event.IsResize():
         log.Printf("Resize: %dx%d", event.Resize.Width, event.Resize.Height)
     }
 })
 
 c.StartEventStream()
+```
+
+### Advanced Event Handling
+
+#### Event Filtering by Type
+
+```go
+// Only handle key events
+c.OnEventType(client.EventTypeKey, func(event *client.Event) {
+    log.Printf("Key pressed: %c", event.Key.Rune)
+})
+
+// Only handle widget events
+c.OnEventType(client.EventTypeWidget, func(event *client.Event) {
+    log.Printf("Widget event: %s", event.Widget.Type)
+})
+```
+
+#### Event Filtering by Widget
+
+```go
+// Only handle events from a specific widget
+list, _ := c.NewList().Title("Menu").Build()
+
+c.OnWidgetEvent(list.ID(), func(event *client.Event) {
+    log.Printf("List event: %s", event.Widget.Type)
+})
+```
+
+#### Custom Event Filters
+
+```go
+// Filter with custom logic
+filter := &client.EventFilter{
+    Types: []client.EventType{client.EventTypeKey},
+    CustomFilter: func(e *client.Event) bool {
+        // Only handle 'Enter' key
+        return e.Key != nil && e.Key.Key == "KEY_ENTER"
+    },
+}
+
+c.OnEventFiltered(func(event *client.Event) {
+    log.Println("Enter key pressed!")
+}, filter)
+```
+
+#### Event Middleware
+
+```go
+// Add middleware to log all events
+c.AddEventMiddleware(func(event *client.Event) (*client.Event, bool) {
+    log.Printf("Event: %v", event.Type)
+    return event, true // Continue processing
+})
+
+// Add middleware to block certain events
+c.AddEventMiddleware(func(event *client.Event) (*client.Event, bool) {
+    if event.Type == client.EventTypeMouse {
+        return event, false // Block mouse events
+    }
+    return event, true
+})
+
+// Add middleware to modify events
+c.AddEventMiddleware(func(event *client.Event) (*client.Event, bool) {
+    if event.Type == client.EventTypeKey && event.Key != nil {
+        // Convert to uppercase
+        if event.Key.Rune >= 'a' && event.Key.Rune <= 'z' {
+            event.Key.Rune = event.Key.Rune - 32
+        }
+    }
+    return event, true
+})
+```
+
+#### Event Batching
+
+```go
+// Batch high-frequency events
+batcher := client.NewEventBatcher(100*time.Millisecond, func(event *client.Event) {
+    // This handler receives batched events every 100ms
+    log.Printf("Batched event: %v", event.Type)
+})
+defer batcher.Close()
+
+// Add events to the batcher
+c.OnEvent(func(event *client.Event) {
+    if event.Type == client.EventTypeMouse {
+        batcher.Add(event)
+    }
+})
+```
+
+#### Event Recording and Replay
+
+```go
+// Enable event recording
+c.EnableEventRecording(1000) // Keep last 1000 events
+
+// Get the recorder
+recorder := c.GetEventRecorder()
+
+// Get all recorded events
+events := recorder.GetEvents()
+log.Printf("Recorded %d events", len(events))
+
+// Get events since a specific time
+since := time.Now().Add(-5 * time.Minute)
+recentEvents := recorder.GetEventsSince(since)
+
+// Replay events
+recorder.Replay(func(event *client.Event) {
+    log.Printf("Replaying: %v", event.Type)
+}, false) // false = replay immediately, true = replay with original timing
+
+// Control recording
+recorder.Stop()  // Pause recording
+recorder.Start() // Resume recording
+recorder.Clear() // Clear all recorded events
+```
+
+#### Server-Side Event Filtering
+
+```go
+// Reduce network traffic by filtering at the server
+c.SetServerEventFilterSimple(
+    true,  // key events
+    false, // mouse events (disabled)
+    true,  // resize events
+    true,  // focus events
+    true,  // widget events
+)
+
+// Filter by specific widgets at the server
+c.SetServerWidgetFilter([]string{
+    widget1.ID(),
+    widget2.ID(),
+})
 ```
 
 ## Helper Functions
