@@ -32,7 +32,7 @@ import (
 
 func main() {
     // Connect to server
-    c, err := client.Connect("localhost:50051")
+    c, err := client.Connect("localhost:7755")
     if err != nil {
         log.Fatal(err)
     }

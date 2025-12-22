@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// Connect to the Yutani server
-	c, err := client.Connect("localhost:50051")
+	c, err := client.Connect("localhost:7755")
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)
 	}
@@ -60,6 +60,13 @@ func main() {
 	if err := list.SetSelected(0); err != nil {
 		log.Printf("Failed to set selection: %v", err)
 	}
+
+	// Set the list as the root widget to display it on the server
+	if err := c.SetRoot(list); err != nil {
+		log.Fatalf("Failed to set root widget: %v", err)
+	}
+
+	fmt.Println("List displayed on server")
 
 	// Start event stream
 	if err := c.StartEventStream(); err != nil {

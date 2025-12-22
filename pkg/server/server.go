@@ -6,12 +6,47 @@ import (
 	"sync"
 	"time"
 
+	"github.com/chazu/yutani/pkg/config"
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 	pb "github.com/chazu/yutani/pkg/proto/yutani"
 )
 
 const Version = "0.1.0-alpha"
+
+// ServerOption is a function that configures a Server.
+type ServerOption func(*Server)
+
+// WithTestMode configures the server to run in test mode.
+func WithTestMode(testMode bool) ServerOption {
+	return func(s *Server) {
+		s.testMode = testMode
+	}
+}
+
+// New creates a new Yutani server with the given configuration and options.
+func New(cfg *config.Config, opts ...ServerOption) (*Server, error) {
+	app := tview.NewApplication()
+
+	s := &Server{
+		maxSessions: cfg.MaxSessions,
+		mouseEnable: cfg.Mouse,
+		pasteEnable: cfg.Paste,
+		testMode:    false,
+		app:         app,
+		sessions:    NewSessionRegistry(cfg.MaxSessions),
+		widgets:     NewWidgetRegistry(),
+		events:      NewEventDispatcher(),
+		stopCh:      make(chan struct{}),
+	}
+
+	// Apply options
+	for _, opt := range opts {
+		opt(s)
+	}
+
+	return s, nil
+}
 
 // Server represents the Yutani display server
 type Server struct {

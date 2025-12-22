@@ -13,7 +13,7 @@ import (
 
 func main() {
 	// Connect to the Yutani server
-	c, err := client.Connect("localhost:50051")
+	c, err := client.Connect("localhost:7755")
 	if err != nil {
 		log.Fatalf("Failed to connect: %v", err)
 	}
@@ -67,6 +67,13 @@ func main() {
 	}
 
 	fmt.Println("Form fields added successfully")
+
+	// Set the form as the root widget to display it on the server
+	if err := c.SetRoot(form); err != nil {
+		log.Fatalf("Failed to set root widget: %v", err)
+	}
+
+	fmt.Println("Form displayed on server")
 
 	// Start event stream
 	if err := c.StartEventStream(); err != nil {

@@ -93,6 +93,14 @@ func ConnectWithOptions(address string, opts ...grpc.DialOption) (*Client, error
 		return nil, fmt.Errorf("failed to connect to server: %w", err)
 	}
 
+	return ConnectWithConn(conn)
+}
+
+// ConnectWithConn creates a new client using an existing gRPC connection.
+// This is useful for testing with a test server.
+func ConnectWithConn(conn *grpc.ClientConn) (*Client, error) {
+	ctx, cancel := context.WithCancel(context.Background())
+
 	client := &Client{
 		conn:          conn,
 		ctx:           ctx,
@@ -367,5 +375,15 @@ func (c *Client) GetWidget(widgetID string) (Widget, bool) {
 	defer c.widgetsMu.RUnlock()
 	widget, ok := c.widgets[widgetID]
 	return widget, ok
+}
+
+// SetRoot sets a widget as the root widget displayed on the server.
+// This makes the widget visible on the server's terminal.
+func (c *Client) SetRoot(widget Widget) error {
+	_, err := c.widgetClient.SetRoot(c.ctx, &pb.SetRootRequest{
+		SessionId: c.sessionID,
+		WidgetId:  &pb.WidgetId{Id: widget.ID()},
+	})
+	return err
 }
 

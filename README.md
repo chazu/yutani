@@ -78,6 +78,26 @@ Yutani is a Go-based terminal display server that provides networked, widget-bas
 - ✅ Comprehensive tests (10 test cases)
 - ✅ Updated documentation with examples
 
+**Phase 6.5** - Additional Examples ✅ **COMPLETE**
+- ✅ File Browser - TreeView navigation example
+- ✅ Dashboard - Grid layout with system stats
+- ✅ Process Monitor - Real-time table updates
+- ✅ Chat Application - Multi-page messaging app
+- ✅ Text Editor - Syntax highlighting and file I/O
+- ✅ Comprehensive examples README
+- ✅ All examples compile and run
+- ✅ Common patterns documented
+
+**Phase 6.6** - Testing Utilities ✅ **COMPLETE**
+- ✅ Mock client for unit testing
+- ✅ Event simulation (keyboard, mouse, resize)
+- ✅ Test helper utilities and assertions
+- ✅ Widget-specific assertions (List, Table)
+- ✅ Integration test helpers with test server
+- ✅ Server options pattern
+- ✅ Comprehensive tests (13 test cases)
+- ✅ Complete documentation with examples
+
 See [PHASE3_COMPLETE.md](PHASE3_COMPLETE.md) for Phase 3 documentation.
 See [PHASE4_COMPLETE.md](PHASE4_COMPLETE.md) for Phase 4 documentation and usage examples.
 See [PHASE5_COMPLETE.md](PHASE5_COMPLETE.md) for Phase 5 client library documentation.
@@ -107,7 +127,7 @@ apt-get install protobuf-compiler
 # Install protoc plugins
 make install-tools
 
-# Build everything (server + clients)
+# Build everything (server + clients + examples)
 make build
 ```
 
@@ -115,6 +135,17 @@ This creates:
 - `bin/yutani-server` - The display server
 - `bin/test-client` - Basic test client
 - `bin/phase4-demo` - Phase 4 demo with complex widgets
+- `bin/examples/*` - All example applications (8 examples)
+
+To build only examples:
+```bash
+make build-examples
+```
+
+To list available examples:
+```bash
+make list-examples
+```
 
 ### Run
 
@@ -123,10 +154,30 @@ This creates:
 make run
 ```
 
-**Terminal 2 - Run the demo:**
+**Terminal 2 - Run a client or example:**
 ```bash
+# Run the demo
 make demo
+
+# Or run an example
+make run-example EXAMPLE=text-editor
+
+# Or run directly
+./bin/examples/text-editor
+./bin/test-client
 ```
+
+**Available Examples**:
+- `simple-list` - Basic list widget
+- `data-table` - Table widget demo
+- `login-form` - Form widget demo
+- `file-browser` - TreeView file browser
+- `dashboard` - Grid layout system monitor
+- `process-monitor` - Real-time process table
+- `chat-app` - Multi-room chat application
+- `text-editor` - Text editor with syntax highlighting
+
+See [examples/README.md](examples/README.md) for detailed documentation.
 
 The graphical UI will appear in the server terminal (Terminal 1).
 
