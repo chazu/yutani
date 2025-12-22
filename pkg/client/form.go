@@ -1,7 +1,7 @@
 package client
 
 import (
-	pb "industries/loosh/yutani/pkg/proto/industries/loosh/yutani/v1"
+	pb "github.com/chazu/yutani/pkg/proto/yutani"
 )
 
 // Form represents a form widget.
@@ -32,12 +32,6 @@ func (b *FormBuilder) Title(title string) *FormBuilder {
 // Border sets whether the form has a border.
 func (b *FormBuilder) Border(border bool) *FormBuilder {
 	b.props.Border = &border
-	return b
-}
-
-// Visible sets whether the form is visible.
-func (b *FormBuilder) Visible(visible bool) *FormBuilder {
-	b.props.Visible = &visible
 	return b
 }
 

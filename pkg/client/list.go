@@ -1,7 +1,7 @@
 package client
 
 import (
-	pb "industries/loosh/yutani/pkg/proto/industries/loosh/yutani/v1"
+	pb "github.com/chazu/yutani/pkg/proto/yutani"
 )
 
 // List represents a list widget.
@@ -32,12 +32,6 @@ func (b *ListBuilder) Title(title string) *ListBuilder {
 // Border sets whether the list has a border.
 func (b *ListBuilder) Border(border bool) *ListBuilder {
 	b.props.Border = &border
-	return b
-}
-
-// Visible sets whether the list is visible.
-func (b *ListBuilder) Visible(visible bool) *ListBuilder {
-	b.props.Visible = &visible
 	return b
 }
 

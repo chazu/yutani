@@ -1,7 +1,7 @@
 package client
 
 import (
-	pb "industries/loosh/yutani/pkg/proto/industries/loosh/yutani/v1"
+	pb "github.com/chazu/yutani/pkg/proto/yutani"
 )
 
 // Widget is the interface that all widgets implement.
@@ -18,9 +18,6 @@ type Widget interface {
 	// SetBorder sets whether the widget has a border.
 	SetBorder(border bool) error
 
-	// SetVisible sets whether the widget is visible.
-	SetVisible(visible bool) error
-
 	// SetFocus sets focus to this widget.
 	SetFocus() error
 
@@ -31,7 +28,7 @@ type Widget interface {
 // baseWidget provides common functionality for all widgets.
 type baseWidget struct {
 	client   *Client
-	widgetID *pb.WidgetID
+	widgetID *pb.WidgetId
 }
 
 // ID returns the widget's unique identifier.
@@ -62,13 +59,6 @@ func (w *baseWidget) SetTitle(title string) error {
 func (w *baseWidget) SetBorder(border bool) error {
 	return w.setProperty(&pb.WidgetProperties{
 		Border: &border,
-	})
-}
-
-// SetVisible sets whether the widget is visible.
-func (w *baseWidget) SetVisible(visible bool) error {
-	return w.setProperty(&pb.WidgetProperties{
-		Visible: &visible,
 	})
 }
 
@@ -132,22 +122,15 @@ func Color(name string) *pb.Color {
 }
 
 // ColorRGB creates an RGB color.
-func ColorRGB(r, g, b uint32) *pb.Color {
+func ColorRGB(r, g, b int32) *pb.Color {
 	return &pb.Color{
 		Color: &pb.Color_Rgb{
-			Rgb: &pb.RGBColor{
+			Rgb: &pb.RGB{
 				R: r,
 				G: g,
 				B: b,
 			},
 		},
-	}
-}
-
-// ColorHex creates a color from a hex string.
-func ColorHex(hex string) *pb.Color {
-	return &pb.Color{
-		Color: &pb.Color_Hex{Hex: hex},
 	}
 }
 

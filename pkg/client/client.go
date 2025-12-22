@@ -37,7 +37,7 @@ import (
 	"sync"
 	"time"
 
-	pb "industries/loosh/yutani/pkg/proto/industries/loosh/yutani/v1"
+	pb "github.com/chazu/yutani/pkg/proto/yutani"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -46,7 +46,7 @@ import (
 // Client represents a connection to the Yutani server.
 type Client struct {
 	conn      *grpc.ClientConn
-	sessionID *pb.SessionID
+	sessionID *pb.SessionId
 	ctx       context.Context
 	cancel    context.CancelFunc
 
@@ -64,7 +64,7 @@ type Client struct {
 	// Event handling
 	eventHandlers []EventHandler
 	eventMu       sync.RWMutex
-	eventStream   pb.EventService_StreamEventsClient
+	eventStream   pb.EventService_SubscribeClient
 	eventDone     chan struct{}
 
 	// Widget registry
@@ -144,7 +144,7 @@ func (c *Client) Close() error {
 }
 
 // SessionID returns the current session ID.
-func (c *Client) SessionID() *pb.SessionID {
+func (c *Client) SessionID() *pb.SessionId {
 	return c.sessionID
 }
 
@@ -162,8 +162,15 @@ func (c *Client) OnEvent(handler EventHandler) {
 
 // StartEventStream starts listening for events from the server.
 func (c *Client) StartEventStream() error {
-	stream, err := c.eventClient.StreamEvents(c.ctx, &pb.StreamEventsRequest{
+	stream, err := c.eventClient.Subscribe(c.ctx, &pb.SubscribeRequest{
 		SessionId: c.sessionID,
+		Filter: &pb.EventFilter{
+			ReceiveKeyEvents:    true,
+			ReceiveMouseEvents:  true,
+			ReceiveResizeEvents: true,
+			ReceiveFocusEvents:  true,
+			ReceiveWidgetEvents: true,
+		},
 	})
 	if err != nil {
 		return fmt.Errorf("failed to start event stream: %w", err)
@@ -208,7 +215,10 @@ func (c *Client) GetScreenSize() (width, height int, err error) {
 	if err != nil {
 		return 0, 0, err
 	}
-	return int(resp.Width), int(resp.Height), nil
+	if resp.Size == nil {
+		return 0, 0, nil
+	}
+	return int(resp.Size.Width), int(resp.Size.Height), nil
 }
 
 // ClearScreen clears the screen.

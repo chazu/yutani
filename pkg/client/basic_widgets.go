@@ -1,7 +1,7 @@
 package client
 
 import (
-	pb "industries/loosh/yutani/pkg/proto/industries/loosh/yutani/v1"
+	pb "github.com/chazu/yutani/pkg/proto/yutani"
 )
 
 // Box represents a box widget.
@@ -32,12 +32,6 @@ func (b *BoxBuilder) Title(title string) *BoxBuilder {
 // Border sets whether the box has a border.
 func (b *BoxBuilder) Border(border bool) *BoxBuilder {
 	b.props.Border = &border
-	return b
-}
-
-// Visible sets whether the box is visible.
-func (b *BoxBuilder) Visible(visible bool) *BoxBuilder {
-	b.props.Visible = &visible
 	return b
 }
 
@@ -102,7 +96,7 @@ func (b *TextViewBuilder) Border(border bool) *TextViewBuilder {
 
 // Text sets the initial text content.
 func (b *TextViewBuilder) Text(text string) *TextViewBuilder {
-	b.props.TypeSpecific = &pb.WidgetProperties_TextView{
+	b.props.TypeProperties = &pb.WidgetProperties_TextView{
 		TextView: &pb.TextViewProperties{
 			Text: &text,
 		},
@@ -112,8 +106,8 @@ func (b *TextViewBuilder) Text(text string) *TextViewBuilder {
 
 // WordWrap sets whether text wraps.
 func (b *TextViewBuilder) WordWrap(wrap bool) *TextViewBuilder {
-	if b.props.TypeSpecific == nil {
-		b.props.TypeSpecific = &pb.WidgetProperties_TextView{
+	if b.props.TypeProperties == nil {
+		b.props.TypeProperties = &pb.WidgetProperties_TextView{
 			TextView: &pb.TextViewProperties{},
 		}
 	}
@@ -123,8 +117,8 @@ func (b *TextViewBuilder) WordWrap(wrap bool) *TextViewBuilder {
 
 // DynamicColors enables dynamic color tags.
 func (b *TextViewBuilder) DynamicColors(enabled bool) *TextViewBuilder {
-	if b.props.TypeSpecific == nil {
-		b.props.TypeSpecific = &pb.WidgetProperties_TextView{
+	if b.props.TypeProperties == nil {
+		b.props.TypeProperties = &pb.WidgetProperties_TextView{
 			TextView: &pb.TextViewProperties{},
 		}
 	}
@@ -157,7 +151,7 @@ func (b *TextViewBuilder) Build() (*TextView, error) {
 // SetText sets the text content.
 func (tv *TextView) SetText(text string) error {
 	return tv.setProperty(&pb.WidgetProperties{
-		TypeSpecific: &pb.WidgetProperties_TextView{
+		TypeProperties: &pb.WidgetProperties_TextView{
 			TextView: &pb.TextViewProperties{
 				Text: &text,
 			},

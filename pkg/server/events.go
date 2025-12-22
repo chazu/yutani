@@ -1,6 +1,7 @@
 package server
 
 import (
+	"log/slog"
 	"sync"
 	"time"
 
@@ -69,25 +70,48 @@ func (d *EventDispatcher) Dispatch(event *pb.Event) {
 	defer d.mu.RUnlock()
 
 	if event.SessionId == nil {
+		slog.Debug("Event dispatch: no session ID")
 		return
 	}
 
 	sessionID := event.SessionId.Id
 	sub, ok := d.subscribers[sessionID]
 	if !ok {
+		slog.Debug("Event dispatch: no subscriber", "session_id", sessionID)
 		return
 	}
 
 	// Check if event passes the filter
 	if !d.passesFilter(event, sub.Filter) {
+		slog.Debug("Event dispatch: filtered out", "session_id", sessionID, "event_type", getEventTypeName(event))
 		return
 	}
 
 	// Try to send event, drop if channel is full
 	select {
 	case sub.Events <- event:
+		slog.Debug("Event dispatched", "session_id", sessionID, "event_type", getEventTypeName(event))
 	default:
 		// Event dropped - channel full
+		slog.Warn("Event dropped: channel full", "session_id", sessionID, "event_type", getEventTypeName(event))
+	}
+}
+
+// getEventTypeName returns a human-readable event type name
+func getEventTypeName(event *pb.Event) string {
+	switch event.Event.(type) {
+	case *pb.Event_Key:
+		return "KEY"
+	case *pb.Event_Mouse:
+		return "MOUSE"
+	case *pb.Event_Resize:
+		return "RESIZE"
+	case *pb.Event_Focus:
+		return "FOCUS"
+	case *pb.Event_Widget:
+		return "WIDGET"
+	default:
+		return "UNKNOWN"
 	}
 }
 

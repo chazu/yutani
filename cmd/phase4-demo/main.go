@@ -2,7 +2,10 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"io"
 	"log"
+	"os"
 	"time"
 
 	pb "github.com/chazu/yutani/pkg/proto/yutani"
@@ -11,6 +14,21 @@ import (
 )
 
 func main() {
+	// Set up logging to file
+	logFile, err := os.Create("phase4-demo.log")
+	if err != nil {
+		log.Fatalf("Failed to create log file: %v", err)
+	}
+	defer logFile.Close()
+
+	// Log to both stdout and file
+	multiWriter := io.MultiWriter(os.Stdout, logFile)
+	log.SetOutput(multiWriter)
+	log.SetFlags(log.Ltime | log.Lmicroseconds)
+
+	log.Println("=== Phase 4 Demo Starting ===")
+	log.Printf("Logging to: phase4-demo.log\n")
+
 	// Connect to the server
 	conn, err := grpc.Dial("localhost:7755", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
@@ -26,6 +44,7 @@ func main() {
 	formClient := pb.NewFormServiceClient(conn)
 	treeClient := pb.NewTreeServiceClient(conn)
 	layoutClient := pb.NewLayoutServiceClient(conn)
+	eventClient := pb.NewEventServiceClient(conn)
 
 	ctx := context.Background()
 
@@ -44,6 +63,40 @@ func main() {
 	}
 	sessionID := &pb.SessionId{Id: sessionResp.SessionId.Id}
 	log.Printf("✓ Session created: %s\n", sessionID.Id)
+
+	// Start event streaming in a goroutine
+	log.Println("\n=== Starting Event Stream ===")
+	eventStream, err := eventClient.Subscribe(ctx, &pb.SubscribeRequest{
+		SessionId: sessionID,
+		Filter: &pb.EventFilter{
+			ReceiveKeyEvents:    true,
+			ReceiveMouseEvents:  true,
+			ReceiveResizeEvents: true,
+			ReceiveFocusEvents:  true,
+			ReceiveWidgetEvents: true,
+		},
+	})
+	if err != nil {
+		log.Fatalf("Failed to start event stream: %v", err)
+	}
+	log.Println("✓ Event stream started")
+
+	// Start event listener goroutine
+	go func() {
+		eventCount := 0
+		for {
+			event, err := eventStream.Recv()
+			if err != nil {
+				log.Printf("Event stream error: %v\n", err)
+				return
+			}
+			eventCount++
+			logEvent(event, eventCount)
+		}
+	}()
+
+	// Give event stream time to initialize
+	time.Sleep(100 * time.Millisecond)
 
 	// Create main layout container (Flex with column direction)
 	log.Println("\n=== Creating Main Layout ===")
@@ -605,5 +658,64 @@ func demoTree(ctx context.Context, sessionID *pb.SessionId, widgetClient pb.Widg
 	log.Println("✓ Tree nodes added")
 
 	return nil
+}
+
+// logEvent logs detailed information about each event
+func logEvent(event *pb.Event, count int) {
+	timestamp := time.Now().Format("15:04:05.000")
+
+	switch e := event.Event.(type) {
+	case *pb.Event_Key:
+		var runeChar rune
+		if len(e.Key.Rune) > 0 {
+			runeChar = rune(e.Key.Rune[0])
+		}
+		log.Printf("[EVENT #%d @ %s] KEY: key=%s rune=%c (%d) modifiers=%v\n",
+			count, timestamp, e.Key.Key, runeChar, runeChar, e.Key.Modifiers)
+
+	case *pb.Event_Mouse:
+		var x, y int32
+		if e.Mouse.Position != nil {
+			x = e.Mouse.Position.X
+			y = e.Mouse.Position.Y
+		}
+		log.Printf("[EVENT #%d @ %s] MOUSE: x=%d y=%d action=%s modifiers=%v\n",
+			count, timestamp, x, y, e.Mouse.Action, e.Mouse.Modifiers)
+
+	case *pb.Event_Resize:
+		var width, height int32
+		if e.Resize.NewSize != nil {
+			width = e.Resize.NewSize.Width
+			height = e.Resize.NewSize.Height
+		}
+		log.Printf("[EVENT #%d @ %s] RESIZE: width=%d height=%d\n",
+			count, timestamp, width, height)
+
+	case *pb.Event_Focus:
+		var oldWidget, newWidget string
+		if e.Focus.OldWidget != nil {
+			oldWidget = e.Focus.OldWidget.Id
+		}
+		if e.Focus.NewWidget != nil {
+			newWidget = e.Focus.NewWidget.Id
+		}
+		log.Printf("[EVENT #%d @ %s] FOCUS: old=%s new=%s\n",
+			count, timestamp, oldWidget, newWidget)
+
+	case *pb.Event_Widget:
+		log.Printf("[EVENT #%d @ %s] WIDGET: id=%s type=%s data=%v\n",
+			count, timestamp, e.Widget.WidgetId.Id, e.Widget.Type, e.Widget.Data)
+
+	default:
+		log.Printf("[EVENT #%d @ %s] UNKNOWN: %T\n", count, timestamp, event.Event)
+	}
+}
+
+// Helper function to format widget events
+func formatWidgetEvent(we *pb.WidgetEvent) string {
+	if len(we.Data) == 0 {
+		return fmt.Sprintf("Widget %s: %s", we.WidgetId.Id, we.Type)
+	}
+	return fmt.Sprintf("Widget %s: %s (data: %v)", we.WidgetId.Id, we.Type, we.Data)
 }
 

@@ -1,7 +1,7 @@
 package client
 
 import (
-	pb "industries/loosh/yutani/pkg/proto/industries/loosh/yutani/v1"
+	pb "github.com/chazu/yutani/pkg/proto/yutani"
 )
 
 // Table represents a table widget.
@@ -32,12 +32,6 @@ func (b *TableBuilder) Title(title string) *TableBuilder {
 // Border sets whether the table has a border.
 func (b *TableBuilder) Border(border bool) *TableBuilder {
 	b.props.Border = &border
-	return b
-}
-
-// Visible sets whether the table is visible.
-func (b *TableBuilder) Visible(visible bool) *TableBuilder {
-	b.props.Visible = &visible
 	return b
 }
 

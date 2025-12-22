@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"industries/loosh/yutani/pkg/client"
+	"github.com/chazu/yutani/pkg/client"
 )
 
 func main() {
@@ -25,7 +25,6 @@ func main() {
 	list, err := c.NewList().
 		Title("File Menu").
 		Border(true).
-		BorderColor(client.Color("blue")).
 		Build()
 	if err != nil {
 		log.Fatalf("Failed to create list: %v", err)

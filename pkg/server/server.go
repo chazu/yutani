@@ -2,7 +2,9 @@ package server
 
 import (
 	"fmt"
+	"log/slog"
 	"sync"
+	"time"
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
@@ -107,6 +109,12 @@ func (s *Server) Start() error {
 	// Set the placeholder as the initial root
 	s.app.SetRoot(placeholder, true)
 
+	// Enable mouse support if configured
+	if s.mouseEnable {
+		s.app.EnableMouse(true)
+		slog.Info("Mouse support enabled")
+	}
+
 	// Set up input capture for event dispatching AND Ctrl+C handling
 	s.app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
 		// Handle Ctrl+C to allow graceful shutdown
@@ -115,8 +123,20 @@ func (s *Server) Start() error {
 			return nil
 		}
 		// Dispatch other key events
-		return s.handleInputEvent(event)
+		s.handleInputEvent(event)
+		// Return event to allow tview to process it too
+		return event
 	})
+
+	// Set up mouse capture for event dispatching
+	if s.mouseEnable {
+		s.app.SetMouseCapture(func(event *tcell.EventMouse, action tview.MouseAction) (*tcell.EventMouse, tview.MouseAction) {
+			// Dispatch mouse event
+			s.handleMouseEvent(event)
+			// Return event to allow tview to process it too
+			return event, action
+		})
+	}
 
 	return nil
 }
@@ -242,49 +262,43 @@ func (s *Server) handleInputEvent(event *tcell.EventKey) *tcell.EventKey {
 	return event // Pass through to tview
 }
 
-// pollScreenEvents polls for mouse and resize events
+// pollScreenEvents polls for resize events
+// Note: Mouse events are now handled via SetMouseCapture
+// Note: Key events are handled via SetInputCapture
 func (s *Server) pollScreenEvents() {
 	var lastWidth, lastHeight int
+	ticker := time.NewTicker(100 * time.Millisecond)
+	defer ticker.Stop()
 
 	for {
 		select {
 		case <-s.stopCh:
 			return
-		default:
-		}
-
-		if s.screen == nil {
-			continue
-		}
-
-		// Check for resize
-		width, height := s.screen.Size()
-		if width != lastWidth || height != lastHeight {
-			lastWidth, lastHeight = width, height
-
-			// Dispatch resize event to all sessions
-			s.sessions.mu.RLock()
-			for sessionID := range s.sessions.sessions {
-				pbEvent := CreateEvent(sessionID, &pb.ResizeEvent{
-					NewSize: &pb.Size{
-						Width:  int32(width),
-						Height: int32(height),
-					},
-				})
-				s.events.Dispatch(pbEvent)
+		case <-ticker.C:
+			if s.screen == nil {
+				continue
 			}
-			s.sessions.mu.RUnlock()
-		}
 
-		// Poll for events (non-blocking)
-		ev := s.screen.PollEvent()
-		if ev == nil {
-			continue
-		}
+			// Check for resize
+			width, height := s.screen.Size()
+			if width != lastWidth || height != lastHeight {
+				lastWidth, lastHeight = width, height
 
-		// Handle mouse events
-		if mouseEv, ok := ev.(*tcell.EventMouse); ok {
-			s.handleMouseEvent(mouseEv)
+				// Dispatch resize event to all sessions
+				s.sessions.mu.RLock()
+				for sessionID := range s.sessions.sessions {
+					pbEvent := CreateEvent(sessionID, &pb.ResizeEvent{
+						NewSize: &pb.Size{
+							Width:  int32(width),
+							Height: int32(height),
+						},
+					})
+					s.events.Dispatch(pbEvent)
+				}
+				s.sessions.mu.RUnlock()
+
+				slog.Debug("Resize event dispatched", "width", width, "height", height)
+			}
 		}
 	}
 }

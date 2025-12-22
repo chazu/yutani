@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"industries/loosh/yutani/pkg/client"
+	"github.com/chazu/yutani/pkg/client"
 )
 
 func main() {
@@ -25,7 +25,6 @@ func main() {
 	form, err := c.NewForm().
 		Title("Login").
 		Border(true).
-		BorderColor(client.Color("cyan")).
 		Build()
 	if err != nil {
 		log.Fatalf("Failed to create form: %v", err)

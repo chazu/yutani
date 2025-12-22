@@ -8,8 +8,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"industries/loosh/yutani/pkg/client"
-	pb "industries/loosh/yutani/pkg/proto/industries/loosh/yutani/v1"
+	"github.com/chazu/yutani/pkg/client"
+	pb "github.com/chazu/yutani/pkg/proto/yutani"
 )
 
 func main() {
@@ -26,7 +26,6 @@ func main() {
 	table, err := c.NewTable().
 		Title("Employee Directory").
 		Border(true).
-		BorderColor(client.Color("green")).
 		Build()
 	if err != nil {
 		log.Fatalf("Failed to create table: %v", err)

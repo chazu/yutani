@@ -1,7 +1,7 @@
 package client
 
 import (
-	pb "industries/loosh/yutani/pkg/proto/industries/loosh/yutani/v1"
+	pb "github.com/chazu/yutani/pkg/proto/yutani"
 )
 
 // EventType represents the type of event.
@@ -67,41 +67,67 @@ func convertEvent(pbEvent *pb.Event) *Event {
 	switch e := pbEvent.Event.(type) {
 	case *pb.Event_Key:
 		event.Type = EventTypeKey
+		var runeChar rune
+		if len(e.Key.Rune) > 0 {
+			runeChar = rune(e.Key.Rune[0])
+		}
+		// Combine modifiers into a single int (simplified)
+		mod := 0
+		for i, m := range e.Key.Modifiers {
+			mod |= (int(m) << (i * 8))
+		}
 		event.Key = &KeyEvent{
-			Key:  e.Key.Key,
-			Rune: rune(e.Key.Rune),
-			Mod:  int(e.Key.Mod),
+			Key:  e.Key.Key.String(),
+			Rune: runeChar,
+			Mod:  mod,
 		}
 
 	case *pb.Event_Mouse:
 		event.Type = EventTypeMouse
+		var x, y int
+		if e.Mouse.Position != nil {
+			x = int(e.Mouse.Position.X)
+			y = int(e.Mouse.Position.Y)
+		}
+		// Combine modifiers
+		mod := 0
+		for i, m := range e.Mouse.Modifiers {
+			mod |= (int(m) << (i * 8))
+		}
 		event.Mouse = &MouseEvent{
-			X:       int(e.Mouse.X),
-			Y:       int(e.Mouse.Y),
-			Button:  int(e.Mouse.Button),
-			Action:  e.Mouse.Action,
-			Buttons: int(e.Mouse.Buttons),
-			Mod:     int(e.Mouse.Mod),
+			X:       x,
+			Y:       y,
+			Button:  0, // Not directly available in new proto
+			Action:  e.Mouse.Action.String(),
+			Buttons: 0, // Not directly available
+			Mod:     mod,
 		}
 
 	case *pb.Event_Resize:
 		event.Type = EventTypeResize
+		var width, height int
+		if e.Resize.NewSize != nil {
+			width = int(e.Resize.NewSize.Width)
+			height = int(e.Resize.NewSize.Height)
+		}
 		event.Resize = &ResizeEvent{
-			Width:  int(e.Resize.Width),
-			Height: int(e.Resize.Height),
+			Width:  width,
+			Height: height,
 		}
 
 	case *pb.Event_Focus:
 		event.Type = EventTypeFocus
+		// Focus event now has old/new widgets, not a simple boolean
+		focused := e.Focus.NewWidget != nil
 		event.Focus = &FocusEvent{
-			Focused: e.Focus.Focused,
+			Focused: focused,
 		}
 
 	case *pb.Event_Widget:
 		event.Type = EventTypeWidget
 		event.Widget = &WidgetEvent{
 			WidgetID: e.Widget.WidgetId.Id,
-			Type:     e.Widget.Type,
+			Type:     e.Widget.Type.String(),
 			Data:     e.Widget.Data,
 		}
 	}
