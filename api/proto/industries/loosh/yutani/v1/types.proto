@@ -90,6 +90,7 @@ enum WidgetType {
   WIDGET_PAGES = 13;
   WIDGET_MODAL = 14;
   WIDGET_IMAGE = 15;
+  WIDGET_PROGRESS_BAR = 16;
 }
 
 enum Alignment {
@@ -124,13 +125,18 @@ message WidgetProperties {
     InputFieldProperties input_field = 21;
     ButtonProperties button = 22;
     CheckboxProperties checkbox = 23;
-    ListProperties list = 24;
-    TableProperties table = 25;
-    FlexProperties flex = 26;
-    GridProperties grid = 27;
-    TreeProperties tree = 28;
-    FormProperties form = 29;
-    PagesProperties pages = 30;
+    DropdownProperties dropdown = 24;
+    ListProperties list = 25;
+    TableProperties table = 26;
+    FlexProperties flex = 27;
+    GridProperties grid = 28;
+    TreeProperties tree = 29;
+    FormProperties form = 30;
+    PagesProperties pages = 31;
+    TextAreaProperties text_area = 32;
+    ModalProperties modal = 33;
+    ImageProperties image = 34;
+    ProgressBarProperties progress_bar = 35;
   }
 }
 
@@ -169,6 +175,17 @@ message CheckboxProperties {
   optional bool checked = 2;
   optional Color label_color = 3;
   optional Color checked_color = 4;
+}
+
+message DropdownProperties {
+  repeated string options = 1;
+  optional int32 selected_index = 2;
+  optional string selected_text = 3;
+  optional Color label_color = 4;
+  optional Color field_background_color = 5;
+  optional Color field_text_color = 6;
+  optional string label = 7;
+  optional int32 field_width = 8;
 }
 
 message ListProperties {
@@ -225,6 +242,48 @@ message FormProperties {
 message PagesProperties {
   optional bool show_page_names = 1;
   optional Color page_name_color = 2;
+}
+
+message TextAreaProperties {
+  optional string text = 1;
+  optional string placeholder = 2;
+  optional int32 max_length = 3;
+  optional bool word_wrap = 4;
+  optional Color text_color = 5;
+  optional Color placeholder_color = 6;
+}
+
+message ModalProperties {
+  optional string text = 1;
+  repeated string buttons = 2;
+  optional Color text_color = 3;
+  optional Color background_color = 4;
+  optional Color button_background_color = 5;
+  optional Color button_text_color = 6;
+}
+
+message ImageProperties {
+  optional bytes image_data = 1;
+  optional string image_path = 2;
+  optional int32 colors = 3;
+  optional bool dithering = 4;
+  optional ImageAspectRatio aspect_ratio = 5;
+}
+
+enum ImageAspectRatio {
+  IMAGE_ASPECT_NONE = 0;
+  IMAGE_ASPECT_PRESERVE = 1;
+}
+
+message ProgressBarProperties {
+  optional int32 progress = 1;         // 0-100
+  optional int32 max = 2;              // Maximum value (default 100)
+  optional string label = 3;           // Optional label
+  optional bool show_percentage = 4;   // Show percentage text
+  optional Color filled_color = 5;
+  optional Color empty_color = 6;
+  optional string filled_char = 7;     // Character for filled portion
+  optional string empty_char = 8;      // Character for empty portion
 }
 
 // Key and modifier enums for events (Phase 2)

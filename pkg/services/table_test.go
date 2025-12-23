@@ -11,15 +11,7 @@ import (
 )
 
 func TestTableService_SetCell(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	tableService := NewTableService(srv)
 	widgetService := NewWidgetService(srv)
@@ -100,15 +92,7 @@ func TestTableService_SetCell(t *testing.T) {
 }
 
 func TestTableService_GetCell(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	tableService := NewTableService(srv)
 	widgetService := NewWidgetService(srv)
@@ -176,15 +160,7 @@ func TestTableService_GetCell(t *testing.T) {
 }
 
 func TestTableService_SetCells(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	tableService := NewTableService(srv)
 	widgetService := NewWidgetService(srv)
@@ -247,15 +223,7 @@ func TestTableService_SetCells(t *testing.T) {
 }
 
 func TestTableService_Clear(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	tableService := NewTableService(srv)
 	widgetService := NewWidgetService(srv)
@@ -317,15 +285,7 @@ func TestTableService_Clear(t *testing.T) {
 }
 
 func TestTableService_GetDimensions(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	tableService := NewTableService(srv)
 	widgetService := NewWidgetService(srv)
@@ -382,15 +342,7 @@ func TestTableService_GetDimensions(t *testing.T) {
 }
 
 func TestTableService_GetSetSelection(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	tableService := NewTableService(srv)
 	widgetService := NewWidgetService(srv)
@@ -459,15 +411,7 @@ func TestTableService_GetSetSelection(t *testing.T) {
 }
 
 func TestTableService_SetFixed(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	tableService := NewTableService(srv)
 	widgetService := NewWidgetService(srv)

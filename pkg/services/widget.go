@@ -285,6 +285,16 @@ func (s *WidgetService) createPrimitive(widgetType pb.WidgetType, props *pb.Widg
 		return s.createGrid(props), nil
 	case pb.WidgetType_WIDGET_PAGES:
 		return s.createPages(props), nil
+	case pb.WidgetType_WIDGET_DROPDOWN:
+		return s.createDropdown(props), nil
+	case pb.WidgetType_WIDGET_TEXT_AREA:
+		return s.createTextArea(props), nil
+	case pb.WidgetType_WIDGET_MODAL:
+		return s.createModal(props), nil
+	case pb.WidgetType_WIDGET_IMAGE:
+		return s.createImage(props), nil
+	case pb.WidgetType_WIDGET_PROGRESS_BAR:
+		return s.createProgressBar(props), nil
 	default:
 		return nil, fmt.Errorf("unsupported widget type: %v", widgetType)
 	}
@@ -318,146 +328,46 @@ func (s *WidgetService) applyProperties(primitive tview.Primitive, widgetType pb
 		if cb, ok := primitive.(*tview.Checkbox); ok {
 			return s.applyCheckboxProperties(cb, props)
 		}
+	case pb.WidgetType_WIDGET_DROPDOWN:
+		if dd, ok := primitive.(*tview.DropDown); ok {
+			return s.applyDropdownProperties(dd, props)
+		}
+	case pb.WidgetType_WIDGET_TEXT_AREA:
+		if ta, ok := primitive.(*tview.TextArea); ok {
+			return s.applyTextAreaProperties(ta, props)
+		}
+	case pb.WidgetType_WIDGET_MODAL:
+		if modal, ok := primitive.(*tview.Modal); ok {
+			return s.applyModalProperties(modal, props)
+		}
+	case pb.WidgetType_WIDGET_IMAGE:
+		if img, ok := primitive.(*tview.Image); ok {
+			return s.applyImageProperties(img, props)
+		}
+	case pb.WidgetType_WIDGET_PROGRESS_BAR:
+		if pb, ok := primitive.(*ProgressBar); ok {
+			return s.applyProgressBarProperties(pb, props)
+		}
 	}
 
 	return nil
 }
 
 
-// AddChild adds a child widget to a container
+// AddChild adds a child widget to a container.
+// Note: For Flex, Grid, and Pages containers, use LayoutService methods instead
+// (AddFlexChild, AddGridChild, AddPage).
 func (s *WidgetService) AddChild(ctx context.Context, req *pb.AddChildRequest) (*pb.AddChildResponse, error) {
-	if req.SessionId == nil || req.ParentId == nil || req.ChildId == nil {
-		return nil, status.Error(codes.InvalidArgument, "session_id, parent_id, and child_id are required")
-	}
-
-	sessionID := req.SessionId.Id
-	parentID := req.ParentId.Id
-	childID := req.ChildId.Id
-
-	// Verify ownership of both widgets
-	parentOwner, ok := s.server.Widgets().GetOwner(parentID)
-	if !ok {
-		return nil, status.Error(codes.NotFound, "parent widget not found")
-	}
-	if parentOwner != sessionID {
-		return nil, status.Error(codes.PermissionDenied, "parent widget not owned by session")
-	}
-
-	childOwner, ok := s.server.Widgets().GetOwner(childID)
-	if !ok {
-		return nil, status.Error(codes.NotFound, "child widget not found")
-	}
-	if childOwner != sessionID {
-		return nil, status.Error(codes.PermissionDenied, "child widget not owned by session")
-	}
-
-	var err error
-	done := make(chan struct{})
-	s.server.App().QueueUpdateDraw(func() {
-		defer close(done)
-
-		parentInfo, ok := s.server.Widgets().GetInfo(parentID)
-		if !ok {
-			err = fmt.Errorf("parent widget not found")
-			return
-		}
-
-		_, ok = s.server.Widgets().Get(childID)
-		if !ok {
-			err = fmt.Errorf("child widget not found")
-			return
-		}
-
-		// Add child based on parent type
-		switch parentInfo.Type {
-		case pb.WidgetType_WIDGET_BOX:
-			// Box doesn't support children directly
-			err = fmt.Errorf("Box widget does not support children")
-			return
-		case pb.WidgetType_WIDGET_FLEX:
-			// TODO: Implement Flex support in Phase 4
-			err = fmt.Errorf("Flex widget not yet implemented")
-			return
-		default:
-			err = fmt.Errorf("widget type %v does not support children", parentInfo.Type)
-			return
-		}
-	})
-	<-done
-
-	if err != nil {
-		return nil, status.Error(codes.InvalidArgument, err.Error())
-	}
-
-	// Update registry
-	if !s.server.Widgets().AddChild(parentID, childID) {
-		return nil, status.Error(codes.Internal, "failed to update widget hierarchy")
-	}
-
-	slog.Info("Child added to widget", "parent_id", parentID, "child_id", childID, "session_id", sessionID)
-
-	return &pb.AddChildResponse{
-		Success: true,
-	}, nil
+	return nil, status.Error(codes.Unimplemented,
+		"use LayoutService for container operations: AddFlexChild, AddGridChild, or AddPage")
 }
 
-// RemoveChild removes a child widget from a container
+// RemoveChild removes a child widget from a container.
+// Note: For Flex, Grid, and Pages containers, use LayoutService methods instead
+// (RemoveFlexChild, RemoveGridChild, RemovePage).
 func (s *WidgetService) RemoveChild(ctx context.Context, req *pb.RemoveChildRequest) (*pb.RemoveChildResponse, error) {
-	if req.SessionId == nil || req.ParentId == nil || req.ChildId == nil {
-		return nil, status.Error(codes.InvalidArgument, "session_id, parent_id, and child_id are required")
-	}
-
-	sessionID := req.SessionId.Id
-	parentID := req.ParentId.Id
-	childID := req.ChildId.Id
-
-	// Verify ownership
-	parentOwner, ok := s.server.Widgets().GetOwner(parentID)
-	if !ok {
-		return nil, status.Error(codes.NotFound, "parent widget not found")
-	}
-	if parentOwner != sessionID {
-		return nil, status.Error(codes.PermissionDenied, "parent widget not owned by session")
-	}
-
-	var err error
-	done := make(chan struct{})
-	s.server.App().QueueUpdateDraw(func() {
-		defer close(done)
-
-		parentInfo, ok := s.server.Widgets().GetInfo(parentID)
-		if !ok {
-			err = fmt.Errorf("parent widget not found")
-			return
-		}
-
-		// Remove child based on parent type
-		switch parentInfo.Type {
-		case pb.WidgetType_WIDGET_FLEX:
-			// TODO: Implement Flex support in Phase 4
-			err = fmt.Errorf("Flex widget not yet implemented")
-			return
-		default:
-			// For now, just update the registry
-			// Actual removal from tview will be implemented with container widgets
-		}
-	})
-	<-done
-
-	if err != nil {
-		return nil, status.Error(codes.InvalidArgument, err.Error())
-	}
-
-	// Update registry
-	if !s.server.Widgets().RemoveChild(parentID, childID) {
-		return nil, status.Error(codes.NotFound, "child not found in parent")
-	}
-
-	slog.Info("Child removed from widget", "parent_id", parentID, "child_id", childID, "session_id", sessionID)
-
-	return &pb.RemoveChildResponse{
-		Success: true,
-	}, nil
+	return nil, status.Error(codes.Unimplemented,
+		"use LayoutService for container operations: RemoveFlexChild, RemoveGridChild, or RemovePage")
 }
 
 
@@ -570,6 +480,33 @@ func (s *WidgetService) wireWidgetEvents(sessionID, widgetID string, widgetType 
 				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_DONE, nil)
 			})
 		}
+	case pb.WidgetType_WIDGET_DROPDOWN:
+		if dd, ok := primitive.(*tview.DropDown); ok {
+			dd.SetSelectedFunc(func(text string, index int) {
+				data := map[string]string{
+					"text":  text,
+					"index": fmt.Sprintf("%d", index),
+				}
+				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_SELECTED, data)
+			})
+		}
+	case pb.WidgetType_WIDGET_TEXT_AREA:
+		if ta, ok := primitive.(*tview.TextArea); ok {
+			ta.SetChangedFunc(func() {
+				data := map[string]string{"text": ta.GetText()}
+				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_CHANGED, data)
+			})
+		}
+	case pb.WidgetType_WIDGET_MODAL:
+		if modal, ok := primitive.(*tview.Modal); ok {
+			modal.SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				data := map[string]string{
+					"button_index": fmt.Sprintf("%d", buttonIndex),
+					"button_label": buttonLabel,
+				}
+				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_SUBMITTED, data)
+			})
+		}
 	}
 }
 
@@ -577,7 +514,7 @@ func (s *WidgetService) wireWidgetEvents(sessionID, widgetID string, widgetType 
 func (s *WidgetService) emitWidgetEvent(sessionID, widgetID string, eventType pb.WidgetEventType, data map[string]string) {
 	event := &pb.Event{
 		SessionId: &pb.SessionId{Id: sessionID},
-		Timestamp: int64(time.Now().Unix()),
+		Timestamp: time.Now().UnixNano(),
 		Event: &pb.Event_Widget{
 			Widget: &pb.WidgetEvent{
 				WidgetId: &pb.WidgetId{Id: widgetID},

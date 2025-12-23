@@ -88,22 +88,23 @@ func (Attribute) EnumDescriptor() ([]byte, []int) {
 type WidgetType int32
 
 const (
-	WidgetType_WIDGET_BOX         WidgetType = 0
-	WidgetType_WIDGET_TEXT_VIEW   WidgetType = 1
-	WidgetType_WIDGET_INPUT_FIELD WidgetType = 2
-	WidgetType_WIDGET_TEXT_AREA   WidgetType = 3
-	WidgetType_WIDGET_BUTTON      WidgetType = 4
-	WidgetType_WIDGET_CHECKBOX    WidgetType = 5
-	WidgetType_WIDGET_DROPDOWN    WidgetType = 6
-	WidgetType_WIDGET_LIST        WidgetType = 7
-	WidgetType_WIDGET_TABLE       WidgetType = 8
-	WidgetType_WIDGET_TREE_VIEW   WidgetType = 9
-	WidgetType_WIDGET_FORM        WidgetType = 10
-	WidgetType_WIDGET_FLEX        WidgetType = 11
-	WidgetType_WIDGET_GRID        WidgetType = 12
-	WidgetType_WIDGET_PAGES       WidgetType = 13
-	WidgetType_WIDGET_MODAL       WidgetType = 14
-	WidgetType_WIDGET_IMAGE       WidgetType = 15
+	WidgetType_WIDGET_BOX          WidgetType = 0
+	WidgetType_WIDGET_TEXT_VIEW    WidgetType = 1
+	WidgetType_WIDGET_INPUT_FIELD  WidgetType = 2
+	WidgetType_WIDGET_TEXT_AREA    WidgetType = 3
+	WidgetType_WIDGET_BUTTON       WidgetType = 4
+	WidgetType_WIDGET_CHECKBOX     WidgetType = 5
+	WidgetType_WIDGET_DROPDOWN     WidgetType = 6
+	WidgetType_WIDGET_LIST         WidgetType = 7
+	WidgetType_WIDGET_TABLE        WidgetType = 8
+	WidgetType_WIDGET_TREE_VIEW    WidgetType = 9
+	WidgetType_WIDGET_FORM         WidgetType = 10
+	WidgetType_WIDGET_FLEX         WidgetType = 11
+	WidgetType_WIDGET_GRID         WidgetType = 12
+	WidgetType_WIDGET_PAGES        WidgetType = 13
+	WidgetType_WIDGET_MODAL        WidgetType = 14
+	WidgetType_WIDGET_IMAGE        WidgetType = 15
+	WidgetType_WIDGET_PROGRESS_BAR WidgetType = 16
 )
 
 // Enum value maps for WidgetType.
@@ -125,24 +126,26 @@ var (
 		13: "WIDGET_PAGES",
 		14: "WIDGET_MODAL",
 		15: "WIDGET_IMAGE",
+		16: "WIDGET_PROGRESS_BAR",
 	}
 	WidgetType_value = map[string]int32{
-		"WIDGET_BOX":         0,
-		"WIDGET_TEXT_VIEW":   1,
-		"WIDGET_INPUT_FIELD": 2,
-		"WIDGET_TEXT_AREA":   3,
-		"WIDGET_BUTTON":      4,
-		"WIDGET_CHECKBOX":    5,
-		"WIDGET_DROPDOWN":    6,
-		"WIDGET_LIST":        7,
-		"WIDGET_TABLE":       8,
-		"WIDGET_TREE_VIEW":   9,
-		"WIDGET_FORM":        10,
-		"WIDGET_FLEX":        11,
-		"WIDGET_GRID":        12,
-		"WIDGET_PAGES":       13,
-		"WIDGET_MODAL":       14,
-		"WIDGET_IMAGE":       15,
+		"WIDGET_BOX":          0,
+		"WIDGET_TEXT_VIEW":    1,
+		"WIDGET_INPUT_FIELD":  2,
+		"WIDGET_TEXT_AREA":    3,
+		"WIDGET_BUTTON":       4,
+		"WIDGET_CHECKBOX":     5,
+		"WIDGET_DROPDOWN":     6,
+		"WIDGET_LIST":         7,
+		"WIDGET_TABLE":        8,
+		"WIDGET_TREE_VIEW":    9,
+		"WIDGET_FORM":         10,
+		"WIDGET_FLEX":         11,
+		"WIDGET_GRID":         12,
+		"WIDGET_PAGES":        13,
+		"WIDGET_MODAL":        14,
+		"WIDGET_IMAGE":        15,
+		"WIDGET_PROGRESS_BAR": 16,
 	}
 )
 
@@ -268,6 +271,52 @@ func (FlexDirection) EnumDescriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{3}
 }
 
+type ImageAspectRatio int32
+
+const (
+	ImageAspectRatio_IMAGE_ASPECT_NONE     ImageAspectRatio = 0
+	ImageAspectRatio_IMAGE_ASPECT_PRESERVE ImageAspectRatio = 1
+)
+
+// Enum value maps for ImageAspectRatio.
+var (
+	ImageAspectRatio_name = map[int32]string{
+		0: "IMAGE_ASPECT_NONE",
+		1: "IMAGE_ASPECT_PRESERVE",
+	}
+	ImageAspectRatio_value = map[string]int32{
+		"IMAGE_ASPECT_NONE":     0,
+		"IMAGE_ASPECT_PRESERVE": 1,
+	}
+)
+
+func (x ImageAspectRatio) Enum() *ImageAspectRatio {
+	p := new(ImageAspectRatio)
+	*p = x
+	return p
+}
+
+func (x ImageAspectRatio) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ImageAspectRatio) Descriptor() protoreflect.EnumDescriptor {
+	return file_industries_loosh_yutani_v1_types_proto_enumTypes[4].Descriptor()
+}
+
+func (ImageAspectRatio) Type() protoreflect.EnumType {
+	return &file_industries_loosh_yutani_v1_types_proto_enumTypes[4]
+}
+
+func (x ImageAspectRatio) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ImageAspectRatio.Descriptor instead.
+func (ImageAspectRatio) EnumDescriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{4}
+}
+
 type Key int32
 
 const (
@@ -376,11 +425,11 @@ func (x Key) String() string {
 }
 
 func (Key) Descriptor() protoreflect.EnumDescriptor {
-	return file_industries_loosh_yutani_v1_types_proto_enumTypes[4].Descriptor()
+	return file_industries_loosh_yutani_v1_types_proto_enumTypes[5].Descriptor()
 }
 
 func (Key) Type() protoreflect.EnumType {
-	return &file_industries_loosh_yutani_v1_types_proto_enumTypes[4]
+	return &file_industries_loosh_yutani_v1_types_proto_enumTypes[5]
 }
 
 func (x Key) Number() protoreflect.EnumNumber {
@@ -389,7 +438,7 @@ func (x Key) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Key.Descriptor instead.
 func (Key) EnumDescriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{4}
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{5}
 }
 
 type Modifier int32
@@ -431,11 +480,11 @@ func (x Modifier) String() string {
 }
 
 func (Modifier) Descriptor() protoreflect.EnumDescriptor {
-	return file_industries_loosh_yutani_v1_types_proto_enumTypes[5].Descriptor()
+	return file_industries_loosh_yutani_v1_types_proto_enumTypes[6].Descriptor()
 }
 
 func (Modifier) Type() protoreflect.EnumType {
-	return &file_industries_loosh_yutani_v1_types_proto_enumTypes[5]
+	return &file_industries_loosh_yutani_v1_types_proto_enumTypes[6]
 }
 
 func (x Modifier) Number() protoreflect.EnumNumber {
@@ -444,7 +493,7 @@ func (x Modifier) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Modifier.Descriptor instead.
 func (Modifier) EnumDescriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{5}
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{6}
 }
 
 type Position struct {
@@ -1064,6 +1113,7 @@ type WidgetProperties struct {
 	//	*WidgetProperties_InputField
 	//	*WidgetProperties_Button
 	//	*WidgetProperties_Checkbox
+	//	*WidgetProperties_Dropdown
 	//	*WidgetProperties_List
 	//	*WidgetProperties_Table
 	//	*WidgetProperties_Flex
@@ -1071,6 +1121,10 @@ type WidgetProperties struct {
 	//	*WidgetProperties_Tree
 	//	*WidgetProperties_Form
 	//	*WidgetProperties_Pages
+	//	*WidgetProperties_TextArea
+	//	*WidgetProperties_Modal
+	//	*WidgetProperties_Image
+	//	*WidgetProperties_ProgressBar
 	TypeProperties isWidgetProperties_TypeProperties `protobuf_oneof:"type_properties"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -1205,6 +1259,15 @@ func (x *WidgetProperties) GetCheckbox() *CheckboxProperties {
 	return nil
 }
 
+func (x *WidgetProperties) GetDropdown() *DropdownProperties {
+	if x != nil {
+		if x, ok := x.TypeProperties.(*WidgetProperties_Dropdown); ok {
+			return x.Dropdown
+		}
+	}
+	return nil
+}
+
 func (x *WidgetProperties) GetList() *ListProperties {
 	if x != nil {
 		if x, ok := x.TypeProperties.(*WidgetProperties_List); ok {
@@ -1268,6 +1331,42 @@ func (x *WidgetProperties) GetPages() *PagesProperties {
 	return nil
 }
 
+func (x *WidgetProperties) GetTextArea() *TextAreaProperties {
+	if x != nil {
+		if x, ok := x.TypeProperties.(*WidgetProperties_TextArea); ok {
+			return x.TextArea
+		}
+	}
+	return nil
+}
+
+func (x *WidgetProperties) GetModal() *ModalProperties {
+	if x != nil {
+		if x, ok := x.TypeProperties.(*WidgetProperties_Modal); ok {
+			return x.Modal
+		}
+	}
+	return nil
+}
+
+func (x *WidgetProperties) GetImage() *ImageProperties {
+	if x != nil {
+		if x, ok := x.TypeProperties.(*WidgetProperties_Image); ok {
+			return x.Image
+		}
+	}
+	return nil
+}
+
+func (x *WidgetProperties) GetProgressBar() *ProgressBarProperties {
+	if x != nil {
+		if x, ok := x.TypeProperties.(*WidgetProperties_ProgressBar); ok {
+			return x.ProgressBar
+		}
+	}
+	return nil
+}
+
 type isWidgetProperties_TypeProperties interface {
 	isWidgetProperties_TypeProperties()
 }
@@ -1288,32 +1387,52 @@ type WidgetProperties_Checkbox struct {
 	Checkbox *CheckboxProperties `protobuf:"bytes,23,opt,name=checkbox,proto3,oneof"`
 }
 
+type WidgetProperties_Dropdown struct {
+	Dropdown *DropdownProperties `protobuf:"bytes,24,opt,name=dropdown,proto3,oneof"`
+}
+
 type WidgetProperties_List struct {
-	List *ListProperties `protobuf:"bytes,24,opt,name=list,proto3,oneof"`
+	List *ListProperties `protobuf:"bytes,25,opt,name=list,proto3,oneof"`
 }
 
 type WidgetProperties_Table struct {
-	Table *TableProperties `protobuf:"bytes,25,opt,name=table,proto3,oneof"`
+	Table *TableProperties `protobuf:"bytes,26,opt,name=table,proto3,oneof"`
 }
 
 type WidgetProperties_Flex struct {
-	Flex *FlexProperties `protobuf:"bytes,26,opt,name=flex,proto3,oneof"`
+	Flex *FlexProperties `protobuf:"bytes,27,opt,name=flex,proto3,oneof"`
 }
 
 type WidgetProperties_Grid struct {
-	Grid *GridProperties `protobuf:"bytes,27,opt,name=grid,proto3,oneof"`
+	Grid *GridProperties `protobuf:"bytes,28,opt,name=grid,proto3,oneof"`
 }
 
 type WidgetProperties_Tree struct {
-	Tree *TreeProperties `protobuf:"bytes,28,opt,name=tree,proto3,oneof"`
+	Tree *TreeProperties `protobuf:"bytes,29,opt,name=tree,proto3,oneof"`
 }
 
 type WidgetProperties_Form struct {
-	Form *FormProperties `protobuf:"bytes,29,opt,name=form,proto3,oneof"`
+	Form *FormProperties `protobuf:"bytes,30,opt,name=form,proto3,oneof"`
 }
 
 type WidgetProperties_Pages struct {
-	Pages *PagesProperties `protobuf:"bytes,30,opt,name=pages,proto3,oneof"`
+	Pages *PagesProperties `protobuf:"bytes,31,opt,name=pages,proto3,oneof"`
+}
+
+type WidgetProperties_TextArea struct {
+	TextArea *TextAreaProperties `protobuf:"bytes,32,opt,name=text_area,json=textArea,proto3,oneof"`
+}
+
+type WidgetProperties_Modal struct {
+	Modal *ModalProperties `protobuf:"bytes,33,opt,name=modal,proto3,oneof"`
+}
+
+type WidgetProperties_Image struct {
+	Image *ImageProperties `protobuf:"bytes,34,opt,name=image,proto3,oneof"`
+}
+
+type WidgetProperties_ProgressBar struct {
+	ProgressBar *ProgressBarProperties `protobuf:"bytes,35,opt,name=progress_bar,json=progressBar,proto3,oneof"`
 }
 
 func (*WidgetProperties_TextView) isWidgetProperties_TypeProperties() {}
@@ -1323,6 +1442,8 @@ func (*WidgetProperties_InputField) isWidgetProperties_TypeProperties() {}
 func (*WidgetProperties_Button) isWidgetProperties_TypeProperties() {}
 
 func (*WidgetProperties_Checkbox) isWidgetProperties_TypeProperties() {}
+
+func (*WidgetProperties_Dropdown) isWidgetProperties_TypeProperties() {}
 
 func (*WidgetProperties_List) isWidgetProperties_TypeProperties() {}
 
@@ -1337,6 +1458,14 @@ func (*WidgetProperties_Tree) isWidgetProperties_TypeProperties() {}
 func (*WidgetProperties_Form) isWidgetProperties_TypeProperties() {}
 
 func (*WidgetProperties_Pages) isWidgetProperties_TypeProperties() {}
+
+func (*WidgetProperties_TextArea) isWidgetProperties_TypeProperties() {}
+
+func (*WidgetProperties_Modal) isWidgetProperties_TypeProperties() {}
+
+func (*WidgetProperties_Image) isWidgetProperties_TypeProperties() {}
+
+func (*WidgetProperties_ProgressBar) isWidgetProperties_TypeProperties() {}
 
 type TextViewProperties struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -1666,6 +1795,106 @@ func (x *CheckboxProperties) GetCheckedColor() *Color {
 	return nil
 }
 
+type DropdownProperties struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Options              []string               `protobuf:"bytes,1,rep,name=options,proto3" json:"options,omitempty"`
+	SelectedIndex        *int32                 `protobuf:"varint,2,opt,name=selected_index,json=selectedIndex,proto3,oneof" json:"selected_index,omitempty"`
+	SelectedText         *string                `protobuf:"bytes,3,opt,name=selected_text,json=selectedText,proto3,oneof" json:"selected_text,omitempty"`
+	LabelColor           *Color                 `protobuf:"bytes,4,opt,name=label_color,json=labelColor,proto3,oneof" json:"label_color,omitempty"`
+	FieldBackgroundColor *Color                 `protobuf:"bytes,5,opt,name=field_background_color,json=fieldBackgroundColor,proto3,oneof" json:"field_background_color,omitempty"`
+	FieldTextColor       *Color                 `protobuf:"bytes,6,opt,name=field_text_color,json=fieldTextColor,proto3,oneof" json:"field_text_color,omitempty"`
+	Label                *string                `protobuf:"bytes,7,opt,name=label,proto3,oneof" json:"label,omitempty"`
+	FieldWidth           *int32                 `protobuf:"varint,8,opt,name=field_width,json=fieldWidth,proto3,oneof" json:"field_width,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *DropdownProperties) Reset() {
+	*x = DropdownProperties{}
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DropdownProperties) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DropdownProperties) ProtoMessage() {}
+
+func (x *DropdownProperties) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DropdownProperties.ProtoReflect.Descriptor instead.
+func (*DropdownProperties) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *DropdownProperties) GetOptions() []string {
+	if x != nil {
+		return x.Options
+	}
+	return nil
+}
+
+func (x *DropdownProperties) GetSelectedIndex() int32 {
+	if x != nil && x.SelectedIndex != nil {
+		return *x.SelectedIndex
+	}
+	return 0
+}
+
+func (x *DropdownProperties) GetSelectedText() string {
+	if x != nil && x.SelectedText != nil {
+		return *x.SelectedText
+	}
+	return ""
+}
+
+func (x *DropdownProperties) GetLabelColor() *Color {
+	if x != nil {
+		return x.LabelColor
+	}
+	return nil
+}
+
+func (x *DropdownProperties) GetFieldBackgroundColor() *Color {
+	if x != nil {
+		return x.FieldBackgroundColor
+	}
+	return nil
+}
+
+func (x *DropdownProperties) GetFieldTextColor() *Color {
+	if x != nil {
+		return x.FieldTextColor
+	}
+	return nil
+}
+
+func (x *DropdownProperties) GetLabel() string {
+	if x != nil && x.Label != nil {
+		return *x.Label
+	}
+	return ""
+}
+
+func (x *DropdownProperties) GetFieldWidth() int32 {
+	if x != nil && x.FieldWidth != nil {
+		return *x.FieldWidth
+	}
+	return 0
+}
+
 type ListProperties struct {
 	state                   protoimpl.MessageState `protogen:"open.v1"`
 	ShowSecondaryText       *bool                  `protobuf:"varint,1,opt,name=show_secondary_text,json=showSecondaryText,proto3,oneof" json:"show_secondary_text,omitempty"`
@@ -1679,7 +1908,7 @@ type ListProperties struct {
 
 func (x *ListProperties) Reset() {
 	*x = ListProperties{}
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[15]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1691,7 +1920,7 @@ func (x *ListProperties) String() string {
 func (*ListProperties) ProtoMessage() {}
 
 func (x *ListProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[15]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1704,7 +1933,7 @@ func (x *ListProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProperties.ProtoReflect.Descriptor instead.
 func (*ListProperties) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{15}
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ListProperties) GetShowSecondaryText() bool {
@@ -1754,7 +1983,7 @@ type TableProperties struct {
 
 func (x *TableProperties) Reset() {
 	*x = TableProperties{}
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[16]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1766,7 +1995,7 @@ func (x *TableProperties) String() string {
 func (*TableProperties) ProtoMessage() {}
 
 func (x *TableProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[16]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1779,7 +2008,7 @@ func (x *TableProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TableProperties.ProtoReflect.Descriptor instead.
 func (*TableProperties) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{16}
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *TableProperties) GetBorders() bool {
@@ -1820,7 +2049,7 @@ type FlexProperties struct {
 
 func (x *FlexProperties) Reset() {
 	*x = FlexProperties{}
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[17]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1832,7 +2061,7 @@ func (x *FlexProperties) String() string {
 func (*FlexProperties) ProtoMessage() {}
 
 func (x *FlexProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[17]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1845,7 +2074,7 @@ func (x *FlexProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FlexProperties.ProtoReflect.Descriptor instead.
 func (*FlexProperties) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{17}
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *FlexProperties) GetDirection() FlexDirection {
@@ -1874,7 +2103,7 @@ type GridProperties struct {
 
 func (x *GridProperties) Reset() {
 	*x = GridProperties{}
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[18]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1886,7 +2115,7 @@ func (x *GridProperties) String() string {
 func (*GridProperties) ProtoMessage() {}
 
 func (x *GridProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[18]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1899,7 +2128,7 @@ func (x *GridProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GridProperties.ProtoReflect.Descriptor instead.
 func (*GridProperties) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{18}
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *GridProperties) GetRows() int32 {
@@ -1943,7 +2172,7 @@ type TreeProperties struct {
 
 func (x *TreeProperties) Reset() {
 	*x = TreeProperties{}
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[19]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1955,7 +2184,7 @@ func (x *TreeProperties) String() string {
 func (*TreeProperties) ProtoMessage() {}
 
 func (x *TreeProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[19]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1968,7 +2197,7 @@ func (x *TreeProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TreeProperties.ProtoReflect.Descriptor instead.
 func (*TreeProperties) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{19}
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *TreeProperties) GetNodeTextColor() *Color {
@@ -2022,7 +2251,7 @@ type FormProperties struct {
 
 func (x *FormProperties) Reset() {
 	*x = FormProperties{}
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[20]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2034,7 +2263,7 @@ func (x *FormProperties) String() string {
 func (*FormProperties) ProtoMessage() {}
 
 func (x *FormProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[20]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2047,7 +2276,7 @@ func (x *FormProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FormProperties.ProtoReflect.Descriptor instead.
 func (*FormProperties) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{20}
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *FormProperties) GetLabelWidth() int32 {
@@ -2116,7 +2345,7 @@ type PagesProperties struct {
 
 func (x *PagesProperties) Reset() {
 	*x = PagesProperties{}
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[21]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2128,7 +2357,7 @@ func (x *PagesProperties) String() string {
 func (*PagesProperties) ProtoMessage() {}
 
 func (x *PagesProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[21]
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2141,7 +2370,7 @@ func (x *PagesProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PagesProperties.ProtoReflect.Descriptor instead.
 func (*PagesProperties) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{21}
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *PagesProperties) GetShowPageNames() bool {
@@ -2156,6 +2385,350 @@ func (x *PagesProperties) GetPageNameColor() *Color {
 		return x.PageNameColor
 	}
 	return nil
+}
+
+type TextAreaProperties struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Text             *string                `protobuf:"bytes,1,opt,name=text,proto3,oneof" json:"text,omitempty"`
+	Placeholder      *string                `protobuf:"bytes,2,opt,name=placeholder,proto3,oneof" json:"placeholder,omitempty"`
+	MaxLength        *int32                 `protobuf:"varint,3,opt,name=max_length,json=maxLength,proto3,oneof" json:"max_length,omitempty"`
+	WordWrap         *bool                  `protobuf:"varint,4,opt,name=word_wrap,json=wordWrap,proto3,oneof" json:"word_wrap,omitempty"`
+	TextColor        *Color                 `protobuf:"bytes,5,opt,name=text_color,json=textColor,proto3,oneof" json:"text_color,omitempty"`
+	PlaceholderColor *Color                 `protobuf:"bytes,6,opt,name=placeholder_color,json=placeholderColor,proto3,oneof" json:"placeholder_color,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *TextAreaProperties) Reset() {
+	*x = TextAreaProperties{}
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TextAreaProperties) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TextAreaProperties) ProtoMessage() {}
+
+func (x *TextAreaProperties) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TextAreaProperties.ProtoReflect.Descriptor instead.
+func (*TextAreaProperties) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *TextAreaProperties) GetText() string {
+	if x != nil && x.Text != nil {
+		return *x.Text
+	}
+	return ""
+}
+
+func (x *TextAreaProperties) GetPlaceholder() string {
+	if x != nil && x.Placeholder != nil {
+		return *x.Placeholder
+	}
+	return ""
+}
+
+func (x *TextAreaProperties) GetMaxLength() int32 {
+	if x != nil && x.MaxLength != nil {
+		return *x.MaxLength
+	}
+	return 0
+}
+
+func (x *TextAreaProperties) GetWordWrap() bool {
+	if x != nil && x.WordWrap != nil {
+		return *x.WordWrap
+	}
+	return false
+}
+
+func (x *TextAreaProperties) GetTextColor() *Color {
+	if x != nil {
+		return x.TextColor
+	}
+	return nil
+}
+
+func (x *TextAreaProperties) GetPlaceholderColor() *Color {
+	if x != nil {
+		return x.PlaceholderColor
+	}
+	return nil
+}
+
+type ModalProperties struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	Text                  *string                `protobuf:"bytes,1,opt,name=text,proto3,oneof" json:"text,omitempty"`
+	Buttons               []string               `protobuf:"bytes,2,rep,name=buttons,proto3" json:"buttons,omitempty"`
+	TextColor             *Color                 `protobuf:"bytes,3,opt,name=text_color,json=textColor,proto3,oneof" json:"text_color,omitempty"`
+	BackgroundColor       *Color                 `protobuf:"bytes,4,opt,name=background_color,json=backgroundColor,proto3,oneof" json:"background_color,omitempty"`
+	ButtonBackgroundColor *Color                 `protobuf:"bytes,5,opt,name=button_background_color,json=buttonBackgroundColor,proto3,oneof" json:"button_background_color,omitempty"`
+	ButtonTextColor       *Color                 `protobuf:"bytes,6,opt,name=button_text_color,json=buttonTextColor,proto3,oneof" json:"button_text_color,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *ModalProperties) Reset() {
+	*x = ModalProperties{}
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ModalProperties) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ModalProperties) ProtoMessage() {}
+
+func (x *ModalProperties) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ModalProperties.ProtoReflect.Descriptor instead.
+func (*ModalProperties) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ModalProperties) GetText() string {
+	if x != nil && x.Text != nil {
+		return *x.Text
+	}
+	return ""
+}
+
+func (x *ModalProperties) GetButtons() []string {
+	if x != nil {
+		return x.Buttons
+	}
+	return nil
+}
+
+func (x *ModalProperties) GetTextColor() *Color {
+	if x != nil {
+		return x.TextColor
+	}
+	return nil
+}
+
+func (x *ModalProperties) GetBackgroundColor() *Color {
+	if x != nil {
+		return x.BackgroundColor
+	}
+	return nil
+}
+
+func (x *ModalProperties) GetButtonBackgroundColor() *Color {
+	if x != nil {
+		return x.ButtonBackgroundColor
+	}
+	return nil
+}
+
+func (x *ModalProperties) GetButtonTextColor() *Color {
+	if x != nil {
+		return x.ButtonTextColor
+	}
+	return nil
+}
+
+type ImageProperties struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ImageData     []byte                 `protobuf:"bytes,1,opt,name=image_data,json=imageData,proto3,oneof" json:"image_data,omitempty"`
+	ImagePath     *string                `protobuf:"bytes,2,opt,name=image_path,json=imagePath,proto3,oneof" json:"image_path,omitempty"`
+	Colors        *int32                 `protobuf:"varint,3,opt,name=colors,proto3,oneof" json:"colors,omitempty"`
+	Dithering     *bool                  `protobuf:"varint,4,opt,name=dithering,proto3,oneof" json:"dithering,omitempty"`
+	AspectRatio   *ImageAspectRatio      `protobuf:"varint,5,opt,name=aspect_ratio,json=aspectRatio,proto3,enum=industries.loosh.yutani.v1.ImageAspectRatio,oneof" json:"aspect_ratio,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImageProperties) Reset() {
+	*x = ImageProperties{}
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImageProperties) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImageProperties) ProtoMessage() {}
+
+func (x *ImageProperties) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImageProperties.ProtoReflect.Descriptor instead.
+func (*ImageProperties) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ImageProperties) GetImageData() []byte {
+	if x != nil {
+		return x.ImageData
+	}
+	return nil
+}
+
+func (x *ImageProperties) GetImagePath() string {
+	if x != nil && x.ImagePath != nil {
+		return *x.ImagePath
+	}
+	return ""
+}
+
+func (x *ImageProperties) GetColors() int32 {
+	if x != nil && x.Colors != nil {
+		return *x.Colors
+	}
+	return 0
+}
+
+func (x *ImageProperties) GetDithering() bool {
+	if x != nil && x.Dithering != nil {
+		return *x.Dithering
+	}
+	return false
+}
+
+func (x *ImageProperties) GetAspectRatio() ImageAspectRatio {
+	if x != nil && x.AspectRatio != nil {
+		return *x.AspectRatio
+	}
+	return ImageAspectRatio_IMAGE_ASPECT_NONE
+}
+
+type ProgressBarProperties struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Progress       *int32                 `protobuf:"varint,1,opt,name=progress,proto3,oneof" json:"progress,omitempty"`                                   // 0-100
+	Max            *int32                 `protobuf:"varint,2,opt,name=max,proto3,oneof" json:"max,omitempty"`                                             // Maximum value (default 100)
+	Label          *string                `protobuf:"bytes,3,opt,name=label,proto3,oneof" json:"label,omitempty"`                                          // Optional label
+	ShowPercentage *bool                  `protobuf:"varint,4,opt,name=show_percentage,json=showPercentage,proto3,oneof" json:"show_percentage,omitempty"` // Show percentage text
+	FilledColor    *Color                 `protobuf:"bytes,5,opt,name=filled_color,json=filledColor,proto3,oneof" json:"filled_color,omitempty"`
+	EmptyColor     *Color                 `protobuf:"bytes,6,opt,name=empty_color,json=emptyColor,proto3,oneof" json:"empty_color,omitempty"`
+	FilledChar     *string                `protobuf:"bytes,7,opt,name=filled_char,json=filledChar,proto3,oneof" json:"filled_char,omitempty"` // Character for filled portion
+	EmptyChar      *string                `protobuf:"bytes,8,opt,name=empty_char,json=emptyChar,proto3,oneof" json:"empty_char,omitempty"`    // Character for empty portion
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ProgressBarProperties) Reset() {
+	*x = ProgressBarProperties{}
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ProgressBarProperties) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ProgressBarProperties) ProtoMessage() {}
+
+func (x *ProgressBarProperties) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ProgressBarProperties.ProtoReflect.Descriptor instead.
+func (*ProgressBarProperties) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *ProgressBarProperties) GetProgress() int32 {
+	if x != nil && x.Progress != nil {
+		return *x.Progress
+	}
+	return 0
+}
+
+func (x *ProgressBarProperties) GetMax() int32 {
+	if x != nil && x.Max != nil {
+		return *x.Max
+	}
+	return 0
+}
+
+func (x *ProgressBarProperties) GetLabel() string {
+	if x != nil && x.Label != nil {
+		return *x.Label
+	}
+	return ""
+}
+
+func (x *ProgressBarProperties) GetShowPercentage() bool {
+	if x != nil && x.ShowPercentage != nil {
+		return *x.ShowPercentage
+	}
+	return false
+}
+
+func (x *ProgressBarProperties) GetFilledColor() *Color {
+	if x != nil {
+		return x.FilledColor
+	}
+	return nil
+}
+
+func (x *ProgressBarProperties) GetEmptyColor() *Color {
+	if x != nil {
+		return x.EmptyColor
+	}
+	return nil
+}
+
+func (x *ProgressBarProperties) GetFilledChar() string {
+	if x != nil && x.FilledChar != nil {
+		return *x.FilledChar
+	}
+	return ""
+}
+
+func (x *ProgressBarProperties) GetEmptyChar() string {
+	if x != nil && x.EmptyChar != nil {
+		return *x.EmptyChar
+	}
+	return ""
 }
 
 var File_industries_loosh_yutani_v1_types_proto protoreflect.FileDescriptor
@@ -2204,7 +2777,7 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\x03top\x18\x01 \x01(\x05R\x03top\x12\x16\n" +
 	"\x06bottom\x18\x02 \x01(\x05R\x06bottom\x12\x12\n" +
 	"\x04left\x18\x03 \x01(\x05R\x04left\x12\x14\n" +
-	"\x05right\x18\x04 \x01(\x05R\x05right\"\x8e\v\n" +
+	"\x05right\x18\x04 \x01(\x05R\x05right\"\x8d\x0e\n" +
 	"\x10WidgetProperties\x129\n" +
 	"\x04rect\x18\x01 \x01(\v2 .industries.loosh.yutani.v1.RectH\x01R\x04rect\x88\x01\x01\x12\x1b\n" +
 	"\x06border\x18\x02 \x01(\bH\x02R\x06border\x88\x01\x01\x12\x19\n" +
@@ -2220,14 +2793,19 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\vinput_field\x18\x15 \x01(\v20.industries.loosh.yutani.v1.InputFieldPropertiesH\x00R\n" +
 	"inputField\x12F\n" +
 	"\x06button\x18\x16 \x01(\v2,.industries.loosh.yutani.v1.ButtonPropertiesH\x00R\x06button\x12L\n" +
-	"\bcheckbox\x18\x17 \x01(\v2..industries.loosh.yutani.v1.CheckboxPropertiesH\x00R\bcheckbox\x12@\n" +
-	"\x04list\x18\x18 \x01(\v2*.industries.loosh.yutani.v1.ListPropertiesH\x00R\x04list\x12C\n" +
-	"\x05table\x18\x19 \x01(\v2+.industries.loosh.yutani.v1.TablePropertiesH\x00R\x05table\x12@\n" +
-	"\x04flex\x18\x1a \x01(\v2*.industries.loosh.yutani.v1.FlexPropertiesH\x00R\x04flex\x12@\n" +
-	"\x04grid\x18\x1b \x01(\v2*.industries.loosh.yutani.v1.GridPropertiesH\x00R\x04grid\x12@\n" +
-	"\x04tree\x18\x1c \x01(\v2*.industries.loosh.yutani.v1.TreePropertiesH\x00R\x04tree\x12@\n" +
-	"\x04form\x18\x1d \x01(\v2*.industries.loosh.yutani.v1.FormPropertiesH\x00R\x04form\x12C\n" +
-	"\x05pages\x18\x1e \x01(\v2+.industries.loosh.yutani.v1.PagesPropertiesH\x00R\x05pagesB\x11\n" +
+	"\bcheckbox\x18\x17 \x01(\v2..industries.loosh.yutani.v1.CheckboxPropertiesH\x00R\bcheckbox\x12L\n" +
+	"\bdropdown\x18\x18 \x01(\v2..industries.loosh.yutani.v1.DropdownPropertiesH\x00R\bdropdown\x12@\n" +
+	"\x04list\x18\x19 \x01(\v2*.industries.loosh.yutani.v1.ListPropertiesH\x00R\x04list\x12C\n" +
+	"\x05table\x18\x1a \x01(\v2+.industries.loosh.yutani.v1.TablePropertiesH\x00R\x05table\x12@\n" +
+	"\x04flex\x18\x1b \x01(\v2*.industries.loosh.yutani.v1.FlexPropertiesH\x00R\x04flex\x12@\n" +
+	"\x04grid\x18\x1c \x01(\v2*.industries.loosh.yutani.v1.GridPropertiesH\x00R\x04grid\x12@\n" +
+	"\x04tree\x18\x1d \x01(\v2*.industries.loosh.yutani.v1.TreePropertiesH\x00R\x04tree\x12@\n" +
+	"\x04form\x18\x1e \x01(\v2*.industries.loosh.yutani.v1.FormPropertiesH\x00R\x04form\x12C\n" +
+	"\x05pages\x18\x1f \x01(\v2+.industries.loosh.yutani.v1.PagesPropertiesH\x00R\x05pages\x12M\n" +
+	"\ttext_area\x18  \x01(\v2..industries.loosh.yutani.v1.TextAreaPropertiesH\x00R\btextArea\x12C\n" +
+	"\x05modal\x18! \x01(\v2+.industries.loosh.yutani.v1.ModalPropertiesH\x00R\x05modal\x12C\n" +
+	"\x05image\x18\" \x01(\v2+.industries.loosh.yutani.v1.ImagePropertiesH\x00R\x05image\x12V\n" +
+	"\fprogress_bar\x18# \x01(\v21.industries.loosh.yutani.v1.ProgressBarPropertiesH\x00R\vprogressBarB\x11\n" +
 	"\x0ftype_propertiesB\a\n" +
 	"\x05_rectB\t\n" +
 	"\a_borderB\b\n" +
@@ -2297,7 +2875,25 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\n" +
 	"\b_checkedB\x0e\n" +
 	"\f_label_colorB\x10\n" +
-	"\x0e_checked_color\"\xa6\x04\n" +
+	"\x0e_checked_color\"\xbd\x04\n" +
+	"\x12DropdownProperties\x12\x18\n" +
+	"\aoptions\x18\x01 \x03(\tR\aoptions\x12*\n" +
+	"\x0eselected_index\x18\x02 \x01(\x05H\x00R\rselectedIndex\x88\x01\x01\x12(\n" +
+	"\rselected_text\x18\x03 \x01(\tH\x01R\fselectedText\x88\x01\x01\x12G\n" +
+	"\vlabel_color\x18\x04 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x02R\n" +
+	"labelColor\x88\x01\x01\x12\\\n" +
+	"\x16field_background_color\x18\x05 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x03R\x14fieldBackgroundColor\x88\x01\x01\x12P\n" +
+	"\x10field_text_color\x18\x06 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x04R\x0efieldTextColor\x88\x01\x01\x12\x19\n" +
+	"\x05label\x18\a \x01(\tH\x05R\x05label\x88\x01\x01\x12$\n" +
+	"\vfield_width\x18\b \x01(\x05H\x06R\n" +
+	"fieldWidth\x88\x01\x01B\x11\n" +
+	"\x0f_selected_indexB\x10\n" +
+	"\x0e_selected_textB\x0e\n" +
+	"\f_label_colorB\x19\n" +
+	"\x17_field_background_colorB\x13\n" +
+	"\x11_field_text_colorB\b\n" +
+	"\x06_labelB\x0e\n" +
+	"\f_field_width\"\xa6\x04\n" +
 	"\x0eListProperties\x123\n" +
 	"\x13show_secondary_text\x18\x01 \x01(\bH\x00R\x11showSecondaryText\x88\x01\x01\x12N\n" +
 	"\x0fmain_text_color\x18\x02 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x01R\rmainTextColor\x88\x01\x01\x12X\n" +
@@ -2377,7 +2973,70 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\x0fshow_page_names\x18\x01 \x01(\bH\x00R\rshowPageNames\x88\x01\x01\x12N\n" +
 	"\x0fpage_name_color\x18\x02 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x01R\rpageNameColor\x88\x01\x01B\x12\n" +
 	"\x10_show_page_namesB\x12\n" +
-	"\x10_page_name_color*\x96\x01\n" +
+	"\x10_page_name_color\"\x91\x03\n" +
+	"\x12TextAreaProperties\x12\x17\n" +
+	"\x04text\x18\x01 \x01(\tH\x00R\x04text\x88\x01\x01\x12%\n" +
+	"\vplaceholder\x18\x02 \x01(\tH\x01R\vplaceholder\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"max_length\x18\x03 \x01(\x05H\x02R\tmaxLength\x88\x01\x01\x12 \n" +
+	"\tword_wrap\x18\x04 \x01(\bH\x03R\bwordWrap\x88\x01\x01\x12E\n" +
+	"\n" +
+	"text_color\x18\x05 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x04R\ttextColor\x88\x01\x01\x12S\n" +
+	"\x11placeholder_color\x18\x06 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x05R\x10placeholderColor\x88\x01\x01B\a\n" +
+	"\x05_textB\x0e\n" +
+	"\f_placeholderB\r\n" +
+	"\v_max_lengthB\f\n" +
+	"\n" +
+	"_word_wrapB\r\n" +
+	"\v_text_colorB\x14\n" +
+	"\x12_placeholder_color\"\xf1\x03\n" +
+	"\x0fModalProperties\x12\x17\n" +
+	"\x04text\x18\x01 \x01(\tH\x00R\x04text\x88\x01\x01\x12\x18\n" +
+	"\abuttons\x18\x02 \x03(\tR\abuttons\x12E\n" +
+	"\n" +
+	"text_color\x18\x03 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x01R\ttextColor\x88\x01\x01\x12Q\n" +
+	"\x10background_color\x18\x04 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x02R\x0fbackgroundColor\x88\x01\x01\x12^\n" +
+	"\x17button_background_color\x18\x05 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x03R\x15buttonBackgroundColor\x88\x01\x01\x12R\n" +
+	"\x11button_text_color\x18\x06 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x04R\x0fbuttonTextColor\x88\x01\x01B\a\n" +
+	"\x05_textB\r\n" +
+	"\v_text_colorB\x13\n" +
+	"\x11_background_colorB\x1a\n" +
+	"\x18_button_background_colorB\x14\n" +
+	"\x12_button_text_color\"\xb7\x02\n" +
+	"\x0fImageProperties\x12\"\n" +
+	"\n" +
+	"image_data\x18\x01 \x01(\fH\x00R\timageData\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"image_path\x18\x02 \x01(\tH\x01R\timagePath\x88\x01\x01\x12\x1b\n" +
+	"\x06colors\x18\x03 \x01(\x05H\x02R\x06colors\x88\x01\x01\x12!\n" +
+	"\tdithering\x18\x04 \x01(\bH\x03R\tdithering\x88\x01\x01\x12T\n" +
+	"\faspect_ratio\x18\x05 \x01(\x0e2,.industries.loosh.yutani.v1.ImageAspectRatioH\x04R\vaspectRatio\x88\x01\x01B\r\n" +
+	"\v_image_dataB\r\n" +
+	"\v_image_pathB\t\n" +
+	"\a_colorsB\f\n" +
+	"\n" +
+	"_ditheringB\x0f\n" +
+	"\r_aspect_ratio\"\xe9\x03\n" +
+	"\x15ProgressBarProperties\x12\x1f\n" +
+	"\bprogress\x18\x01 \x01(\x05H\x00R\bprogress\x88\x01\x01\x12\x15\n" +
+	"\x03max\x18\x02 \x01(\x05H\x01R\x03max\x88\x01\x01\x12\x19\n" +
+	"\x05label\x18\x03 \x01(\tH\x02R\x05label\x88\x01\x01\x12,\n" +
+	"\x0fshow_percentage\x18\x04 \x01(\bH\x03R\x0eshowPercentage\x88\x01\x01\x12I\n" +
+	"\ffilled_color\x18\x05 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x04R\vfilledColor\x88\x01\x01\x12G\n" +
+	"\vempty_color\x18\x06 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x05R\n" +
+	"emptyColor\x88\x01\x01\x12$\n" +
+	"\vfilled_char\x18\a \x01(\tH\x06R\n" +
+	"filledChar\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"empty_char\x18\b \x01(\tH\aR\temptyChar\x88\x01\x01B\v\n" +
+	"\t_progressB\x06\n" +
+	"\x04_maxB\b\n" +
+	"\x06_labelB\x12\n" +
+	"\x10_show_percentageB\x0f\n" +
+	"\r_filled_colorB\x0e\n" +
+	"\f_empty_colorB\x0e\n" +
+	"\f_filled_charB\r\n" +
+	"\v_empty_char*\x96\x01\n" +
 	"\tAttribute\x12\r\n" +
 	"\tATTR_NONE\x10\x00\x12\r\n" +
 	"\tATTR_BOLD\x10\x01\x12\x0f\n" +
@@ -2387,7 +3046,7 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\n" +
 	"ATTR_BLINK\x10\x05\x12\f\n" +
 	"\bATTR_DIM\x10\x06\x12\x16\n" +
-	"\x12ATTR_STRIKETHROUGH\x10\a*\xbf\x02\n" +
+	"\x12ATTR_STRIKETHROUGH\x10\a*\xd8\x02\n" +
 	"\n" +
 	"WidgetType\x12\x0e\n" +
 	"\n" +
@@ -2407,7 +3066,8 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\vWIDGET_GRID\x10\f\x12\x10\n" +
 	"\fWIDGET_PAGES\x10\r\x12\x10\n" +
 	"\fWIDGET_MODAL\x10\x0e\x12\x10\n" +
-	"\fWIDGET_IMAGE\x10\x0f*>\n" +
+	"\fWIDGET_IMAGE\x10\x0f\x12\x17\n" +
+	"\x13WIDGET_PROGRESS_BAR\x10\x10*>\n" +
 	"\tAlignment\x12\x0e\n" +
 	"\n" +
 	"ALIGN_LEFT\x10\x00\x12\x10\n" +
@@ -2415,7 +3075,10 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\vALIGN_RIGHT\x10\x02*.\n" +
 	"\rFlexDirection\x12\f\n" +
 	"\bFLEX_ROW\x10\x00\x12\x0f\n" +
-	"\vFLEX_COLUMN\x10\x01*\x84\x03\n" +
+	"\vFLEX_COLUMN\x10\x01*D\n" +
+	"\x10ImageAspectRatio\x12\x15\n" +
+	"\x11IMAGE_ASPECT_NONE\x10\x00\x12\x19\n" +
+	"\x15IMAGE_ASPECT_PRESERVE\x10\x01*\x84\x03\n" +
 	"\x03Key\x12\f\n" +
 	"\bKEY_RUNE\x10\x00\x12\n" +
 	"\n" +
@@ -2478,90 +3141,113 @@ func file_industries_loosh_yutani_v1_types_proto_rawDescGZIP() []byte {
 	return file_industries_loosh_yutani_v1_types_proto_rawDescData
 }
 
-var file_industries_loosh_yutani_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
-var file_industries_loosh_yutani_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_industries_loosh_yutani_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
+var file_industries_loosh_yutani_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_industries_loosh_yutani_v1_types_proto_goTypes = []any{
-	(Attribute)(0),               // 0: industries.loosh.yutani.v1.Attribute
-	(WidgetType)(0),              // 1: industries.loosh.yutani.v1.WidgetType
-	(Alignment)(0),               // 2: industries.loosh.yutani.v1.Alignment
-	(FlexDirection)(0),           // 3: industries.loosh.yutani.v1.FlexDirection
-	(Key)(0),                     // 4: industries.loosh.yutani.v1.Key
-	(Modifier)(0),                // 5: industries.loosh.yutani.v1.Modifier
-	(*Position)(nil),             // 6: industries.loosh.yutani.v1.Position
-	(*Size)(nil),                 // 7: industries.loosh.yutani.v1.Size
-	(*Rect)(nil),                 // 8: industries.loosh.yutani.v1.Rect
-	(*Color)(nil),                // 9: industries.loosh.yutani.v1.Color
-	(*RGB)(nil),                  // 10: industries.loosh.yutani.v1.RGB
-	(*Style)(nil),                // 11: industries.loosh.yutani.v1.Style
-	(*Cell)(nil),                 // 12: industries.loosh.yutani.v1.Cell
-	(*SessionId)(nil),            // 13: industries.loosh.yutani.v1.SessionId
-	(*WidgetId)(nil),             // 14: industries.loosh.yutani.v1.WidgetId
-	(*Padding)(nil),              // 15: industries.loosh.yutani.v1.Padding
-	(*WidgetProperties)(nil),     // 16: industries.loosh.yutani.v1.WidgetProperties
-	(*TextViewProperties)(nil),   // 17: industries.loosh.yutani.v1.TextViewProperties
-	(*InputFieldProperties)(nil), // 18: industries.loosh.yutani.v1.InputFieldProperties
-	(*ButtonProperties)(nil),     // 19: industries.loosh.yutani.v1.ButtonProperties
-	(*CheckboxProperties)(nil),   // 20: industries.loosh.yutani.v1.CheckboxProperties
-	(*ListProperties)(nil),       // 21: industries.loosh.yutani.v1.ListProperties
-	(*TableProperties)(nil),      // 22: industries.loosh.yutani.v1.TableProperties
-	(*FlexProperties)(nil),       // 23: industries.loosh.yutani.v1.FlexProperties
-	(*GridProperties)(nil),       // 24: industries.loosh.yutani.v1.GridProperties
-	(*TreeProperties)(nil),       // 25: industries.loosh.yutani.v1.TreeProperties
-	(*FormProperties)(nil),       // 26: industries.loosh.yutani.v1.FormProperties
-	(*PagesProperties)(nil),      // 27: industries.loosh.yutani.v1.PagesProperties
+	(Attribute)(0),                // 0: industries.loosh.yutani.v1.Attribute
+	(WidgetType)(0),               // 1: industries.loosh.yutani.v1.WidgetType
+	(Alignment)(0),                // 2: industries.loosh.yutani.v1.Alignment
+	(FlexDirection)(0),            // 3: industries.loosh.yutani.v1.FlexDirection
+	(ImageAspectRatio)(0),         // 4: industries.loosh.yutani.v1.ImageAspectRatio
+	(Key)(0),                      // 5: industries.loosh.yutani.v1.Key
+	(Modifier)(0),                 // 6: industries.loosh.yutani.v1.Modifier
+	(*Position)(nil),              // 7: industries.loosh.yutani.v1.Position
+	(*Size)(nil),                  // 8: industries.loosh.yutani.v1.Size
+	(*Rect)(nil),                  // 9: industries.loosh.yutani.v1.Rect
+	(*Color)(nil),                 // 10: industries.loosh.yutani.v1.Color
+	(*RGB)(nil),                   // 11: industries.loosh.yutani.v1.RGB
+	(*Style)(nil),                 // 12: industries.loosh.yutani.v1.Style
+	(*Cell)(nil),                  // 13: industries.loosh.yutani.v1.Cell
+	(*SessionId)(nil),             // 14: industries.loosh.yutani.v1.SessionId
+	(*WidgetId)(nil),              // 15: industries.loosh.yutani.v1.WidgetId
+	(*Padding)(nil),               // 16: industries.loosh.yutani.v1.Padding
+	(*WidgetProperties)(nil),      // 17: industries.loosh.yutani.v1.WidgetProperties
+	(*TextViewProperties)(nil),    // 18: industries.loosh.yutani.v1.TextViewProperties
+	(*InputFieldProperties)(nil),  // 19: industries.loosh.yutani.v1.InputFieldProperties
+	(*ButtonProperties)(nil),      // 20: industries.loosh.yutani.v1.ButtonProperties
+	(*CheckboxProperties)(nil),    // 21: industries.loosh.yutani.v1.CheckboxProperties
+	(*DropdownProperties)(nil),    // 22: industries.loosh.yutani.v1.DropdownProperties
+	(*ListProperties)(nil),        // 23: industries.loosh.yutani.v1.ListProperties
+	(*TableProperties)(nil),       // 24: industries.loosh.yutani.v1.TableProperties
+	(*FlexProperties)(nil),        // 25: industries.loosh.yutani.v1.FlexProperties
+	(*GridProperties)(nil),        // 26: industries.loosh.yutani.v1.GridProperties
+	(*TreeProperties)(nil),        // 27: industries.loosh.yutani.v1.TreeProperties
+	(*FormProperties)(nil),        // 28: industries.loosh.yutani.v1.FormProperties
+	(*PagesProperties)(nil),       // 29: industries.loosh.yutani.v1.PagesProperties
+	(*TextAreaProperties)(nil),    // 30: industries.loosh.yutani.v1.TextAreaProperties
+	(*ModalProperties)(nil),       // 31: industries.loosh.yutani.v1.ModalProperties
+	(*ImageProperties)(nil),       // 32: industries.loosh.yutani.v1.ImageProperties
+	(*ProgressBarProperties)(nil), // 33: industries.loosh.yutani.v1.ProgressBarProperties
 }
 var file_industries_loosh_yutani_v1_types_proto_depIdxs = []int32{
-	10, // 0: industries.loosh.yutani.v1.Color.rgb:type_name -> industries.loosh.yutani.v1.RGB
-	9,  // 1: industries.loosh.yutani.v1.Style.foreground:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 2: industries.loosh.yutani.v1.Style.background:type_name -> industries.loosh.yutani.v1.Color
+	11, // 0: industries.loosh.yutani.v1.Color.rgb:type_name -> industries.loosh.yutani.v1.RGB
+	10, // 1: industries.loosh.yutani.v1.Style.foreground:type_name -> industries.loosh.yutani.v1.Color
+	10, // 2: industries.loosh.yutani.v1.Style.background:type_name -> industries.loosh.yutani.v1.Color
 	0,  // 3: industries.loosh.yutani.v1.Style.attributes:type_name -> industries.loosh.yutani.v1.Attribute
-	11, // 4: industries.loosh.yutani.v1.Cell.style:type_name -> industries.loosh.yutani.v1.Style
-	8,  // 5: industries.loosh.yutani.v1.WidgetProperties.rect:type_name -> industries.loosh.yutani.v1.Rect
+	12, // 4: industries.loosh.yutani.v1.Cell.style:type_name -> industries.loosh.yutani.v1.Style
+	9,  // 5: industries.loosh.yutani.v1.WidgetProperties.rect:type_name -> industries.loosh.yutani.v1.Rect
 	2,  // 6: industries.loosh.yutani.v1.WidgetProperties.title_align:type_name -> industries.loosh.yutani.v1.Alignment
-	9,  // 7: industries.loosh.yutani.v1.WidgetProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 8: industries.loosh.yutani.v1.WidgetProperties.border_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 9: industries.loosh.yutani.v1.WidgetProperties.title_color:type_name -> industries.loosh.yutani.v1.Color
-	15, // 10: industries.loosh.yutani.v1.WidgetProperties.padding:type_name -> industries.loosh.yutani.v1.Padding
-	17, // 11: industries.loosh.yutani.v1.WidgetProperties.text_view:type_name -> industries.loosh.yutani.v1.TextViewProperties
-	18, // 12: industries.loosh.yutani.v1.WidgetProperties.input_field:type_name -> industries.loosh.yutani.v1.InputFieldProperties
-	19, // 13: industries.loosh.yutani.v1.WidgetProperties.button:type_name -> industries.loosh.yutani.v1.ButtonProperties
-	20, // 14: industries.loosh.yutani.v1.WidgetProperties.checkbox:type_name -> industries.loosh.yutani.v1.CheckboxProperties
-	21, // 15: industries.loosh.yutani.v1.WidgetProperties.list:type_name -> industries.loosh.yutani.v1.ListProperties
-	22, // 16: industries.loosh.yutani.v1.WidgetProperties.table:type_name -> industries.loosh.yutani.v1.TableProperties
-	23, // 17: industries.loosh.yutani.v1.WidgetProperties.flex:type_name -> industries.loosh.yutani.v1.FlexProperties
-	24, // 18: industries.loosh.yutani.v1.WidgetProperties.grid:type_name -> industries.loosh.yutani.v1.GridProperties
-	25, // 19: industries.loosh.yutani.v1.WidgetProperties.tree:type_name -> industries.loosh.yutani.v1.TreeProperties
-	26, // 20: industries.loosh.yutani.v1.WidgetProperties.form:type_name -> industries.loosh.yutani.v1.FormProperties
-	27, // 21: industries.loosh.yutani.v1.WidgetProperties.pages:type_name -> industries.loosh.yutani.v1.PagesProperties
-	9,  // 22: industries.loosh.yutani.v1.TextViewProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 23: industries.loosh.yutani.v1.InputFieldProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 24: industries.loosh.yutani.v1.InputFieldProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 25: industries.loosh.yutani.v1.InputFieldProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 26: industries.loosh.yutani.v1.ButtonProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 27: industries.loosh.yutani.v1.ButtonProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 28: industries.loosh.yutani.v1.ButtonProperties.activated_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 29: industries.loosh.yutani.v1.CheckboxProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 30: industries.loosh.yutani.v1.CheckboxProperties.checked_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 31: industries.loosh.yutani.v1.ListProperties.main_text_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 32: industries.loosh.yutani.v1.ListProperties.secondary_text_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 33: industries.loosh.yutani.v1.ListProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 34: industries.loosh.yutani.v1.ListProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 35: industries.loosh.yutani.v1.TableProperties.borders_color:type_name -> industries.loosh.yutani.v1.Color
-	3,  // 36: industries.loosh.yutani.v1.FlexProperties.direction:type_name -> industries.loosh.yutani.v1.FlexDirection
-	9,  // 37: industries.loosh.yutani.v1.TreeProperties.node_text_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 38: industries.loosh.yutani.v1.TreeProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 39: industries.loosh.yutani.v1.TreeProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 40: industries.loosh.yutani.v1.FormProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 41: industries.loosh.yutani.v1.FormProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 42: industries.loosh.yutani.v1.FormProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 43: industries.loosh.yutani.v1.FormProperties.button_background_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 44: industries.loosh.yutani.v1.FormProperties.button_text_color:type_name -> industries.loosh.yutani.v1.Color
-	9,  // 45: industries.loosh.yutani.v1.PagesProperties.page_name_color:type_name -> industries.loosh.yutani.v1.Color
-	46, // [46:46] is the sub-list for method output_type
-	46, // [46:46] is the sub-list for method input_type
-	46, // [46:46] is the sub-list for extension type_name
-	46, // [46:46] is the sub-list for extension extendee
-	0,  // [0:46] is the sub-list for field type_name
+	10, // 7: industries.loosh.yutani.v1.WidgetProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 8: industries.loosh.yutani.v1.WidgetProperties.border_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 9: industries.loosh.yutani.v1.WidgetProperties.title_color:type_name -> industries.loosh.yutani.v1.Color
+	16, // 10: industries.loosh.yutani.v1.WidgetProperties.padding:type_name -> industries.loosh.yutani.v1.Padding
+	18, // 11: industries.loosh.yutani.v1.WidgetProperties.text_view:type_name -> industries.loosh.yutani.v1.TextViewProperties
+	19, // 12: industries.loosh.yutani.v1.WidgetProperties.input_field:type_name -> industries.loosh.yutani.v1.InputFieldProperties
+	20, // 13: industries.loosh.yutani.v1.WidgetProperties.button:type_name -> industries.loosh.yutani.v1.ButtonProperties
+	21, // 14: industries.loosh.yutani.v1.WidgetProperties.checkbox:type_name -> industries.loosh.yutani.v1.CheckboxProperties
+	22, // 15: industries.loosh.yutani.v1.WidgetProperties.dropdown:type_name -> industries.loosh.yutani.v1.DropdownProperties
+	23, // 16: industries.loosh.yutani.v1.WidgetProperties.list:type_name -> industries.loosh.yutani.v1.ListProperties
+	24, // 17: industries.loosh.yutani.v1.WidgetProperties.table:type_name -> industries.loosh.yutani.v1.TableProperties
+	25, // 18: industries.loosh.yutani.v1.WidgetProperties.flex:type_name -> industries.loosh.yutani.v1.FlexProperties
+	26, // 19: industries.loosh.yutani.v1.WidgetProperties.grid:type_name -> industries.loosh.yutani.v1.GridProperties
+	27, // 20: industries.loosh.yutani.v1.WidgetProperties.tree:type_name -> industries.loosh.yutani.v1.TreeProperties
+	28, // 21: industries.loosh.yutani.v1.WidgetProperties.form:type_name -> industries.loosh.yutani.v1.FormProperties
+	29, // 22: industries.loosh.yutani.v1.WidgetProperties.pages:type_name -> industries.loosh.yutani.v1.PagesProperties
+	30, // 23: industries.loosh.yutani.v1.WidgetProperties.text_area:type_name -> industries.loosh.yutani.v1.TextAreaProperties
+	31, // 24: industries.loosh.yutani.v1.WidgetProperties.modal:type_name -> industries.loosh.yutani.v1.ModalProperties
+	32, // 25: industries.loosh.yutani.v1.WidgetProperties.image:type_name -> industries.loosh.yutani.v1.ImageProperties
+	33, // 26: industries.loosh.yutani.v1.WidgetProperties.progress_bar:type_name -> industries.loosh.yutani.v1.ProgressBarProperties
+	10, // 27: industries.loosh.yutani.v1.TextViewProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 28: industries.loosh.yutani.v1.InputFieldProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 29: industries.loosh.yutani.v1.InputFieldProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 30: industries.loosh.yutani.v1.InputFieldProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 31: industries.loosh.yutani.v1.ButtonProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 32: industries.loosh.yutani.v1.ButtonProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 33: industries.loosh.yutani.v1.ButtonProperties.activated_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 34: industries.loosh.yutani.v1.CheckboxProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 35: industries.loosh.yutani.v1.CheckboxProperties.checked_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 36: industries.loosh.yutani.v1.DropdownProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 37: industries.loosh.yutani.v1.DropdownProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 38: industries.loosh.yutani.v1.DropdownProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 39: industries.loosh.yutani.v1.ListProperties.main_text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 40: industries.loosh.yutani.v1.ListProperties.secondary_text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 41: industries.loosh.yutani.v1.ListProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 42: industries.loosh.yutani.v1.ListProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 43: industries.loosh.yutani.v1.TableProperties.borders_color:type_name -> industries.loosh.yutani.v1.Color
+	3,  // 44: industries.loosh.yutani.v1.FlexProperties.direction:type_name -> industries.loosh.yutani.v1.FlexDirection
+	10, // 45: industries.loosh.yutani.v1.TreeProperties.node_text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 46: industries.loosh.yutani.v1.TreeProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 47: industries.loosh.yutani.v1.TreeProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 48: industries.loosh.yutani.v1.FormProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 49: industries.loosh.yutani.v1.FormProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 50: industries.loosh.yutani.v1.FormProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 51: industries.loosh.yutani.v1.FormProperties.button_background_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 52: industries.loosh.yutani.v1.FormProperties.button_text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 53: industries.loosh.yutani.v1.PagesProperties.page_name_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 54: industries.loosh.yutani.v1.TextAreaProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 55: industries.loosh.yutani.v1.TextAreaProperties.placeholder_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 56: industries.loosh.yutani.v1.ModalProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 57: industries.loosh.yutani.v1.ModalProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 58: industries.loosh.yutani.v1.ModalProperties.button_background_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 59: industries.loosh.yutani.v1.ModalProperties.button_text_color:type_name -> industries.loosh.yutani.v1.Color
+	4,  // 60: industries.loosh.yutani.v1.ImageProperties.aspect_ratio:type_name -> industries.loosh.yutani.v1.ImageAspectRatio
+	10, // 61: industries.loosh.yutani.v1.ProgressBarProperties.filled_color:type_name -> industries.loosh.yutani.v1.Color
+	10, // 62: industries.loosh.yutani.v1.ProgressBarProperties.empty_color:type_name -> industries.loosh.yutani.v1.Color
+	63, // [63:63] is the sub-list for method output_type
+	63, // [63:63] is the sub-list for method input_type
+	63, // [63:63] is the sub-list for extension type_name
+	63, // [63:63] is the sub-list for extension extendee
+	0,  // [0:63] is the sub-list for field type_name
 }
 
 func init() { file_industries_loosh_yutani_v1_types_proto_init() }
@@ -2579,6 +3265,7 @@ func file_industries_loosh_yutani_v1_types_proto_init() {
 		(*WidgetProperties_InputField)(nil),
 		(*WidgetProperties_Button)(nil),
 		(*WidgetProperties_Checkbox)(nil),
+		(*WidgetProperties_Dropdown)(nil),
 		(*WidgetProperties_List)(nil),
 		(*WidgetProperties_Table)(nil),
 		(*WidgetProperties_Flex)(nil),
@@ -2586,6 +3273,10 @@ func file_industries_loosh_yutani_v1_types_proto_init() {
 		(*WidgetProperties_Tree)(nil),
 		(*WidgetProperties_Form)(nil),
 		(*WidgetProperties_Pages)(nil),
+		(*WidgetProperties_TextArea)(nil),
+		(*WidgetProperties_Modal)(nil),
+		(*WidgetProperties_Image)(nil),
+		(*WidgetProperties_ProgressBar)(nil),
 	}
 	file_industries_loosh_yutani_v1_types_proto_msgTypes[11].OneofWrappers = []any{}
 	file_industries_loosh_yutani_v1_types_proto_msgTypes[12].OneofWrappers = []any{}
@@ -2598,13 +3289,18 @@ func file_industries_loosh_yutani_v1_types_proto_init() {
 	file_industries_loosh_yutani_v1_types_proto_msgTypes[19].OneofWrappers = []any{}
 	file_industries_loosh_yutani_v1_types_proto_msgTypes[20].OneofWrappers = []any{}
 	file_industries_loosh_yutani_v1_types_proto_msgTypes[21].OneofWrappers = []any{}
+	file_industries_loosh_yutani_v1_types_proto_msgTypes[22].OneofWrappers = []any{}
+	file_industries_loosh_yutani_v1_types_proto_msgTypes[23].OneofWrappers = []any{}
+	file_industries_loosh_yutani_v1_types_proto_msgTypes[24].OneofWrappers = []any{}
+	file_industries_loosh_yutani_v1_types_proto_msgTypes[25].OneofWrappers = []any{}
+	file_industries_loosh_yutani_v1_types_proto_msgTypes[26].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_industries_loosh_yutani_v1_types_proto_rawDesc), len(file_industries_loosh_yutani_v1_types_proto_rawDesc)),
-			NumEnums:      6,
-			NumMessages:   22,
+			NumEnums:      7,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

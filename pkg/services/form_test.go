@@ -9,15 +9,7 @@ import (
 )
 
 func TestFormService_AddField(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	formService := NewFormService(srv)
 	widgetService := NewWidgetService(srv)
@@ -107,15 +99,7 @@ func TestFormService_AddField(t *testing.T) {
 }
 
 func TestFormService_AddButton(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	formService := NewFormService(srv)
 	widgetService := NewWidgetService(srv)
@@ -170,15 +154,7 @@ func TestFormService_AddButton(t *testing.T) {
 }
 
 func TestFormService_GetSetFieldValue(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	formService := NewFormService(srv)
 	widgetService := NewWidgetService(srv)
@@ -305,15 +281,7 @@ func TestFormService_GetSetFieldValue(t *testing.T) {
 }
 
 func TestFormService_Clear(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	formService := NewFormService(srv)
 	widgetService := NewWidgetService(srv)
@@ -383,15 +351,7 @@ func TestFormService_Clear(t *testing.T) {
 }
 
 func TestFormService_GetItemCount(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	formService := NewFormService(srv)
 	widgetService := NewWidgetService(srv)

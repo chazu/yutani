@@ -3,6 +3,7 @@ package server
 import (
 	"log/slog"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	pb "github.com/chazu/yutani/pkg/proto/yutani"
@@ -20,6 +21,12 @@ type EventSubscriber struct {
 	Filter    *pb.EventFilter
 	Events    chan *pb.Event
 	Done      chan struct{}
+	closed    atomic.Bool
+}
+
+// IsClosed returns true if the subscriber has been closed
+func (s *EventSubscriber) IsClosed() bool {
+	return s.closed.Load()
 }
 
 // NewEventDispatcher creates a new event dispatcher
@@ -36,8 +43,10 @@ func (d *EventDispatcher) Subscribe(sessionID string, filter *pb.EventFilter) *E
 
 	// Close existing subscription if any
 	if existing, ok := d.subscribers[sessionID]; ok {
+		// Mark as closed first to prevent sends
+		existing.closed.Store(true)
 		close(existing.Done)
-		close(existing.Events)
+		// Don't close Events here - let the consumer drain it
 	}
 
 	// Create new subscriber with buffered channel
@@ -58,8 +67,9 @@ func (d *EventDispatcher) Unsubscribe(sessionID string) {
 	defer d.mu.Unlock()
 
 	if sub, ok := d.subscribers[sessionID]; ok {
+		// Mark as closed first to prevent sends
+		sub.closed.Store(true)
 		close(sub.Done)
-		close(sub.Events)
 		delete(d.subscribers, sessionID)
 	}
 }
@@ -78,6 +88,12 @@ func (d *EventDispatcher) Dispatch(event *pb.Event) {
 	sub, ok := d.subscribers[sessionID]
 	if !ok {
 		slog.Debug("Event dispatch: no subscriber", "session_id", sessionID)
+		return
+	}
+
+	// Check if subscriber is closed
+	if sub.closed.Load() {
+		slog.Debug("Event dispatch: subscriber closed", "session_id", sessionID)
 		return
 	}
 

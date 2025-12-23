@@ -112,3 +112,17 @@ func (btn *Button) SetLabel(label string) error {
 	})
 }
 
+// GetLabel returns the current label of the button.
+func (btn *Button) GetLabel() (string, error) {
+	props, err := btn.GetProperties()
+	if err != nil {
+		return "", err
+	}
+	if buttonProps := props.GetButton(); buttonProps != nil {
+		if buttonProps.Label != nil {
+			return *buttonProps.Label, nil
+		}
+	}
+	return "", nil
+}
+

@@ -177,9 +177,10 @@ func (s *ScreenService) SetCell(ctx context.Context, req *pb.SetCellRequest) (*p
 		return nil, status.Error(codes.Unavailable, "screen not initialized")
 	}
 
-	// Queue the operation
+	// Queue the operation - use QueueUpdate (not QueueUpdateDraw) to avoid
+	// triggering a full widget redraw which would overwrite our cell changes
 	done := make(chan error, 1)
-	s.server.App().QueueUpdateDraw(func() {
+	s.server.App().QueueUpdate(func() {
 		style := tcell.StyleDefault
 		if req.Cell != nil && req.Cell.Style != nil {
 			style = convertStyle(req.Cell.Style)
@@ -192,6 +193,7 @@ func (s *ScreenService) SetCell(ctx context.Context, req *pb.SetCellRequest) (*p
 		}
 
 		screen.SetContent(int(req.Position.X), int(req.Position.Y), ch, nil, style)
+		screen.Show() // Commit changes to screen buffer
 		done <- nil
 	})
 

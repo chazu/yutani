@@ -9,15 +9,7 @@ import (
 )
 
 func TestListService_AddItem(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	widgetSvc := NewWidgetService(srv)
 	listSvc := NewListService(srv)
@@ -74,15 +66,7 @@ func TestListService_AddItem(t *testing.T) {
 }
 
 func TestListService_RemoveItem(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	widgetSvc := NewWidgetService(srv)
 	listSvc := NewListService(srv)
@@ -147,15 +131,7 @@ func TestListService_RemoveItem(t *testing.T) {
 }
 
 func TestListService_Clear(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	widgetSvc := NewWidgetService(srv)
 	listSvc := NewListService(srv)
@@ -219,15 +195,7 @@ func TestListService_Clear(t *testing.T) {
 }
 
 func TestListService_GetSetSelected(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	widgetSvc := NewWidgetService(srv)
 	listSvc := NewListService(srv)
@@ -292,15 +260,7 @@ func TestListService_GetSetSelected(t *testing.T) {
 }
 
 func TestListService_GetItem(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	widgetSvc := NewWidgetService(srv)
 	listSvc := NewListService(srv)

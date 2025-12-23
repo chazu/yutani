@@ -157,14 +157,17 @@ func TestEventDispatcher_Unsubscribe(t *testing.T) {
 	// Unsubscribe
 	dispatcher.Unsubscribe(sessionID)
 
-	// Channels should be closed
+	// Subscriber should be marked as closed
+	if !sub.IsClosed() {
+		t.Error("Subscriber should be marked as closed")
+	}
+
+	// Done channel should be closed
 	select {
-	case _, ok := <-sub.Events:
-		if ok {
-			t.Error("Events channel should be closed")
-		}
+	case <-sub.Done:
+		// Expected - Done is closed
 	case <-time.After(100 * time.Millisecond):
-		t.Error("Timeout waiting for channel close")
+		t.Error("Timeout waiting for Done channel close")
 	}
 }
 

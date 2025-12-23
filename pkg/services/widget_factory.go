@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	pb "github.com/chazu/yutani/pkg/proto/yutani"
 	"github.com/rivo/tview"
 )
@@ -436,4 +438,455 @@ func (s *WidgetService) createPages(props *pb.WidgetProperties) *tview.Pages {
 		// Pages doesn't have many configurable properties in tview
 	}
 	return pages
+}
+
+func (s *WidgetService) createDropdown(props *pb.WidgetProperties) *tview.DropDown {
+	dd := tview.NewDropDown()
+	if props != nil {
+		s.applyBoxProperties(dd.Box, props)
+		if props.TypeProperties != nil {
+			if ddProps, ok := props.TypeProperties.(*pb.WidgetProperties_Dropdown); ok && ddProps.Dropdown != nil {
+				if ddProps.Dropdown.Label != nil {
+					dd.SetLabel(*ddProps.Dropdown.Label)
+				}
+				if len(ddProps.Dropdown.Options) > 0 {
+					dd.SetOptions(ddProps.Dropdown.Options, nil)
+				}
+				if ddProps.Dropdown.SelectedIndex != nil {
+					dd.SetCurrentOption(int(*ddProps.Dropdown.SelectedIndex))
+				}
+				if ddProps.Dropdown.FieldWidth != nil {
+					dd.SetFieldWidth(int(*ddProps.Dropdown.FieldWidth))
+				}
+				if ddProps.Dropdown.LabelColor != nil {
+					dd.SetLabelColor(convertColor(ddProps.Dropdown.LabelColor))
+				}
+				if ddProps.Dropdown.FieldTextColor != nil {
+					dd.SetFieldTextColor(convertColor(ddProps.Dropdown.FieldTextColor))
+				}
+				if ddProps.Dropdown.FieldBackgroundColor != nil {
+					dd.SetFieldBackgroundColor(convertColor(ddProps.Dropdown.FieldBackgroundColor))
+				}
+			}
+		}
+	}
+	return dd
+}
+
+// applyDropdownProperties applies Dropdown-specific properties
+func (s *WidgetService) applyDropdownProperties(dd *tview.DropDown, props *pb.WidgetProperties) error {
+	if props.TypeProperties == nil {
+		return nil
+	}
+
+	ddProps, ok := props.TypeProperties.(*pb.WidgetProperties_Dropdown)
+	if !ok || ddProps.Dropdown == nil {
+		return nil
+	}
+
+	if ddProps.Dropdown.Label != nil {
+		dd.SetLabel(*ddProps.Dropdown.Label)
+	}
+	if len(ddProps.Dropdown.Options) > 0 {
+		dd.SetOptions(ddProps.Dropdown.Options, nil)
+	}
+	if ddProps.Dropdown.SelectedIndex != nil {
+		dd.SetCurrentOption(int(*ddProps.Dropdown.SelectedIndex))
+	}
+	if ddProps.Dropdown.FieldWidth != nil {
+		dd.SetFieldWidth(int(*ddProps.Dropdown.FieldWidth))
+	}
+	if ddProps.Dropdown.LabelColor != nil {
+		dd.SetLabelColor(convertColor(ddProps.Dropdown.LabelColor))
+	}
+	if ddProps.Dropdown.FieldTextColor != nil {
+		dd.SetFieldTextColor(convertColor(ddProps.Dropdown.FieldTextColor))
+	}
+	if ddProps.Dropdown.FieldBackgroundColor != nil {
+		dd.SetFieldBackgroundColor(convertColor(ddProps.Dropdown.FieldBackgroundColor))
+	}
+
+	return nil
+}
+
+// TextArea widget
+
+func (s *WidgetService) createTextArea(props *pb.WidgetProperties) *tview.TextArea {
+	ta := tview.NewTextArea()
+	if props != nil {
+		s.applyBoxProperties(ta.Box, props)
+		if props.TypeProperties != nil {
+			if taProps, ok := props.TypeProperties.(*pb.WidgetProperties_TextArea); ok && taProps.TextArea != nil {
+				if taProps.TextArea.Text != nil {
+					ta.SetText(*taProps.TextArea.Text, true)
+				}
+				if taProps.TextArea.Placeholder != nil {
+					ta.SetPlaceholder(*taProps.TextArea.Placeholder)
+				}
+				if taProps.TextArea.MaxLength != nil {
+					ta.SetMaxLength(int(*taProps.TextArea.MaxLength))
+				}
+				if taProps.TextArea.WordWrap != nil {
+					ta.SetWordWrap(*taProps.TextArea.WordWrap)
+				}
+				if taProps.TextArea.TextColor != nil {
+					ta.SetTextStyle(ta.GetTextStyle().Foreground(convertColor(taProps.TextArea.TextColor)))
+				}
+				if taProps.TextArea.PlaceholderColor != nil {
+					ta.SetPlaceholderStyle(ta.GetPlaceholderStyle().Foreground(convertColor(taProps.TextArea.PlaceholderColor)))
+				}
+			}
+		}
+	}
+	return ta
+}
+
+func (s *WidgetService) applyTextAreaProperties(ta *tview.TextArea, props *pb.WidgetProperties) error {
+	if props.TypeProperties == nil {
+		return nil
+	}
+
+	taProps, ok := props.TypeProperties.(*pb.WidgetProperties_TextArea)
+	if !ok || taProps.TextArea == nil {
+		return nil
+	}
+
+	if taProps.TextArea.Text != nil {
+		ta.SetText(*taProps.TextArea.Text, true)
+	}
+	if taProps.TextArea.Placeholder != nil {
+		ta.SetPlaceholder(*taProps.TextArea.Placeholder)
+	}
+	if taProps.TextArea.MaxLength != nil {
+		ta.SetMaxLength(int(*taProps.TextArea.MaxLength))
+	}
+	if taProps.TextArea.WordWrap != nil {
+		ta.SetWordWrap(*taProps.TextArea.WordWrap)
+	}
+	if taProps.TextArea.TextColor != nil {
+		ta.SetTextStyle(ta.GetTextStyle().Foreground(convertColor(taProps.TextArea.TextColor)))
+	}
+	if taProps.TextArea.PlaceholderColor != nil {
+		ta.SetPlaceholderStyle(ta.GetPlaceholderStyle().Foreground(convertColor(taProps.TextArea.PlaceholderColor)))
+	}
+
+	return nil
+}
+
+// Modal widget
+
+func (s *WidgetService) createModal(props *pb.WidgetProperties) *tview.Modal {
+	modal := tview.NewModal()
+	if props != nil {
+		// Modal doesn't expose Box directly, but we can set title via SetTitle if border is set
+		if props.Title != nil {
+			modal.SetTitle(*props.Title)
+		}
+		if props.Border != nil {
+			modal.SetBorder(*props.Border)
+		}
+		if props.TypeProperties != nil {
+			if modalProps, ok := props.TypeProperties.(*pb.WidgetProperties_Modal); ok && modalProps.Modal != nil {
+				if modalProps.Modal.Text != nil {
+					modal.SetText(*modalProps.Modal.Text)
+				}
+				if len(modalProps.Modal.Buttons) > 0 {
+					modal.AddButtons(modalProps.Modal.Buttons)
+				}
+				if modalProps.Modal.TextColor != nil {
+					modal.SetTextColor(convertColor(modalProps.Modal.TextColor))
+				}
+				if modalProps.Modal.BackgroundColor != nil {
+					modal.SetBackgroundColor(convertColor(modalProps.Modal.BackgroundColor))
+				}
+				if modalProps.Modal.ButtonBackgroundColor != nil {
+					modal.SetButtonBackgroundColor(convertColor(modalProps.Modal.ButtonBackgroundColor))
+				}
+				if modalProps.Modal.ButtonTextColor != nil {
+					modal.SetButtonTextColor(convertColor(modalProps.Modal.ButtonTextColor))
+				}
+			}
+		}
+	}
+	return modal
+}
+
+func (s *WidgetService) applyModalProperties(modal *tview.Modal, props *pb.WidgetProperties) error {
+	if props.TypeProperties == nil {
+		return nil
+	}
+
+	modalProps, ok := props.TypeProperties.(*pb.WidgetProperties_Modal)
+	if !ok || modalProps.Modal == nil {
+		return nil
+	}
+
+	if modalProps.Modal.Text != nil {
+		modal.SetText(*modalProps.Modal.Text)
+	}
+	if len(modalProps.Modal.Buttons) > 0 {
+		modal.ClearButtons()
+		modal.AddButtons(modalProps.Modal.Buttons)
+	}
+	if modalProps.Modal.TextColor != nil {
+		modal.SetTextColor(convertColor(modalProps.Modal.TextColor))
+	}
+	if modalProps.Modal.BackgroundColor != nil {
+		modal.SetBackgroundColor(convertColor(modalProps.Modal.BackgroundColor))
+	}
+	if modalProps.Modal.ButtonBackgroundColor != nil {
+		modal.SetButtonBackgroundColor(convertColor(modalProps.Modal.ButtonBackgroundColor))
+	}
+	if modalProps.Modal.ButtonTextColor != nil {
+		modal.SetButtonTextColor(convertColor(modalProps.Modal.ButtonTextColor))
+	}
+
+	return nil
+}
+
+// Image widget
+
+func (s *WidgetService) createImage(props *pb.WidgetProperties) *tview.Image {
+	img := tview.NewImage()
+	if props != nil {
+		s.applyBoxProperties(img.Box, props)
+		if props.TypeProperties != nil {
+			if imgProps, ok := props.TypeProperties.(*pb.WidgetProperties_Image); ok && imgProps.Image != nil {
+				if imgProps.Image.Colors != nil {
+					img.SetColors(int(*imgProps.Image.Colors))
+				}
+				if imgProps.Image.Dithering != nil {
+					img.SetDithering(tview.DitheringFloydSteinberg)
+				}
+				// Note: Image data/path would need special handling to load the image
+			}
+		}
+	}
+	return img
+}
+
+func (s *WidgetService) applyImageProperties(img *tview.Image, props *pb.WidgetProperties) error {
+	if props.TypeProperties == nil {
+		return nil
+	}
+
+	imgProps, ok := props.TypeProperties.(*pb.WidgetProperties_Image)
+	if !ok || imgProps.Image == nil {
+		return nil
+	}
+
+	if imgProps.Image.Colors != nil {
+		img.SetColors(int(*imgProps.Image.Colors))
+	}
+	if imgProps.Image.Dithering != nil && *imgProps.Image.Dithering {
+		img.SetDithering(tview.DitheringFloydSteinberg)
+	}
+
+	return nil
+}
+
+// ProgressBar widget (implemented as styled TextView)
+// tview doesn't have a native progress bar, so we use a custom wrapper
+
+type ProgressBar struct {
+	*tview.TextView
+	progress       int
+	max            int
+	label          string
+	showPercentage bool
+	filledChar     rune
+	emptyChar      rune
+	filledColor    string
+	emptyColor     string
+}
+
+func newProgressBar() *ProgressBar {
+	pb := &ProgressBar{
+		TextView:       tview.NewTextView(),
+		progress:       0,
+		max:            100,
+		filledChar:     '█',
+		emptyChar:      '░',
+		showPercentage: true,
+		filledColor:    "green",
+		emptyColor:     "gray",
+	}
+	pb.TextView.SetDynamicColors(true)
+	pb.update()
+	return pb
+}
+
+func (pb *ProgressBar) SetProgress(progress int) {
+	if progress < 0 {
+		progress = 0
+	}
+	if progress > pb.max {
+		progress = pb.max
+	}
+	pb.progress = progress
+	pb.update()
+}
+
+func (pb *ProgressBar) SetMax(max int) {
+	if max < 1 {
+		max = 1
+	}
+	pb.max = max
+	pb.update()
+}
+
+func (pb *ProgressBar) SetLabel(label string) {
+	pb.label = label
+	pb.update()
+}
+
+func (pb *ProgressBar) SetShowPercentage(show bool) {
+	pb.showPercentage = show
+	pb.update()
+}
+
+func (pb *ProgressBar) update() {
+	// Calculate filled portion
+	_, _, width, _ := pb.TextView.GetInnerRect()
+	if width < 10 {
+		width = 20 // Default width
+	}
+
+	// Reserve space for label and percentage
+	barWidth := width
+	labelPart := ""
+	if pb.label != "" {
+		labelPart = pb.label + " "
+		barWidth -= len(labelPart)
+	}
+	if pb.showPercentage {
+		barWidth -= 5 // " 100%"
+	}
+	if barWidth < 5 {
+		barWidth = 5
+	}
+
+	// Calculate fill
+	fillWidth := 0
+	if pb.max > 0 {
+		fillWidth = (pb.progress * barWidth) / pb.max
+	}
+	emptyWidth := barWidth - fillWidth
+
+	// Build the bar
+	filled := ""
+	for i := 0; i < fillWidth; i++ {
+		filled += string(pb.filledChar)
+	}
+	empty := ""
+	for i := 0; i < emptyWidth; i++ {
+		empty += string(pb.emptyChar)
+	}
+
+	// Format with colors
+	text := labelPart
+	text += "[" + pb.filledColor + "]" + filled + "[-]"
+	text += "[" + pb.emptyColor + "]" + empty + "[-]"
+
+	if pb.showPercentage {
+		pct := 0
+		if pb.max > 0 {
+			pct = (pb.progress * 100) / pb.max
+		}
+		text += fmt.Sprintf(" %3d%%", pct)
+	}
+
+	pb.TextView.SetText(text)
+}
+
+func (s *WidgetService) createProgressBar(props *pb.WidgetProperties) *ProgressBar {
+	pbar := newProgressBar()
+	if props != nil {
+		s.applyBoxProperties(pbar.Box, props)
+		if props.TypeProperties != nil {
+			if pbarProps, ok := props.TypeProperties.(*pb.WidgetProperties_ProgressBar); ok && pbarProps.ProgressBar != nil {
+				if pbarProps.ProgressBar.Max != nil {
+					pbar.SetMax(int(*pbarProps.ProgressBar.Max))
+				}
+				if pbarProps.ProgressBar.Progress != nil {
+					pbar.SetProgress(int(*pbarProps.ProgressBar.Progress))
+				}
+				if pbarProps.ProgressBar.Label != nil {
+					pbar.SetLabel(*pbarProps.ProgressBar.Label)
+				}
+				if pbarProps.ProgressBar.ShowPercentage != nil {
+					pbar.SetShowPercentage(*pbarProps.ProgressBar.ShowPercentage)
+				}
+				if pbarProps.ProgressBar.FilledChar != nil && len(*pbarProps.ProgressBar.FilledChar) > 0 {
+					pbar.filledChar = []rune(*pbarProps.ProgressBar.FilledChar)[0]
+				}
+				if pbarProps.ProgressBar.EmptyChar != nil && len(*pbarProps.ProgressBar.EmptyChar) > 0 {
+					pbar.emptyChar = []rune(*pbarProps.ProgressBar.EmptyChar)[0]
+				}
+				if pbarProps.ProgressBar.FilledColor != nil {
+					pbar.filledColor = colorToString(pbarProps.ProgressBar.FilledColor)
+				}
+				if pbarProps.ProgressBar.EmptyColor != nil {
+					pbar.emptyColor = colorToString(pbarProps.ProgressBar.EmptyColor)
+				}
+				pbar.update()
+			}
+		}
+	}
+	return pbar
+}
+
+func (s *WidgetService) applyProgressBarProperties(pbar *ProgressBar, props *pb.WidgetProperties) error {
+	if props.TypeProperties == nil {
+		return nil
+	}
+
+	pbarProps, ok := props.TypeProperties.(*pb.WidgetProperties_ProgressBar)
+	if !ok || pbarProps.ProgressBar == nil {
+		return nil
+	}
+
+	if pbarProps.ProgressBar.Max != nil {
+		pbar.SetMax(int(*pbarProps.ProgressBar.Max))
+	}
+	if pbarProps.ProgressBar.Progress != nil {
+		pbar.SetProgress(int(*pbarProps.ProgressBar.Progress))
+	}
+	if pbarProps.ProgressBar.Label != nil {
+		pbar.SetLabel(*pbarProps.ProgressBar.Label)
+	}
+	if pbarProps.ProgressBar.ShowPercentage != nil {
+		pbar.SetShowPercentage(*pbarProps.ProgressBar.ShowPercentage)
+	}
+	if pbarProps.ProgressBar.FilledChar != nil && len(*pbarProps.ProgressBar.FilledChar) > 0 {
+		pbar.filledChar = []rune(*pbarProps.ProgressBar.FilledChar)[0]
+	}
+	if pbarProps.ProgressBar.EmptyChar != nil && len(*pbarProps.ProgressBar.EmptyChar) > 0 {
+		pbar.emptyChar = []rune(*pbarProps.ProgressBar.EmptyChar)[0]
+	}
+	if pbarProps.ProgressBar.FilledColor != nil {
+		pbar.filledColor = colorToString(pbarProps.ProgressBar.FilledColor)
+	}
+	if pbarProps.ProgressBar.EmptyColor != nil {
+		pbar.emptyColor = colorToString(pbarProps.ProgressBar.EmptyColor)
+	}
+	pbar.update()
+
+	return nil
+}
+
+// colorToString converts a proto Color to a tview color string
+func colorToString(c *pb.Color) string {
+	if c == nil {
+		return "white"
+	}
+	switch v := c.Color.(type) {
+	case *pb.Color_Name:
+		return v.Name
+	case *pb.Color_Index:
+		return fmt.Sprintf("color%d", v.Index)
+	case *pb.Color_Rgb:
+		return fmt.Sprintf("#%02x%02x%02x", v.Rgb.R, v.Rgb.G, v.Rgb.B)
+	}
+	return "white"
 }

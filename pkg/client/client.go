@@ -73,7 +73,47 @@ type Client struct {
 	// Widget registry
 	widgets   map[string]Widget
 	widgetsMu sync.RWMutex
+
+	// Connection management
+	mu                 sync.RWMutex
+	autoReconnect      bool
+	reconnectAddress   string
+	reconnectOpts      RetryOptions
+	reconnectGrpcOpts  []grpc.DialOption
+	connectionState    ConnectionState
+	stateCallbacks     []ConnectionStateCallback
+	healthCheckTicker  *time.Ticker
+	healthCheckStop    chan struct{}
 }
+
+// ConnectionState represents the current connection state.
+type ConnectionState int
+
+const (
+	// StateConnected indicates the client is connected.
+	StateConnected ConnectionState = iota
+	// StateDisconnected indicates the client is disconnected.
+	StateDisconnected
+	// StateReconnecting indicates the client is attempting to reconnect.
+	StateReconnecting
+)
+
+// String returns the string representation of the connection state.
+func (s ConnectionState) String() string {
+	switch s {
+	case StateConnected:
+		return "Connected"
+	case StateDisconnected:
+		return "Disconnected"
+	case StateReconnecting:
+		return "Reconnecting"
+	default:
+		return "Unknown"
+	}
+}
+
+// ConnectionStateCallback is called when connection state changes.
+type ConnectionStateCallback func(oldState, newState ConnectionState)
 
 // EventHandler is a function that handles events from the server.
 type EventHandler func(*Event)
@@ -102,20 +142,22 @@ func ConnectWithConn(conn *grpc.ClientConn) (*Client, error) {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	client := &Client{
-		conn:          conn,
-		ctx:           ctx,
-		cancel:        cancel,
-		sessionClient: pb.NewSessionServiceClient(conn),
-		widgetClient:  pb.NewWidgetServiceClient(conn),
-		screenClient:  pb.NewScreenServiceClient(conn),
-		eventClient:   pb.NewEventServiceClient(conn),
-		listClient:    pb.NewListServiceClient(conn),
-		tableClient:   pb.NewTableServiceClient(conn),
-		formClient:    pb.NewFormServiceClient(conn),
-		treeClient:    pb.NewTreeServiceClient(conn),
-		layoutClient:  pb.NewLayoutServiceClient(conn),
-		eventDone:     make(chan struct{}),
-		widgets:       make(map[string]Widget),
+		conn:            conn,
+		ctx:             ctx,
+		cancel:          cancel,
+		sessionClient:   pb.NewSessionServiceClient(conn),
+		widgetClient:    pb.NewWidgetServiceClient(conn),
+		screenClient:    pb.NewScreenServiceClient(conn),
+		eventClient:     pb.NewEventServiceClient(conn),
+		listClient:      pb.NewListServiceClient(conn),
+		tableClient:     pb.NewTableServiceClient(conn),
+		formClient:      pb.NewFormServiceClient(conn),
+		treeClient:      pb.NewTreeServiceClient(conn),
+		layoutClient:    pb.NewLayoutServiceClient(conn),
+		eventDone:       make(chan struct{}),
+		widgets:         make(map[string]Widget),
+		connectionState: StateConnected,
+		stateCallbacks:  make([]ConnectionStateCallback, 0),
 	}
 
 	// Create session
@@ -134,6 +176,12 @@ func ConnectWithConn(conn *grpc.ClientConn) (*Client, error) {
 
 // Close closes the client connection and cleans up resources.
 func (c *Client) Close() error {
+	// Stop health check
+	c.StopHealthCheck()
+
+	// Update state
+	c.setConnectionState(StateDisconnected)
+
 	// Destroy session
 	if c.sessionID != nil {
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -385,5 +433,155 @@ func (c *Client) SetRoot(widget Widget) error {
 		WidgetId:  &pb.WidgetId{Id: widget.ID()},
 	})
 	return err
+}
+
+// Connection State Management
+
+// GetConnectionState returns the current connection state.
+func (c *Client) GetConnectionState() ConnectionState {
+	c.mu.RLock()
+	defer c.mu.RUnlock()
+	return c.connectionState
+}
+
+// IsConnected returns true if the client is connected.
+func (c *Client) IsConnected() bool {
+	return c.GetConnectionState() == StateConnected
+}
+
+// IsHealthy checks if the connection is healthy by pinging the server.
+func (c *Client) IsHealthy() bool {
+	if !c.IsConnected() {
+		return false
+	}
+
+	ctx, cancel := context.WithTimeout(c.ctx, 2*time.Second)
+	defer cancel()
+
+	_, err := c.sessionClient.Ping(ctx, &pb.PingRequest{
+		Timestamp: time.Now().UnixNano(),
+	})
+
+	return err == nil
+}
+
+// OnConnectionStateChange registers a callback for connection state changes.
+func (c *Client) OnConnectionStateChange(callback ConnectionStateCallback) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.stateCallbacks = append(c.stateCallbacks, callback)
+}
+
+// setConnectionState updates the connection state and notifies callbacks.
+func (c *Client) setConnectionState(newState ConnectionState) {
+	c.mu.Lock()
+	oldState := c.connectionState
+	c.connectionState = newState
+	callbacks := make([]ConnectionStateCallback, len(c.stateCallbacks))
+	copy(callbacks, c.stateCallbacks)
+	c.mu.Unlock()
+
+	// Notify callbacks
+	if oldState != newState {
+		for _, callback := range callbacks {
+			callback(oldState, newState)
+		}
+	}
+}
+
+// Reconnect manually triggers a reconnection attempt.
+func (c *Client) Reconnect() error {
+	c.mu.RLock()
+	if !c.autoReconnect {
+		c.mu.RUnlock()
+		return fmt.Errorf("auto-reconnect not enabled")
+	}
+	address := c.reconnectAddress
+	opts := c.reconnectOpts
+	grpcOpts := c.reconnectGrpcOpts
+	c.mu.RUnlock()
+
+	c.setConnectionState(StateReconnecting)
+
+	// Close existing connection
+	if c.conn != nil {
+		c.conn.Close()
+	}
+
+	// Try to reconnect
+	newClient, err := ConnectWithRetryAndOptions(address, opts, grpcOpts...)
+	if err != nil {
+		c.setConnectionState(StateDisconnected)
+		return err
+	}
+
+	// Update connection
+	c.mu.Lock()
+	c.conn = newClient.conn
+	c.sessionID = newClient.sessionID
+	c.sessionClient = newClient.sessionClient
+	c.widgetClient = newClient.widgetClient
+	c.screenClient = newClient.screenClient
+	c.eventClient = newClient.eventClient
+	c.listClient = newClient.listClient
+	c.tableClient = newClient.tableClient
+	c.formClient = newClient.formClient
+	c.treeClient = newClient.treeClient
+	c.layoutClient = newClient.layoutClient
+	c.mu.Unlock()
+
+	c.setConnectionState(StateConnected)
+
+	// Restart event stream if it was running
+	if c.eventStream != nil {
+		c.StartEventStream()
+	}
+
+	return nil
+}
+
+// StartHealthCheck starts periodic health checks.
+func (c *Client) StartHealthCheck(interval time.Duration) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	// Stop existing health check if running
+	if c.healthCheckTicker != nil {
+		c.healthCheckTicker.Stop()
+		close(c.healthCheckStop)
+	}
+
+	c.healthCheckTicker = time.NewTicker(interval)
+	c.healthCheckStop = make(chan struct{})
+
+	// Capture in local variables to avoid data race with StopHealthCheck
+	ticker := c.healthCheckTicker
+	stopCh := c.healthCheckStop
+
+	go func() {
+		for {
+			select {
+			case <-ticker.C:
+				if !c.IsHealthy() && c.autoReconnect {
+					c.Reconnect()
+				}
+			case <-stopCh:
+				return
+			}
+		}
+	}()
+}
+
+// StopHealthCheck stops periodic health checks.
+func (c *Client) StopHealthCheck() {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	if c.healthCheckTicker != nil {
+		c.healthCheckTicker.Stop()
+		close(c.healthCheckStop)
+		c.healthCheckTicker = nil
+		c.healthCheckStop = nil
+	}
 }
 

@@ -1,4 +1,4 @@
-.PHONY: proto clean build build-server build-test-client build-phase4-demo build-examples run demo install-tools dev fmt tidy run-example list-examples
+.PHONY: proto clean build build-server build-test-client build-phase4-demo build-examples build-cli run demo install-tools dev fmt tidy run-example list-examples
 
 # Proto compilation
 proto:
@@ -19,8 +19,8 @@ build-server: proto
 	go build -o bin/yutani-server ./cmd/yutani-server
 	@echo "Build complete: bin/yutani-server"
 
-# Build all binaries (server, clients, and examples)
-build: build-server build-test-client build-phase4-demo build-examples
+# Build all binaries (server, clients, examples, and CLI)
+build: build-server build-test-client build-phase4-demo build-examples build-cli
 	@echo "All builds complete!"
 
 # Build test client
@@ -56,6 +56,12 @@ build-examples: proto
 	@echo "  Building text-editor..."
 	@go build -o bin/examples/text-editor ./examples/text-editor
 	@echo "Examples build complete: bin/examples/"
+
+# Build CLI tool
+build-cli: proto
+	@echo "Building Yutani CLI..."
+	go build -o bin/yutani ./cmd/yutani
+	@echo "Build complete: bin/yutani"
 
 # Run server
 run: build-server

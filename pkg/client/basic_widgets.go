@@ -159,3 +159,17 @@ func (tv *TextView) SetText(text string) error {
 	})
 }
 
+// GetText returns the current text content of the text view.
+func (tv *TextView) GetText() (string, error) {
+	props, err := tv.GetProperties()
+	if err != nil {
+		return "", err
+	}
+	if textViewProps := props.GetTextView(); textViewProps != nil {
+		if textViewProps.Text != nil {
+			return *textViewProps.Text, nil
+		}
+	}
+	return "", nil
+}
+

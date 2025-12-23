@@ -251,9 +251,9 @@ func (m *MockClient) sendEvent(event *client.Event) {
 
 // OnEvent registers an event handler.
 func (m *MockClient) OnEvent(handler client.EventHandler) {
+	m.RecordCall("OnEvent")
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	m.RecordCall("OnEvent")
 	m.eventHandler = handler
 }
 

@@ -2,6 +2,7 @@ package client
 
 import (
 	"sync"
+	"sync/atomic"
 	"testing"
 	"time"
 )
@@ -85,9 +86,9 @@ func TestEventFilterCustom(t *testing.T) {
 
 // TestEventBatcher tests event batching
 func TestEventBatcher(t *testing.T) {
-	receivedCount := 0
+	var receivedCount atomic.Int32
 	handler := func(e *Event) {
-		receivedCount++
+		receivedCount.Add(1)
 	}
 
 	batcher := NewEventBatcher(50*time.Millisecond, handler)
@@ -101,8 +102,8 @@ func TestEventBatcher(t *testing.T) {
 	// Wait for batch to flush
 	time.Sleep(100 * time.Millisecond)
 
-	if receivedCount != 10 {
-		t.Errorf("Expected 10 events, got %d", receivedCount)
+	if receivedCount.Load() != 10 {
+		t.Errorf("Expected 10 events, got %d", receivedCount.Load())
 	}
 }
 

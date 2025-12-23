@@ -108,7 +108,7 @@ func main() {
 					fmt.Printf("Role: %s\n", role)
 				}
 
-				fmt.Println("=====================\n")
+				fmt.Println("=====================")
 			}
 		}
 

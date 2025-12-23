@@ -168,3 +168,31 @@ func (i *InputField) SetLabel(label string) error {
 	})
 }
 
+// GetText returns the current text content of the input field.
+func (i *InputField) GetText() (string, error) {
+	props, err := i.GetProperties()
+	if err != nil {
+		return "", err
+	}
+	if inputProps := props.GetInputField(); inputProps != nil {
+		if inputProps.Text != nil {
+			return *inputProps.Text, nil
+		}
+	}
+	return "", nil
+}
+
+// GetLabel returns the current label of the input field.
+func (i *InputField) GetLabel() (string, error) {
+	props, err := i.GetProperties()
+	if err != nil {
+		return "", err
+	}
+	if inputProps := props.GetInputField(); inputProps != nil {
+		if inputProps.Label != nil {
+			return *inputProps.Label, nil
+		}
+	}
+	return "", nil
+}
+

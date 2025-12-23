@@ -86,7 +86,18 @@ func StartTestServer(t *testing.T) *TestServer {
 		stopCh:     make(chan struct{}),
 	}
 
-	// Start server in background
+	// Start tview server
+	if err := srv.Start(); err != nil {
+		listener.Close()
+		t.Fatalf("Failed to start server: %v", err)
+	}
+
+	// Run tview event loop in background (required for QueueUpdateDraw)
+	go func() {
+		_ = srv.Run()
+	}()
+
+	// Start gRPC server in background
 	go func() {
 		if err := grpcServer.Serve(listener); err != nil {
 			select {

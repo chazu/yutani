@@ -71,42 +71,26 @@ type Server struct {
 	stopCh  chan struct{}
 }
 
-// NewServer creates a new Yutani server
+// NewServer creates a new Yutani server.
+// This is a convenience wrapper around New() for direct parameter passing.
 func NewServer(maxSessions int, mouseEnable, pasteEnable bool) (*Server, error) {
-	app := tview.NewApplication()
-
-	s := &Server{
-		maxSessions: maxSessions,
-		mouseEnable: mouseEnable,
-		pasteEnable: pasteEnable,
-		testMode:    false,
-		app:         app,
-		sessions:    NewSessionRegistry(maxSessions),
-		widgets:     NewWidgetRegistry(),
-		events:      NewEventDispatcher(),
-		stopCh:      make(chan struct{}),
+	cfg := &config.Config{
+		MaxSessions: maxSessions,
+		Mouse:       mouseEnable,
+		Paste:       pasteEnable,
 	}
-
-	return s, nil
+	return New(cfg)
 }
 
-// NewTestServer creates a server for testing with simulation screen
+// NewTestServer creates a server for testing with simulation screen.
+// This is a convenience wrapper around New() with test mode enabled.
 func NewTestServer(maxSessions int) (*Server, error) {
-	app := tview.NewApplication()
-
-	s := &Server{
-		maxSessions: maxSessions,
-		mouseEnable: true,
-		pasteEnable: true,
-		testMode:    true,
-		app:         app,
-		sessions:    NewSessionRegistry(maxSessions),
-		widgets:     NewWidgetRegistry(),
-		events:      NewEventDispatcher(),
-		stopCh:      make(chan struct{}),
+	cfg := &config.Config{
+		MaxSessions: maxSessions,
+		Mouse:       true,
+		Paste:       true,
 	}
-
-	return s, nil
+	return New(cfg, WithTestMode(true))
 }
 
 // Start initializes the TUI (does not block)

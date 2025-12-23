@@ -123,3 +123,31 @@ func (cb *Checkbox) SetLabel(label string) error {
 	})
 }
 
+// IsChecked returns the current checked state of the checkbox.
+func (cb *Checkbox) IsChecked() (bool, error) {
+	props, err := cb.GetProperties()
+	if err != nil {
+		return false, err
+	}
+	if checkboxProps := props.GetCheckbox(); checkboxProps != nil {
+		if checkboxProps.Checked != nil {
+			return *checkboxProps.Checked, nil
+		}
+	}
+	return false, nil
+}
+
+// GetLabel returns the current label of the checkbox.
+func (cb *Checkbox) GetLabel() (string, error) {
+	props, err := cb.GetProperties()
+	if err != nil {
+		return "", err
+	}
+	if checkboxProps := props.GetCheckbox(); checkboxProps != nil {
+		if checkboxProps.Label != nil {
+			return *checkboxProps.Label, nil
+		}
+	}
+	return "", nil
+}
+

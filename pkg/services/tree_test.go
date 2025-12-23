@@ -9,15 +9,7 @@ import (
 )
 
 func TestTreeService_SetRoot(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	treeService := NewTreeService(srv)
 	widgetService := NewWidgetService(srv)
@@ -61,15 +53,7 @@ func TestTreeService_SetRoot(t *testing.T) {
 }
 
 func TestTreeService_AddChild(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	treeService := NewTreeService(srv)
 	widgetService := NewWidgetService(srv)
@@ -143,15 +127,7 @@ func TestTreeService_AddChild(t *testing.T) {
 }
 
 func TestTreeService_RemoveNode(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	treeService := NewTreeService(srv)
 	widgetService := NewWidgetService(srv)
@@ -217,15 +193,7 @@ func TestTreeService_RemoveNode(t *testing.T) {
 }
 
 func TestTreeService_SetExpanded(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	treeService := NewTreeService(srv)
 	widgetService := NewWidgetService(srv)
@@ -292,15 +260,7 @@ func TestTreeService_SetExpanded(t *testing.T) {
 }
 
 func TestTreeService_GetSetSelected(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	treeService := NewTreeService(srv)
 	widgetService := NewWidgetService(srv)
@@ -381,15 +341,7 @@ func TestTreeService_GetSetSelected(t *testing.T) {
 }
 
 func TestTreeService_GetChildren(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	treeService := NewTreeService(srv)
 	widgetService := NewWidgetService(srv)

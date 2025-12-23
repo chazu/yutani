@@ -9,15 +9,7 @@ import (
 )
 
 func TestLayoutService_FlexAddItem(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	layoutService := NewLayoutService(srv)
 	widgetService := NewWidgetService(srv)
@@ -68,15 +60,7 @@ func TestLayoutService_FlexAddItem(t *testing.T) {
 }
 
 func TestLayoutService_FlexRemoveItem(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	layoutService := NewLayoutService(srv)
 	widgetService := NewWidgetService(srv)
@@ -137,15 +121,7 @@ func TestLayoutService_FlexRemoveItem(t *testing.T) {
 }
 
 func TestLayoutService_FlexSetDirection(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	layoutService := NewLayoutService(srv)
 	widgetService := NewWidgetService(srv)
@@ -197,15 +173,7 @@ func TestLayoutService_FlexSetDirection(t *testing.T) {
 }
 
 func TestLayoutService_GridAddItem(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	layoutService := NewLayoutService(srv)
 	widgetService := NewWidgetService(srv)
@@ -261,15 +229,7 @@ func TestLayoutService_GridAddItem(t *testing.T) {
 }
 
 func TestLayoutService_GridRemoveItem(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	layoutService := NewLayoutService(srv)
 	widgetService := NewWidgetService(srv)
@@ -335,15 +295,7 @@ func TestLayoutService_GridRemoveItem(t *testing.T) {
 }
 
 func TestLayoutService_GridSetRows(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	layoutService := NewLayoutService(srv)
 	widgetService := NewWidgetService(srv)
@@ -382,15 +334,7 @@ func TestLayoutService_GridSetRows(t *testing.T) {
 }
 
 func TestLayoutService_GridSetColumns(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	layoutService := NewLayoutService(srv)
 	widgetService := NewWidgetService(srv)
@@ -429,15 +373,7 @@ func TestLayoutService_GridSetColumns(t *testing.T) {
 }
 
 func TestLayoutService_PagesAddPage(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	layoutService := NewLayoutService(srv)
 	widgetService := NewWidgetService(srv)
@@ -489,15 +425,7 @@ func TestLayoutService_PagesAddPage(t *testing.T) {
 }
 
 func TestLayoutService_PagesRemovePage(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	layoutService := NewLayoutService(srv)
 	widgetService := NewWidgetService(srv)
@@ -559,15 +487,7 @@ func TestLayoutService_PagesRemovePage(t *testing.T) {
 }
 
 func TestLayoutService_PagesShowGetPage(t *testing.T) {
-	srv, err := server.NewTestServer(10)
-	if err != nil {
-		t.Fatalf("Failed to create test server: %v", err)
-	}
-	defer srv.Stop()
-
-	if err := srv.Start(); err != nil {
-		t.Fatalf("Failed to start server: %v", err)
-	}
+	srv := setupTestServer(t)
 
 	layoutService := NewLayoutService(srv)
 	widgetService := NewWidgetService(srv)
