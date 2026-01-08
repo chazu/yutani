@@ -905,13 +905,13 @@ Environment variables use the `YUTANI_` prefix and match the flag names in upper
 
 ### Phase 6: Advanced Features and Optimization (Future)
 
-#### 6.1 Additional Widget Builders
-- [ ] TreeView widget builder with fluent API
-- [ ] Flex layout widget builder
-- [ ] Grid layout widget builder
-- [ ] Pages layout widget builder
-- [ ] InputField and Button widget builders
-- [ ] Checkbox widget builder
+#### 6.1 Additional Widget Builders ✅ **COMPLETE**
+- [x] TreeView widget builder with fluent API
+- [x] Flex layout widget builder
+- [x] Grid layout widget builder
+- [x] Pages layout widget builder
+- [x] InputField and Button widget builders
+- [x] Checkbox widget builder
 
 #### 6.2 Advanced Event Handling
 - [ ] Event filtering by widget ID or type
