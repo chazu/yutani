@@ -262,6 +262,23 @@ func (s *Server) Events() *EventDispatcher {
 	return s.events
 }
 
+// IsTestMode returns whether the server is running in test mode
+func (s *Server) IsTestMode() bool {
+	return s.testMode
+}
+
+// GetSimulationScreen returns the simulation screen if in test mode, nil otherwise.
+// Callers should check IsTestMode() first or handle nil.
+func (s *Server) GetSimulationScreen() tcell.SimulationScreen {
+	if !s.testMode {
+		return nil
+	}
+	if sim, ok := s.screen.(tcell.SimulationScreen); ok {
+		return sim
+	}
+	return nil
+}
+
 // handleInputEvent captures keyboard events and dispatches them
 func (s *Server) handleInputEvent(event *tcell.EventKey) *tcell.EventKey {
 	// Dispatch key event to all sessions

@@ -80,6 +80,8 @@ func main() {
 	formService := services.NewFormService(yutaniServer)
 	treeService := services.NewTreeService(yutaniServer)
 	layoutService := services.NewLayoutService(yutaniServer)
+	debugService := services.NewDebugService(yutaniServer)
+	testService := services.NewTestService(yutaniServer)
 
 	pb.RegisterSessionServiceServer(grpcServer, sessionService)
 	pb.RegisterScreenServiceServer(grpcServer, screenService)
@@ -90,6 +92,8 @@ func main() {
 	pb.RegisterFormServiceServer(grpcServer, formService)
 	pb.RegisterTreeServiceServer(grpcServer, treeService)
 	pb.RegisterLayoutServiceServer(grpcServer, layoutService)
+	pb.RegisterDebugServiceServer(grpcServer, debugService)
+	pb.RegisterTestServiceServer(grpcServer, testService)
 
 	// Enable gRPC reflection
 	reflection.Register(grpcServer)

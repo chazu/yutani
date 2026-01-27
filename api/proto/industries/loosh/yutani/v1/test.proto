@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+import "industries/loosh/yutani/v1/types.proto";
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+// TestService provides headless UI testing capabilities.
+// These endpoints only work when the server is running in test mode
+// (using SimulationScreen). Production servers will reject all calls.
+service TestService {
+  // InjectKey injects a single keystroke into the tview input queue.
+  // The key is injected via tcell.SimulationScreen.InjectKey().
+  rpc InjectKey(InjectKeyRequest) returns (InjectKeyResponse);
+
+  // InjectText injects a string as a sequence of KEY_RUNE events.
+  // Each character is injected separately with no modifiers.
+  rpc InjectText(InjectTextRequest) returns (InjectTextResponse);
+
+  // WaitForIdle blocks until tview has processed all pending events.
+  // Uses app.QueueUpdate() to ensure the event queue is drained.
+  rpc WaitForIdle(WaitForIdleRequest) returns (WaitForIdleResponse);
+
+  // IsTestMode checks if the server is running in test mode.
+  // Returns true if SimulationScreen is available for key injection.
+  rpc IsTestMode(IsTestModeRequest) returns (IsTestModeResponse);
+}
+
+// InjectKey
+
+message InjectKeyRequest {
+  SessionId session_id = 1;
+  Key key = 2;
+  string rune = 3;              // UTF-8 character if key is KEY_RUNE
+  repeated Modifier modifiers = 4;
+}
+
+message InjectKeyResponse {
+  bool success = 1;
+}
+
+// InjectText
+
+message InjectTextRequest {
+  SessionId session_id = 1;
+  string text = 2;              // String to inject as KEY_RUNE sequence
+}
+
+message InjectTextResponse {
+  bool success = 1;
+  int32 characters_injected = 2;
+}
+
+// WaitForIdle
+
+message WaitForIdleRequest {
+  SessionId session_id = 1;
+  int64 timeout_ms = 2;         // Timeout in milliseconds (default: 5000)
+}
+
+message WaitForIdleResponse {
+  bool success = 1;
+  bool timed_out = 2;           // True if wait timed out before idle
+}
+
+// IsTestMode
+
+message IsTestModeRequest {}
+
+message IsTestModeResponse {
+  bool test_mode = 1;
+}

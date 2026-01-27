@@ -51,5 +51,6 @@ Git Commit: %s
 	rootCmd.AddCommand(newCmd)
 	rootCmd.AddCommand(widgetCmd)
 	rootCmd.AddCommand(sessionCmd)
+	rootCmd.AddCommand(injectCmd)
 }
 
