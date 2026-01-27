@@ -68,6 +68,24 @@ before taking screenshots or checking state.`,
 	RunE: runInjectWaitIdle,
 }
 
+var injectMouseCmd = &cobra.Command{
+	Use:   "mouse",
+	Short: "Inject a mouse event",
+	Long: `Inject a mouse event (click or scroll) into the test server.
+
+Available buttons: primary (left), secondary (right), middle,
+wheel-up, wheel-down, wheel-left, wheel-right, none.`,
+	Example: `  # Click at coordinates
+  yutani inject mouse -s <session-id> --x 10 --y 5 --button primary
+
+  # Right-click with modifier
+  yutani inject mouse -s <session-id> --x 10 --y 5 --button secondary --mod ctrl
+
+  # Scroll up
+  yutani inject mouse -s <session-id> --x 10 --y 5 --button wheel-up`,
+	RunE: runInjectMouse,
+}
+
 var injectTestModeCmd = &cobra.Command{
 	Use:   "test-mode",
 	Short: "Check if server is in test mode",
@@ -84,11 +102,15 @@ var (
 	injectMod       string
 	injectTimeout   int64
 	injectFormat    string
+	injectMouseX    int32
+	injectMouseY    int32
+	injectButton    string
 )
 
 func init() {
 	injectCmd.AddCommand(injectKeyCmd)
 	injectCmd.AddCommand(injectTextCmd)
+	injectCmd.AddCommand(injectMouseCmd)
 	injectCmd.AddCommand(injectWaitIdleCmd)
 	injectCmd.AddCommand(injectTestModeCmd)
 
@@ -103,6 +125,15 @@ func init() {
 	injectTextCmd.Flags().StringVarP(&injectAddress, "address", "a", "localhost:7755", "Server address")
 	injectTextCmd.Flags().StringVarP(&injectSessionID, "session", "s", "", "Session ID (required)")
 	injectTextCmd.Flags().StringVarP(&injectFormat, "format", "f", "text", "Output format (text, json)")
+
+	// Mouse command flags
+	injectMouseCmd.Flags().StringVarP(&injectAddress, "address", "a", "localhost:7755", "Server address")
+	injectMouseCmd.Flags().StringVarP(&injectSessionID, "session", "s", "", "Session ID (required)")
+	injectMouseCmd.Flags().Int32VarP(&injectMouseX, "x", "x", 0, "X coordinate (column)")
+	injectMouseCmd.Flags().Int32VarP(&injectMouseY, "y", "y", 0, "Y coordinate (row)")
+	injectMouseCmd.Flags().StringVarP(&injectButton, "button", "b", "primary", "Button (primary, secondary, middle, wheel-up, wheel-down)")
+	injectMouseCmd.Flags().StringVarP(&injectMod, "mod", "m", "", "Modifier (ctrl, alt, shift, meta)")
+	injectMouseCmd.Flags().StringVarP(&injectFormat, "format", "f", "text", "Output format (text, json)")
 
 	// Wait-idle command flags
 	injectWaitIdleCmd.Flags().StringVarP(&injectAddress, "address", "a", "localhost:7755", "Server address")
@@ -391,4 +422,83 @@ func runInjectTestMode(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
+}
+
+func runInjectMouse(cmd *cobra.Command, args []string) error {
+	if injectSessionID == "" {
+		return fmt.Errorf("session ID required (--session)")
+	}
+
+	conn, err := injectConnect()
+	if err != nil {
+		return fmt.Errorf("failed to connect: %w", err)
+	}
+	defer conn.Close()
+
+	client := pb.NewTestServiceClient(conn)
+
+	// Parse button and modifiers
+	button := parseButton(injectButton)
+	mods := parseModifiers(injectMod)
+
+	resp, err := client.InjectMouse(context.Background(), &pb.InjectMouseRequest{
+		SessionId: &pb.SessionId{Id: injectSessionID},
+		X:         injectMouseX,
+		Y:         injectMouseY,
+		Button:    button,
+		Modifiers: mods,
+	})
+	if err != nil {
+		return fmt.Errorf("failed to inject mouse: %w", err)
+	}
+
+	if injectFormat == "json" {
+		data, _ := json.MarshalIndent(map[string]interface{}{
+			"success": resp.Success,
+			"x":       injectMouseX,
+			"y":       injectMouseY,
+			"button":  injectButton,
+			"mod":     injectMod,
+		}, "", "  ")
+		fmt.Println(string(data))
+		return nil
+	}
+
+	if resp.Success {
+		buttonDesc := injectButton
+		if injectMod != "" {
+			buttonDesc = injectMod + "+" + buttonDesc
+		}
+		fmt.Printf("Injected mouse: %s at (%d, %d)\n", buttonDesc, injectMouseX, injectMouseY)
+	} else {
+		fmt.Println("Failed to inject mouse event")
+	}
+
+	return nil
+}
+
+// parseButton converts a button name to a protobuf MouseButton enum
+func parseButton(buttonName string) pb.MouseButton {
+	buttonLower := strings.ToLower(buttonName)
+
+	switch buttonLower {
+	case "primary", "left", "button1":
+		return pb.MouseButton_MOUSE_PRIMARY
+	case "secondary", "right", "button2":
+		return pb.MouseButton_MOUSE_SECONDARY
+	case "middle", "button3":
+		return pb.MouseButton_MOUSE_MIDDLE
+	case "wheel-up", "wheelup", "scrollup":
+		return pb.MouseButton_MOUSE_WHEEL_UP
+	case "wheel-down", "wheeldown", "scrolldown":
+		return pb.MouseButton_MOUSE_WHEEL_DOWN
+	case "wheel-left", "wheelleft", "scrollleft":
+		return pb.MouseButton_MOUSE_WHEEL_LEFT
+	case "wheel-right", "wheelright", "scrollright":
+		return pb.MouseButton_MOUSE_WHEEL_RIGHT
+	case "none", "":
+		return pb.MouseButton_MOUSE_NONE
+	default:
+		return pb.MouseButton_MOUSE_PRIMARY
+	}
 }

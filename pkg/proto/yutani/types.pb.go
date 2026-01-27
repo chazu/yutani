@@ -496,6 +496,71 @@ func (Modifier) EnumDescriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{6}
 }
 
+// Mouse button enum for mouse events
+type MouseButton int32
+
+const (
+	MouseButton_MOUSE_NONE        MouseButton = 0
+	MouseButton_MOUSE_PRIMARY     MouseButton = 1 // Left button (Button1)
+	MouseButton_MOUSE_SECONDARY   MouseButton = 2 // Right button (Button2)
+	MouseButton_MOUSE_MIDDLE      MouseButton = 3 // Middle button (Button3)
+	MouseButton_MOUSE_WHEEL_UP    MouseButton = 4
+	MouseButton_MOUSE_WHEEL_DOWN  MouseButton = 5
+	MouseButton_MOUSE_WHEEL_LEFT  MouseButton = 6
+	MouseButton_MOUSE_WHEEL_RIGHT MouseButton = 7
+)
+
+// Enum value maps for MouseButton.
+var (
+	MouseButton_name = map[int32]string{
+		0: "MOUSE_NONE",
+		1: "MOUSE_PRIMARY",
+		2: "MOUSE_SECONDARY",
+		3: "MOUSE_MIDDLE",
+		4: "MOUSE_WHEEL_UP",
+		5: "MOUSE_WHEEL_DOWN",
+		6: "MOUSE_WHEEL_LEFT",
+		7: "MOUSE_WHEEL_RIGHT",
+	}
+	MouseButton_value = map[string]int32{
+		"MOUSE_NONE":        0,
+		"MOUSE_PRIMARY":     1,
+		"MOUSE_SECONDARY":   2,
+		"MOUSE_MIDDLE":      3,
+		"MOUSE_WHEEL_UP":    4,
+		"MOUSE_WHEEL_DOWN":  5,
+		"MOUSE_WHEEL_LEFT":  6,
+		"MOUSE_WHEEL_RIGHT": 7,
+	}
+)
+
+func (x MouseButton) Enum() *MouseButton {
+	p := new(MouseButton)
+	*p = x
+	return p
+}
+
+func (x MouseButton) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (MouseButton) Descriptor() protoreflect.EnumDescriptor {
+	return file_industries_loosh_yutani_v1_types_proto_enumTypes[7].Descriptor()
+}
+
+func (MouseButton) Type() protoreflect.EnumType {
+	return &file_industries_loosh_yutani_v1_types_proto_enumTypes[7]
+}
+
+func (x MouseButton) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use MouseButton.Descriptor instead.
+func (MouseButton) EnumDescriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{7}
+}
+
 type Position struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	X             int32                  `protobuf:"varint,1,opt,name=x,proto3" json:"x,omitempty"`
@@ -3127,7 +3192,17 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\tMOD_SHIFT\x10\x01\x12\f\n" +
 	"\bMOD_CTRL\x10\x02\x12\v\n" +
 	"\aMOD_ALT\x10\x03\x12\f\n" +
-	"\bMOD_META\x10\x04B*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
+	"\bMOD_META\x10\x04*\xae\x01\n" +
+	"\vMouseButton\x12\x0e\n" +
+	"\n" +
+	"MOUSE_NONE\x10\x00\x12\x11\n" +
+	"\rMOUSE_PRIMARY\x10\x01\x12\x13\n" +
+	"\x0fMOUSE_SECONDARY\x10\x02\x12\x10\n" +
+	"\fMOUSE_MIDDLE\x10\x03\x12\x12\n" +
+	"\x0eMOUSE_WHEEL_UP\x10\x04\x12\x14\n" +
+	"\x10MOUSE_WHEEL_DOWN\x10\x05\x12\x14\n" +
+	"\x10MOUSE_WHEEL_LEFT\x10\x06\x12\x15\n" +
+	"\x11MOUSE_WHEEL_RIGHT\x10\aB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
 
 var (
 	file_industries_loosh_yutani_v1_types_proto_rawDescOnce sync.Once
@@ -3141,7 +3216,7 @@ func file_industries_loosh_yutani_v1_types_proto_rawDescGZIP() []byte {
 	return file_industries_loosh_yutani_v1_types_proto_rawDescData
 }
 
-var file_industries_loosh_yutani_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
+var file_industries_loosh_yutani_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
 var file_industries_loosh_yutani_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_industries_loosh_yutani_v1_types_proto_goTypes = []any{
 	(Attribute)(0),                // 0: industries.loosh.yutani.v1.Attribute
@@ -3151,98 +3226,99 @@ var file_industries_loosh_yutani_v1_types_proto_goTypes = []any{
 	(ImageAspectRatio)(0),         // 4: industries.loosh.yutani.v1.ImageAspectRatio
 	(Key)(0),                      // 5: industries.loosh.yutani.v1.Key
 	(Modifier)(0),                 // 6: industries.loosh.yutani.v1.Modifier
-	(*Position)(nil),              // 7: industries.loosh.yutani.v1.Position
-	(*Size)(nil),                  // 8: industries.loosh.yutani.v1.Size
-	(*Rect)(nil),                  // 9: industries.loosh.yutani.v1.Rect
-	(*Color)(nil),                 // 10: industries.loosh.yutani.v1.Color
-	(*RGB)(nil),                   // 11: industries.loosh.yutani.v1.RGB
-	(*Style)(nil),                 // 12: industries.loosh.yutani.v1.Style
-	(*Cell)(nil),                  // 13: industries.loosh.yutani.v1.Cell
-	(*SessionId)(nil),             // 14: industries.loosh.yutani.v1.SessionId
-	(*WidgetId)(nil),              // 15: industries.loosh.yutani.v1.WidgetId
-	(*Padding)(nil),               // 16: industries.loosh.yutani.v1.Padding
-	(*WidgetProperties)(nil),      // 17: industries.loosh.yutani.v1.WidgetProperties
-	(*TextViewProperties)(nil),    // 18: industries.loosh.yutani.v1.TextViewProperties
-	(*InputFieldProperties)(nil),  // 19: industries.loosh.yutani.v1.InputFieldProperties
-	(*ButtonProperties)(nil),      // 20: industries.loosh.yutani.v1.ButtonProperties
-	(*CheckboxProperties)(nil),    // 21: industries.loosh.yutani.v1.CheckboxProperties
-	(*DropdownProperties)(nil),    // 22: industries.loosh.yutani.v1.DropdownProperties
-	(*ListProperties)(nil),        // 23: industries.loosh.yutani.v1.ListProperties
-	(*TableProperties)(nil),       // 24: industries.loosh.yutani.v1.TableProperties
-	(*FlexProperties)(nil),        // 25: industries.loosh.yutani.v1.FlexProperties
-	(*GridProperties)(nil),        // 26: industries.loosh.yutani.v1.GridProperties
-	(*TreeProperties)(nil),        // 27: industries.loosh.yutani.v1.TreeProperties
-	(*FormProperties)(nil),        // 28: industries.loosh.yutani.v1.FormProperties
-	(*PagesProperties)(nil),       // 29: industries.loosh.yutani.v1.PagesProperties
-	(*TextAreaProperties)(nil),    // 30: industries.loosh.yutani.v1.TextAreaProperties
-	(*ModalProperties)(nil),       // 31: industries.loosh.yutani.v1.ModalProperties
-	(*ImageProperties)(nil),       // 32: industries.loosh.yutani.v1.ImageProperties
-	(*ProgressBarProperties)(nil), // 33: industries.loosh.yutani.v1.ProgressBarProperties
+	(MouseButton)(0),              // 7: industries.loosh.yutani.v1.MouseButton
+	(*Position)(nil),              // 8: industries.loosh.yutani.v1.Position
+	(*Size)(nil),                  // 9: industries.loosh.yutani.v1.Size
+	(*Rect)(nil),                  // 10: industries.loosh.yutani.v1.Rect
+	(*Color)(nil),                 // 11: industries.loosh.yutani.v1.Color
+	(*RGB)(nil),                   // 12: industries.loosh.yutani.v1.RGB
+	(*Style)(nil),                 // 13: industries.loosh.yutani.v1.Style
+	(*Cell)(nil),                  // 14: industries.loosh.yutani.v1.Cell
+	(*SessionId)(nil),             // 15: industries.loosh.yutani.v1.SessionId
+	(*WidgetId)(nil),              // 16: industries.loosh.yutani.v1.WidgetId
+	(*Padding)(nil),               // 17: industries.loosh.yutani.v1.Padding
+	(*WidgetProperties)(nil),      // 18: industries.loosh.yutani.v1.WidgetProperties
+	(*TextViewProperties)(nil),    // 19: industries.loosh.yutani.v1.TextViewProperties
+	(*InputFieldProperties)(nil),  // 20: industries.loosh.yutani.v1.InputFieldProperties
+	(*ButtonProperties)(nil),      // 21: industries.loosh.yutani.v1.ButtonProperties
+	(*CheckboxProperties)(nil),    // 22: industries.loosh.yutani.v1.CheckboxProperties
+	(*DropdownProperties)(nil),    // 23: industries.loosh.yutani.v1.DropdownProperties
+	(*ListProperties)(nil),        // 24: industries.loosh.yutani.v1.ListProperties
+	(*TableProperties)(nil),       // 25: industries.loosh.yutani.v1.TableProperties
+	(*FlexProperties)(nil),        // 26: industries.loosh.yutani.v1.FlexProperties
+	(*GridProperties)(nil),        // 27: industries.loosh.yutani.v1.GridProperties
+	(*TreeProperties)(nil),        // 28: industries.loosh.yutani.v1.TreeProperties
+	(*FormProperties)(nil),        // 29: industries.loosh.yutani.v1.FormProperties
+	(*PagesProperties)(nil),       // 30: industries.loosh.yutani.v1.PagesProperties
+	(*TextAreaProperties)(nil),    // 31: industries.loosh.yutani.v1.TextAreaProperties
+	(*ModalProperties)(nil),       // 32: industries.loosh.yutani.v1.ModalProperties
+	(*ImageProperties)(nil),       // 33: industries.loosh.yutani.v1.ImageProperties
+	(*ProgressBarProperties)(nil), // 34: industries.loosh.yutani.v1.ProgressBarProperties
 }
 var file_industries_loosh_yutani_v1_types_proto_depIdxs = []int32{
-	11, // 0: industries.loosh.yutani.v1.Color.rgb:type_name -> industries.loosh.yutani.v1.RGB
-	10, // 1: industries.loosh.yutani.v1.Style.foreground:type_name -> industries.loosh.yutani.v1.Color
-	10, // 2: industries.loosh.yutani.v1.Style.background:type_name -> industries.loosh.yutani.v1.Color
+	12, // 0: industries.loosh.yutani.v1.Color.rgb:type_name -> industries.loosh.yutani.v1.RGB
+	11, // 1: industries.loosh.yutani.v1.Style.foreground:type_name -> industries.loosh.yutani.v1.Color
+	11, // 2: industries.loosh.yutani.v1.Style.background:type_name -> industries.loosh.yutani.v1.Color
 	0,  // 3: industries.loosh.yutani.v1.Style.attributes:type_name -> industries.loosh.yutani.v1.Attribute
-	12, // 4: industries.loosh.yutani.v1.Cell.style:type_name -> industries.loosh.yutani.v1.Style
-	9,  // 5: industries.loosh.yutani.v1.WidgetProperties.rect:type_name -> industries.loosh.yutani.v1.Rect
+	13, // 4: industries.loosh.yutani.v1.Cell.style:type_name -> industries.loosh.yutani.v1.Style
+	10, // 5: industries.loosh.yutani.v1.WidgetProperties.rect:type_name -> industries.loosh.yutani.v1.Rect
 	2,  // 6: industries.loosh.yutani.v1.WidgetProperties.title_align:type_name -> industries.loosh.yutani.v1.Alignment
-	10, // 7: industries.loosh.yutani.v1.WidgetProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 8: industries.loosh.yutani.v1.WidgetProperties.border_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 9: industries.loosh.yutani.v1.WidgetProperties.title_color:type_name -> industries.loosh.yutani.v1.Color
-	16, // 10: industries.loosh.yutani.v1.WidgetProperties.padding:type_name -> industries.loosh.yutani.v1.Padding
-	18, // 11: industries.loosh.yutani.v1.WidgetProperties.text_view:type_name -> industries.loosh.yutani.v1.TextViewProperties
-	19, // 12: industries.loosh.yutani.v1.WidgetProperties.input_field:type_name -> industries.loosh.yutani.v1.InputFieldProperties
-	20, // 13: industries.loosh.yutani.v1.WidgetProperties.button:type_name -> industries.loosh.yutani.v1.ButtonProperties
-	21, // 14: industries.loosh.yutani.v1.WidgetProperties.checkbox:type_name -> industries.loosh.yutani.v1.CheckboxProperties
-	22, // 15: industries.loosh.yutani.v1.WidgetProperties.dropdown:type_name -> industries.loosh.yutani.v1.DropdownProperties
-	23, // 16: industries.loosh.yutani.v1.WidgetProperties.list:type_name -> industries.loosh.yutani.v1.ListProperties
-	24, // 17: industries.loosh.yutani.v1.WidgetProperties.table:type_name -> industries.loosh.yutani.v1.TableProperties
-	25, // 18: industries.loosh.yutani.v1.WidgetProperties.flex:type_name -> industries.loosh.yutani.v1.FlexProperties
-	26, // 19: industries.loosh.yutani.v1.WidgetProperties.grid:type_name -> industries.loosh.yutani.v1.GridProperties
-	27, // 20: industries.loosh.yutani.v1.WidgetProperties.tree:type_name -> industries.loosh.yutani.v1.TreeProperties
-	28, // 21: industries.loosh.yutani.v1.WidgetProperties.form:type_name -> industries.loosh.yutani.v1.FormProperties
-	29, // 22: industries.loosh.yutani.v1.WidgetProperties.pages:type_name -> industries.loosh.yutani.v1.PagesProperties
-	30, // 23: industries.loosh.yutani.v1.WidgetProperties.text_area:type_name -> industries.loosh.yutani.v1.TextAreaProperties
-	31, // 24: industries.loosh.yutani.v1.WidgetProperties.modal:type_name -> industries.loosh.yutani.v1.ModalProperties
-	32, // 25: industries.loosh.yutani.v1.WidgetProperties.image:type_name -> industries.loosh.yutani.v1.ImageProperties
-	33, // 26: industries.loosh.yutani.v1.WidgetProperties.progress_bar:type_name -> industries.loosh.yutani.v1.ProgressBarProperties
-	10, // 27: industries.loosh.yutani.v1.TextViewProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 28: industries.loosh.yutani.v1.InputFieldProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 29: industries.loosh.yutani.v1.InputFieldProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 30: industries.loosh.yutani.v1.InputFieldProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 31: industries.loosh.yutani.v1.ButtonProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 32: industries.loosh.yutani.v1.ButtonProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 33: industries.loosh.yutani.v1.ButtonProperties.activated_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 34: industries.loosh.yutani.v1.CheckboxProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 35: industries.loosh.yutani.v1.CheckboxProperties.checked_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 36: industries.loosh.yutani.v1.DropdownProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 37: industries.loosh.yutani.v1.DropdownProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 38: industries.loosh.yutani.v1.DropdownProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 39: industries.loosh.yutani.v1.ListProperties.main_text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 40: industries.loosh.yutani.v1.ListProperties.secondary_text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 41: industries.loosh.yutani.v1.ListProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 42: industries.loosh.yutani.v1.ListProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 43: industries.loosh.yutani.v1.TableProperties.borders_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 7: industries.loosh.yutani.v1.WidgetProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 8: industries.loosh.yutani.v1.WidgetProperties.border_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 9: industries.loosh.yutani.v1.WidgetProperties.title_color:type_name -> industries.loosh.yutani.v1.Color
+	17, // 10: industries.loosh.yutani.v1.WidgetProperties.padding:type_name -> industries.loosh.yutani.v1.Padding
+	19, // 11: industries.loosh.yutani.v1.WidgetProperties.text_view:type_name -> industries.loosh.yutani.v1.TextViewProperties
+	20, // 12: industries.loosh.yutani.v1.WidgetProperties.input_field:type_name -> industries.loosh.yutani.v1.InputFieldProperties
+	21, // 13: industries.loosh.yutani.v1.WidgetProperties.button:type_name -> industries.loosh.yutani.v1.ButtonProperties
+	22, // 14: industries.loosh.yutani.v1.WidgetProperties.checkbox:type_name -> industries.loosh.yutani.v1.CheckboxProperties
+	23, // 15: industries.loosh.yutani.v1.WidgetProperties.dropdown:type_name -> industries.loosh.yutani.v1.DropdownProperties
+	24, // 16: industries.loosh.yutani.v1.WidgetProperties.list:type_name -> industries.loosh.yutani.v1.ListProperties
+	25, // 17: industries.loosh.yutani.v1.WidgetProperties.table:type_name -> industries.loosh.yutani.v1.TableProperties
+	26, // 18: industries.loosh.yutani.v1.WidgetProperties.flex:type_name -> industries.loosh.yutani.v1.FlexProperties
+	27, // 19: industries.loosh.yutani.v1.WidgetProperties.grid:type_name -> industries.loosh.yutani.v1.GridProperties
+	28, // 20: industries.loosh.yutani.v1.WidgetProperties.tree:type_name -> industries.loosh.yutani.v1.TreeProperties
+	29, // 21: industries.loosh.yutani.v1.WidgetProperties.form:type_name -> industries.loosh.yutani.v1.FormProperties
+	30, // 22: industries.loosh.yutani.v1.WidgetProperties.pages:type_name -> industries.loosh.yutani.v1.PagesProperties
+	31, // 23: industries.loosh.yutani.v1.WidgetProperties.text_area:type_name -> industries.loosh.yutani.v1.TextAreaProperties
+	32, // 24: industries.loosh.yutani.v1.WidgetProperties.modal:type_name -> industries.loosh.yutani.v1.ModalProperties
+	33, // 25: industries.loosh.yutani.v1.WidgetProperties.image:type_name -> industries.loosh.yutani.v1.ImageProperties
+	34, // 26: industries.loosh.yutani.v1.WidgetProperties.progress_bar:type_name -> industries.loosh.yutani.v1.ProgressBarProperties
+	11, // 27: industries.loosh.yutani.v1.TextViewProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 28: industries.loosh.yutani.v1.InputFieldProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 29: industries.loosh.yutani.v1.InputFieldProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 30: industries.loosh.yutani.v1.InputFieldProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 31: industries.loosh.yutani.v1.ButtonProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 32: industries.loosh.yutani.v1.ButtonProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 33: industries.loosh.yutani.v1.ButtonProperties.activated_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 34: industries.loosh.yutani.v1.CheckboxProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 35: industries.loosh.yutani.v1.CheckboxProperties.checked_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 36: industries.loosh.yutani.v1.DropdownProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 37: industries.loosh.yutani.v1.DropdownProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 38: industries.loosh.yutani.v1.DropdownProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 39: industries.loosh.yutani.v1.ListProperties.main_text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 40: industries.loosh.yutani.v1.ListProperties.secondary_text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 41: industries.loosh.yutani.v1.ListProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 42: industries.loosh.yutani.v1.ListProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 43: industries.loosh.yutani.v1.TableProperties.borders_color:type_name -> industries.loosh.yutani.v1.Color
 	3,  // 44: industries.loosh.yutani.v1.FlexProperties.direction:type_name -> industries.loosh.yutani.v1.FlexDirection
-	10, // 45: industries.loosh.yutani.v1.TreeProperties.node_text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 46: industries.loosh.yutani.v1.TreeProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 47: industries.loosh.yutani.v1.TreeProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 48: industries.loosh.yutani.v1.FormProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 49: industries.loosh.yutani.v1.FormProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 50: industries.loosh.yutani.v1.FormProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 51: industries.loosh.yutani.v1.FormProperties.button_background_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 52: industries.loosh.yutani.v1.FormProperties.button_text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 53: industries.loosh.yutani.v1.PagesProperties.page_name_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 54: industries.loosh.yutani.v1.TextAreaProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 55: industries.loosh.yutani.v1.TextAreaProperties.placeholder_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 56: industries.loosh.yutani.v1.ModalProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 57: industries.loosh.yutani.v1.ModalProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 58: industries.loosh.yutani.v1.ModalProperties.button_background_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 59: industries.loosh.yutani.v1.ModalProperties.button_text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 45: industries.loosh.yutani.v1.TreeProperties.node_text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 46: industries.loosh.yutani.v1.TreeProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 47: industries.loosh.yutani.v1.TreeProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 48: industries.loosh.yutani.v1.FormProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 49: industries.loosh.yutani.v1.FormProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 50: industries.loosh.yutani.v1.FormProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 51: industries.loosh.yutani.v1.FormProperties.button_background_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 52: industries.loosh.yutani.v1.FormProperties.button_text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 53: industries.loosh.yutani.v1.PagesProperties.page_name_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 54: industries.loosh.yutani.v1.TextAreaProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 55: industries.loosh.yutani.v1.TextAreaProperties.placeholder_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 56: industries.loosh.yutani.v1.ModalProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 57: industries.loosh.yutani.v1.ModalProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 58: industries.loosh.yutani.v1.ModalProperties.button_background_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 59: industries.loosh.yutani.v1.ModalProperties.button_text_color:type_name -> industries.loosh.yutani.v1.Color
 	4,  // 60: industries.loosh.yutani.v1.ImageProperties.aspect_ratio:type_name -> industries.loosh.yutani.v1.ImageAspectRatio
-	10, // 61: industries.loosh.yutani.v1.ProgressBarProperties.filled_color:type_name -> industries.loosh.yutani.v1.Color
-	10, // 62: industries.loosh.yutani.v1.ProgressBarProperties.empty_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 61: industries.loosh.yutani.v1.ProgressBarProperties.filled_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 62: industries.loosh.yutani.v1.ProgressBarProperties.empty_color:type_name -> industries.loosh.yutani.v1.Color
 	63, // [63:63] is the sub-list for method output_type
 	63, // [63:63] is the sub-list for method input_type
 	63, // [63:63] is the sub-list for extension type_name
@@ -3299,7 +3375,7 @@ func file_industries_loosh_yutani_v1_types_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_industries_loosh_yutani_v1_types_proto_rawDesc), len(file_industries_loosh_yutani_v1_types_proto_rawDesc)),
-			NumEnums:      7,
+			NumEnums:      8,
 			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,

@@ -327,3 +327,15 @@ enum Modifier {
   MOD_META = 4;
 }
 
+// Mouse button enum for mouse events
+enum MouseButton {
+  MOUSE_NONE = 0;
+  MOUSE_PRIMARY = 1;      // Left button (Button1)
+  MOUSE_SECONDARY = 2;    // Right button (Button2)
+  MOUSE_MIDDLE = 3;       // Middle button (Button3)
+  MOUSE_WHEEL_UP = 4;
+  MOUSE_WHEEL_DOWN = 5;
+  MOUSE_WHEEL_LEFT = 6;
+  MOUSE_WHEEL_RIGHT = 7;
+}
+

@@ -18,6 +18,10 @@ service TestService {
   // Each character is injected separately with no modifiers.
   rpc InjectText(InjectTextRequest) returns (InjectTextResponse);
 
+  // InjectMouse injects a mouse event into the tview input queue.
+  // The event is injected via tcell.SimulationScreen.InjectMouse().
+  rpc InjectMouse(InjectMouseRequest) returns (InjectMouseResponse);
+
   // WaitForIdle blocks until tview has processed all pending events.
   // Uses app.QueueUpdate() to ensure the event queue is drained.
   rpc WaitForIdle(WaitForIdleRequest) returns (WaitForIdleResponse);
@@ -50,6 +54,20 @@ message InjectTextRequest {
 message InjectTextResponse {
   bool success = 1;
   int32 characters_injected = 2;
+}
+
+// InjectMouse
+
+message InjectMouseRequest {
+  SessionId session_id = 1;
+  int32 x = 2;                      // X coordinate (column)
+  int32 y = 3;                      // Y coordinate (row)
+  MouseButton button = 4;           // Mouse button or wheel
+  repeated Modifier modifiers = 5;  // Ctrl, Alt, Shift, Meta
+}
+
+message InjectMouseResponse {
+  bool success = 1;
 }
 
 // WaitForIdle

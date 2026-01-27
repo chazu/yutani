@@ -237,6 +237,126 @@ func (x *InjectTextResponse) GetCharactersInjected() int32 {
 	return 0
 }
 
+type InjectMouseRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	X             int32                  `protobuf:"varint,2,opt,name=x,proto3" json:"x,omitempty"`                                                                 // X coordinate (column)
+	Y             int32                  `protobuf:"varint,3,opt,name=y,proto3" json:"y,omitempty"`                                                                 // Y coordinate (row)
+	Button        MouseButton            `protobuf:"varint,4,opt,name=button,proto3,enum=industries.loosh.yutani.v1.MouseButton" json:"button,omitempty"`           // Mouse button or wheel
+	Modifiers     []Modifier             `protobuf:"varint,5,rep,packed,name=modifiers,proto3,enum=industries.loosh.yutani.v1.Modifier" json:"modifiers,omitempty"` // Ctrl, Alt, Shift, Meta
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InjectMouseRequest) Reset() {
+	*x = InjectMouseRequest{}
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InjectMouseRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InjectMouseRequest) ProtoMessage() {}
+
+func (x *InjectMouseRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InjectMouseRequest.ProtoReflect.Descriptor instead.
+func (*InjectMouseRequest) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_test_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *InjectMouseRequest) GetSessionId() *SessionId {
+	if x != nil {
+		return x.SessionId
+	}
+	return nil
+}
+
+func (x *InjectMouseRequest) GetX() int32 {
+	if x != nil {
+		return x.X
+	}
+	return 0
+}
+
+func (x *InjectMouseRequest) GetY() int32 {
+	if x != nil {
+		return x.Y
+	}
+	return 0
+}
+
+func (x *InjectMouseRequest) GetButton() MouseButton {
+	if x != nil {
+		return x.Button
+	}
+	return MouseButton_MOUSE_NONE
+}
+
+func (x *InjectMouseRequest) GetModifiers() []Modifier {
+	if x != nil {
+		return x.Modifiers
+	}
+	return nil
+}
+
+type InjectMouseResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InjectMouseResponse) Reset() {
+	*x = InjectMouseResponse{}
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InjectMouseResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InjectMouseResponse) ProtoMessage() {}
+
+func (x *InjectMouseResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InjectMouseResponse.ProtoReflect.Descriptor instead.
+func (*InjectMouseResponse) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_test_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *InjectMouseResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
 type WaitForIdleRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
@@ -247,7 +367,7 @@ type WaitForIdleRequest struct {
 
 func (x *WaitForIdleRequest) Reset() {
 	*x = WaitForIdleRequest{}
-	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[4]
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -259,7 +379,7 @@ func (x *WaitForIdleRequest) String() string {
 func (*WaitForIdleRequest) ProtoMessage() {}
 
 func (x *WaitForIdleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[4]
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -272,7 +392,7 @@ func (x *WaitForIdleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WaitForIdleRequest.ProtoReflect.Descriptor instead.
 func (*WaitForIdleRequest) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_test_proto_rawDescGZIP(), []int{4}
+	return file_industries_loosh_yutani_v1_test_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *WaitForIdleRequest) GetSessionId() *SessionId {
@@ -299,7 +419,7 @@ type WaitForIdleResponse struct {
 
 func (x *WaitForIdleResponse) Reset() {
 	*x = WaitForIdleResponse{}
-	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[5]
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -311,7 +431,7 @@ func (x *WaitForIdleResponse) String() string {
 func (*WaitForIdleResponse) ProtoMessage() {}
 
 func (x *WaitForIdleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[5]
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -324,7 +444,7 @@ func (x *WaitForIdleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WaitForIdleResponse.ProtoReflect.Descriptor instead.
 func (*WaitForIdleResponse) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_test_proto_rawDescGZIP(), []int{5}
+	return file_industries_loosh_yutani_v1_test_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *WaitForIdleResponse) GetSuccess() bool {
@@ -349,7 +469,7 @@ type IsTestModeRequest struct {
 
 func (x *IsTestModeRequest) Reset() {
 	*x = IsTestModeRequest{}
-	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[6]
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -361,7 +481,7 @@ func (x *IsTestModeRequest) String() string {
 func (*IsTestModeRequest) ProtoMessage() {}
 
 func (x *IsTestModeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[6]
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -374,7 +494,7 @@ func (x *IsTestModeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IsTestModeRequest.ProtoReflect.Descriptor instead.
 func (*IsTestModeRequest) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_test_proto_rawDescGZIP(), []int{6}
+	return file_industries_loosh_yutani_v1_test_proto_rawDescGZIP(), []int{8}
 }
 
 type IsTestModeResponse struct {
@@ -386,7 +506,7 @@ type IsTestModeResponse struct {
 
 func (x *IsTestModeResponse) Reset() {
 	*x = IsTestModeResponse{}
-	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[7]
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -398,7 +518,7 @@ func (x *IsTestModeResponse) String() string {
 func (*IsTestModeResponse) ProtoMessage() {}
 
 func (x *IsTestModeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[7]
+	mi := &file_industries_loosh_yutani_v1_test_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -411,7 +531,7 @@ func (x *IsTestModeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IsTestModeResponse.ProtoReflect.Descriptor instead.
 func (*IsTestModeResponse) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_test_proto_rawDescGZIP(), []int{7}
+	return file_industries_loosh_yutani_v1_test_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *IsTestModeResponse) GetTestMode() bool {
@@ -440,7 +560,16 @@ const file_industries_loosh_yutani_v1_test_proto_rawDesc = "" +
 	"\x04text\x18\x02 \x01(\tR\x04text\"_\n" +
 	"\x12InjectTextResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12/\n" +
-	"\x13characters_injected\x18\x02 \x01(\x05R\x12charactersInjected\"y\n" +
+	"\x13characters_injected\x18\x02 \x01(\x05R\x12charactersInjected\"\xfb\x01\n" +
+	"\x12InjectMouseRequest\x12D\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12\f\n" +
+	"\x01x\x18\x02 \x01(\x05R\x01x\x12\f\n" +
+	"\x01y\x18\x03 \x01(\x05R\x01y\x12?\n" +
+	"\x06button\x18\x04 \x01(\x0e2'.industries.loosh.yutani.v1.MouseButtonR\x06button\x12B\n" +
+	"\tmodifiers\x18\x05 \x03(\x0e2$.industries.loosh.yutani.v1.ModifierR\tmodifiers\"/\n" +
+	"\x13InjectMouseResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"y\n" +
 	"\x12WaitForIdleRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12\x1d\n" +
@@ -451,11 +580,12 @@ const file_industries_loosh_yutani_v1_test_proto_rawDesc = "" +
 	"\ttimed_out\x18\x02 \x01(\bR\btimedOut\"\x13\n" +
 	"\x11IsTestModeRequest\"1\n" +
 	"\x12IsTestModeResponse\x12\x1b\n" +
-	"\ttest_mode\x18\x01 \x01(\bR\btestMode2\xc1\x03\n" +
+	"\ttest_mode\x18\x01 \x01(\bR\btestMode2\xb1\x04\n" +
 	"\vTestService\x12h\n" +
 	"\tInjectKey\x12,.industries.loosh.yutani.v1.InjectKeyRequest\x1a-.industries.loosh.yutani.v1.InjectKeyResponse\x12k\n" +
 	"\n" +
 	"InjectText\x12-.industries.loosh.yutani.v1.InjectTextRequest\x1a..industries.loosh.yutani.v1.InjectTextResponse\x12n\n" +
+	"\vInjectMouse\x12..industries.loosh.yutani.v1.InjectMouseRequest\x1a/.industries.loosh.yutani.v1.InjectMouseResponse\x12n\n" +
 	"\vWaitForIdle\x12..industries.loosh.yutani.v1.WaitForIdleRequest\x1a/.industries.loosh.yutani.v1.WaitForIdleResponse\x12k\n" +
 	"\n" +
 	"IsTestMode\x12-.industries.loosh.yutani.v1.IsTestModeRequest\x1a..industries.loosh.yutani.v1.IsTestModeResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
@@ -472,39 +602,47 @@ func file_industries_loosh_yutani_v1_test_proto_rawDescGZIP() []byte {
 	return file_industries_loosh_yutani_v1_test_proto_rawDescData
 }
 
-var file_industries_loosh_yutani_v1_test_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_industries_loosh_yutani_v1_test_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_industries_loosh_yutani_v1_test_proto_goTypes = []any{
 	(*InjectKeyRequest)(nil),    // 0: industries.loosh.yutani.v1.InjectKeyRequest
 	(*InjectKeyResponse)(nil),   // 1: industries.loosh.yutani.v1.InjectKeyResponse
 	(*InjectTextRequest)(nil),   // 2: industries.loosh.yutani.v1.InjectTextRequest
 	(*InjectTextResponse)(nil),  // 3: industries.loosh.yutani.v1.InjectTextResponse
-	(*WaitForIdleRequest)(nil),  // 4: industries.loosh.yutani.v1.WaitForIdleRequest
-	(*WaitForIdleResponse)(nil), // 5: industries.loosh.yutani.v1.WaitForIdleResponse
-	(*IsTestModeRequest)(nil),   // 6: industries.loosh.yutani.v1.IsTestModeRequest
-	(*IsTestModeResponse)(nil),  // 7: industries.loosh.yutani.v1.IsTestModeResponse
-	(*SessionId)(nil),           // 8: industries.loosh.yutani.v1.SessionId
-	(Key)(0),                    // 9: industries.loosh.yutani.v1.Key
-	(Modifier)(0),               // 10: industries.loosh.yutani.v1.Modifier
+	(*InjectMouseRequest)(nil),  // 4: industries.loosh.yutani.v1.InjectMouseRequest
+	(*InjectMouseResponse)(nil), // 5: industries.loosh.yutani.v1.InjectMouseResponse
+	(*WaitForIdleRequest)(nil),  // 6: industries.loosh.yutani.v1.WaitForIdleRequest
+	(*WaitForIdleResponse)(nil), // 7: industries.loosh.yutani.v1.WaitForIdleResponse
+	(*IsTestModeRequest)(nil),   // 8: industries.loosh.yutani.v1.IsTestModeRequest
+	(*IsTestModeResponse)(nil),  // 9: industries.loosh.yutani.v1.IsTestModeResponse
+	(*SessionId)(nil),           // 10: industries.loosh.yutani.v1.SessionId
+	(Key)(0),                    // 11: industries.loosh.yutani.v1.Key
+	(Modifier)(0),               // 12: industries.loosh.yutani.v1.Modifier
+	(MouseButton)(0),            // 13: industries.loosh.yutani.v1.MouseButton
 }
 var file_industries_loosh_yutani_v1_test_proto_depIdxs = []int32{
-	8,  // 0: industries.loosh.yutani.v1.InjectKeyRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	9,  // 1: industries.loosh.yutani.v1.InjectKeyRequest.key:type_name -> industries.loosh.yutani.v1.Key
-	10, // 2: industries.loosh.yutani.v1.InjectKeyRequest.modifiers:type_name -> industries.loosh.yutani.v1.Modifier
-	8,  // 3: industries.loosh.yutani.v1.InjectTextRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	8,  // 4: industries.loosh.yutani.v1.WaitForIdleRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	0,  // 5: industries.loosh.yutani.v1.TestService.InjectKey:input_type -> industries.loosh.yutani.v1.InjectKeyRequest
-	2,  // 6: industries.loosh.yutani.v1.TestService.InjectText:input_type -> industries.loosh.yutani.v1.InjectTextRequest
-	4,  // 7: industries.loosh.yutani.v1.TestService.WaitForIdle:input_type -> industries.loosh.yutani.v1.WaitForIdleRequest
-	6,  // 8: industries.loosh.yutani.v1.TestService.IsTestMode:input_type -> industries.loosh.yutani.v1.IsTestModeRequest
-	1,  // 9: industries.loosh.yutani.v1.TestService.InjectKey:output_type -> industries.loosh.yutani.v1.InjectKeyResponse
-	3,  // 10: industries.loosh.yutani.v1.TestService.InjectText:output_type -> industries.loosh.yutani.v1.InjectTextResponse
-	5,  // 11: industries.loosh.yutani.v1.TestService.WaitForIdle:output_type -> industries.loosh.yutani.v1.WaitForIdleResponse
-	7,  // 12: industries.loosh.yutani.v1.TestService.IsTestMode:output_type -> industries.loosh.yutani.v1.IsTestModeResponse
-	9,  // [9:13] is the sub-list for method output_type
-	5,  // [5:9] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	10, // 0: industries.loosh.yutani.v1.InjectKeyRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	11, // 1: industries.loosh.yutani.v1.InjectKeyRequest.key:type_name -> industries.loosh.yutani.v1.Key
+	12, // 2: industries.loosh.yutani.v1.InjectKeyRequest.modifiers:type_name -> industries.loosh.yutani.v1.Modifier
+	10, // 3: industries.loosh.yutani.v1.InjectTextRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	10, // 4: industries.loosh.yutani.v1.InjectMouseRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	13, // 5: industries.loosh.yutani.v1.InjectMouseRequest.button:type_name -> industries.loosh.yutani.v1.MouseButton
+	12, // 6: industries.loosh.yutani.v1.InjectMouseRequest.modifiers:type_name -> industries.loosh.yutani.v1.Modifier
+	10, // 7: industries.loosh.yutani.v1.WaitForIdleRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	0,  // 8: industries.loosh.yutani.v1.TestService.InjectKey:input_type -> industries.loosh.yutani.v1.InjectKeyRequest
+	2,  // 9: industries.loosh.yutani.v1.TestService.InjectText:input_type -> industries.loosh.yutani.v1.InjectTextRequest
+	4,  // 10: industries.loosh.yutani.v1.TestService.InjectMouse:input_type -> industries.loosh.yutani.v1.InjectMouseRequest
+	6,  // 11: industries.loosh.yutani.v1.TestService.WaitForIdle:input_type -> industries.loosh.yutani.v1.WaitForIdleRequest
+	8,  // 12: industries.loosh.yutani.v1.TestService.IsTestMode:input_type -> industries.loosh.yutani.v1.IsTestModeRequest
+	1,  // 13: industries.loosh.yutani.v1.TestService.InjectKey:output_type -> industries.loosh.yutani.v1.InjectKeyResponse
+	3,  // 14: industries.loosh.yutani.v1.TestService.InjectText:output_type -> industries.loosh.yutani.v1.InjectTextResponse
+	5,  // 15: industries.loosh.yutani.v1.TestService.InjectMouse:output_type -> industries.loosh.yutani.v1.InjectMouseResponse
+	7,  // 16: industries.loosh.yutani.v1.TestService.WaitForIdle:output_type -> industries.loosh.yutani.v1.WaitForIdleResponse
+	9,  // 17: industries.loosh.yutani.v1.TestService.IsTestMode:output_type -> industries.loosh.yutani.v1.IsTestModeResponse
+	13, // [13:18] is the sub-list for method output_type
+	8,  // [8:13] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_industries_loosh_yutani_v1_test_proto_init() }
@@ -519,7 +657,7 @@ func file_industries_loosh_yutani_v1_test_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_industries_loosh_yutani_v1_test_proto_rawDesc), len(file_industries_loosh_yutani_v1_test_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	TestService_InjectKey_FullMethodName   = "/industries.loosh.yutani.v1.TestService/InjectKey"
 	TestService_InjectText_FullMethodName  = "/industries.loosh.yutani.v1.TestService/InjectText"
+	TestService_InjectMouse_FullMethodName = "/industries.loosh.yutani.v1.TestService/InjectMouse"
 	TestService_WaitForIdle_FullMethodName = "/industries.loosh.yutani.v1.TestService/WaitForIdle"
 	TestService_IsTestMode_FullMethodName  = "/industries.loosh.yutani.v1.TestService/IsTestMode"
 )
@@ -39,6 +40,9 @@ type TestServiceClient interface {
 	// InjectText injects a string as a sequence of KEY_RUNE events.
 	// Each character is injected separately with no modifiers.
 	InjectText(ctx context.Context, in *InjectTextRequest, opts ...grpc.CallOption) (*InjectTextResponse, error)
+	// InjectMouse injects a mouse event into the tview input queue.
+	// The event is injected via tcell.SimulationScreen.InjectMouse().
+	InjectMouse(ctx context.Context, in *InjectMouseRequest, opts ...grpc.CallOption) (*InjectMouseResponse, error)
 	// WaitForIdle blocks until tview has processed all pending events.
 	// Uses app.QueueUpdate() to ensure the event queue is drained.
 	WaitForIdle(ctx context.Context, in *WaitForIdleRequest, opts ...grpc.CallOption) (*WaitForIdleResponse, error)
@@ -69,6 +73,16 @@ func (c *testServiceClient) InjectText(ctx context.Context, in *InjectTextReques
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(InjectTextResponse)
 	err := c.cc.Invoke(ctx, TestService_InjectText_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *testServiceClient) InjectMouse(ctx context.Context, in *InjectMouseRequest, opts ...grpc.CallOption) (*InjectMouseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InjectMouseResponse)
+	err := c.cc.Invoke(ctx, TestService_InjectMouse_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -109,6 +123,9 @@ type TestServiceServer interface {
 	// InjectText injects a string as a sequence of KEY_RUNE events.
 	// Each character is injected separately with no modifiers.
 	InjectText(context.Context, *InjectTextRequest) (*InjectTextResponse, error)
+	// InjectMouse injects a mouse event into the tview input queue.
+	// The event is injected via tcell.SimulationScreen.InjectMouse().
+	InjectMouse(context.Context, *InjectMouseRequest) (*InjectMouseResponse, error)
 	// WaitForIdle blocks until tview has processed all pending events.
 	// Uses app.QueueUpdate() to ensure the event queue is drained.
 	WaitForIdle(context.Context, *WaitForIdleRequest) (*WaitForIdleResponse, error)
@@ -130,6 +147,9 @@ func (UnimplementedTestServiceServer) InjectKey(context.Context, *InjectKeyReque
 }
 func (UnimplementedTestServiceServer) InjectText(context.Context, *InjectTextRequest) (*InjectTextResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method InjectText not implemented")
+}
+func (UnimplementedTestServiceServer) InjectMouse(context.Context, *InjectMouseRequest) (*InjectMouseResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method InjectMouse not implemented")
 }
 func (UnimplementedTestServiceServer) WaitForIdle(context.Context, *WaitForIdleRequest) (*WaitForIdleResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method WaitForIdle not implemented")
@@ -194,6 +214,24 @@ func _TestService_InjectText_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TestService_InjectMouse_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InjectMouseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TestServiceServer).InjectMouse(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TestService_InjectMouse_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TestServiceServer).InjectMouse(ctx, req.(*InjectMouseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _TestService_WaitForIdle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(WaitForIdleRequest)
 	if err := dec(in); err != nil {
@@ -244,6 +282,10 @@ var TestService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InjectText",
 			Handler:    _TestService_InjectText_Handler,
+		},
+		{
+			MethodName: "InjectMouse",
+			Handler:    _TestService_InjectMouse_Handler,
 		},
 		{
 			MethodName: "WaitForIdle",

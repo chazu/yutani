@@ -95,6 +95,36 @@ func (s *TestService) InjectText(ctx context.Context, req *pb.InjectTextRequest)
 	}, nil
 }
 
+// InjectMouse injects a mouse event into the tview input queue
+func (s *TestService) InjectMouse(ctx context.Context, req *pb.InjectMouseRequest) (*pb.InjectMouseResponse, error) {
+	if !s.server.IsTestMode() {
+		return nil, status.Error(codes.FailedPrecondition, "server not in test mode")
+	}
+
+	if req.SessionId == nil {
+		return nil, status.Error(codes.InvalidArgument, "session_id is required")
+	}
+
+	sessionID := req.SessionId.Id
+	if !s.server.Sessions().Exists(sessionID) {
+		return nil, status.Error(codes.NotFound, "session not found")
+	}
+
+	sim := s.server.GetSimulationScreen()
+	if sim == nil {
+		return nil, status.Error(codes.Internal, "simulation screen not available")
+	}
+
+	// Convert protobuf button to tcell ButtonMask
+	tcellButton := convertProtoButtonToTcell(req.Button)
+	tcellMod := convertProtoModifiersToTcell(req.Modifiers)
+
+	// Inject the mouse event
+	sim.InjectMouse(int(req.X), int(req.Y), tcellButton, tcellMod)
+
+	return &pb.InjectMouseResponse{Success: true}, nil
+}
+
 // WaitForIdle blocks until tview has processed all pending events
 func (s *TestService) WaitForIdle(ctx context.Context, req *pb.WaitForIdleRequest) (*pb.WaitForIdleResponse, error) {
 	if !s.server.IsTestMode() {
@@ -221,4 +251,28 @@ func convertProtoModifiersToTcell(mods []pb.Modifier) tcell.ModMask {
 	}
 
 	return result
+}
+
+// convertProtoButtonToTcell converts a protobuf MouseButton to tcell.ButtonMask
+func convertProtoButtonToTcell(button pb.MouseButton) tcell.ButtonMask {
+	switch button {
+	case pb.MouseButton_MOUSE_PRIMARY:
+		return tcell.ButtonPrimary
+	case pb.MouseButton_MOUSE_SECONDARY:
+		return tcell.ButtonSecondary
+	case pb.MouseButton_MOUSE_MIDDLE:
+		return tcell.ButtonMiddle
+	case pb.MouseButton_MOUSE_WHEEL_UP:
+		return tcell.WheelUp
+	case pb.MouseButton_MOUSE_WHEEL_DOWN:
+		return tcell.WheelDown
+	case pb.MouseButton_MOUSE_WHEEL_LEFT:
+		return tcell.WheelLeft
+	case pb.MouseButton_MOUSE_WHEEL_RIGHT:
+		return tcell.WheelRight
+	case pb.MouseButton_MOUSE_NONE:
+		return tcell.ButtonNone
+	default:
+		return tcell.ButtonNone
+	}
 }
