@@ -177,9 +177,69 @@ func (s *WidgetService) GetProperties(ctx context.Context, req *pb.GetProperties
 		return nil, status.Error(codes.NotFound, "widget not found")
 	}
 
+	// Read live state from primitive (for editable widgets)
+	props := s.enrichPropertiesFromPrimitive(info)
+
 	return &pb.GetPropertiesResponse{
-		Properties: info.Properties,
+		Properties: props,
 	}, nil
+}
+
+// enrichPropertiesFromPrimitive reads live state from primitives
+// This is needed because some state (like text content) is managed by tview internally
+func (s *WidgetService) enrichPropertiesFromPrimitive(info *server.WidgetInfo) *pb.WidgetProperties {
+	if info.Properties == nil {
+		info.Properties = &pb.WidgetProperties{}
+	}
+
+	props := info.Properties
+
+	switch info.Type {
+	case pb.WidgetType_WIDGET_TEXT_AREA:
+		if ta, ok := info.Primitive.(*tview.TextArea); ok {
+			text := ta.GetText()
+			if props.TypeProperties == nil {
+				props.TypeProperties = &pb.WidgetProperties_TextArea{
+					TextArea: &pb.TextAreaProperties{Text: &text},
+				}
+			} else if taProps, ok := props.TypeProperties.(*pb.WidgetProperties_TextArea); ok {
+				if taProps.TextArea == nil {
+					taProps.TextArea = &pb.TextAreaProperties{}
+				}
+				taProps.TextArea.Text = &text
+			}
+		}
+	case pb.WidgetType_WIDGET_INPUT_FIELD:
+		if input, ok := info.Primitive.(*tview.InputField); ok {
+			text := input.GetText()
+			if props.TypeProperties == nil {
+				props.TypeProperties = &pb.WidgetProperties_InputField{
+					InputField: &pb.InputFieldProperties{Text: &text},
+				}
+			} else if ifProps, ok := props.TypeProperties.(*pb.WidgetProperties_InputField); ok {
+				if ifProps.InputField == nil {
+					ifProps.InputField = &pb.InputFieldProperties{}
+				}
+				ifProps.InputField.Text = &text
+			}
+		}
+	case pb.WidgetType_WIDGET_TEXT_VIEW:
+		if tv, ok := info.Primitive.(*tview.TextView); ok {
+			text := tv.GetText(false)
+			if props.TypeProperties == nil {
+				props.TypeProperties = &pb.WidgetProperties_TextView{
+					TextView: &pb.TextViewProperties{Text: &text},
+				}
+			} else if tvProps, ok := props.TypeProperties.(*pb.WidgetProperties_TextView); ok {
+				if tvProps.TextView == nil {
+					tvProps.TextView = &pb.TextViewProperties{}
+				}
+				tvProps.TextView.Text = &text
+			}
+		}
+	}
+
+	return props
 }
 
 // SetRoot sets a widget as the root (displays it)
