@@ -12,6 +12,7 @@ import (
 	"github.com/rivo/tview"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/proto"
 )
 
 // WidgetService implements the WidgetService gRPC service
@@ -192,56 +193,52 @@ func (s *WidgetService) GetProperties(ctx context.Context, req *pb.GetProperties
 	}, nil
 }
 
-// enrichPropertiesFromPrimitive reads live state from primitives
-// This is needed because some state (like text content) is managed by tview internally
+// enrichPropertiesFromPrimitive reads live state from primitives and returns
+// a fresh WidgetProperties with both stored and live state.
+// This is needed because some state (like text content) is managed by tview internally.
+// We clone the stored properties to avoid mutating the registry's copy and to
+// ensure proto serialization caches are clean.
 func (s *WidgetService) enrichPropertiesFromPrimitive(info *server.WidgetInfo) *pb.WidgetProperties {
-	if info.Properties == nil {
-		info.Properties = &pb.WidgetProperties{}
+	var props *pb.WidgetProperties
+	if info.Properties != nil {
+		props = proto.Clone(info.Properties).(*pb.WidgetProperties)
+	} else {
+		props = &pb.WidgetProperties{}
 	}
-
-	props := info.Properties
 
 	switch info.Type {
 	case pb.WidgetType_WIDGET_TEXT_AREA:
 		if ta, ok := info.Primitive.(*tview.TextArea); ok {
 			text := ta.GetText()
-			if props.TypeProperties == nil {
+			if taProps, ok := props.TypeProperties.(*pb.WidgetProperties_TextArea); ok && taProps.TextArea != nil {
+				taProps.TextArea.Text = &text
+			} else {
 				props.TypeProperties = &pb.WidgetProperties_TextArea{
 					TextArea: &pb.TextAreaProperties{Text: &text},
 				}
-			} else if taProps, ok := props.TypeProperties.(*pb.WidgetProperties_TextArea); ok {
-				if taProps.TextArea == nil {
-					taProps.TextArea = &pb.TextAreaProperties{}
-				}
-				taProps.TextArea.Text = &text
 			}
 		}
 	case pb.WidgetType_WIDGET_INPUT_FIELD:
 		if input, ok := info.Primitive.(*tview.InputField); ok {
 			text := input.GetText()
-			if props.TypeProperties == nil {
+			slog.Debug("enrichProperties: InputField", "widget_id", info.ID, "text", text, "textLen", len(text))
+			if ifProps, ok := props.TypeProperties.(*pb.WidgetProperties_InputField); ok && ifProps.InputField != nil {
+				ifProps.InputField.Text = &text
+			} else {
 				props.TypeProperties = &pb.WidgetProperties_InputField{
 					InputField: &pb.InputFieldProperties{Text: &text},
 				}
-			} else if ifProps, ok := props.TypeProperties.(*pb.WidgetProperties_InputField); ok {
-				if ifProps.InputField == nil {
-					ifProps.InputField = &pb.InputFieldProperties{}
-				}
-				ifProps.InputField.Text = &text
 			}
 		}
 	case pb.WidgetType_WIDGET_TEXT_VIEW:
 		if tv, ok := info.Primitive.(*tview.TextView); ok {
 			text := tv.GetText(false)
-			if props.TypeProperties == nil {
+			if tvProps, ok := props.TypeProperties.(*pb.WidgetProperties_TextView); ok && tvProps.TextView != nil {
+				tvProps.TextView.Text = &text
+			} else {
 				props.TypeProperties = &pb.WidgetProperties_TextView{
 					TextView: &pb.TextViewProperties{Text: &text},
 				}
-			} else if tvProps, ok := props.TypeProperties.(*pb.WidgetProperties_TextView); ok {
-				if tvProps.TextView == nil {
-					tvProps.TextView = &pb.TextViewProperties{}
-				}
-				tvProps.TextView.Text = &text
 			}
 		}
 	}

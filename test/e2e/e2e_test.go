@@ -70,6 +70,7 @@ func newTestServer(t *testing.T) *testServer {
 	formSvc := services.NewFormService(srv)
 	treeSvc := services.NewTreeService(srv)
 	layoutSvc := services.NewLayoutService(srv)
+	debugSvc := services.NewDebugService(srv)
 
 	pb.RegisterSessionServiceServer(grpcServer, sessionSvc)
 	pb.RegisterScreenServiceServer(grpcServer, screenSvc)
@@ -80,6 +81,7 @@ func newTestServer(t *testing.T) *testServer {
 	pb.RegisterFormServiceServer(grpcServer, formSvc)
 	pb.RegisterTreeServiceServer(grpcServer, treeSvc)
 	pb.RegisterLayoutServiceServer(grpcServer, layoutSvc)
+	pb.RegisterDebugServiceServer(grpcServer, debugSvc)
 
 	// Start gRPC server
 	go func() {

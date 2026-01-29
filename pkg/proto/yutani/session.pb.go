@@ -276,6 +276,146 @@ func (x *DestroySessionResponse) GetSuccess() bool {
 	return false
 }
 
+type ListSessionsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSessionsRequest) Reset() {
+	*x = ListSessionsRequest{}
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSessionsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSessionsRequest) ProtoMessage() {}
+
+func (x *ListSessionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSessionsRequest.ProtoReflect.Descriptor instead.
+func (*ListSessionsRequest) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{5}
+}
+
+type ListSessionsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Sessions      []*SessionInfo         `protobuf:"bytes,1,rep,name=sessions,proto3" json:"sessions,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSessionsResponse) Reset() {
+	*x = ListSessionsResponse{}
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSessionsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSessionsResponse) ProtoMessage() {}
+
+func (x *ListSessionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSessionsResponse.ProtoReflect.Descriptor instead.
+func (*ListSessionsResponse) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListSessionsResponse) GetSessions() []*SessionInfo {
+	if x != nil {
+		return x.Sessions
+	}
+	return nil
+}
+
+type SessionInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	ClientName    string                 `protobuf:"bytes,2,opt,name=client_name,json=clientName,proto3" json:"client_name,omitempty"`
+	CreatedAt     int64                  `protobuf:"varint,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"` // Unix timestamp in nanoseconds
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SessionInfo) Reset() {
+	*x = SessionInfo{}
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SessionInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SessionInfo) ProtoMessage() {}
+
+func (x *SessionInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SessionInfo.ProtoReflect.Descriptor instead.
+func (*SessionInfo) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *SessionInfo) GetSessionId() *SessionId {
+	if x != nil {
+		return x.SessionId
+	}
+	return nil
+}
+
+func (x *SessionInfo) GetClientName() string {
+	if x != nil {
+		return x.ClientName
+	}
+	return ""
+}
+
+func (x *SessionInfo) GetCreatedAt() int64 {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return 0
+}
+
 type GetServerInfoRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
@@ -284,7 +424,7 @@ type GetServerInfoRequest struct {
 
 func (x *GetServerInfoRequest) Reset() {
 	*x = GetServerInfoRequest{}
-	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[5]
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -296,7 +436,7 @@ func (x *GetServerInfoRequest) String() string {
 func (*GetServerInfoRequest) ProtoMessage() {}
 
 func (x *GetServerInfoRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[5]
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -309,7 +449,7 @@ func (x *GetServerInfoRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetServerInfoRequest.ProtoReflect.Descriptor instead.
 func (*GetServerInfoRequest) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{5}
+	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{8}
 }
 
 type GetServerInfoResponse struct {
@@ -325,7 +465,7 @@ type GetServerInfoResponse struct {
 
 func (x *GetServerInfoResponse) Reset() {
 	*x = GetServerInfoResponse{}
-	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[6]
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -337,7 +477,7 @@ func (x *GetServerInfoResponse) String() string {
 func (*GetServerInfoResponse) ProtoMessage() {}
 
 func (x *GetServerInfoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[6]
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -350,7 +490,7 @@ func (x *GetServerInfoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetServerInfoResponse.ProtoReflect.Descriptor instead.
 func (*GetServerInfoResponse) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{6}
+	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GetServerInfoResponse) GetVersion() string {
@@ -400,7 +540,7 @@ type ServerCapabilities struct {
 
 func (x *ServerCapabilities) Reset() {
 	*x = ServerCapabilities{}
-	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[7]
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -412,7 +552,7 @@ func (x *ServerCapabilities) String() string {
 func (*ServerCapabilities) ProtoMessage() {}
 
 func (x *ServerCapabilities) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[7]
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -425,7 +565,7 @@ func (x *ServerCapabilities) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ServerCapabilities.ProtoReflect.Descriptor instead.
 func (*ServerCapabilities) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{7}
+	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ServerCapabilities) GetMouseSupport() bool {
@@ -465,7 +605,7 @@ type PingRequest struct {
 
 func (x *PingRequest) Reset() {
 	*x = PingRequest{}
-	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[8]
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -477,7 +617,7 @@ func (x *PingRequest) String() string {
 func (*PingRequest) ProtoMessage() {}
 
 func (x *PingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[8]
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -490,7 +630,7 @@ func (x *PingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PingRequest.ProtoReflect.Descriptor instead.
 func (*PingRequest) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{8}
+	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *PingRequest) GetTimestamp() int64 {
@@ -510,7 +650,7 @@ type PingResponse struct {
 
 func (x *PingResponse) Reset() {
 	*x = PingResponse{}
-	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[9]
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -522,7 +662,7 @@ func (x *PingResponse) String() string {
 func (*PingResponse) ProtoMessage() {}
 
 func (x *PingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[9]
+	mi := &file_industries_loosh_yutani_v1_session_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -535,7 +675,7 @@ func (x *PingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PingResponse.ProtoReflect.Descriptor instead.
 func (*PingResponse) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{9}
+	return file_industries_loosh_yutani_v1_session_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *PingResponse) GetTimestamp() int64 {
@@ -573,7 +713,17 @@ const file_industries_loosh_yutani_v1_session_proto_rawDesc = "" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\"2\n" +
 	"\x16DestroySessionResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x16\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x15\n" +
+	"\x13ListSessionsRequest\"[\n" +
+	"\x14ListSessionsResponse\x12C\n" +
+	"\bsessions\x18\x01 \x03(\v2'.industries.loosh.yutani.v1.SessionInfoR\bsessions\"\x93\x01\n" +
+	"\vSessionInfo\x12D\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12\x1f\n" +
+	"\vclient_name\x18\x02 \x01(\tR\n" +
+	"clientName\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x03 \x01(\x03R\tcreatedAt\"\x16\n" +
 	"\x14GetServerInfoRequest\"\x94\x02\n" +
 	"\x15GetServerInfoResponse\x12\x18\n" +
 	"\aversion\x18\x01 \x01(\tR\aversion\x12'\n" +
@@ -592,10 +742,11 @@ const file_industries_loosh_yutani_v1_session_proto_rawDesc = "" +
 	"\ttimestamp\x18\x01 \x01(\x03R\ttimestamp\"W\n" +
 	"\fPingResponse\x12\x1c\n" +
 	"\ttimestamp\x18\x01 \x01(\x03R\ttimestamp\x12)\n" +
-	"\x10server_timestamp\x18\x02 \x01(\x03R\x0fserverTimestamp2\xd0\x03\n" +
+	"\x10server_timestamp\x18\x02 \x01(\x03R\x0fserverTimestamp2\xc3\x04\n" +
 	"\x0eSessionService\x12t\n" +
 	"\rCreateSession\x120.industries.loosh.yutani.v1.CreateSessionRequest\x1a1.industries.loosh.yutani.v1.CreateSessionResponse\x12w\n" +
-	"\x0eDestroySession\x121.industries.loosh.yutani.v1.DestroySessionRequest\x1a2.industries.loosh.yutani.v1.DestroySessionResponse\x12t\n" +
+	"\x0eDestroySession\x121.industries.loosh.yutani.v1.DestroySessionRequest\x1a2.industries.loosh.yutani.v1.DestroySessionResponse\x12q\n" +
+	"\fListSessions\x12/.industries.loosh.yutani.v1.ListSessionsRequest\x1a0.industries.loosh.yutani.v1.ListSessionsResponse\x12t\n" +
 	"\rGetServerInfo\x120.industries.loosh.yutani.v1.GetServerInfoRequest\x1a1.industries.loosh.yutani.v1.GetServerInfoResponse\x12Y\n" +
 	"\x04Ping\x12'.industries.loosh.yutani.v1.PingRequest\x1a(.industries.loosh.yutani.v1.PingResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
 
@@ -611,40 +762,47 @@ func file_industries_loosh_yutani_v1_session_proto_rawDescGZIP() []byte {
 	return file_industries_loosh_yutani_v1_session_proto_rawDescData
 }
 
-var file_industries_loosh_yutani_v1_session_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_industries_loosh_yutani_v1_session_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_industries_loosh_yutani_v1_session_proto_goTypes = []any{
 	(*CreateSessionRequest)(nil),   // 0: industries.loosh.yutani.v1.CreateSessionRequest
 	(*SessionPreferences)(nil),     // 1: industries.loosh.yutani.v1.SessionPreferences
 	(*CreateSessionResponse)(nil),  // 2: industries.loosh.yutani.v1.CreateSessionResponse
 	(*DestroySessionRequest)(nil),  // 3: industries.loosh.yutani.v1.DestroySessionRequest
 	(*DestroySessionResponse)(nil), // 4: industries.loosh.yutani.v1.DestroySessionResponse
-	(*GetServerInfoRequest)(nil),   // 5: industries.loosh.yutani.v1.GetServerInfoRequest
-	(*GetServerInfoResponse)(nil),  // 6: industries.loosh.yutani.v1.GetServerInfoResponse
-	(*ServerCapabilities)(nil),     // 7: industries.loosh.yutani.v1.ServerCapabilities
-	(*PingRequest)(nil),            // 8: industries.loosh.yutani.v1.PingRequest
-	(*PingResponse)(nil),           // 9: industries.loosh.yutani.v1.PingResponse
-	(*SessionId)(nil),              // 10: industries.loosh.yutani.v1.SessionId
-	(*Size)(nil),                   // 11: industries.loosh.yutani.v1.Size
+	(*ListSessionsRequest)(nil),    // 5: industries.loosh.yutani.v1.ListSessionsRequest
+	(*ListSessionsResponse)(nil),   // 6: industries.loosh.yutani.v1.ListSessionsResponse
+	(*SessionInfo)(nil),            // 7: industries.loosh.yutani.v1.SessionInfo
+	(*GetServerInfoRequest)(nil),   // 8: industries.loosh.yutani.v1.GetServerInfoRequest
+	(*GetServerInfoResponse)(nil),  // 9: industries.loosh.yutani.v1.GetServerInfoResponse
+	(*ServerCapabilities)(nil),     // 10: industries.loosh.yutani.v1.ServerCapabilities
+	(*PingRequest)(nil),            // 11: industries.loosh.yutani.v1.PingRequest
+	(*PingResponse)(nil),           // 12: industries.loosh.yutani.v1.PingResponse
+	(*SessionId)(nil),              // 13: industries.loosh.yutani.v1.SessionId
+	(*Size)(nil),                   // 14: industries.loosh.yutani.v1.Size
 }
 var file_industries_loosh_yutani_v1_session_proto_depIdxs = []int32{
 	1,  // 0: industries.loosh.yutani.v1.CreateSessionRequest.preferences:type_name -> industries.loosh.yutani.v1.SessionPreferences
-	10, // 1: industries.loosh.yutani.v1.CreateSessionResponse.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	10, // 2: industries.loosh.yutani.v1.DestroySessionRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	11, // 3: industries.loosh.yutani.v1.GetServerInfoResponse.screen_size:type_name -> industries.loosh.yutani.v1.Size
-	7,  // 4: industries.loosh.yutani.v1.GetServerInfoResponse.capabilities:type_name -> industries.loosh.yutani.v1.ServerCapabilities
-	0,  // 5: industries.loosh.yutani.v1.SessionService.CreateSession:input_type -> industries.loosh.yutani.v1.CreateSessionRequest
-	3,  // 6: industries.loosh.yutani.v1.SessionService.DestroySession:input_type -> industries.loosh.yutani.v1.DestroySessionRequest
-	5,  // 7: industries.loosh.yutani.v1.SessionService.GetServerInfo:input_type -> industries.loosh.yutani.v1.GetServerInfoRequest
-	8,  // 8: industries.loosh.yutani.v1.SessionService.Ping:input_type -> industries.loosh.yutani.v1.PingRequest
-	2,  // 9: industries.loosh.yutani.v1.SessionService.CreateSession:output_type -> industries.loosh.yutani.v1.CreateSessionResponse
-	4,  // 10: industries.loosh.yutani.v1.SessionService.DestroySession:output_type -> industries.loosh.yutani.v1.DestroySessionResponse
-	6,  // 11: industries.loosh.yutani.v1.SessionService.GetServerInfo:output_type -> industries.loosh.yutani.v1.GetServerInfoResponse
-	9,  // 12: industries.loosh.yutani.v1.SessionService.Ping:output_type -> industries.loosh.yutani.v1.PingResponse
-	9,  // [9:13] is the sub-list for method output_type
-	5,  // [5:9] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	13, // 1: industries.loosh.yutani.v1.CreateSessionResponse.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	13, // 2: industries.loosh.yutani.v1.DestroySessionRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	7,  // 3: industries.loosh.yutani.v1.ListSessionsResponse.sessions:type_name -> industries.loosh.yutani.v1.SessionInfo
+	13, // 4: industries.loosh.yutani.v1.SessionInfo.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	14, // 5: industries.loosh.yutani.v1.GetServerInfoResponse.screen_size:type_name -> industries.loosh.yutani.v1.Size
+	10, // 6: industries.loosh.yutani.v1.GetServerInfoResponse.capabilities:type_name -> industries.loosh.yutani.v1.ServerCapabilities
+	0,  // 7: industries.loosh.yutani.v1.SessionService.CreateSession:input_type -> industries.loosh.yutani.v1.CreateSessionRequest
+	3,  // 8: industries.loosh.yutani.v1.SessionService.DestroySession:input_type -> industries.loosh.yutani.v1.DestroySessionRequest
+	5,  // 9: industries.loosh.yutani.v1.SessionService.ListSessions:input_type -> industries.loosh.yutani.v1.ListSessionsRequest
+	8,  // 10: industries.loosh.yutani.v1.SessionService.GetServerInfo:input_type -> industries.loosh.yutani.v1.GetServerInfoRequest
+	11, // 11: industries.loosh.yutani.v1.SessionService.Ping:input_type -> industries.loosh.yutani.v1.PingRequest
+	2,  // 12: industries.loosh.yutani.v1.SessionService.CreateSession:output_type -> industries.loosh.yutani.v1.CreateSessionResponse
+	4,  // 13: industries.loosh.yutani.v1.SessionService.DestroySession:output_type -> industries.loosh.yutani.v1.DestroySessionResponse
+	6,  // 14: industries.loosh.yutani.v1.SessionService.ListSessions:output_type -> industries.loosh.yutani.v1.ListSessionsResponse
+	9,  // 15: industries.loosh.yutani.v1.SessionService.GetServerInfo:output_type -> industries.loosh.yutani.v1.GetServerInfoResponse
+	12, // 16: industries.loosh.yutani.v1.SessionService.Ping:output_type -> industries.loosh.yutani.v1.PingResponse
+	12, // [12:17] is the sub-list for method output_type
+	7,  // [7:12] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_industries_loosh_yutani_v1_session_proto_init() }
@@ -659,7 +817,7 @@ func file_industries_loosh_yutani_v1_session_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_industries_loosh_yutani_v1_session_proto_rawDesc), len(file_industries_loosh_yutani_v1_session_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

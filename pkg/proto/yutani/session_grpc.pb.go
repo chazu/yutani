@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	SessionService_CreateSession_FullMethodName  = "/industries.loosh.yutani.v1.SessionService/CreateSession"
 	SessionService_DestroySession_FullMethodName = "/industries.loosh.yutani.v1.SessionService/DestroySession"
+	SessionService_ListSessions_FullMethodName   = "/industries.loosh.yutani.v1.SessionService/ListSessions"
 	SessionService_GetServerInfo_FullMethodName  = "/industries.loosh.yutani.v1.SessionService/GetServerInfo"
 	SessionService_Ping_FullMethodName           = "/industries.loosh.yutani.v1.SessionService/Ping"
 )
@@ -35,6 +36,8 @@ type SessionServiceClient interface {
 	CreateSession(ctx context.Context, in *CreateSessionRequest, opts ...grpc.CallOption) (*CreateSessionResponse, error)
 	// End a session and cleanup its resources
 	DestroySession(ctx context.Context, in *DestroySessionRequest, opts ...grpc.CallOption) (*DestroySessionResponse, error)
+	// List all active sessions
+	ListSessions(ctx context.Context, in *ListSessionsRequest, opts ...grpc.CallOption) (*ListSessionsResponse, error)
 	// Get server information
 	GetServerInfo(ctx context.Context, in *GetServerInfoRequest, opts ...grpc.CallOption) (*GetServerInfoResponse, error)
 	// Ping for health check
@@ -63,6 +66,16 @@ func (c *sessionServiceClient) DestroySession(ctx context.Context, in *DestroySe
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DestroySessionResponse)
 	err := c.cc.Invoke(ctx, SessionService_DestroySession_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sessionServiceClient) ListSessions(ctx context.Context, in *ListSessionsRequest, opts ...grpc.CallOption) (*ListSessionsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListSessionsResponse)
+	err := c.cc.Invoke(ctx, SessionService_ListSessions_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -99,6 +112,8 @@ type SessionServiceServer interface {
 	CreateSession(context.Context, *CreateSessionRequest) (*CreateSessionResponse, error)
 	// End a session and cleanup its resources
 	DestroySession(context.Context, *DestroySessionRequest) (*DestroySessionResponse, error)
+	// List all active sessions
+	ListSessions(context.Context, *ListSessionsRequest) (*ListSessionsResponse, error)
 	// Get server information
 	GetServerInfo(context.Context, *GetServerInfoRequest) (*GetServerInfoResponse, error)
 	// Ping for health check
@@ -118,6 +133,9 @@ func (UnimplementedSessionServiceServer) CreateSession(context.Context, *CreateS
 }
 func (UnimplementedSessionServiceServer) DestroySession(context.Context, *DestroySessionRequest) (*DestroySessionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method DestroySession not implemented")
+}
+func (UnimplementedSessionServiceServer) ListSessions(context.Context, *ListSessionsRequest) (*ListSessionsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListSessions not implemented")
 }
 func (UnimplementedSessionServiceServer) GetServerInfo(context.Context, *GetServerInfoRequest) (*GetServerInfoResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetServerInfo not implemented")
@@ -182,6 +200,24 @@ func _SessionService_DestroySession_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SessionService_ListSessions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSessionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SessionServiceServer).ListSessions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SessionService_ListSessions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SessionServiceServer).ListSessions(ctx, req.(*ListSessionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SessionService_GetServerInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetServerInfoRequest)
 	if err := dec(in); err != nil {
@@ -232,6 +268,10 @@ var SessionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DestroySession",
 			Handler:    _SessionService_DestroySession_Handler,
+		},
+		{
+			MethodName: "ListSessions",
+			Handler:    _SessionService_ListSessions_Handler,
 		},
 		{
 			MethodName: "GetServerInfo",

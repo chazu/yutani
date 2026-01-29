@@ -22,10 +22,11 @@ var debugCmd = &cobra.Command{
 	Long: `Debug utilities for Yutani applications.
 
 Provides tools for:
+  - Screen dump (ASCII representation)
+  - Widget state inspection
   - Widget tree visualization
   - Event stream monitoring
-  - Connection debugging
-  - State inspection`,
+  - Connection debugging`,
 }
 
 var debugTreeCmd = &cobra.Command{
@@ -52,17 +53,77 @@ var debugEventsCmd = &cobra.Command{
 	RunE: runDebugEvents,
 }
 
+var debugScreenCmd = &cobra.Command{
+	Use:   "screen",
+	Short: "Dump current screen contents",
+	Long: `Get an ASCII art representation of the current screen contents.
+
+This is useful for LLM agents to understand what is currently displayed
+in the terminal UI without needing visual access.`,
+	Example: `  # Dump screen contents
+  yutani debug screen -s <session-id>
+
+  # Dump with widget bounds overlay
+  yutani debug screen -s <session-id> --bounds
+
+  # Dump with legend showing widget info
+  yutani debug screen -s <session-id> --bounds --legend
+
+  # Output as JSON
+  yutani debug screen -s <session-id> --format json`,
+	RunE: runDebugScreen,
+}
+
+var debugWidgetCmd = &cobra.Command{
+	Use:   "widget",
+	Short: "Inspect widget state",
+	Long: `Get detailed state information about a specific widget.
+
+Shows:
+  - Widget type and ID
+  - Screen bounds (position and size)
+  - Focus state
+  - Visibility
+  - Properties
+  - Parent/child relationships
+  - Recent events`,
+	Example: `  # Inspect a specific widget
+  yutani debug widget -s <session-id> -w <widget-id>
+
+  # Output as JSON
+  yutani debug widget -s <session-id> -w <widget-id> --format json`,
+	RunE: runDebugWidget,
+}
+
+var debugBoundsCmd = &cobra.Command{
+	Use:   "bounds",
+	Short: "List all widget bounds",
+	Long:  `Get bounds information for all widgets in a session.`,
+	Example: `  # List all widget bounds
+  yutani debug bounds -s <session-id>
+
+  # Output as JSON
+  yutani debug bounds -s <session-id> --format json`,
+	RunE: runDebugBounds,
+}
+
 var (
-	debugAddress   string
-	debugVerbose   bool
-	debugTypes     []string
-	debugSessionID string
-	debugFormat    string
+	debugAddress    string
+	debugVerbose    bool
+	debugTypes      []string
+	debugSessionID  string
+	debugFormat     string
+	debugWidgetID   string
+	debugShowBounds bool
+	debugShowLegend bool
 )
 
 func init() {
 	debugCmd.AddCommand(debugTreeCmd)
 	debugCmd.AddCommand(debugEventsCmd)
+	debugCmd.AddCommand(debugScreenCmd)
+	debugCmd.AddCommand(debugWidgetCmd)
+	debugCmd.AddCommand(debugBoundsCmd)
 
 	// Tree command flags
 	debugTreeCmd.Flags().StringVarP(&debugAddress, "address", "a", "localhost:7755", "Server address")
@@ -75,6 +136,24 @@ func init() {
 	debugEventsCmd.Flags().StringVarP(&debugSessionID, "session", "s", "", "Session ID (required)")
 	debugEventsCmd.Flags().StringSliceVarP(&debugTypes, "type", "t", []string{}, "Event types to monitor (key, mouse, resize, focus, widget)")
 	debugEventsCmd.Flags().StringVarP(&debugFormat, "format", "f", "text", "Output format (text, json)")
+
+	// Screen command flags
+	debugScreenCmd.Flags().StringVarP(&debugAddress, "address", "a", "localhost:7755", "Server address")
+	debugScreenCmd.Flags().StringVarP(&debugSessionID, "session", "s", "", "Session ID (required)")
+	debugScreenCmd.Flags().BoolVar(&debugShowBounds, "bounds", false, "Overlay widget bounds on screen")
+	debugScreenCmd.Flags().BoolVar(&debugShowLegend, "legend", false, "Include widget bounds legend")
+	debugScreenCmd.Flags().StringVarP(&debugFormat, "format", "f", "text", "Output format (text, json)")
+
+	// Widget command flags
+	debugWidgetCmd.Flags().StringVarP(&debugAddress, "address", "a", "localhost:7755", "Server address")
+	debugWidgetCmd.Flags().StringVarP(&debugSessionID, "session", "s", "", "Session ID (required)")
+	debugWidgetCmd.Flags().StringVarP(&debugWidgetID, "widget", "w", "", "Widget ID (required)")
+	debugWidgetCmd.Flags().StringVarP(&debugFormat, "format", "f", "text", "Output format (text, json)")
+
+	// Bounds command flags
+	debugBoundsCmd.Flags().StringVarP(&debugAddress, "address", "a", "localhost:7755", "Server address")
+	debugBoundsCmd.Flags().StringVarP(&debugSessionID, "session", "s", "", "Session ID (required)")
+	debugBoundsCmd.Flags().StringVarP(&debugFormat, "format", "f", "text", "Output format (text, json)")
 }
 
 func debugConnect() (*grpc.ClientConn, error) {
@@ -333,5 +412,242 @@ func formatModifiers(mods []pb.Modifier) string {
 		}
 	}
 	return strings.Join(parts, "")
+}
+
+func runDebugScreen(cmd *cobra.Command, args []string) error {
+	if debugSessionID == "" {
+		return fmt.Errorf("session ID required (--session)")
+	}
+
+	conn, err := debugConnect()
+	if err != nil {
+		return fmt.Errorf("failed to connect: %w", err)
+	}
+	defer conn.Close()
+
+	client := pb.NewDebugServiceClient(conn)
+
+	resp, err := client.GetScreenDump(context.Background(), &pb.GetScreenDumpRequest{
+		SessionId:        &pb.SessionId{Id: debugSessionID},
+		ShowWidgetBounds: debugShowBounds,
+		IncludeLegend:    debugShowLegend,
+	})
+	if err != nil {
+		return fmt.Errorf("failed to get screen dump: %w", err)
+	}
+
+	if debugFormat == "json" {
+		type jsonOutput struct {
+			ScreenDump    string                 `json:"screen_dump"`
+			ScreenSize    map[string]int32       `json:"screen_size"`
+			WidgetBounds  []*pb.WidgetBoundsInfo `json:"widget_bounds,omitempty"`
+			FocusedWidget string                 `json:"focused_widget,omitempty"`
+		}
+
+		output := jsonOutput{
+			ScreenDump: resp.ScreenDump,
+			ScreenSize: map[string]int32{
+				"width":  resp.ScreenSize.Width,
+				"height": resp.ScreenSize.Height,
+			},
+			WidgetBounds: resp.WidgetBounds,
+		}
+		if resp.FocusedWidget != nil {
+			output.FocusedWidget = resp.FocusedWidget.Id
+		}
+
+		data, _ := json.MarshalIndent(output, "", "  ")
+		fmt.Println(string(data))
+		return nil
+	}
+
+	// Text output
+	fmt.Println("Screen Dump")
+	fmt.Println("===========")
+	fmt.Printf("Session: %s\n", debugSessionID)
+	fmt.Printf("Size: %dx%d\n", resp.ScreenSize.Width, resp.ScreenSize.Height)
+	if resp.FocusedWidget != nil {
+		focusedID := resp.FocusedWidget.Id
+		if len(focusedID) > 12 {
+			focusedID = focusedID[:12] + "..."
+		}
+		fmt.Printf("Focused: %s\n", focusedID)
+	}
+	fmt.Println()
+	fmt.Println(resp.ScreenDump)
+
+	// Show legend if requested
+	if debugShowLegend && len(resp.WidgetBounds) > 0 {
+		fmt.Println()
+		fmt.Println("Widget Bounds Legend")
+		fmt.Println("--------------------")
+		for _, b := range resp.WidgetBounds {
+			widgetType := strings.TrimPrefix(b.WidgetType.String(), "WIDGET_")
+			focusMarker := ""
+			if b.HasFocus {
+				focusMarker = " [FOCUSED]"
+			}
+			shortID := b.WidgetId.Id
+			if len(shortID) > 12 {
+				shortID = shortID[:12] + "..."
+			}
+			fmt.Printf("  %s: %s (%s) at (%d,%d) %dx%d%s\n",
+				b.ShortId, shortID, widgetType,
+				b.Bounds.X, b.Bounds.Y,
+				b.Bounds.Width, b.Bounds.Height,
+				focusMarker)
+		}
+	}
+
+	return nil
+}
+
+func runDebugWidget(cmd *cobra.Command, args []string) error {
+	if debugSessionID == "" {
+		return fmt.Errorf("session ID required (--session)")
+	}
+	if debugWidgetID == "" {
+		return fmt.Errorf("widget ID required (--widget)")
+	}
+
+	conn, err := debugConnect()
+	if err != nil {
+		return fmt.Errorf("failed to connect: %w", err)
+	}
+	defer conn.Close()
+
+	client := pb.NewDebugServiceClient(conn)
+
+	resp, err := client.GetWidgetState(context.Background(), &pb.GetWidgetStateRequest{
+		SessionId: &pb.SessionId{Id: debugSessionID},
+		WidgetId:  &pb.WidgetId{Id: debugWidgetID},
+	})
+	if err != nil {
+		return fmt.Errorf("failed to get widget state: %w", err)
+	}
+
+	if debugFormat == "json" {
+		data, _ := json.MarshalIndent(resp, "", "  ")
+		fmt.Println(string(data))
+		return nil
+	}
+
+	// Text output
+	widgetType := strings.TrimPrefix(resp.WidgetType.String(), "WIDGET_")
+
+	fmt.Println("Widget State")
+	fmt.Println("============")
+	fmt.Printf("ID:       %s\n", resp.WidgetId.Id)
+	fmt.Printf("Type:     %s\n", widgetType)
+	fmt.Printf("Bounds:   (%d,%d) %dx%d\n",
+		resp.Bounds.X, resp.Bounds.Y,
+		resp.Bounds.Width, resp.Bounds.Height)
+	fmt.Printf("Focus:    %v\n", resp.HasFocus)
+	fmt.Printf("Visible:  %v\n", resp.IsVisible)
+
+	if resp.ParentId != nil {
+		parentID := resp.ParentId.Id
+		if len(parentID) > 16 {
+			parentID = parentID[:16] + "..."
+		}
+		fmt.Printf("Parent:   %s\n", parentID)
+	}
+
+	if len(resp.Children) > 0 {
+		fmt.Printf("Children: %d\n", len(resp.Children))
+		for i, child := range resp.Children {
+			childID := child.Id
+			if len(childID) > 16 {
+				childID = childID[:16] + "..."
+			}
+			fmt.Printf("  [%d] %s\n", i, childID)
+		}
+	}
+
+	if len(resp.RecentEvents) > 0 {
+		fmt.Println()
+		fmt.Println("Recent Events:")
+		for _, event := range resp.RecentEvents {
+			timestamp := time.Unix(0, event.Timestamp).Format("15:04:05.000")
+			fmt.Printf("  %s: %s\n", timestamp, event.EventType)
+			for k, v := range event.Details {
+				fmt.Printf("           %s: %s\n", k, v)
+			}
+		}
+	}
+
+	return nil
+}
+
+func runDebugBounds(cmd *cobra.Command, args []string) error {
+	if debugSessionID == "" {
+		return fmt.Errorf("session ID required (--session)")
+	}
+
+	conn, err := debugConnect()
+	if err != nil {
+		return fmt.Errorf("failed to connect: %w", err)
+	}
+	defer conn.Close()
+
+	client := pb.NewDebugServiceClient(conn)
+
+	resp, err := client.GetAllWidgetBounds(context.Background(), &pb.GetAllWidgetBoundsRequest{
+		SessionId: &pb.SessionId{Id: debugSessionID},
+	})
+	if err != nil {
+		return fmt.Errorf("failed to get widget bounds: %w", err)
+	}
+
+	if debugFormat == "json" {
+		data, _ := json.MarshalIndent(resp, "", "  ")
+		fmt.Println(string(data))
+		return nil
+	}
+
+	// Text output
+	fmt.Println("Widget Bounds")
+	fmt.Println("=============")
+	fmt.Printf("Session: %s\n", debugSessionID)
+	fmt.Printf("Screen:  %dx%d\n", resp.ScreenSize.Width, resp.ScreenSize.Height)
+	if resp.FocusedWidget != nil {
+		focusedID := resp.FocusedWidget.Id
+		if len(focusedID) > 12 {
+			focusedID = focusedID[:12] + "..."
+		}
+		fmt.Printf("Focused: %s\n", focusedID)
+	}
+	fmt.Println()
+
+	if len(resp.Widgets) == 0 {
+		fmt.Println("(no widgets)")
+		return nil
+	}
+
+	// Table header
+	fmt.Printf("%-4s %-16s %-12s %-20s %s\n", "ID", "Widget ID", "Type", "Bounds", "Focus")
+	fmt.Println(strings.Repeat("-", 70))
+
+	for _, w := range resp.Widgets {
+		widgetType := strings.TrimPrefix(w.WidgetType.String(), "WIDGET_")
+		widgetID := w.WidgetId.Id
+		if len(widgetID) > 14 {
+			widgetID = widgetID[:14] + ".."
+		}
+
+		bounds := fmt.Sprintf("(%d,%d) %dx%d",
+			w.Bounds.X, w.Bounds.Y,
+			w.Bounds.Width, w.Bounds.Height)
+
+		focusStr := ""
+		if w.HasFocus {
+			focusStr = "*"
+		}
+
+		fmt.Printf("%-4s %-16s %-12s %-20s %s\n",
+			w.ShortId, widgetID, widgetType, bounds, focusStr)
+	}
+
+	return nil
 }
 

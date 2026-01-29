@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
 	"time"
 
 	pb "github.com/chazu/yutani/pkg/proto/yutani"
@@ -50,10 +51,23 @@ var sessionInfoCmd = &cobra.Command{
 	RunE:  runSessionInfo,
 }
 
+var sessionListCmd = &cobra.Command{
+	Use:   "list",
+	Short: "List active sessions",
+	Long:  `List all active sessions on the server with their IDs and client names.`,
+	Example: `  # List all sessions
+  yutani session list
+
+  # List sessions as JSON
+  yutani session list --format json`,
+	RunE: runSessionList,
+}
+
 func init() {
 	sessionCmd.AddCommand(sessionCreateCmd)
 	sessionCmd.AddCommand(sessionDestroyCmd)
 	sessionCmd.AddCommand(sessionInfoCmd)
+	sessionCmd.AddCommand(sessionListCmd)
 
 	// Common flags
 	sessionCmd.PersistentFlags().StringVarP(&sessionAddress, "address", "a", "localhost:7755", "Server address")
@@ -164,6 +178,57 @@ func runSessionInfo(cmd *cobra.Command, args []string) error {
 		fmt.Printf("Active:         %d\n", resp.ActiveSessions)
 		if resp.ScreenSize != nil {
 			fmt.Printf("Screen Size:    %dx%d\n", resp.ScreenSize.Width, resp.ScreenSize.Height)
+		}
+	}
+
+	return nil
+}
+
+func runSessionList(cmd *cobra.Command, args []string) error {
+	conn, err := connectToServer(sessionAddress, 5*time.Second)
+	if err != nil {
+		return fmt.Errorf("failed to connect: %w", err)
+	}
+	defer conn.Close()
+
+	client := pb.NewSessionServiceClient(conn)
+
+	resp, err := client.ListSessions(context.Background(), &pb.ListSessionsRequest{})
+	if err != nil {
+		return fmt.Errorf("failed to list sessions: %w", err)
+	}
+
+	if sessionFormat == "json" {
+		type jsonSession struct {
+			SessionID  string `json:"session_id"`
+			ClientName string `json:"client_name"`
+			CreatedAt  string `json:"created_at"`
+		}
+		sessions := make([]jsonSession, 0, len(resp.Sessions))
+		for _, s := range resp.Sessions {
+			sessions = append(sessions, jsonSession{
+				SessionID:  s.SessionId.Id,
+				ClientName: s.ClientName,
+				CreatedAt:  time.Unix(0, s.CreatedAt).Format(time.RFC3339),
+			})
+		}
+		data, _ := json.MarshalIndent(sessions, "", "  ")
+		fmt.Println(string(data))
+	} else {
+		fmt.Println("Active Sessions")
+		fmt.Println("===============")
+
+		if len(resp.Sessions) == 0 {
+			fmt.Println("(no active sessions)")
+			return nil
+		}
+
+		fmt.Printf("\n%-38s %-20s %s\n", "SESSION ID", "CLIENT NAME", "CREATED")
+		fmt.Println(strings.Repeat("-", 80))
+
+		for _, s := range resp.Sessions {
+			createdAt := time.Unix(0, s.CreatedAt).Format("2006-01-02 15:04:05")
+			fmt.Printf("%-38s %-20s %s\n", s.SessionId.Id, s.ClientName, createdAt)
 		}
 	}
 

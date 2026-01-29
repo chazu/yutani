@@ -212,10 +212,17 @@ func (s *LayoutService) FlexSetDirection(ctx context.Context, req *pb.FlexSetDir
 		}
 
 		// Set the direction
+		// NOTE: tview's naming is confusing and opposite of CSS flexbox:
+		// - tview.FlexColumn = items arranged HORIZONTALLY (side by side)
+		// - tview.FlexRow = items arranged VERTICALLY (stacked)
+		// Our proto uses CSS-style semantics where FLEX_COLUMN = vertical stacking
+		// So we SWAP the mapping here.
 		if req.Direction == pb.FlexDirection_FLEX_COLUMN {
-			flex.SetDirection(tview.FlexColumn)
-		} else {
+			// User wants vertical stacking (CSS column) -> use tview.FlexRow
 			flex.SetDirection(tview.FlexRow)
+		} else {
+			// User wants horizontal arrangement (CSS row) -> use tview.FlexColumn
+			flex.SetDirection(tview.FlexColumn)
 		}
 	})
 	<-done

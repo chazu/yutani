@@ -121,6 +121,7 @@ Yutani is a Go-based terminal display server that provides networked, widget-bas
 See [PHASE3_COMPLETE.md](PHASE3_COMPLETE.md) for Phase 3 documentation.
 See [PHASE4_COMPLETE.md](PHASE4_COMPLETE.md) for Phase 4 documentation and usage examples.
 See [PHASE5_COMPLETE.md](PHASE5_COMPLETE.md) for Phase 5 client library documentation.
+See [DEBUG_GUIDE.md](DEBUG_GUIDE.md) for debugging TUI applications (useful for LLM agents).
 
 ## Quick Start
 

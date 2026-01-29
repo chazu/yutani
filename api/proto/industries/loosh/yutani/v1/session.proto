@@ -14,6 +14,9 @@ service SessionService {
   // End a session and cleanup its resources
   rpc DestroySession(DestroySessionRequest) returns (DestroySessionResponse);
 
+  // List all active sessions
+  rpc ListSessions(ListSessionsRequest) returns (ListSessionsResponse);
+
   // Get server information
   rpc GetServerInfo(GetServerInfoRequest) returns (GetServerInfoResponse);
 
@@ -51,6 +54,22 @@ message DestroySessionRequest {
 
 message DestroySessionResponse {
   bool success = 1;
+}
+
+// ListSessions
+
+message ListSessionsRequest {
+  // Empty for now
+}
+
+message ListSessionsResponse {
+  repeated SessionInfo sessions = 1;
+}
+
+message SessionInfo {
+  SessionId session_id = 1;
+  string client_name = 2;
+  int64 created_at = 3;  // Unix timestamp in nanoseconds
 }
 
 // GetServerInfo

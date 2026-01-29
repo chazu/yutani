@@ -105,3 +105,14 @@ func (r *SessionRegistry) List() []string {
 	return ids
 }
 
+// ListAll returns all active sessions
+func (r *SessionRegistry) ListAll() []*Session {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	sessions := make([]*Session, 0, len(r.sessions))
+	for _, session := range r.sessions {
+		sessions = append(sessions, session)
+	}
+	return sessions
+}
+

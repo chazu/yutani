@@ -82,6 +82,24 @@ func (s *SessionService) DestroySession(ctx context.Context, req *pb.DestroySess
 	return &pb.DestroySessionResponse{Success: true}, nil
 }
 
+// ListSessions returns all active sessions
+func (s *SessionService) ListSessions(ctx context.Context, req *pb.ListSessionsRequest) (*pb.ListSessionsResponse, error) {
+	sessions := s.server.Sessions().ListAll()
+
+	pbSessions := make([]*pb.SessionInfo, 0, len(sessions))
+	for _, sess := range sessions {
+		pbSessions = append(pbSessions, &pb.SessionInfo{
+			SessionId:  &pb.SessionId{Id: sess.ID},
+			ClientName: sess.ClientName,
+			CreatedAt:  sess.CreatedAt.UnixNano(),
+		})
+	}
+
+	return &pb.ListSessionsResponse{
+		Sessions: pbSessions,
+	}, nil
+}
+
 // GetServerInfo returns server information
 func (s *SessionService) GetServerInfo(ctx context.Context, req *pb.GetServerInfoRequest) (*pb.GetServerInfoResponse, error) {
 	// Get screen size

@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+import "industries/loosh/yutani/v1/types.proto";
+
+// DebugService provides debugging tools for LLM agents to understand screen state
+service DebugService {
+  // GetScreenDump returns an ASCII art representation of the current screen
+  // with optional widget bounds overlay
+  rpc GetScreenDump(GetScreenDumpRequest) returns (GetScreenDumpResponse);
+
+  // GetWidgetState returns detailed state information for a specific widget
+  rpc GetWidgetState(GetWidgetStateRequest) returns (GetWidgetStateResponse);
+
+  // GetAllWidgetBounds returns bounds for all widgets on screen
+  rpc GetAllWidgetBounds(GetAllWidgetBoundsRequest) returns (GetAllWidgetBoundsResponse);
+}
+
+// GetScreenDump messages
+
+message GetScreenDumpRequest {
+  SessionId session_id = 1;
+
+  // If true, overlay widget bounds markers on the screen dump
+  bool show_widget_bounds = 2;
+
+  // If true, include a legend mapping widget IDs to their bounds
+  bool include_legend = 3;
+}
+
+message GetScreenDumpResponse {
+  // ASCII art representation of screen contents
+  // Each line represents one row of the terminal
+  string screen_dump = 1;
+
+  // Screen dimensions
+  Size screen_size = 2;
+
+  // Widget bounds legend (if requested)
+  // Maps abbreviated widget ID to full info
+  repeated WidgetBoundsInfo widget_bounds = 3;
+
+  // Currently focused widget ID (if any)
+  optional WidgetId focused_widget = 4;
+}
+
+// GetWidgetState messages
+
+message GetWidgetStateRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message GetWidgetStateResponse {
+  // Basic widget info
+  WidgetId widget_id = 1;
+  WidgetType widget_type = 2;
+
+  // Bounds on screen
+  Rect bounds = 3;
+
+  // Is this widget currently focused?
+  bool has_focus = 4;
+
+  // Is this widget visible (on-screen)?
+  bool is_visible = 5;
+
+  // Widget-specific properties
+  WidgetProperties properties = 6;
+
+  // Parent widget (if any)
+  optional WidgetId parent_id = 7;
+
+  // Child widgets
+  repeated WidgetId children = 8;
+
+  // Recent events received by this widget (last 10)
+  repeated WidgetEventRecord recent_events = 9;
+}
+
+// WidgetEventRecord captures a recent event for debugging
+message WidgetEventRecord {
+  // Timestamp in nanoseconds since Unix epoch
+  int64 timestamp = 1;
+
+  // Event type description
+  string event_type = 2;
+
+  // Event details as key-value pairs
+  map<string, string> details = 3;
+}
+
+// GetAllWidgetBounds messages
+
+message GetAllWidgetBoundsRequest {
+  SessionId session_id = 1;
+}
+
+message GetAllWidgetBoundsResponse {
+  // All widget bounds
+  repeated WidgetBoundsInfo widgets = 1;
+
+  // Currently focused widget ID (if any)
+  optional WidgetId focused_widget = 2;
+
+  // Screen dimensions
+  Size screen_size = 3;
+}
+
+// Shared types
+
+message WidgetBoundsInfo {
+  WidgetId widget_id = 1;
+  WidgetType widget_type = 2;
+  Rect bounds = 3;
+  bool has_focus = 4;
+
+  // Short ID for use in screen dump legend (e.g., "A", "B", "C")
+  string short_id = 5;
+}
