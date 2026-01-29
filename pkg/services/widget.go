@@ -178,7 +178,14 @@ func (s *WidgetService) GetProperties(ctx context.Context, req *pb.GetProperties
 	}
 
 	// Read live state from primitive (for editable widgets)
-	props := s.enrichPropertiesFromPrimitive(info)
+	// Must be done on tview's update thread since tview is not thread-safe
+	var props *pb.WidgetProperties
+	done := make(chan struct{})
+	s.server.App().QueueUpdate(func() {
+		defer close(done)
+		props = s.enrichPropertiesFromPrimitive(info)
+	})
+	<-done
 
 	return &pb.GetPropertiesResponse{
 		Properties: props,
