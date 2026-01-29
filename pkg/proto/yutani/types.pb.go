@@ -449,6 +449,7 @@ const (
 	Modifier_MOD_CTRL  Modifier = 2
 	Modifier_MOD_ALT   Modifier = 3
 	Modifier_MOD_META  Modifier = 4
+	Modifier_MOD_HYPER Modifier = 5
 )
 
 // Enum value maps for Modifier.
@@ -459,6 +460,7 @@ var (
 		2: "MOD_CTRL",
 		3: "MOD_ALT",
 		4: "MOD_META",
+		5: "MOD_HYPER",
 	}
 	Modifier_value = map[string]int32{
 		"MOD_NONE":  0,
@@ -466,6 +468,7 @@ var (
 		"MOD_CTRL":  2,
 		"MOD_ALT":   3,
 		"MOD_META":  4,
+		"MOD_HYPER": 5,
 	}
 )
 
@@ -3186,13 +3189,14 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\x06KEY_F9\x10\x18\x12\v\n" +
 	"\aKEY_F10\x10\x19\x12\v\n" +
 	"\aKEY_F11\x10\x1a\x12\v\n" +
-	"\aKEY_F12\x10\x1b*P\n" +
+	"\aKEY_F12\x10\x1b*_\n" +
 	"\bModifier\x12\f\n" +
 	"\bMOD_NONE\x10\x00\x12\r\n" +
 	"\tMOD_SHIFT\x10\x01\x12\f\n" +
 	"\bMOD_CTRL\x10\x02\x12\v\n" +
 	"\aMOD_ALT\x10\x03\x12\f\n" +
-	"\bMOD_META\x10\x04*\xae\x01\n" +
+	"\bMOD_META\x10\x04\x12\r\n" +
+	"\tMOD_HYPER\x10\x05*\xae\x01\n" +
 	"\vMouseButton\x12\x0e\n" +
 	"\n" +
 	"MOUSE_NONE\x10\x00\x12\x11\n" +

@@ -325,6 +325,7 @@ enum Modifier {
   MOD_CTRL = 2;
   MOD_ALT = 3;
   MOD_META = 4;
+  MOD_HYPER = 5;
 }
 
 // Mouse button enum for mouse events

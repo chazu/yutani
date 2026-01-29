@@ -57,6 +57,8 @@ func convertKey(key tcell.Key) pb.Key {
 		return pb.Key_KEY_ENTER
 	case tcell.KeyTab:
 		return pb.Key_KEY_TAB
+	case tcell.KeyBacktab:
+		return pb.Key_KEY_BACKTAB
 	case tcell.KeyBackspace, tcell.KeyBackspace2:
 		return pb.Key_KEY_BACKSPACE
 	case tcell.KeyEscape:
@@ -127,6 +129,9 @@ func convertModifiers(mods tcell.ModMask) []pb.Modifier {
 	}
 	if mods&tcell.ModMeta != 0 {
 		result = append(result, pb.Modifier_MOD_META)
+	}
+	if mods&tcell.ModHyper != 0 {
+		result = append(result, pb.Modifier_MOD_HYPER)
 	}
 
 	return result

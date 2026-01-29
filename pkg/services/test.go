@@ -247,6 +247,8 @@ func convertProtoModifiersToTcell(mods []pb.Modifier) tcell.ModMask {
 			result |= tcell.ModAlt
 		case pb.Modifier_MOD_META:
 			result |= tcell.ModMeta
+		case pb.Modifier_MOD_HYPER:
+			result |= tcell.ModHyper
 		}
 	}
 
