@@ -9,6 +9,7 @@ import (
 	pb "github.com/chazu/yutani/pkg/proto/yutani"
 	"github.com/chazu/yutani/pkg/server"
 	"github.com/chazu/yutani/pkg/services"
+	"github.com/chazu/yutani/pkg/testutil"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/test/bufconn"
@@ -449,8 +450,8 @@ func TestE2E_WidgetOperations(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_BOX,
 		Properties: &pb.WidgetProperties{
-			Border: boolPtr(true),
-			Title:  strPtr("Test Box"),
+			Border: testutil.BoolPtr(true),
+			Title:  testutil.StrPtr("Test Box"),
 		},
 	})
 	if err != nil {
@@ -522,7 +523,7 @@ func TestE2E_WidgetOperations(t *testing.T) {
 		SessionId: sessionID,
 		WidgetId:  &pb.WidgetId{Id: boxID},
 		Properties: &pb.WidgetProperties{
-			Title: strPtr("Updated Title"),
+			Title: testutil.StrPtr("Updated Title"),
 		},
 	})
 	if err != nil {
@@ -586,8 +587,8 @@ func TestE2E_ListOperations(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_LIST,
 		Properties: &pb.WidgetProperties{
-			Border: boolPtr(true),
-			Title:  strPtr("Test List"),
+			Border: testutil.BoolPtr(true),
+			Title:  testutil.StrPtr("Test List"),
 		},
 	})
 	if err != nil {
@@ -603,7 +604,7 @@ func TestE2E_ListOperations(t *testing.T) {
 		WidgetId:      listID,
 		MainText:      "Item 1",
 		SecondaryText: "Description 1",
-		Shortcut:      strPtr("1"),
+		Shortcut:      testutil.StrPtr("1"),
 	})
 	if err != nil {
 		t.Fatalf("AddItem failed: %v", err)
@@ -744,19 +745,6 @@ func TestE2E_ListOperations(t *testing.T) {
 	sessionClient.DestroySession(ctx, &pb.DestroySessionRequest{SessionId: sessionID})
 }
 
-// Helper functions
-func boolPtr(b bool) *bool {
-	return &b
-}
-
-func strPtr(s string) *string {
-	return &s
-}
-
-func int32Ptr(i int32) *int32 {
-	return &i
-}
-
 // TestE2E_TableOperations tests all TableService operations
 func TestE2E_TableOperations(t *testing.T) {
 	ts := newTestServer(t)
@@ -787,8 +775,8 @@ func TestE2E_TableOperations(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_TABLE,
 		Properties: &pb.WidgetProperties{
-			Border: boolPtr(true),
-			Title:  strPtr("Test Table"),
+			Border: testutil.BoolPtr(true),
+			Title:  testutil.StrPtr("Test Table"),
 		},
 	})
 	if err != nil {
@@ -987,8 +975,8 @@ func TestE2E_FormOperations(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_FORM,
 		Properties: &pb.WidgetProperties{
-			Border: boolPtr(true),
-			Title:  strPtr("Test Form"),
+			Border: testutil.BoolPtr(true),
+			Title:  testutil.StrPtr("Test Form"),
 		},
 	})
 	if err != nil {
@@ -1004,8 +992,8 @@ func TestE2E_FormOperations(t *testing.T) {
 		WidgetId:     formID,
 		Label:        "Username",
 		FieldType:    pb.FormFieldType_FORM_FIELD_INPUT,
-		FieldWidth:   int32Ptr(20),
-		InitialValue: strPtr("admin"),
+		FieldWidth:   testutil.Int32Ptr(20),
+		InitialValue: testutil.StrPtr("admin"),
 	})
 	if err != nil {
 		t.Fatalf("AddField (input) failed: %v", err)
@@ -1023,7 +1011,7 @@ func TestE2E_FormOperations(t *testing.T) {
 		WidgetId:   formID,
 		Label:      "Password",
 		FieldType:  pb.FormFieldType_FORM_FIELD_PASSWORD,
-		FieldWidth: int32Ptr(20),
+		FieldWidth: testutil.Int32Ptr(20),
 	})
 	if err != nil {
 		t.Fatalf("AddField (password) failed: %v", err)
@@ -1050,7 +1038,7 @@ func TestE2E_FormOperations(t *testing.T) {
 		Label:           "Role",
 		FieldType:       pb.FormFieldType_FORM_FIELD_DROPDOWN,
 		DropdownOptions: []string{"Admin", "User", "Guest"},
-		InitialValue:    strPtr("User"),
+		InitialValue:    testutil.StrPtr("User"),
 	})
 	if err != nil {
 		t.Fatalf("AddField (dropdown) failed: %v", err)
@@ -1185,8 +1173,8 @@ func TestE2E_TreeOperations(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_TREE_VIEW,
 		Properties: &pb.WidgetProperties{
-			Border: boolPtr(true),
-			Title:  strPtr("Test Tree"),
+			Border: testutil.BoolPtr(true),
+			Title:  testutil.StrPtr("Test Tree"),
 		},
 	})
 	if err != nil {
@@ -1202,9 +1190,9 @@ func TestE2E_TreeOperations(t *testing.T) {
 		WidgetId:  treeID,
 		Node: &pb.TreeNode{
 			Text:       "Root",
-			Selectable: boolPtr(true),
-			Expanded:   boolPtr(true),
-			Reference:  strPtr("root-ref"),
+			Selectable: testutil.BoolPtr(true),
+			Expanded:   testutil.BoolPtr(true),
+			Reference:  testutil.StrPtr("root-ref"),
 		},
 	})
 	if err != nil {
@@ -1222,8 +1210,8 @@ func TestE2E_TreeOperations(t *testing.T) {
 		ParentId:  rootID,
 		Node: &pb.TreeNode{
 			Text:       "Child 1",
-			Selectable: boolPtr(true),
-			Reference:  strPtr("child1-ref"),
+			Selectable: testutil.BoolPtr(true),
+			Reference:  testutil.StrPtr("child1-ref"),
 		},
 	})
 	if err != nil {
@@ -1241,8 +1229,8 @@ func TestE2E_TreeOperations(t *testing.T) {
 		ParentId:  rootID,
 		Node: &pb.TreeNode{
 			Text:      "Child 2",
-			Expanded:  boolPtr(true),
-			Reference: strPtr("child2-ref"),
+			Expanded:  testutil.BoolPtr(true),
+			Reference: testutil.StrPtr("child2-ref"),
 		},
 	})
 	if err != nil {
@@ -1257,7 +1245,7 @@ func TestE2E_TreeOperations(t *testing.T) {
 		ParentId:  child2ID,
 		Node: &pb.TreeNode{
 			Text:      "Grandchild 1",
-			Reference: strPtr("grandchild1-ref"),
+			Reference: testutil.StrPtr("grandchild1-ref"),
 		},
 	})
 	if err != nil {
@@ -1382,8 +1370,8 @@ func TestE2E_LayoutOperations_Flex(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_FLEX,
 		Properties: &pb.WidgetProperties{
-			Border: boolPtr(true),
-			Title:  strPtr("Test Flex"),
+			Border: testutil.BoolPtr(true),
+			Title:  testutil.StrPtr("Test Flex"),
 		},
 	})
 	if err != nil {
@@ -1396,8 +1384,8 @@ func TestE2E_LayoutOperations_Flex(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_BOX,
 		Properties: &pb.WidgetProperties{
-			Border: boolPtr(true),
-			Title:  strPtr("Box 1"),
+			Border: testutil.BoolPtr(true),
+			Title:  testutil.StrPtr("Box 1"),
 		},
 	})
 	box1ID := box1Resp.WidgetId
@@ -1406,8 +1394,8 @@ func TestE2E_LayoutOperations_Flex(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_BOX,
 		Properties: &pb.WidgetProperties{
-			Border: boolPtr(true),
-			Title:  strPtr("Box 2"),
+			Border: testutil.BoolPtr(true),
+			Title:  testutil.StrPtr("Box 2"),
 		},
 	})
 	box2ID := box2Resp.WidgetId
@@ -1506,8 +1494,8 @@ func TestE2E_LayoutOperations_Grid(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_GRID,
 		Properties: &pb.WidgetProperties{
-			Border: boolPtr(true),
-			Title:  strPtr("Test Grid"),
+			Border: testutil.BoolPtr(true),
+			Title:  testutil.StrPtr("Test Grid"),
 		},
 	})
 	if err != nil {
@@ -1520,7 +1508,7 @@ func TestE2E_LayoutOperations_Grid(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_BOX,
 		Properties: &pb.WidgetProperties{
-			Title: strPtr("Cell 0,0"),
+			Title: testutil.StrPtr("Cell 0,0"),
 		},
 	})
 	box1ID := box1Resp.WidgetId
@@ -1529,7 +1517,7 @@ func TestE2E_LayoutOperations_Grid(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_BOX,
 		Properties: &pb.WidgetProperties{
-			Title: strPtr("Cell 0,1"),
+			Title: testutil.StrPtr("Cell 0,1"),
 		},
 	})
 	box2ID := box2Resp.WidgetId
@@ -1650,8 +1638,8 @@ func TestE2E_LayoutOperations_Pages(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_PAGES,
 		Properties: &pb.WidgetProperties{
-			Border: boolPtr(true),
-			Title:  strPtr("Test Pages"),
+			Border: testutil.BoolPtr(true),
+			Title:  testutil.StrPtr("Test Pages"),
 		},
 	})
 	if err != nil {
@@ -1664,7 +1652,7 @@ func TestE2E_LayoutOperations_Pages(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_BOX,
 		Properties: &pb.WidgetProperties{
-			Title: strPtr("Page 1 Content"),
+			Title: testutil.StrPtr("Page 1 Content"),
 		},
 	})
 	page1ID := page1Resp.WidgetId
@@ -1673,7 +1661,7 @@ func TestE2E_LayoutOperations_Pages(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_BOX,
 		Properties: &pb.WidgetProperties{
-			Title: strPtr("Page 2 Content"),
+			Title: testutil.StrPtr("Page 2 Content"),
 		},
 	})
 	page2ID := page2Resp.WidgetId
@@ -1682,7 +1670,7 @@ func TestE2E_LayoutOperations_Pages(t *testing.T) {
 		SessionId: sessionID,
 		Type:      pb.WidgetType_WIDGET_BOX,
 		Properties: &pb.WidgetProperties{
-			Title: strPtr("Page 3 Content"),
+			Title: testutil.StrPtr("Page 3 Content"),
 		},
 	})
 	page3ID := page3Resp.WidgetId

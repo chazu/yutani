@@ -5,6 +5,7 @@ import (
 
 	"github.com/rivo/tview"
 	pb "github.com/chazu/yutani/pkg/proto/yutani"
+	"github.com/chazu/yutani/pkg/testutil"
 )
 
 func TestConvertAlignment(t *testing.T) {
@@ -42,8 +43,8 @@ func TestCreateBox(t *testing.T) {
 		{
 			name: "with border and title",
 			props: &pb.WidgetProperties{
-				Border: boolPtr(true),
-				Title:  strPtr("Test Box"),
+				Border: testutil.BoolPtr(true),
+				Title:  testutil.StrPtr("Test Box"),
 			},
 		},
 		{
@@ -82,7 +83,7 @@ func TestCreateTextView(t *testing.T) {
 			props: &pb.WidgetProperties{
 				TypeProperties: &pb.WidgetProperties_TextView{
 					TextView: &pb.TextViewProperties{
-						Text: strPtr("Hello, World!"),
+						Text: testutil.StrPtr("Hello, World!"),
 					},
 				},
 			},
@@ -92,8 +93,8 @@ func TestCreateTextView(t *testing.T) {
 			props: &pb.WidgetProperties{
 				TypeProperties: &pb.WidgetProperties_TextView{
 					TextView: &pb.TextViewProperties{
-						Text:          strPtr("[red]Red text[white] white text"),
-						DynamicColors: boolPtr(true),
+						Text:          testutil.StrPtr("[red]Red text[white] white text"),
+						DynamicColors: testutil.BoolPtr(true),
 					},
 				},
 			},
@@ -126,8 +127,8 @@ func TestCreateInputField(t *testing.T) {
 			props: &pb.WidgetProperties{
 				TypeProperties: &pb.WidgetProperties_InputField{
 					InputField: &pb.InputFieldProperties{
-						Label:       strPtr("Name: "),
-						Placeholder: strPtr("Enter your name"),
+						Label:       testutil.StrPtr("Name: "),
+						Placeholder: testutil.StrPtr("Enter your name"),
 					},
 				},
 			},
@@ -160,7 +161,7 @@ func TestCreateButton(t *testing.T) {
 			props: &pb.WidgetProperties{
 				TypeProperties: &pb.WidgetProperties_Button{
 					Button: &pb.ButtonProperties{
-						Label: strPtr("Click Me!"),
+						Label: testutil.StrPtr("Click Me!"),
 					},
 				},
 			},
@@ -193,8 +194,8 @@ func TestCreateCheckbox(t *testing.T) {
 			props: &pb.WidgetProperties{
 				TypeProperties: &pb.WidgetProperties_Checkbox{
 					Checkbox: &pb.CheckboxProperties{
-						Label:   strPtr("Enable feature"),
-						Checked: boolPtr(true),
+						Label:   testutil.StrPtr("Enable feature"),
+						Checked: testutil.BoolPtr(true),
 					},
 				},
 			},
@@ -204,8 +205,8 @@ func TestCreateCheckbox(t *testing.T) {
 			props: &pb.WidgetProperties{
 				TypeProperties: &pb.WidgetProperties_Checkbox{
 					Checkbox: &pb.CheckboxProperties{
-						Label:   strPtr("Disabled"),
-						Checked: boolPtr(false),
+						Label:   testutil.StrPtr("Disabled"),
+						Checked: testutil.BoolPtr(false),
 					},
 				},
 			},
@@ -227,8 +228,8 @@ func TestApplyBoxProperties(t *testing.T) {
 	box := tview.NewBox()
 
 	props := &pb.WidgetProperties{
-		Border:          boolPtr(true),
-		Title:           strPtr("Test Title"),
+		Border:          testutil.BoolPtr(true),
+		Title:           testutil.StrPtr("Test Title"),
 		TitleAlign:      pb.Alignment_ALIGN_CENTER.Enum(),
 		BackgroundColor: &pb.Color{Color: &pb.Color_Name{Name: "blue"}},
 		BorderColor:     &pb.Color{Color: &pb.Color_Name{Name: "white"}},
@@ -256,10 +257,10 @@ func TestApplyTextViewProperties(t *testing.T) {
 	props := &pb.WidgetProperties{
 		TypeProperties: &pb.WidgetProperties_TextView{
 			TextView: &pb.TextViewProperties{
-				Text:          strPtr("Test text"),
-				DynamicColors: boolPtr(true),
-				WordWrap:      boolPtr(true),
-				Scrollable:    boolPtr(true),
+				Text:          testutil.StrPtr("Test text"),
+				DynamicColors: testutil.BoolPtr(true),
+				WordWrap:      testutil.BoolPtr(true),
+				Scrollable:    testutil.BoolPtr(true),
 				TextColor:     &pb.Color{Color: &pb.Color_Name{Name: "green"}},
 			},
 		},
@@ -283,10 +284,10 @@ func TestApplyInputFieldProperties(t *testing.T) {
 	props := &pb.WidgetProperties{
 		TypeProperties: &pb.WidgetProperties_InputField{
 			InputField: &pb.InputFieldProperties{
-				Label:          strPtr("Name: "),
-				Placeholder:    strPtr("Enter name"),
-				Text:           strPtr("Initial text"),
-				FieldWidth:     int32Ptr(20),
+				Label:          testutil.StrPtr("Name: "),
+				Placeholder:    testutil.StrPtr("Enter name"),
+				Text:           testutil.StrPtr("Initial text"),
+				FieldWidth:     testutil.Int32Ptr(20),
 				LabelColor:     &pb.Color{Color: &pb.Color_Name{Name: "white"}},
 				FieldTextColor: &pb.Color{Color: &pb.Color_Name{Name: "yellow"}},
 			},
@@ -302,19 +303,6 @@ func TestApplyInputFieldProperties(t *testing.T) {
 	if input == nil {
 		t.Error("InputField should not be nil after applying properties")
 	}
-}
-
-// Helper functions
-func boolPtr(b bool) *bool {
-	return &b
-}
-
-func strPtr(s string) *string {
-	return &s
-}
-
-func int32Ptr(i int32) *int32 {
-	return &i
 }
 
 // Tests for complex widgets
@@ -333,11 +321,11 @@ func TestCreateList(t *testing.T) {
 		{
 			name: "with list properties",
 			props: &pb.WidgetProperties{
-				Border: boolPtr(true),
-				Title:  strPtr("Test List"),
+				Border: testutil.BoolPtr(true),
+				Title:  testutil.StrPtr("Test List"),
 				TypeProperties: &pb.WidgetProperties_List{
 					List: &pb.ListProperties{
-						ShowSecondaryText: boolPtr(true),
+						ShowSecondaryText: testutil.BoolPtr(true),
 					},
 				},
 			},
@@ -368,12 +356,12 @@ func TestCreateTable(t *testing.T) {
 		{
 			name: "with table properties",
 			props: &pb.WidgetProperties{
-				Border: boolPtr(true),
-				Title:  strPtr("Test Table"),
+				Border: testutil.BoolPtr(true),
+				Title:  testutil.StrPtr("Test Table"),
 				TypeProperties: &pb.WidgetProperties_Table{
 					Table: &pb.TableProperties{
-						Borders:    boolPtr(true),
-						Selectable: boolPtr(true),
+						Borders:    testutil.BoolPtr(true),
+						Selectable: testutil.BoolPtr(true),
 					},
 				},
 			},
@@ -404,11 +392,11 @@ func TestCreateTreeView(t *testing.T) {
 		{
 			name: "with tree properties",
 			props: &pb.WidgetProperties{
-				Border: boolPtr(true),
-				Title:  strPtr("Test Tree"),
+				Border: testutil.BoolPtr(true),
+				Title:  testutil.StrPtr("Test Tree"),
 				TypeProperties: &pb.WidgetProperties_Tree{
 					Tree: &pb.TreeProperties{
-						ShowGraphics: boolPtr(true),
+						ShowGraphics: testutil.BoolPtr(true),
 					},
 				},
 			},
@@ -439,11 +427,11 @@ func TestCreateForm(t *testing.T) {
 		{
 			name: "with form properties",
 			props: &pb.WidgetProperties{
-				Border: boolPtr(true),
-				Title:  strPtr("Test Form"),
+				Border: testutil.BoolPtr(true),
+				Title:  testutil.StrPtr("Test Form"),
 				TypeProperties: &pb.WidgetProperties_Form{
 					Form: &pb.FormProperties{
-						Horizontal: boolPtr(false),
+						Horizontal: testutil.BoolPtr(false),
 					},
 				},
 			},
@@ -474,7 +462,7 @@ func TestCreateFlex(t *testing.T) {
 		{
 			name: "with flex properties",
 			props: &pb.WidgetProperties{
-				Border: boolPtr(true),
+				Border: testutil.BoolPtr(true),
 				TypeProperties: &pb.WidgetProperties_Flex{
 					Flex: &pb.FlexProperties{
 						Direction: func() *pb.FlexDirection {
@@ -511,11 +499,11 @@ func TestCreateGrid(t *testing.T) {
 		{
 			name: "with grid properties",
 			props: &pb.WidgetProperties{
-				Border: boolPtr(true),
+				Border: testutil.BoolPtr(true),
 				TypeProperties: &pb.WidgetProperties_Grid{
 					Grid: &pb.GridProperties{
-						Rows:    int32Ptr(3),
-						Columns: int32Ptr(3),
+						Rows:    testutil.Int32Ptr(3),
+						Columns: testutil.Int32Ptr(3),
 					},
 				},
 			},
@@ -546,10 +534,10 @@ func TestCreatePages(t *testing.T) {
 		{
 			name: "with pages properties",
 			props: &pb.WidgetProperties{
-				Border: boolPtr(true),
+				Border: testutil.BoolPtr(true),
 				TypeProperties: &pb.WidgetProperties_Pages{
 					Pages: &pb.PagesProperties{
-						ShowPageNames: boolPtr(true),
+						ShowPageNames: testutil.BoolPtr(true),
 					},
 				},
 			},

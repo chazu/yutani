@@ -5,6 +5,7 @@ import (
 
 	"github.com/rivo/tview"
 	pb "github.com/chazu/yutani/pkg/proto/yutani"
+	"github.com/chazu/yutani/pkg/testutil"
 )
 
 func TestWidgetRegistry_Register(t *testing.T) {
@@ -13,8 +14,8 @@ func TestWidgetRegistry_Register(t *testing.T) {
 	widgetType := pb.WidgetType_WIDGET_BOX
 	primitive := tview.NewBox()
 	properties := &pb.WidgetProperties{
-		Border: boolPtr(true),
-		Title:  strPtr("Test Box"),
+		Border: testutil.BoolPtr(true),
+		Title:  testutil.StrPtr("Test Box"),
 	}
 
 	widgetID := registry.Register(sessionID, widgetType, primitive, properties)
@@ -98,16 +99,16 @@ func TestWidgetRegistry_UpdateProperties(t *testing.T) {
 	sessionID := "test-session"
 	primitive := tview.NewBox()
 	initialProps := &pb.WidgetProperties{
-		Border: boolPtr(true),
-		Title:  strPtr("Initial"),
+		Border: testutil.BoolPtr(true),
+		Title:  testutil.StrPtr("Initial"),
 	}
 
 	widgetID := registry.Register(sessionID, pb.WidgetType_WIDGET_BOX, primitive, initialProps)
 
 	// Update properties
 	newProps := &pb.WidgetProperties{
-		Border: boolPtr(false),
-		Title:  strPtr("Updated"),
+		Border: testutil.BoolPtr(false),
+		Title:  testutil.StrPtr("Updated"),
 	}
 
 	ok := registry.UpdateProperties(widgetID, newProps)
@@ -365,12 +366,4 @@ func TestWidgetRegistry_ListBySession(t *testing.T) {
 	}
 }
 
-// Helper functions
-func boolPtr(b bool) *bool {
-	return &b
-}
-
-func strPtr(s string) *string {
-	return &s
-}
 
