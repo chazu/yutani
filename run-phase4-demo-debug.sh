@@ -18,7 +18,7 @@ rm -f yutani-server.log phase4-demo.log
 
 # Build the binaries
 echo "Building binaries..."
-go build -o bin/yutani-server ./cmd/yutani-server
+go build -o bin/yutani ./cmd/yutani
 go build -o bin/phase4-demo ./cmd/phase4-demo
 
 if [ $? -ne 0 ]; then
@@ -31,7 +31,7 @@ echo ""
 
 # Start the server in the background with logging
 echo "Starting Yutani server with logging..."
-YUTANI_LOG_FILE=yutani-server.log YUTANI_LOG_LEVEL=debug ./bin/yutani-server &
+./bin/yutani server --log-file yutani-server.log --log-level debug &
 SERVER_PID=$!
 
 echo "✓ Server started (PID: $SERVER_PID)"
@@ -65,4 +65,3 @@ echo ""
 echo "Or view all events:"
 echo "  grep EVENT phase4-demo.log"
 echo "  grep 'Event dispatch' yutani-server.log"
-

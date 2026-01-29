@@ -33,7 +33,7 @@ var defaults = Config{
 	LogLevel:    "info",
 }
 
-// Load loads configuration from file, environment variables, and command-line flags
+// Load loads configuration from file, environment variables, and command-line flags.
 // Priority: flags > env vars > config file > defaults
 func Load() (*Config, error) {
 	cfg := defaults
@@ -51,6 +51,25 @@ func Load() (*Config, error) {
 
 	// 3. Load from command-line flags
 	loadFromFlags(&cfg)
+
+	return &cfg, nil
+}
+
+// LoadWithoutFlags loads configuration from file and environment variables,
+// skipping flag.Parse(). Use this when flags are managed externally (e.g. Cobra).
+// Priority: env vars > config file > defaults
+func LoadWithoutFlags() (*Config, error) {
+	cfg := defaults
+
+	// 1. Load from config file
+	if err := loadFromFile(&cfg, ".yutani.conf"); err != nil {
+		if !os.IsNotExist(err) {
+			slog.Warn("Error loading config file", "error", err)
+		}
+	}
+
+	// 2. Load from environment variables
+	loadFromEnv(&cfg)
 
 	return &cfg, nil
 }

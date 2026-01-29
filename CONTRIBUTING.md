@@ -71,8 +71,8 @@ See the "How to Add a Widget Type" section in `AGENTS.md`.
 1. Define the service in a new `.proto` file under `api/proto/industries/loosh/yutani/v1/`
 2. Run `make proto`
 3. Implement the service in `pkg/services/`
-4. Register it in `cmd/yutani-server/main.go`
-5. Register it in test harnesses: `pkg/client/testing/integration.go` and `test/e2e/e2e_test.go`
+4. Register it in `pkg/services/register.go` (`RegisterAllServices` function)
+5. Registration will automatically apply to the CLI server, test harnesses, and E2E tests
 6. Add unit tests and E2E test coverage
 7. Update `AGENTS.md` with the new service count
 

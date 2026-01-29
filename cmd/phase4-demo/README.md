@@ -40,7 +40,7 @@ Main Flex (column direction)
 
 1. Start the Yutani server in one terminal:
    ```bash
-   ./bin/yutani-server
+   ./bin/yutani server
    ```
 
 2. In another terminal, run the demo:

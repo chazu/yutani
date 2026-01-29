@@ -47,7 +47,7 @@ make build
 ```
 
 This creates:
-- `bin/yutani-server` - The display server
+- `bin/yutani` - The Yutani CLI (includes `server` subcommand)
 - `bin/test-client` - Basic test client
 - `bin/phase4-demo` - Phase 4 demo with complex widgets
 - `bin/examples/*` - All example applications (8 examples)
@@ -100,7 +100,7 @@ The graphical UI will appear in the server terminal (Terminal 1).
 - ✅ Clean TUI display (no log messages)
 - ✅ Welcome screen when no client is connected
 - ✅ Press **Ctrl+C** to exit gracefully
-- ✅ Enable logging with `YUTANI_LOG_FILE=server.log ./bin/yutani-server`
+- ✅ Enable logging with `./bin/yutani server --log-file server.log`
 
 **Note:** If you have display issues, see [DEBUGGING.md](DEBUGGING.md) for troubleshooting.
 
@@ -138,7 +138,7 @@ export YUTANI_LOG_LEVEL=debug
 ### Command-Line Flags
 
 ```bash
-./bin/yutani-server \
+./bin/yutani server \
   --address=:7755 \
   --max-sessions=100 \
   --mouse=true \
@@ -153,7 +153,10 @@ export YUTANI_LOG_LEVEL=debug
 make run
 
 # Or directly
-./bin/yutani-server
+./bin/yutani server
+
+# Headless mode (for testing/CI)
+./bin/yutani server --headless
 ```
 
 The server will start and listen on the configured address (default: `:7755`).

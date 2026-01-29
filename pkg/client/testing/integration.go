@@ -8,7 +8,6 @@ import (
 
 	"github.com/chazu/yutani/pkg/client"
 	"github.com/chazu/yutani/pkg/config"
-	pb "github.com/chazu/yutani/pkg/proto/yutani"
 	"github.com/chazu/yutani/pkg/server"
 	"github.com/chazu/yutani/pkg/services"
 	"google.golang.org/grpc"
@@ -53,33 +52,9 @@ func StartTestServer(t *testing.T) *TestServer {
 		t.Fatalf("Failed to create server: %v", err)
 	}
 
-	// Create gRPC server
+	// Create gRPC server and register all services
 	grpcServer := grpc.NewServer()
-
-	// Register services
-	sessionService := services.NewSessionService(srv)
-	widgetService := services.NewWidgetService(srv)
-	screenService := services.NewScreenService(srv)
-	eventService := services.NewEventService(srv)
-	listService := services.NewListService(srv)
-	tableService := services.NewTableService(srv)
-	formService := services.NewFormService(srv)
-	treeService := services.NewTreeService(srv)
-	layoutService := services.NewLayoutService(srv)
-	debugService := services.NewDebugService(srv)
-	testService := services.NewTestService(srv)
-
-	pb.RegisterSessionServiceServer(grpcServer, sessionService)
-	pb.RegisterWidgetServiceServer(grpcServer, widgetService)
-	pb.RegisterScreenServiceServer(grpcServer, screenService)
-	pb.RegisterEventServiceServer(grpcServer, eventService)
-	pb.RegisterListServiceServer(grpcServer, listService)
-	pb.RegisterTableServiceServer(grpcServer, tableService)
-	pb.RegisterFormServiceServer(grpcServer, formService)
-	pb.RegisterTreeServiceServer(grpcServer, treeService)
-	pb.RegisterLayoutServiceServer(grpcServer, layoutService)
-	pb.RegisterDebugServiceServer(grpcServer, debugService)
-	pb.RegisterTestServiceServer(grpcServer, testService)
+	services.RegisterAllServices(grpcServer, srv)
 
 	ts := &TestServer{
 		t:          t,

@@ -23,7 +23,7 @@ This directory contains example applications demonstrating various features of t
 1. **Start the Yutani server**:
    ```bash
    cd /path/to/yutani
-   go run cmd/server/main.go
+   ./bin/yutani server
    ```
 
 2. **In a new terminal, run an example**:
@@ -384,7 +384,7 @@ fmt.Println("Shutting down...")
 - Make sure the Yutani server is running
 - Check that the server is listening on `localhost:7755` (default port)
 - Verify no firewall is blocking the connection
-- You can change the port with: `YUTANI_ADDRESS=:7755 go run cmd/yutani-server/main.go`
+- You can change the port with: `./bin/yutani server --address :7755`
 
 ### "Widget not displaying"
 - Ensure you called `Build()` on the widget builder

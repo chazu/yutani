@@ -31,17 +31,25 @@ yutani server --address :8080
 # Start server with debug logging
 yutani server --debug
 
+# Start headless server for testing/CI
+yutani server --headless
+
+# Start with log file
+yutani server --log-file server.log --debug
+
 # Start server with custom settings
 yutani server --address :7755 --max-sessions 20 --mouse --paste
 ```
 
 **Flags**:
-- `-a, --address` - Server address to listen on (default ":7755")
-- `-m, --max-sessions` - Maximum concurrent sessions (default 10)
+- `-a, --address` - Server address to listen on (from config/env, default ":7755")
+- `-m, --max-sessions` - Maximum concurrent sessions (from config/env, default 100)
 - `--mouse` - Enable mouse support (default true)
 - `--paste` - Enable paste support (default true)
 - `-l, --log-level` - Log level: debug, info, warn, error (default "info")
 - `-d, --debug` - Enable debug mode
+- `--headless` - Run in headless mode (no TUI, simulated screen)
+- `--log-file` - Log to file instead of stderr (TUI mode discards logs by default)
 
 ### `yutani new`
 

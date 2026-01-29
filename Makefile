@@ -1,4 +1,4 @@
-.PHONY: proto clean build build-server build-test-client build-phase4-demo build-examples build-cli run demo install-tools dev fmt tidy run-example list-examples
+.PHONY: proto clean build build-yutani build-test-client build-phase4-demo build-examples run demo install-tools dev fmt tidy run-example list-examples
 
 # Proto compilation
 proto:
@@ -13,14 +13,14 @@ proto:
 		api/proto/industries/loosh/yutani/v1/*.proto
 	@echo "Proto compilation complete"
 
-# Build server only
-build-server: proto
-	@echo "Building yutani-server..."
-	go build -o bin/yutani-server ./cmd/yutani-server
-	@echo "Build complete: bin/yutani-server"
+# Build Yutani CLI (includes server subcommand)
+build-yutani: proto
+	@echo "Building yutani..."
+	go build -o bin/yutani ./cmd/yutani
+	@echo "Build complete: bin/yutani"
 
-# Build all binaries (server, clients, examples, and CLI)
-build: build-server build-test-client build-phase4-demo build-examples build-cli
+# Build all binaries
+build: build-yutani build-test-client build-phase4-demo build-examples
 	@echo "All builds complete!"
 
 # Build test client
@@ -57,15 +57,9 @@ build-examples: proto
 	@go build -o bin/examples/text-editor ./examples/text-editor
 	@echo "Examples build complete: bin/examples/"
 
-# Build CLI tool
-build-cli: proto
-	@echo "Building Yutani CLI..."
-	go build -o bin/yutani ./cmd/yutani
-	@echo "Build complete: bin/yutani"
-
 # Run server
-run: build-server
-	./bin/yutani-server
+run: build-yutani
+	./bin/yutani server
 
 # Clean generated files
 clean:
@@ -88,7 +82,7 @@ demo: build-phase4-demo
 	./bin/phase4-demo
 
 # Development helpers
-dev: clean build-server run
+dev: clean build-yutani run
 
 # Format code
 fmt:
@@ -132,4 +126,3 @@ list-examples:
 	@echo ""
 	@echo "Usage: make run-example EXAMPLE=<name>"
 	@echo "   or: ./bin/examples/<name>"
-

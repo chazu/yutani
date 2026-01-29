@@ -594,8 +594,8 @@ enum WidgetEventType {
 ```
 yutani/
 ├── cmd/
-│   ├── yutani-server/
-│   │   └── main.go           # Server entry point
+│   ├── yutani/
+│   │   └── main.go           # CLI entry point (includes server subcommand)
 │   ├── test-client/
 │   │   └── main.go           # Test client
 │   └── phase4-demo/
@@ -850,7 +850,7 @@ YUTANI_LOG_LEVEL=info
 
 Command-line flags:
 ```bash
-yutani-server \
+yutani server \
   --address=:7755 \
   --max-sessions=100 \
   --mouse=true \

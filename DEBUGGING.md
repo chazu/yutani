@@ -219,7 +219,7 @@ go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
 
 Make sure the Yutani server is running:
 ```bash
-./bin/yutani-server
+./bin/yutani server
 ```
 
 The server runs on `localhost:7755` by default.
@@ -638,7 +638,7 @@ timeout 10s grpcurl -plaintext -d "{\"session_id\": {\"id\": \"$SESSION_ID\"}}" 
 
 ### grpcurl Troubleshooting
 
-**Connection Refused**: Make sure the Yutani server is running (`./bin/yutani-server`).
+**Connection Refused**: Make sure the Yutani server is running (`./bin/yutani server`).
 
 **Invalid Session ID**: Create a new session or verify your session ID is correct.
 
@@ -663,14 +663,17 @@ This will:
 
 ### Enable Server Logging
 
-The Yutani server logs to a file when the `YUTANI_LOG_FILE` environment variable is set:
+The Yutani server supports logging via the `--log-file` flag (or the `YUTANI_LOG_FILE` environment variable):
 
 ```bash
 # Start server with logging
-YUTANI_LOG_FILE=yutani-server.log ./bin/yutani-server
+./bin/yutani server --log-file yutani-server.log
 
 # With debug level logging
-YUTANI_LOG_FILE=yutani-server.log YUTANI_LOG_LEVEL=debug ./bin/yutani-server
+./bin/yutani server --log-file yutani-server.log --log-level debug
+
+# Headless mode logs to stderr by default
+./bin/yutani server --headless
 ```
 
 ### Log Levels

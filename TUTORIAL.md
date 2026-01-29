@@ -74,7 +74,7 @@ func main() {
 
 ```bash
 # Terminal 1: Start the server
-./bin/yutani-server
+./bin/yutani server
 
 # Terminal 2: Run your application
 go run your-app.go
@@ -352,7 +352,7 @@ go func() {
 
 Make sure the Yutani server is running:
 ```bash
-./bin/yutani-server
+./bin/yutani server
 ```
 
 ### Widget Not Appearing

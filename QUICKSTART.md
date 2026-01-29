@@ -9,7 +9,7 @@ make build
 ```
 
 This compiles protobuf definitions and builds:
-- `bin/yutani-server` - The display server
+- `bin/yutani` - The Yutani CLI (includes `server` subcommand)
 - `bin/test-client` - Basic test client
 - `bin/phase4-demo` - Phase 4 complex widgets demo
 
@@ -24,7 +24,7 @@ make run
 Or directly:
 
 ```bash
-./bin/yutani-server
+./bin/yutani server
 ```
 
 **Important:** Keep this terminal open -- the graphical UI will appear here!
@@ -129,11 +129,11 @@ echo $TERM
 
 # Try setting it explicitly
 export TERM=xterm-256color
-./bin/yutani-server
+./bin/yutani server
 
 # Or try screen-256color
 export TERM=screen-256color
-./bin/yutani-server
+./bin/yutani server
 ```
 
 The server must run in an interactive terminal to display the TUI. It will not work when run in the background with `&`.
@@ -144,10 +144,10 @@ The server must run in an interactive terminal to display the TUI. It will not w
 
 ```bash
 make clean
-make build-server
+make build-yutani
 ```
 
-If it still does not work, try pressing Ctrl+C multiple times, and verify you are running the correct binary (`./bin/yutani-server`).
+If it still does not work, try pressing Ctrl+C multiple times, and verify you are running the server (`./bin/yutani server`).
 
 ### Problem: "Failed to connect" error
 
@@ -158,7 +158,7 @@ If it still does not work, try pressing Ctrl+C multiple times, and verify you ar
 **Solution:** Kill any existing server process:
 
 ```bash
-pkill yutani-server
+pkill yutani
 ```
 
 Then restart the server.
@@ -167,7 +167,7 @@ Then restart the server.
 
 ```bash
 # Enable logging to a file
-YUTANI_LOG_FILE=server.log ./bin/yutani-server
+./bin/yutani server --log-file server.log
 
 # In another terminal, watch the logs
 tail -f server.log
@@ -189,7 +189,7 @@ This tests all Phase 1-3 features including:
 
 ### Explore the Code
 
-- `cmd/yutani-server/main.go` - Server entry point
+- `cmd/yutani/main.go` - CLI entry point (includes `server` subcommand)
 - `cmd/phase4-demo/main.go` - Demo client showing complex widgets
 - `pkg/server/` - Core server implementation
 - `pkg/services/` - gRPC service implementations
@@ -211,7 +211,7 @@ This tests all Phase 1-3 features including:
 make clean build
 
 # Terminal 1: Run server with logs enabled
-YUTANI_LOG_FILE=server.log ./bin/yutani-server
+./bin/yutani server --log-file server.log
 
 # Terminal 2: Run demo
 make demo
@@ -238,7 +238,7 @@ make dev
 
 ## Tips
 
-1. **Logs are disabled by default** - Enable with `YUTANI_LOG_FILE=server.log ./bin/yutani-server`
+1. **Logs are disabled by default** - Enable with `./bin/yutani server --log-file server.log`
 2. **Server must run first** - Always start the server before clients
 3. **UI appears in server terminal** - Not in the client terminal
 4. **Multiple clients supported** - You can run multiple demo clients simultaneously

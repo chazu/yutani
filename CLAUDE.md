@@ -4,11 +4,11 @@ Yutani is a Go-based terminal display server providing networked, widget-based T
 
 ## Key Directories
 
-- `cmd/yutani-server/` - Server entry point
+- `cmd/yutani/` - Unified CLI entry point (`yutani server`, `yutani ping`, etc.)
 - `pkg/server/` - Core server (tview app, session registry, widget registry, event dispatcher)
-- `pkg/services/` - gRPC service implementations (11 services)
+- `pkg/services/` - gRPC service implementations (11 services) and `RegisterAllServices()` helper
 - `pkg/client/` - Go client library with fluent builders
-- `pkg/cli/` - CLI tool (debug, inspect, profile)
+- `pkg/cli/` - CLI commands (server, debug, inspect, profile)
 - `pkg/proto/yutani/` - Generated protobuf Go code (do not edit manually)
 - `pkg/config/` - Configuration loading (file -> env -> flags)
 - `pkg/testutil/` - Shared test utilities
