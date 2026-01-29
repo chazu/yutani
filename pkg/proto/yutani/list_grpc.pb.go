@@ -23,8 +23,8 @@ const (
 	ListService_RemoveItem_FullMethodName   = "/industries.loosh.yutani.v1.ListService/RemoveItem"
 	ListService_Clear_FullMethodName        = "/industries.loosh.yutani.v1.ListService/Clear"
 	ListService_GetItemCount_FullMethodName = "/industries.loosh.yutani.v1.ListService/GetItemCount"
-	ListService_GetSelected_FullMethodName  = "/industries.loosh.yutani.v1.ListService/GetSelected"
-	ListService_SetSelected_FullMethodName  = "/industries.loosh.yutani.v1.ListService/SetSelected"
+	ListService_GetSelection_FullMethodName = "/industries.loosh.yutani.v1.ListService/GetSelection"
+	ListService_SetSelection_FullMethodName = "/industries.loosh.yutani.v1.ListService/SetSelection"
 	ListService_GetItem_FullMethodName      = "/industries.loosh.yutani.v1.ListService/GetItem"
 )
 
@@ -35,19 +35,19 @@ const (
 // ListService provides operations for List widgets
 type ListServiceClient interface {
 	// Add an item to the list
-	AddItem(ctx context.Context, in *AddItemRequest, opts ...grpc.CallOption) (*AddItemResponse, error)
+	AddItem(ctx context.Context, in *ListAddItemRequest, opts ...grpc.CallOption) (*ListAddItemResponse, error)
 	// Remove an item from the list
-	RemoveItem(ctx context.Context, in *RemoveItemRequest, opts ...grpc.CallOption) (*RemoveItemResponse, error)
+	RemoveItem(ctx context.Context, in *ListRemoveItemRequest, opts ...grpc.CallOption) (*ListRemoveItemResponse, error)
 	// Clear all items from the list
-	Clear(ctx context.Context, in *ClearListRequest, opts ...grpc.CallOption) (*ClearListResponse, error)
+	Clear(ctx context.Context, in *ListClearRequest, opts ...grpc.CallOption) (*ListClearResponse, error)
 	// Get the number of items in the list
-	GetItemCount(ctx context.Context, in *GetItemCountRequest, opts ...grpc.CallOption) (*GetItemCountResponse, error)
+	GetItemCount(ctx context.Context, in *ListGetItemCountRequest, opts ...grpc.CallOption) (*ListGetItemCountResponse, error)
 	// Get the currently selected item index
-	GetSelected(ctx context.Context, in *GetSelectedRequest, opts ...grpc.CallOption) (*GetSelectedResponse, error)
+	GetSelection(ctx context.Context, in *ListGetSelectionRequest, opts ...grpc.CallOption) (*ListGetSelectionResponse, error)
 	// Set the selected item index
-	SetSelected(ctx context.Context, in *SetSelectedRequest, opts ...grpc.CallOption) (*SetSelectedResponse, error)
+	SetSelection(ctx context.Context, in *ListSetSelectionRequest, opts ...grpc.CallOption) (*ListSetSelectionResponse, error)
 	// Get an item's text
-	GetItem(ctx context.Context, in *GetItemRequest, opts ...grpc.CallOption) (*GetItemResponse, error)
+	GetItem(ctx context.Context, in *ListGetItemRequest, opts ...grpc.CallOption) (*ListGetItemResponse, error)
 }
 
 type listServiceClient struct {
@@ -58,9 +58,9 @@ func NewListServiceClient(cc grpc.ClientConnInterface) ListServiceClient {
 	return &listServiceClient{cc}
 }
 
-func (c *listServiceClient) AddItem(ctx context.Context, in *AddItemRequest, opts ...grpc.CallOption) (*AddItemResponse, error) {
+func (c *listServiceClient) AddItem(ctx context.Context, in *ListAddItemRequest, opts ...grpc.CallOption) (*ListAddItemResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AddItemResponse)
+	out := new(ListAddItemResponse)
 	err := c.cc.Invoke(ctx, ListService_AddItem_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -68,9 +68,9 @@ func (c *listServiceClient) AddItem(ctx context.Context, in *AddItemRequest, opt
 	return out, nil
 }
 
-func (c *listServiceClient) RemoveItem(ctx context.Context, in *RemoveItemRequest, opts ...grpc.CallOption) (*RemoveItemResponse, error) {
+func (c *listServiceClient) RemoveItem(ctx context.Context, in *ListRemoveItemRequest, opts ...grpc.CallOption) (*ListRemoveItemResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RemoveItemResponse)
+	out := new(ListRemoveItemResponse)
 	err := c.cc.Invoke(ctx, ListService_RemoveItem_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -78,9 +78,9 @@ func (c *listServiceClient) RemoveItem(ctx context.Context, in *RemoveItemReques
 	return out, nil
 }
 
-func (c *listServiceClient) Clear(ctx context.Context, in *ClearListRequest, opts ...grpc.CallOption) (*ClearListResponse, error) {
+func (c *listServiceClient) Clear(ctx context.Context, in *ListClearRequest, opts ...grpc.CallOption) (*ListClearResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ClearListResponse)
+	out := new(ListClearResponse)
 	err := c.cc.Invoke(ctx, ListService_Clear_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -88,9 +88,9 @@ func (c *listServiceClient) Clear(ctx context.Context, in *ClearListRequest, opt
 	return out, nil
 }
 
-func (c *listServiceClient) GetItemCount(ctx context.Context, in *GetItemCountRequest, opts ...grpc.CallOption) (*GetItemCountResponse, error) {
+func (c *listServiceClient) GetItemCount(ctx context.Context, in *ListGetItemCountRequest, opts ...grpc.CallOption) (*ListGetItemCountResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetItemCountResponse)
+	out := new(ListGetItemCountResponse)
 	err := c.cc.Invoke(ctx, ListService_GetItemCount_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -98,29 +98,29 @@ func (c *listServiceClient) GetItemCount(ctx context.Context, in *GetItemCountRe
 	return out, nil
 }
 
-func (c *listServiceClient) GetSelected(ctx context.Context, in *GetSelectedRequest, opts ...grpc.CallOption) (*GetSelectedResponse, error) {
+func (c *listServiceClient) GetSelection(ctx context.Context, in *ListGetSelectionRequest, opts ...grpc.CallOption) (*ListGetSelectionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetSelectedResponse)
-	err := c.cc.Invoke(ctx, ListService_GetSelected_FullMethodName, in, out, cOpts...)
+	out := new(ListGetSelectionResponse)
+	err := c.cc.Invoke(ctx, ListService_GetSelection_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *listServiceClient) SetSelected(ctx context.Context, in *SetSelectedRequest, opts ...grpc.CallOption) (*SetSelectedResponse, error) {
+func (c *listServiceClient) SetSelection(ctx context.Context, in *ListSetSelectionRequest, opts ...grpc.CallOption) (*ListSetSelectionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SetSelectedResponse)
-	err := c.cc.Invoke(ctx, ListService_SetSelected_FullMethodName, in, out, cOpts...)
+	out := new(ListSetSelectionResponse)
+	err := c.cc.Invoke(ctx, ListService_SetSelection_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *listServiceClient) GetItem(ctx context.Context, in *GetItemRequest, opts ...grpc.CallOption) (*GetItemResponse, error) {
+func (c *listServiceClient) GetItem(ctx context.Context, in *ListGetItemRequest, opts ...grpc.CallOption) (*ListGetItemResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetItemResponse)
+	out := new(ListGetItemResponse)
 	err := c.cc.Invoke(ctx, ListService_GetItem_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -135,19 +135,19 @@ func (c *listServiceClient) GetItem(ctx context.Context, in *GetItemRequest, opt
 // ListService provides operations for List widgets
 type ListServiceServer interface {
 	// Add an item to the list
-	AddItem(context.Context, *AddItemRequest) (*AddItemResponse, error)
+	AddItem(context.Context, *ListAddItemRequest) (*ListAddItemResponse, error)
 	// Remove an item from the list
-	RemoveItem(context.Context, *RemoveItemRequest) (*RemoveItemResponse, error)
+	RemoveItem(context.Context, *ListRemoveItemRequest) (*ListRemoveItemResponse, error)
 	// Clear all items from the list
-	Clear(context.Context, *ClearListRequest) (*ClearListResponse, error)
+	Clear(context.Context, *ListClearRequest) (*ListClearResponse, error)
 	// Get the number of items in the list
-	GetItemCount(context.Context, *GetItemCountRequest) (*GetItemCountResponse, error)
+	GetItemCount(context.Context, *ListGetItemCountRequest) (*ListGetItemCountResponse, error)
 	// Get the currently selected item index
-	GetSelected(context.Context, *GetSelectedRequest) (*GetSelectedResponse, error)
+	GetSelection(context.Context, *ListGetSelectionRequest) (*ListGetSelectionResponse, error)
 	// Set the selected item index
-	SetSelected(context.Context, *SetSelectedRequest) (*SetSelectedResponse, error)
+	SetSelection(context.Context, *ListSetSelectionRequest) (*ListSetSelectionResponse, error)
 	// Get an item's text
-	GetItem(context.Context, *GetItemRequest) (*GetItemResponse, error)
+	GetItem(context.Context, *ListGetItemRequest) (*ListGetItemResponse, error)
 	mustEmbedUnimplementedListServiceServer()
 }
 
@@ -158,25 +158,25 @@ type ListServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedListServiceServer struct{}
 
-func (UnimplementedListServiceServer) AddItem(context.Context, *AddItemRequest) (*AddItemResponse, error) {
+func (UnimplementedListServiceServer) AddItem(context.Context, *ListAddItemRequest) (*ListAddItemResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method AddItem not implemented")
 }
-func (UnimplementedListServiceServer) RemoveItem(context.Context, *RemoveItemRequest) (*RemoveItemResponse, error) {
+func (UnimplementedListServiceServer) RemoveItem(context.Context, *ListRemoveItemRequest) (*ListRemoveItemResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RemoveItem not implemented")
 }
-func (UnimplementedListServiceServer) Clear(context.Context, *ClearListRequest) (*ClearListResponse, error) {
+func (UnimplementedListServiceServer) Clear(context.Context, *ListClearRequest) (*ListClearResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Clear not implemented")
 }
-func (UnimplementedListServiceServer) GetItemCount(context.Context, *GetItemCountRequest) (*GetItemCountResponse, error) {
+func (UnimplementedListServiceServer) GetItemCount(context.Context, *ListGetItemCountRequest) (*ListGetItemCountResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetItemCount not implemented")
 }
-func (UnimplementedListServiceServer) GetSelected(context.Context, *GetSelectedRequest) (*GetSelectedResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetSelected not implemented")
+func (UnimplementedListServiceServer) GetSelection(context.Context, *ListGetSelectionRequest) (*ListGetSelectionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSelection not implemented")
 }
-func (UnimplementedListServiceServer) SetSelected(context.Context, *SetSelectedRequest) (*SetSelectedResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method SetSelected not implemented")
+func (UnimplementedListServiceServer) SetSelection(context.Context, *ListSetSelectionRequest) (*ListSetSelectionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SetSelection not implemented")
 }
-func (UnimplementedListServiceServer) GetItem(context.Context, *GetItemRequest) (*GetItemResponse, error) {
+func (UnimplementedListServiceServer) GetItem(context.Context, *ListGetItemRequest) (*ListGetItemResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetItem not implemented")
 }
 func (UnimplementedListServiceServer) mustEmbedUnimplementedListServiceServer() {}
@@ -201,7 +201,7 @@ func RegisterListServiceServer(s grpc.ServiceRegistrar, srv ListServiceServer) {
 }
 
 func _ListService_AddItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddItemRequest)
+	in := new(ListAddItemRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -213,13 +213,13 @@ func _ListService_AddItem_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: ListService_AddItem_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ListServiceServer).AddItem(ctx, req.(*AddItemRequest))
+		return srv.(ListServiceServer).AddItem(ctx, req.(*ListAddItemRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ListService_RemoveItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RemoveItemRequest)
+	in := new(ListRemoveItemRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -231,13 +231,13 @@ func _ListService_RemoveItem_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: ListService_RemoveItem_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ListServiceServer).RemoveItem(ctx, req.(*RemoveItemRequest))
+		return srv.(ListServiceServer).RemoveItem(ctx, req.(*ListRemoveItemRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ListService_Clear_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ClearListRequest)
+	in := new(ListClearRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -249,13 +249,13 @@ func _ListService_Clear_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: ListService_Clear_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ListServiceServer).Clear(ctx, req.(*ClearListRequest))
+		return srv.(ListServiceServer).Clear(ctx, req.(*ListClearRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ListService_GetItemCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetItemCountRequest)
+	in := new(ListGetItemCountRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -267,49 +267,49 @@ func _ListService_GetItemCount_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: ListService_GetItemCount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ListServiceServer).GetItemCount(ctx, req.(*GetItemCountRequest))
+		return srv.(ListServiceServer).GetItemCount(ctx, req.(*ListGetItemCountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ListService_GetSelected_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetSelectedRequest)
+func _ListService_GetSelection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListGetSelectionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ListServiceServer).GetSelected(ctx, in)
+		return srv.(ListServiceServer).GetSelection(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ListService_GetSelected_FullMethodName,
+		FullMethod: ListService_GetSelection_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ListServiceServer).GetSelected(ctx, req.(*GetSelectedRequest))
+		return srv.(ListServiceServer).GetSelection(ctx, req.(*ListGetSelectionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ListService_SetSelected_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetSelectedRequest)
+func _ListService_SetSelection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSetSelectionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ListServiceServer).SetSelected(ctx, in)
+		return srv.(ListServiceServer).SetSelection(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ListService_SetSelected_FullMethodName,
+		FullMethod: ListService_SetSelection_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ListServiceServer).SetSelected(ctx, req.(*SetSelectedRequest))
+		return srv.(ListServiceServer).SetSelection(ctx, req.(*ListSetSelectionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ListService_GetItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetItemRequest)
+	in := new(ListGetItemRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -321,7 +321,7 @@ func _ListService_GetItem_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: ListService_GetItem_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ListServiceServer).GetItem(ctx, req.(*GetItemRequest))
+		return srv.(ListServiceServer).GetItem(ctx, req.(*ListGetItemRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -350,12 +350,12 @@ var ListService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ListService_GetItemCount_Handler,
 		},
 		{
-			MethodName: "GetSelected",
-			Handler:    _ListService_GetSelected_Handler,
+			MethodName: "GetSelection",
+			Handler:    _ListService_GetSelection_Handler,
 		},
 		{
-			MethodName: "SetSelected",
-			Handler:    _ListService_SetSelected_Handler,
+			MethodName: "SetSelection",
+			Handler:    _ListService_SetSelection_Handler,
 		},
 		{
 			MethodName: "GetItem",

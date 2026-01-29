@@ -324,7 +324,7 @@ func removeNodeFromTree(parent, target *tview.TreeNode) bool {
 }
 
 // SetExpanded expands or collapses a node
-func (s *TreeService) SetExpanded(ctx context.Context, req *pb.SetExpandedRequest) (*pb.SetExpandedResponse, error) {
+func (s *TreeService) SetExpanded(ctx context.Context, req *pb.TreeSetExpandedRequest) (*pb.TreeSetExpandedResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil || req.NodeId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id, widget_id, and node_id are required")
 	}
@@ -378,13 +378,13 @@ func (s *TreeService) SetExpanded(ctx context.Context, req *pb.SetExpandedReques
 		return nil, err
 	}
 
-	return &pb.SetExpandedResponse{
+	return &pb.TreeSetExpandedResponse{
 		Success: true,
 	}, nil
 }
 
 // GetSelected gets the currently selected node
-func (s *TreeService) GetSelected(ctx context.Context, req *pb.GetTreeSelectedRequest) (*pb.GetTreeSelectedResponse, error) {
+func (s *TreeService) GetSelection(ctx context.Context, req *pb.TreeGetSelectionRequest) (*pb.TreeGetSelectionResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -444,7 +444,7 @@ func (s *TreeService) GetSelected(ctx context.Context, req *pb.GetTreeSelectedRe
 		return nil, err
 	}
 
-	return &pb.GetTreeSelectedResponse{
+	return &pb.TreeGetSelectionResponse{
 		NodeId:    &pb.TreeNodeId{Id: nodeID},
 		Text:      text,
 		Reference: reference,
@@ -452,7 +452,7 @@ func (s *TreeService) GetSelected(ctx context.Context, req *pb.GetTreeSelectedRe
 }
 
 // SetSelected sets the currently selected node
-func (s *TreeService) SetSelected(ctx context.Context, req *pb.SetTreeSelectedRequest) (*pb.SetTreeSelectedResponse, error) {
+func (s *TreeService) SetSelection(ctx context.Context, req *pb.TreeSetSelectionRequest) (*pb.TreeSetSelectionResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil || req.NodeId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id, widget_id, and node_id are required")
 	}
@@ -506,13 +506,13 @@ func (s *TreeService) SetSelected(ctx context.Context, req *pb.SetTreeSelectedRe
 		return nil, err
 	}
 
-	return &pb.SetTreeSelectedResponse{
+	return &pb.TreeSetSelectionResponse{
 		Success: true,
 	}, nil
 }
 
 // GetChildren gets the children of a node
-func (s *TreeService) GetChildren(ctx context.Context, req *pb.GetChildrenRequest) (*pb.GetChildrenResponse, error) {
+func (s *TreeService) GetChildren(ctx context.Context, req *pb.TreeGetChildrenRequest) (*pb.TreeGetChildrenResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil || req.NodeId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id, widget_id, and node_id are required")
 	}
@@ -586,7 +586,7 @@ func (s *TreeService) GetChildren(ctx context.Context, req *pb.GetChildrenReques
 		return nil, err
 	}
 
-	return &pb.GetChildrenResponse{
+	return &pb.TreeGetChildrenResponse{
 		Children: children,
 	}, nil
 }

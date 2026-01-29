@@ -24,8 +24,6 @@ const (
 	WidgetService_SetProperties_FullMethodName = "/industries.loosh.yutani.v1.WidgetService/SetProperties"
 	WidgetService_GetProperties_FullMethodName = "/industries.loosh.yutani.v1.WidgetService/GetProperties"
 	WidgetService_SetRoot_FullMethodName       = "/industries.loosh.yutani.v1.WidgetService/SetRoot"
-	WidgetService_AddChild_FullMethodName      = "/industries.loosh.yutani.v1.WidgetService/AddChild"
-	WidgetService_RemoveChild_FullMethodName   = "/industries.loosh.yutani.v1.WidgetService/RemoveChild"
 	WidgetService_SetFocus_FullMethodName      = "/industries.loosh.yutani.v1.WidgetService/SetFocus"
 	WidgetService_GetFocus_FullMethodName      = "/industries.loosh.yutani.v1.WidgetService/GetFocus"
 	WidgetService_ListWidgets_FullMethodName   = "/industries.loosh.yutani.v1.WidgetService/ListWidgets"
@@ -47,10 +45,6 @@ type WidgetServiceClient interface {
 	GetProperties(ctx context.Context, in *GetPropertiesRequest, opts ...grpc.CallOption) (*GetPropertiesResponse, error)
 	// Set widget as root (display it)
 	SetRoot(ctx context.Context, in *SetRootRequest, opts ...grpc.CallOption) (*SetRootResponse, error)
-	// Add child to container widget
-	AddChild(ctx context.Context, in *AddChildRequest, opts ...grpc.CallOption) (*AddChildResponse, error)
-	// Remove child from container
-	RemoveChild(ctx context.Context, in *RemoveChildRequest, opts ...grpc.CallOption) (*RemoveChildResponse, error)
 	// Set focus to widget
 	SetFocus(ctx context.Context, in *SetFocusRequest, opts ...grpc.CallOption) (*SetFocusResponse, error)
 	// Get currently focused widget
@@ -117,26 +111,6 @@ func (c *widgetServiceClient) SetRoot(ctx context.Context, in *SetRootRequest, o
 	return out, nil
 }
 
-func (c *widgetServiceClient) AddChild(ctx context.Context, in *AddChildRequest, opts ...grpc.CallOption) (*AddChildResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AddChildResponse)
-	err := c.cc.Invoke(ctx, WidgetService_AddChild_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *widgetServiceClient) RemoveChild(ctx context.Context, in *RemoveChildRequest, opts ...grpc.CallOption) (*RemoveChildResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(RemoveChildResponse)
-	err := c.cc.Invoke(ctx, WidgetService_RemoveChild_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *widgetServiceClient) SetFocus(ctx context.Context, in *SetFocusRequest, opts ...grpc.CallOption) (*SetFocusResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SetFocusResponse)
@@ -183,10 +157,6 @@ type WidgetServiceServer interface {
 	GetProperties(context.Context, *GetPropertiesRequest) (*GetPropertiesResponse, error)
 	// Set widget as root (display it)
 	SetRoot(context.Context, *SetRootRequest) (*SetRootResponse, error)
-	// Add child to container widget
-	AddChild(context.Context, *AddChildRequest) (*AddChildResponse, error)
-	// Remove child from container
-	RemoveChild(context.Context, *RemoveChildRequest) (*RemoveChildResponse, error)
 	// Set focus to widget
 	SetFocus(context.Context, *SetFocusRequest) (*SetFocusResponse, error)
 	// Get currently focused widget
@@ -217,12 +187,6 @@ func (UnimplementedWidgetServiceServer) GetProperties(context.Context, *GetPrope
 }
 func (UnimplementedWidgetServiceServer) SetRoot(context.Context, *SetRootRequest) (*SetRootResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SetRoot not implemented")
-}
-func (UnimplementedWidgetServiceServer) AddChild(context.Context, *AddChildRequest) (*AddChildResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method AddChild not implemented")
-}
-func (UnimplementedWidgetServiceServer) RemoveChild(context.Context, *RemoveChildRequest) (*RemoveChildResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method RemoveChild not implemented")
 }
 func (UnimplementedWidgetServiceServer) SetFocus(context.Context, *SetFocusRequest) (*SetFocusResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SetFocus not implemented")
@@ -344,42 +308,6 @@ func _WidgetService_SetRoot_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WidgetService_AddChild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddChildRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WidgetServiceServer).AddChild(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WidgetService_AddChild_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WidgetServiceServer).AddChild(ctx, req.(*AddChildRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WidgetService_RemoveChild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RemoveChildRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WidgetServiceServer).RemoveChild(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WidgetService_RemoveChild_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WidgetServiceServer).RemoveChild(ctx, req.(*RemoveChildRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _WidgetService_SetFocus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SetFocusRequest)
 	if err := dec(in); err != nil {
@@ -460,14 +388,6 @@ var WidgetService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetRoot",
 			Handler:    _WidgetService_SetRoot_Handler,
-		},
-		{
-			MethodName: "AddChild",
-			Handler:    _WidgetService_AddChild_Handler,
-		},
-		{
-			MethodName: "RemoveChild",
-			Handler:    _WidgetService_RemoveChild_Handler,
 		},
 		{
 			MethodName: "SetFocus",

@@ -151,7 +151,7 @@ func (tv *TreeView) RemoveNode(nodeID *pb.TreeNodeId) error {
 
 // SetExpanded expands or collapses a node.
 func (tv *TreeView) SetExpanded(nodeID *pb.TreeNodeId, expanded bool) error {
-	_, err := tv.client.treeClient.SetExpanded(tv.client.ctx, &pb.SetExpandedRequest{
+	_, err := tv.client.treeClient.SetExpanded(tv.client.ctx, &pb.TreeSetExpandedRequest{
 		SessionId: tv.client.sessionID,
 		WidgetId:  tv.widgetID,
 		NodeId:    nodeID,
@@ -160,9 +160,9 @@ func (tv *TreeView) SetExpanded(nodeID *pb.TreeNodeId, expanded bool) error {
 	return err
 }
 
-// GetSelected gets the currently selected node.
-func (tv *TreeView) GetSelected() (*pb.TreeNodeId, string, string, error) {
-	resp, err := tv.client.treeClient.GetSelected(tv.client.ctx, &pb.GetTreeSelectedRequest{
+// GetSelection gets the currently selected node.
+func (tv *TreeView) GetSelection() (*pb.TreeNodeId, string, string, error) {
+	resp, err := tv.client.treeClient.GetSelection(tv.client.ctx, &pb.TreeGetSelectionRequest{
 		SessionId: tv.client.sessionID,
 		WidgetId:  tv.widgetID,
 	})
@@ -172,9 +172,9 @@ func (tv *TreeView) GetSelected() (*pb.TreeNodeId, string, string, error) {
 	return resp.NodeId, resp.Text, resp.Reference, nil
 }
 
-// SetSelected sets the currently selected node.
-func (tv *TreeView) SetSelected(nodeID *pb.TreeNodeId) error {
-	_, err := tv.client.treeClient.SetSelected(tv.client.ctx, &pb.SetTreeSelectedRequest{
+// SetSelection sets the currently selected node.
+func (tv *TreeView) SetSelection(nodeID *pb.TreeNodeId) error {
+	_, err := tv.client.treeClient.SetSelection(tv.client.ctx, &pb.TreeSetSelectionRequest{
 		SessionId: tv.client.sessionID,
 		WidgetId:  tv.widgetID,
 		NodeId:    nodeID,
@@ -184,7 +184,7 @@ func (tv *TreeView) SetSelected(nodeID *pb.TreeNodeId) error {
 
 // GetChildren gets the children of a node.
 func (tv *TreeView) GetChildren(nodeID *pb.TreeNodeId) ([]*pb.TreeNodeInfo, error) {
-	resp, err := tv.client.treeClient.GetChildren(tv.client.ctx, &pb.GetChildrenRequest{
+	resp, err := tv.client.treeClient.GetChildren(tv.client.ctx, &pb.TreeGetChildrenRequest{
 		SessionId: tv.client.sessionID,
 		WidgetId:  tv.widgetID,
 		NodeId:    nodeID,

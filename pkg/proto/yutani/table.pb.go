@@ -502,7 +502,7 @@ func (x *SetTableCellsResponse) GetCellsSet() int32 {
 	return 0
 }
 
-type ClearTableRequest struct {
+type TableClearRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -510,20 +510,20 @@ type ClearTableRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ClearTableRequest) Reset() {
-	*x = ClearTableRequest{}
+func (x *TableClearRequest) Reset() {
+	*x = TableClearRequest{}
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ClearTableRequest) String() string {
+func (x *TableClearRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ClearTableRequest) ProtoMessage() {}
+func (*TableClearRequest) ProtoMessage() {}
 
-func (x *ClearTableRequest) ProtoReflect() protoreflect.Message {
+func (x *TableClearRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -535,46 +535,46 @@ func (x *ClearTableRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ClearTableRequest.ProtoReflect.Descriptor instead.
-func (*ClearTableRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TableClearRequest.ProtoReflect.Descriptor instead.
+func (*TableClearRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_table_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *ClearTableRequest) GetSessionId() *SessionId {
+func (x *TableClearRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *ClearTableRequest) GetWidgetId() *WidgetId {
+func (x *TableClearRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-type ClearTableResponse struct {
+type TableClearResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ClearTableResponse) Reset() {
-	*x = ClearTableResponse{}
+func (x *TableClearResponse) Reset() {
+	*x = TableClearResponse{}
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ClearTableResponse) String() string {
+func (x *TableClearResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ClearTableResponse) ProtoMessage() {}
+func (*TableClearResponse) ProtoMessage() {}
 
-func (x *ClearTableResponse) ProtoReflect() protoreflect.Message {
+func (x *TableClearResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -586,19 +586,19 @@ func (x *ClearTableResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ClearTableResponse.ProtoReflect.Descriptor instead.
-func (*ClearTableResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use TableClearResponse.ProtoReflect.Descriptor instead.
+func (*TableClearResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_table_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *ClearTableResponse) GetSuccess() bool {
+func (x *TableClearResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type GetDimensionsRequest struct {
+type TableGetDimensionsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -606,20 +606,20 @@ type GetDimensionsRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetDimensionsRequest) Reset() {
-	*x = GetDimensionsRequest{}
+func (x *TableGetDimensionsRequest) Reset() {
+	*x = TableGetDimensionsRequest{}
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetDimensionsRequest) String() string {
+func (x *TableGetDimensionsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetDimensionsRequest) ProtoMessage() {}
+func (*TableGetDimensionsRequest) ProtoMessage() {}
 
-func (x *GetDimensionsRequest) ProtoReflect() protoreflect.Message {
+func (x *TableGetDimensionsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -631,26 +631,26 @@ func (x *GetDimensionsRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetDimensionsRequest.ProtoReflect.Descriptor instead.
-func (*GetDimensionsRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TableGetDimensionsRequest.ProtoReflect.Descriptor instead.
+func (*TableGetDimensionsRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_table_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *GetDimensionsRequest) GetSessionId() *SessionId {
+func (x *TableGetDimensionsRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *GetDimensionsRequest) GetWidgetId() *WidgetId {
+func (x *TableGetDimensionsRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-type GetDimensionsResponse struct {
+type TableGetDimensionsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Rows          int32                  `protobuf:"varint,1,opt,name=rows,proto3" json:"rows,omitempty"`
 	Columns       int32                  `protobuf:"varint,2,opt,name=columns,proto3" json:"columns,omitempty"`
@@ -658,20 +658,20 @@ type GetDimensionsResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetDimensionsResponse) Reset() {
-	*x = GetDimensionsResponse{}
+func (x *TableGetDimensionsResponse) Reset() {
+	*x = TableGetDimensionsResponse{}
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetDimensionsResponse) String() string {
+func (x *TableGetDimensionsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetDimensionsResponse) ProtoMessage() {}
+func (*TableGetDimensionsResponse) ProtoMessage() {}
 
-func (x *GetDimensionsResponse) ProtoReflect() protoreflect.Message {
+func (x *TableGetDimensionsResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -683,26 +683,26 @@ func (x *GetDimensionsResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetDimensionsResponse.ProtoReflect.Descriptor instead.
-func (*GetDimensionsResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use TableGetDimensionsResponse.ProtoReflect.Descriptor instead.
+func (*TableGetDimensionsResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_table_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *GetDimensionsResponse) GetRows() int32 {
+func (x *TableGetDimensionsResponse) GetRows() int32 {
 	if x != nil {
 		return x.Rows
 	}
 	return 0
 }
 
-func (x *GetDimensionsResponse) GetColumns() int32 {
+func (x *TableGetDimensionsResponse) GetColumns() int32 {
 	if x != nil {
 		return x.Columns
 	}
 	return 0
 }
 
-type GetSelectionRequest struct {
+type TableGetSelectionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -710,20 +710,20 @@ type GetSelectionRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetSelectionRequest) Reset() {
-	*x = GetSelectionRequest{}
+func (x *TableGetSelectionRequest) Reset() {
+	*x = TableGetSelectionRequest{}
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetSelectionRequest) String() string {
+func (x *TableGetSelectionRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetSelectionRequest) ProtoMessage() {}
+func (*TableGetSelectionRequest) ProtoMessage() {}
 
-func (x *GetSelectionRequest) ProtoReflect() protoreflect.Message {
+func (x *TableGetSelectionRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -735,26 +735,26 @@ func (x *GetSelectionRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetSelectionRequest.ProtoReflect.Descriptor instead.
-func (*GetSelectionRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TableGetSelectionRequest.ProtoReflect.Descriptor instead.
+func (*TableGetSelectionRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_table_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *GetSelectionRequest) GetSessionId() *SessionId {
+func (x *TableGetSelectionRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *GetSelectionRequest) GetWidgetId() *WidgetId {
+func (x *TableGetSelectionRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-type GetSelectionResponse struct {
+type TableGetSelectionResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Row           int32                  `protobuf:"varint,1,opt,name=row,proto3" json:"row,omitempty"`
 	Column        int32                  `protobuf:"varint,2,opt,name=column,proto3" json:"column,omitempty"`
@@ -762,20 +762,20 @@ type GetSelectionResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetSelectionResponse) Reset() {
-	*x = GetSelectionResponse{}
+func (x *TableGetSelectionResponse) Reset() {
+	*x = TableGetSelectionResponse{}
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetSelectionResponse) String() string {
+func (x *TableGetSelectionResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetSelectionResponse) ProtoMessage() {}
+func (*TableGetSelectionResponse) ProtoMessage() {}
 
-func (x *GetSelectionResponse) ProtoReflect() protoreflect.Message {
+func (x *TableGetSelectionResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -787,26 +787,26 @@ func (x *GetSelectionResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetSelectionResponse.ProtoReflect.Descriptor instead.
-func (*GetSelectionResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use TableGetSelectionResponse.ProtoReflect.Descriptor instead.
+func (*TableGetSelectionResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_table_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *GetSelectionResponse) GetRow() int32 {
+func (x *TableGetSelectionResponse) GetRow() int32 {
 	if x != nil {
 		return x.Row
 	}
 	return 0
 }
 
-func (x *GetSelectionResponse) GetColumn() int32 {
+func (x *TableGetSelectionResponse) GetColumn() int32 {
 	if x != nil {
 		return x.Column
 	}
 	return 0
 }
 
-type SetSelectionRequest struct {
+type TableSetSelectionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -816,20 +816,20 @@ type SetSelectionRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetSelectionRequest) Reset() {
-	*x = SetSelectionRequest{}
+func (x *TableSetSelectionRequest) Reset() {
+	*x = TableSetSelectionRequest{}
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetSelectionRequest) String() string {
+func (x *TableSetSelectionRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetSelectionRequest) ProtoMessage() {}
+func (*TableSetSelectionRequest) ProtoMessage() {}
 
-func (x *SetSelectionRequest) ProtoReflect() protoreflect.Message {
+func (x *TableSetSelectionRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -841,60 +841,60 @@ func (x *SetSelectionRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetSelectionRequest.ProtoReflect.Descriptor instead.
-func (*SetSelectionRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TableSetSelectionRequest.ProtoReflect.Descriptor instead.
+func (*TableSetSelectionRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_table_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *SetSelectionRequest) GetSessionId() *SessionId {
+func (x *TableSetSelectionRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *SetSelectionRequest) GetWidgetId() *WidgetId {
+func (x *TableSetSelectionRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *SetSelectionRequest) GetRow() int32 {
+func (x *TableSetSelectionRequest) GetRow() int32 {
 	if x != nil {
 		return x.Row
 	}
 	return 0
 }
 
-func (x *SetSelectionRequest) GetColumn() int32 {
+func (x *TableSetSelectionRequest) GetColumn() int32 {
 	if x != nil {
 		return x.Column
 	}
 	return 0
 }
 
-type SetSelectionResponse struct {
+type TableSetSelectionResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetSelectionResponse) Reset() {
-	*x = SetSelectionResponse{}
+func (x *TableSetSelectionResponse) Reset() {
+	*x = TableSetSelectionResponse{}
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetSelectionResponse) String() string {
+func (x *TableSetSelectionResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetSelectionResponse) ProtoMessage() {}
+func (*TableSetSelectionResponse) ProtoMessage() {}
 
-func (x *SetSelectionResponse) ProtoReflect() protoreflect.Message {
+func (x *TableSetSelectionResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -906,19 +906,19 @@ func (x *SetSelectionResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetSelectionResponse.ProtoReflect.Descriptor instead.
-func (*SetSelectionResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use TableSetSelectionResponse.ProtoReflect.Descriptor instead.
+func (*TableSetSelectionResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_table_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *SetSelectionResponse) GetSuccess() bool {
+func (x *TableSetSelectionResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type SetFixedRequest struct {
+type TableSetFixedRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -928,20 +928,20 @@ type SetFixedRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetFixedRequest) Reset() {
-	*x = SetFixedRequest{}
+func (x *TableSetFixedRequest) Reset() {
+	*x = TableSetFixedRequest{}
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetFixedRequest) String() string {
+func (x *TableSetFixedRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetFixedRequest) ProtoMessage() {}
+func (*TableSetFixedRequest) ProtoMessage() {}
 
-func (x *SetFixedRequest) ProtoReflect() protoreflect.Message {
+func (x *TableSetFixedRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -953,60 +953,60 @@ func (x *SetFixedRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetFixedRequest.ProtoReflect.Descriptor instead.
-func (*SetFixedRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TableSetFixedRequest.ProtoReflect.Descriptor instead.
+func (*TableSetFixedRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_table_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *SetFixedRequest) GetSessionId() *SessionId {
+func (x *TableSetFixedRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *SetFixedRequest) GetWidgetId() *WidgetId {
+func (x *TableSetFixedRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *SetFixedRequest) GetFixedRows() int32 {
+func (x *TableSetFixedRequest) GetFixedRows() int32 {
 	if x != nil {
 		return x.FixedRows
 	}
 	return 0
 }
 
-func (x *SetFixedRequest) GetFixedColumns() int32 {
+func (x *TableSetFixedRequest) GetFixedColumns() int32 {
 	if x != nil {
 		return x.FixedColumns
 	}
 	return 0
 }
 
-type SetFixedResponse struct {
+type TableSetFixedResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetFixedResponse) Reset() {
-	*x = SetFixedResponse{}
+func (x *TableSetFixedResponse) Reset() {
+	*x = TableSetFixedResponse{}
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetFixedResponse) String() string {
+func (x *TableSetFixedResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetFixedResponse) ProtoMessage() {}
+func (*TableSetFixedResponse) ProtoMessage() {}
 
-func (x *SetFixedResponse) ProtoReflect() protoreflect.Message {
+func (x *TableSetFixedResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_table_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1018,12 +1018,12 @@ func (x *SetFixedResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetFixedResponse.ProtoReflect.Descriptor instead.
-func (*SetFixedResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use TableSetFixedResponse.ProtoReflect.Descriptor instead.
+func (*TableSetFixedResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_table_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *SetFixedResponse) GetSuccess() bool {
+func (x *TableSetFixedResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
@@ -1077,52 +1077,52 @@ const file_industries_loosh_yutani_v1_table_proto_rawDesc = "" +
 	"\x15SetTableCellsResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x1b\n" +
 	"\tcells_set\x18\x02 \x01(\x05R\bcellsSet\"\x9c\x01\n" +
-	"\x11ClearTableRequest\x12D\n" +
+	"\x11TableClearRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\".\n" +
-	"\x12ClearTableResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x9f\x01\n" +
-	"\x14GetDimensionsRequest\x12D\n" +
+	"\x12TableClearResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xa4\x01\n" +
+	"\x19TableGetDimensionsRequest\x12D\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
+	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"J\n" +
+	"\x1aTableGetDimensionsResponse\x12\x12\n" +
+	"\x04rows\x18\x01 \x01(\x05R\x04rows\x12\x18\n" +
+	"\acolumns\x18\x02 \x01(\x05R\acolumns\"\xa3\x01\n" +
+	"\x18TableGetSelectionRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"E\n" +
-	"\x15GetDimensionsResponse\x12\x12\n" +
-	"\x04rows\x18\x01 \x01(\x05R\x04rows\x12\x18\n" +
-	"\acolumns\x18\x02 \x01(\x05R\acolumns\"\x9e\x01\n" +
-	"\x13GetSelectionRequest\x12D\n" +
-	"\n" +
-	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
-	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"@\n" +
-	"\x14GetSelectionResponse\x12\x10\n" +
+	"\x19TableGetSelectionResponse\x12\x10\n" +
 	"\x03row\x18\x01 \x01(\x05R\x03row\x12\x16\n" +
-	"\x06column\x18\x02 \x01(\x05R\x06column\"\xc8\x01\n" +
-	"\x13SetSelectionRequest\x12D\n" +
+	"\x06column\x18\x02 \x01(\x05R\x06column\"\xcd\x01\n" +
+	"\x18TableSetSelectionRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12\x10\n" +
 	"\x03row\x18\x03 \x01(\x05R\x03row\x12\x16\n" +
-	"\x06column\x18\x04 \x01(\x05R\x06column\"0\n" +
-	"\x14SetSelectionResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xde\x01\n" +
-	"\x0fSetFixedRequest\x12D\n" +
+	"\x06column\x18\x04 \x01(\x05R\x06column\"5\n" +
+	"\x19TableSetSelectionResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xe3\x01\n" +
+	"\x14TableSetFixedRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12\x1d\n" +
 	"\n" +
 	"fixed_rows\x18\x03 \x01(\x05R\tfixedRows\x12#\n" +
-	"\rfixed_columns\x18\x04 \x01(\x05R\ffixedColumns\",\n" +
-	"\x10SetFixedResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\x86\a\n" +
+	"\rfixed_columns\x18\x04 \x01(\x05R\ffixedColumns\"1\n" +
+	"\x15TableSetFixedResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\xae\a\n" +
 	"\fTableService\x12l\n" +
 	"\aSetCell\x12/.industries.loosh.yutani.v1.SetTableCellRequest\x1a0.industries.loosh.yutani.v1.SetTableCellResponse\x12l\n" +
 	"\aGetCell\x12/.industries.loosh.yutani.v1.GetTableCellRequest\x1a0.industries.loosh.yutani.v1.GetTableCellResponse\x12o\n" +
 	"\bSetCells\x120.industries.loosh.yutani.v1.SetTableCellsRequest\x1a1.industries.loosh.yutani.v1.SetTableCellsResponse\x12f\n" +
-	"\x05Clear\x12-.industries.loosh.yutani.v1.ClearTableRequest\x1a..industries.loosh.yutani.v1.ClearTableResponse\x12t\n" +
-	"\rGetDimensions\x120.industries.loosh.yutani.v1.GetDimensionsRequest\x1a1.industries.loosh.yutani.v1.GetDimensionsResponse\x12q\n" +
-	"\fGetSelection\x12/.industries.loosh.yutani.v1.GetSelectionRequest\x1a0.industries.loosh.yutani.v1.GetSelectionResponse\x12q\n" +
-	"\fSetSelection\x12/.industries.loosh.yutani.v1.SetSelectionRequest\x1a0.industries.loosh.yutani.v1.SetSelectionResponse\x12e\n" +
-	"\bSetFixed\x12+.industries.loosh.yutani.v1.SetFixedRequest\x1a,.industries.loosh.yutani.v1.SetFixedResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
+	"\x05Clear\x12-.industries.loosh.yutani.v1.TableClearRequest\x1a..industries.loosh.yutani.v1.TableClearResponse\x12~\n" +
+	"\rGetDimensions\x125.industries.loosh.yutani.v1.TableGetDimensionsRequest\x1a6.industries.loosh.yutani.v1.TableGetDimensionsResponse\x12{\n" +
+	"\fGetSelection\x124.industries.loosh.yutani.v1.TableGetSelectionRequest\x1a5.industries.loosh.yutani.v1.TableGetSelectionResponse\x12{\n" +
+	"\fSetSelection\x124.industries.loosh.yutani.v1.TableSetSelectionRequest\x1a5.industries.loosh.yutani.v1.TableSetSelectionResponse\x12o\n" +
+	"\bSetFixed\x120.industries.loosh.yutani.v1.TableSetFixedRequest\x1a1.industries.loosh.yutani.v1.TableSetFixedResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
 
 var (
 	file_industries_loosh_yutani_v1_table_proto_rawDescOnce sync.Once
@@ -1138,28 +1138,28 @@ func file_industries_loosh_yutani_v1_table_proto_rawDescGZIP() []byte {
 
 var file_industries_loosh_yutani_v1_table_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_industries_loosh_yutani_v1_table_proto_goTypes = []any{
-	(*TableCell)(nil),             // 0: industries.loosh.yutani.v1.TableCell
-	(*SetTableCellRequest)(nil),   // 1: industries.loosh.yutani.v1.SetTableCellRequest
-	(*SetTableCellResponse)(nil),  // 2: industries.loosh.yutani.v1.SetTableCellResponse
-	(*GetTableCellRequest)(nil),   // 3: industries.loosh.yutani.v1.GetTableCellRequest
-	(*GetTableCellResponse)(nil),  // 4: industries.loosh.yutani.v1.GetTableCellResponse
-	(*SetTableCellsRequest)(nil),  // 5: industries.loosh.yutani.v1.SetTableCellsRequest
-	(*TableCellUpdate)(nil),       // 6: industries.loosh.yutani.v1.TableCellUpdate
-	(*SetTableCellsResponse)(nil), // 7: industries.loosh.yutani.v1.SetTableCellsResponse
-	(*ClearTableRequest)(nil),     // 8: industries.loosh.yutani.v1.ClearTableRequest
-	(*ClearTableResponse)(nil),    // 9: industries.loosh.yutani.v1.ClearTableResponse
-	(*GetDimensionsRequest)(nil),  // 10: industries.loosh.yutani.v1.GetDimensionsRequest
-	(*GetDimensionsResponse)(nil), // 11: industries.loosh.yutani.v1.GetDimensionsResponse
-	(*GetSelectionRequest)(nil),   // 12: industries.loosh.yutani.v1.GetSelectionRequest
-	(*GetSelectionResponse)(nil),  // 13: industries.loosh.yutani.v1.GetSelectionResponse
-	(*SetSelectionRequest)(nil),   // 14: industries.loosh.yutani.v1.SetSelectionRequest
-	(*SetSelectionResponse)(nil),  // 15: industries.loosh.yutani.v1.SetSelectionResponse
-	(*SetFixedRequest)(nil),       // 16: industries.loosh.yutani.v1.SetFixedRequest
-	(*SetFixedResponse)(nil),      // 17: industries.loosh.yutani.v1.SetFixedResponse
-	(*Color)(nil),                 // 18: industries.loosh.yutani.v1.Color
-	(Alignment)(0),                // 19: industries.loosh.yutani.v1.Alignment
-	(*SessionId)(nil),             // 20: industries.loosh.yutani.v1.SessionId
-	(*WidgetId)(nil),              // 21: industries.loosh.yutani.v1.WidgetId
+	(*TableCell)(nil),                  // 0: industries.loosh.yutani.v1.TableCell
+	(*SetTableCellRequest)(nil),        // 1: industries.loosh.yutani.v1.SetTableCellRequest
+	(*SetTableCellResponse)(nil),       // 2: industries.loosh.yutani.v1.SetTableCellResponse
+	(*GetTableCellRequest)(nil),        // 3: industries.loosh.yutani.v1.GetTableCellRequest
+	(*GetTableCellResponse)(nil),       // 4: industries.loosh.yutani.v1.GetTableCellResponse
+	(*SetTableCellsRequest)(nil),       // 5: industries.loosh.yutani.v1.SetTableCellsRequest
+	(*TableCellUpdate)(nil),            // 6: industries.loosh.yutani.v1.TableCellUpdate
+	(*SetTableCellsResponse)(nil),      // 7: industries.loosh.yutani.v1.SetTableCellsResponse
+	(*TableClearRequest)(nil),          // 8: industries.loosh.yutani.v1.TableClearRequest
+	(*TableClearResponse)(nil),         // 9: industries.loosh.yutani.v1.TableClearResponse
+	(*TableGetDimensionsRequest)(nil),  // 10: industries.loosh.yutani.v1.TableGetDimensionsRequest
+	(*TableGetDimensionsResponse)(nil), // 11: industries.loosh.yutani.v1.TableGetDimensionsResponse
+	(*TableGetSelectionRequest)(nil),   // 12: industries.loosh.yutani.v1.TableGetSelectionRequest
+	(*TableGetSelectionResponse)(nil),  // 13: industries.loosh.yutani.v1.TableGetSelectionResponse
+	(*TableSetSelectionRequest)(nil),   // 14: industries.loosh.yutani.v1.TableSetSelectionRequest
+	(*TableSetSelectionResponse)(nil),  // 15: industries.loosh.yutani.v1.TableSetSelectionResponse
+	(*TableSetFixedRequest)(nil),       // 16: industries.loosh.yutani.v1.TableSetFixedRequest
+	(*TableSetFixedResponse)(nil),      // 17: industries.loosh.yutani.v1.TableSetFixedResponse
+	(*Color)(nil),                      // 18: industries.loosh.yutani.v1.Color
+	(Alignment)(0),                     // 19: industries.loosh.yutani.v1.Alignment
+	(*SessionId)(nil),                  // 20: industries.loosh.yutani.v1.SessionId
+	(*WidgetId)(nil),                   // 21: industries.loosh.yutani.v1.WidgetId
 }
 var file_industries_loosh_yutani_v1_table_proto_depIdxs = []int32{
 	18, // 0: industries.loosh.yutani.v1.TableCell.color:type_name -> industries.loosh.yutani.v1.Color
@@ -1174,32 +1174,32 @@ var file_industries_loosh_yutani_v1_table_proto_depIdxs = []int32{
 	21, // 9: industries.loosh.yutani.v1.SetTableCellsRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
 	6,  // 10: industries.loosh.yutani.v1.SetTableCellsRequest.cells:type_name -> industries.loosh.yutani.v1.TableCellUpdate
 	0,  // 11: industries.loosh.yutani.v1.TableCellUpdate.cell:type_name -> industries.loosh.yutani.v1.TableCell
-	20, // 12: industries.loosh.yutani.v1.ClearTableRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	21, // 13: industries.loosh.yutani.v1.ClearTableRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	20, // 14: industries.loosh.yutani.v1.GetDimensionsRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	21, // 15: industries.loosh.yutani.v1.GetDimensionsRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	20, // 16: industries.loosh.yutani.v1.GetSelectionRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	21, // 17: industries.loosh.yutani.v1.GetSelectionRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	20, // 18: industries.loosh.yutani.v1.SetSelectionRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	21, // 19: industries.loosh.yutani.v1.SetSelectionRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	20, // 20: industries.loosh.yutani.v1.SetFixedRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	21, // 21: industries.loosh.yutani.v1.SetFixedRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	20, // 12: industries.loosh.yutani.v1.TableClearRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	21, // 13: industries.loosh.yutani.v1.TableClearRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	20, // 14: industries.loosh.yutani.v1.TableGetDimensionsRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	21, // 15: industries.loosh.yutani.v1.TableGetDimensionsRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	20, // 16: industries.loosh.yutani.v1.TableGetSelectionRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	21, // 17: industries.loosh.yutani.v1.TableGetSelectionRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	20, // 18: industries.loosh.yutani.v1.TableSetSelectionRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	21, // 19: industries.loosh.yutani.v1.TableSetSelectionRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	20, // 20: industries.loosh.yutani.v1.TableSetFixedRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	21, // 21: industries.loosh.yutani.v1.TableSetFixedRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
 	1,  // 22: industries.loosh.yutani.v1.TableService.SetCell:input_type -> industries.loosh.yutani.v1.SetTableCellRequest
 	3,  // 23: industries.loosh.yutani.v1.TableService.GetCell:input_type -> industries.loosh.yutani.v1.GetTableCellRequest
 	5,  // 24: industries.loosh.yutani.v1.TableService.SetCells:input_type -> industries.loosh.yutani.v1.SetTableCellsRequest
-	8,  // 25: industries.loosh.yutani.v1.TableService.Clear:input_type -> industries.loosh.yutani.v1.ClearTableRequest
-	10, // 26: industries.loosh.yutani.v1.TableService.GetDimensions:input_type -> industries.loosh.yutani.v1.GetDimensionsRequest
-	12, // 27: industries.loosh.yutani.v1.TableService.GetSelection:input_type -> industries.loosh.yutani.v1.GetSelectionRequest
-	14, // 28: industries.loosh.yutani.v1.TableService.SetSelection:input_type -> industries.loosh.yutani.v1.SetSelectionRequest
-	16, // 29: industries.loosh.yutani.v1.TableService.SetFixed:input_type -> industries.loosh.yutani.v1.SetFixedRequest
+	8,  // 25: industries.loosh.yutani.v1.TableService.Clear:input_type -> industries.loosh.yutani.v1.TableClearRequest
+	10, // 26: industries.loosh.yutani.v1.TableService.GetDimensions:input_type -> industries.loosh.yutani.v1.TableGetDimensionsRequest
+	12, // 27: industries.loosh.yutani.v1.TableService.GetSelection:input_type -> industries.loosh.yutani.v1.TableGetSelectionRequest
+	14, // 28: industries.loosh.yutani.v1.TableService.SetSelection:input_type -> industries.loosh.yutani.v1.TableSetSelectionRequest
+	16, // 29: industries.loosh.yutani.v1.TableService.SetFixed:input_type -> industries.loosh.yutani.v1.TableSetFixedRequest
 	2,  // 30: industries.loosh.yutani.v1.TableService.SetCell:output_type -> industries.loosh.yutani.v1.SetTableCellResponse
 	4,  // 31: industries.loosh.yutani.v1.TableService.GetCell:output_type -> industries.loosh.yutani.v1.GetTableCellResponse
 	7,  // 32: industries.loosh.yutani.v1.TableService.SetCells:output_type -> industries.loosh.yutani.v1.SetTableCellsResponse
-	9,  // 33: industries.loosh.yutani.v1.TableService.Clear:output_type -> industries.loosh.yutani.v1.ClearTableResponse
-	11, // 34: industries.loosh.yutani.v1.TableService.GetDimensions:output_type -> industries.loosh.yutani.v1.GetDimensionsResponse
-	13, // 35: industries.loosh.yutani.v1.TableService.GetSelection:output_type -> industries.loosh.yutani.v1.GetSelectionResponse
-	15, // 36: industries.loosh.yutani.v1.TableService.SetSelection:output_type -> industries.loosh.yutani.v1.SetSelectionResponse
-	17, // 37: industries.loosh.yutani.v1.TableService.SetFixed:output_type -> industries.loosh.yutani.v1.SetFixedResponse
+	9,  // 33: industries.loosh.yutani.v1.TableService.Clear:output_type -> industries.loosh.yutani.v1.TableClearResponse
+	11, // 34: industries.loosh.yutani.v1.TableService.GetDimensions:output_type -> industries.loosh.yutani.v1.TableGetDimensionsResponse
+	13, // 35: industries.loosh.yutani.v1.TableService.GetSelection:output_type -> industries.loosh.yutani.v1.TableGetSelectionResponse
+	15, // 36: industries.loosh.yutani.v1.TableService.SetSelection:output_type -> industries.loosh.yutani.v1.TableSetSelectionResponse
+	17, // 37: industries.loosh.yutani.v1.TableService.SetFixed:output_type -> industries.loosh.yutani.v1.TableSetFixedResponse
 	30, // [30:38] is the sub-list for method output_type
 	22, // [22:30] is the sub-list for method input_type
 	22, // [22:22] is the sub-list for extension type_name

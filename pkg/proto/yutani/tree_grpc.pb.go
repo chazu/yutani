@@ -19,13 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TreeService_SetRoot_FullMethodName     = "/industries.loosh.yutani.v1.TreeService/SetRoot"
-	TreeService_AddChild_FullMethodName    = "/industries.loosh.yutani.v1.TreeService/AddChild"
-	TreeService_RemoveNode_FullMethodName  = "/industries.loosh.yutani.v1.TreeService/RemoveNode"
-	TreeService_SetExpanded_FullMethodName = "/industries.loosh.yutani.v1.TreeService/SetExpanded"
-	TreeService_GetSelected_FullMethodName = "/industries.loosh.yutani.v1.TreeService/GetSelected"
-	TreeService_SetSelected_FullMethodName = "/industries.loosh.yutani.v1.TreeService/SetSelected"
-	TreeService_GetChildren_FullMethodName = "/industries.loosh.yutani.v1.TreeService/GetChildren"
+	TreeService_SetRoot_FullMethodName      = "/industries.loosh.yutani.v1.TreeService/SetRoot"
+	TreeService_AddChild_FullMethodName     = "/industries.loosh.yutani.v1.TreeService/AddChild"
+	TreeService_RemoveNode_FullMethodName   = "/industries.loosh.yutani.v1.TreeService/RemoveNode"
+	TreeService_SetExpanded_FullMethodName  = "/industries.loosh.yutani.v1.TreeService/SetExpanded"
+	TreeService_GetSelection_FullMethodName = "/industries.loosh.yutani.v1.TreeService/GetSelection"
+	TreeService_SetSelection_FullMethodName = "/industries.loosh.yutani.v1.TreeService/SetSelection"
+	TreeService_GetChildren_FullMethodName  = "/industries.loosh.yutani.v1.TreeService/GetChildren"
 )
 
 // TreeServiceClient is the client API for TreeService service.
@@ -41,13 +41,13 @@ type TreeServiceClient interface {
 	// Remove a node
 	RemoveNode(ctx context.Context, in *RemoveTreeNodeRequest, opts ...grpc.CallOption) (*RemoveTreeNodeResponse, error)
 	// Expand or collapse a node
-	SetExpanded(ctx context.Context, in *SetExpandedRequest, opts ...grpc.CallOption) (*SetExpandedResponse, error)
+	SetExpanded(ctx context.Context, in *TreeSetExpandedRequest, opts ...grpc.CallOption) (*TreeSetExpandedResponse, error)
 	// Get the currently selected node
-	GetSelected(ctx context.Context, in *GetTreeSelectedRequest, opts ...grpc.CallOption) (*GetTreeSelectedResponse, error)
+	GetSelection(ctx context.Context, in *TreeGetSelectionRequest, opts ...grpc.CallOption) (*TreeGetSelectionResponse, error)
 	// Set the selected node
-	SetSelected(ctx context.Context, in *SetTreeSelectedRequest, opts ...grpc.CallOption) (*SetTreeSelectedResponse, error)
+	SetSelection(ctx context.Context, in *TreeSetSelectionRequest, opts ...grpc.CallOption) (*TreeSetSelectionResponse, error)
 	// Get a node's children
-	GetChildren(ctx context.Context, in *GetChildrenRequest, opts ...grpc.CallOption) (*GetChildrenResponse, error)
+	GetChildren(ctx context.Context, in *TreeGetChildrenRequest, opts ...grpc.CallOption) (*TreeGetChildrenResponse, error)
 }
 
 type treeServiceClient struct {
@@ -88,9 +88,9 @@ func (c *treeServiceClient) RemoveNode(ctx context.Context, in *RemoveTreeNodeRe
 	return out, nil
 }
 
-func (c *treeServiceClient) SetExpanded(ctx context.Context, in *SetExpandedRequest, opts ...grpc.CallOption) (*SetExpandedResponse, error) {
+func (c *treeServiceClient) SetExpanded(ctx context.Context, in *TreeSetExpandedRequest, opts ...grpc.CallOption) (*TreeSetExpandedResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SetExpandedResponse)
+	out := new(TreeSetExpandedResponse)
 	err := c.cc.Invoke(ctx, TreeService_SetExpanded_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -98,29 +98,29 @@ func (c *treeServiceClient) SetExpanded(ctx context.Context, in *SetExpandedRequ
 	return out, nil
 }
 
-func (c *treeServiceClient) GetSelected(ctx context.Context, in *GetTreeSelectedRequest, opts ...grpc.CallOption) (*GetTreeSelectedResponse, error) {
+func (c *treeServiceClient) GetSelection(ctx context.Context, in *TreeGetSelectionRequest, opts ...grpc.CallOption) (*TreeGetSelectionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetTreeSelectedResponse)
-	err := c.cc.Invoke(ctx, TreeService_GetSelected_FullMethodName, in, out, cOpts...)
+	out := new(TreeGetSelectionResponse)
+	err := c.cc.Invoke(ctx, TreeService_GetSelection_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *treeServiceClient) SetSelected(ctx context.Context, in *SetTreeSelectedRequest, opts ...grpc.CallOption) (*SetTreeSelectedResponse, error) {
+func (c *treeServiceClient) SetSelection(ctx context.Context, in *TreeSetSelectionRequest, opts ...grpc.CallOption) (*TreeSetSelectionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SetTreeSelectedResponse)
-	err := c.cc.Invoke(ctx, TreeService_SetSelected_FullMethodName, in, out, cOpts...)
+	out := new(TreeSetSelectionResponse)
+	err := c.cc.Invoke(ctx, TreeService_SetSelection_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *treeServiceClient) GetChildren(ctx context.Context, in *GetChildrenRequest, opts ...grpc.CallOption) (*GetChildrenResponse, error) {
+func (c *treeServiceClient) GetChildren(ctx context.Context, in *TreeGetChildrenRequest, opts ...grpc.CallOption) (*TreeGetChildrenResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetChildrenResponse)
+	out := new(TreeGetChildrenResponse)
 	err := c.cc.Invoke(ctx, TreeService_GetChildren_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -141,13 +141,13 @@ type TreeServiceServer interface {
 	// Remove a node
 	RemoveNode(context.Context, *RemoveTreeNodeRequest) (*RemoveTreeNodeResponse, error)
 	// Expand or collapse a node
-	SetExpanded(context.Context, *SetExpandedRequest) (*SetExpandedResponse, error)
+	SetExpanded(context.Context, *TreeSetExpandedRequest) (*TreeSetExpandedResponse, error)
 	// Get the currently selected node
-	GetSelected(context.Context, *GetTreeSelectedRequest) (*GetTreeSelectedResponse, error)
+	GetSelection(context.Context, *TreeGetSelectionRequest) (*TreeGetSelectionResponse, error)
 	// Set the selected node
-	SetSelected(context.Context, *SetTreeSelectedRequest) (*SetTreeSelectedResponse, error)
+	SetSelection(context.Context, *TreeSetSelectionRequest) (*TreeSetSelectionResponse, error)
 	// Get a node's children
-	GetChildren(context.Context, *GetChildrenRequest) (*GetChildrenResponse, error)
+	GetChildren(context.Context, *TreeGetChildrenRequest) (*TreeGetChildrenResponse, error)
 	mustEmbedUnimplementedTreeServiceServer()
 }
 
@@ -167,16 +167,16 @@ func (UnimplementedTreeServiceServer) AddChild(context.Context, *AddTreeChildReq
 func (UnimplementedTreeServiceServer) RemoveNode(context.Context, *RemoveTreeNodeRequest) (*RemoveTreeNodeResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RemoveNode not implemented")
 }
-func (UnimplementedTreeServiceServer) SetExpanded(context.Context, *SetExpandedRequest) (*SetExpandedResponse, error) {
+func (UnimplementedTreeServiceServer) SetExpanded(context.Context, *TreeSetExpandedRequest) (*TreeSetExpandedResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SetExpanded not implemented")
 }
-func (UnimplementedTreeServiceServer) GetSelected(context.Context, *GetTreeSelectedRequest) (*GetTreeSelectedResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetSelected not implemented")
+func (UnimplementedTreeServiceServer) GetSelection(context.Context, *TreeGetSelectionRequest) (*TreeGetSelectionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSelection not implemented")
 }
-func (UnimplementedTreeServiceServer) SetSelected(context.Context, *SetTreeSelectedRequest) (*SetTreeSelectedResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method SetSelected not implemented")
+func (UnimplementedTreeServiceServer) SetSelection(context.Context, *TreeSetSelectionRequest) (*TreeSetSelectionResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SetSelection not implemented")
 }
-func (UnimplementedTreeServiceServer) GetChildren(context.Context, *GetChildrenRequest) (*GetChildrenResponse, error) {
+func (UnimplementedTreeServiceServer) GetChildren(context.Context, *TreeGetChildrenRequest) (*TreeGetChildrenResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetChildren not implemented")
 }
 func (UnimplementedTreeServiceServer) mustEmbedUnimplementedTreeServiceServer() {}
@@ -255,7 +255,7 @@ func _TreeService_RemoveNode_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _TreeService_SetExpanded_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetExpandedRequest)
+	in := new(TreeSetExpandedRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -267,49 +267,49 @@ func _TreeService_SetExpanded_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: TreeService_SetExpanded_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TreeServiceServer).SetExpanded(ctx, req.(*SetExpandedRequest))
+		return srv.(TreeServiceServer).SetExpanded(ctx, req.(*TreeSetExpandedRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TreeService_GetSelected_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTreeSelectedRequest)
+func _TreeService_GetSelection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TreeGetSelectionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TreeServiceServer).GetSelected(ctx, in)
+		return srv.(TreeServiceServer).GetSelection(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TreeService_GetSelected_FullMethodName,
+		FullMethod: TreeService_GetSelection_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TreeServiceServer).GetSelected(ctx, req.(*GetTreeSelectedRequest))
+		return srv.(TreeServiceServer).GetSelection(ctx, req.(*TreeGetSelectionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TreeService_SetSelected_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetTreeSelectedRequest)
+func _TreeService_SetSelection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TreeSetSelectionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TreeServiceServer).SetSelected(ctx, in)
+		return srv.(TreeServiceServer).SetSelection(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TreeService_SetSelected_FullMethodName,
+		FullMethod: TreeService_SetSelection_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TreeServiceServer).SetSelected(ctx, req.(*SetTreeSelectedRequest))
+		return srv.(TreeServiceServer).SetSelection(ctx, req.(*TreeSetSelectionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TreeService_GetChildren_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetChildrenRequest)
+	in := new(TreeGetChildrenRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -321,7 +321,7 @@ func _TreeService_GetChildren_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: TreeService_GetChildren_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TreeServiceServer).GetChildren(ctx, req.(*GetChildrenRequest))
+		return srv.(TreeServiceServer).GetChildren(ctx, req.(*TreeGetChildrenRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -350,12 +350,12 @@ var TreeService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _TreeService_SetExpanded_Handler,
 		},
 		{
-			MethodName: "GetSelected",
-			Handler:    _TreeService_GetSelected_Handler,
+			MethodName: "GetSelection",
+			Handler:    _TreeService_GetSelection_Handler,
 		},
 		{
-			MethodName: "SetSelected",
-			Handler:    _TreeService_SetSelected_Handler,
+			MethodName: "SetSelection",
+			Handler:    _TreeService_SetSelection_Handler,
 		},
 		{
 			MethodName: "GetChildren",

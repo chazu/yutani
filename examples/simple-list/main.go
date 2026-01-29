@@ -57,7 +57,7 @@ func main() {
 	fmt.Printf("Added %d items to list\n", len(items))
 
 	// Set initial selection
-	if err := list.SetSelected(0); err != nil {
+	if err := list.SetSelection(0); err != nil {
 		log.Printf("Failed to set selection: %v", err)
 	}
 
@@ -81,7 +81,7 @@ func main() {
 			fmt.Printf("Widget event: %s (type: %s)\n", event.Widget.WidgetID, event.Widget.Type)
 
 			// Get current selection
-			if selected, err := list.GetSelected(); err == nil {
+			if selected, err := list.GetSelection(); err == nil {
 				if main, secondary, shortcut, err := list.GetItem(selected); err == nil {
 					fmt.Printf("  Selected item %d: %s (%s) [%s]\n", selected, main, secondary, shortcut)
 				}

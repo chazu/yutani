@@ -26,7 +26,7 @@ func NewFormService(srv *server.Server) *FormService {
 }
 
 // AddField adds a form field to the form
-func (s *FormService) AddField(ctx context.Context, req *pb.AddFieldRequest) (*pb.AddFieldResponse, error) {
+func (s *FormService) AddField(ctx context.Context, req *pb.FormAddFieldRequest) (*pb.FormAddFieldResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -101,14 +101,14 @@ func (s *FormService) AddField(ctx context.Context, req *pb.AddFieldRequest) (*p
 		return nil, err
 	}
 
-	return &pb.AddFieldResponse{
+	return &pb.FormAddFieldResponse{
 		Success:    true,
 		FieldIndex: fieldIndex,
 	}, nil
 }
 
 // AddButton adds a button to the form
-func (s *FormService) AddButton(ctx context.Context, req *pb.AddButtonRequest) (*pb.AddButtonResponse, error) {
+func (s *FormService) AddButton(ctx context.Context, req *pb.FormAddButtonRequest) (*pb.FormAddButtonResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -157,14 +157,14 @@ func (s *FormService) AddButton(ctx context.Context, req *pb.AddButtonRequest) (
 		return nil, err
 	}
 
-	return &pb.AddButtonResponse{
+	return &pb.FormAddButtonResponse{
 		Success:     true,
 		ButtonIndex: buttonIndex,
 	}, nil
 }
 
 // GetFieldValue gets the value of a form field
-func (s *FormService) GetFieldValue(ctx context.Context, req *pb.GetFieldValueRequest) (*pb.GetFieldValueResponse, error) {
+func (s *FormService) GetFieldValue(ctx context.Context, req *pb.FormGetFieldValueRequest) (*pb.FormGetFieldValueResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -235,13 +235,13 @@ func (s *FormService) GetFieldValue(ctx context.Context, req *pb.GetFieldValueRe
 		return nil, err
 	}
 
-	return &pb.GetFieldValueResponse{
+	return &pb.FormGetFieldValueResponse{
 		Value: value,
 	}, nil
 }
 
 // SetFieldValue sets the value of a form field
-func (s *FormService) SetFieldValue(ctx context.Context, req *pb.SetFieldValueRequest) (*pb.SetFieldValueResponse, error) {
+func (s *FormService) SetFieldValue(ctx context.Context, req *pb.FormSetFieldValueRequest) (*pb.FormSetFieldValueResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -320,13 +320,13 @@ func (s *FormService) SetFieldValue(ctx context.Context, req *pb.SetFieldValueRe
 		return nil, err
 	}
 
-	return &pb.SetFieldValueResponse{
+	return &pb.FormSetFieldValueResponse{
 		Success: true,
 	}, nil
 }
 
 // Clear clears all form fields
-func (s *FormService) Clear(ctx context.Context, req *pb.ClearFormRequest) (*pb.ClearFormResponse, error) {
+func (s *FormService) Clear(ctx context.Context, req *pb.FormClearRequest) (*pb.FormClearResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -371,13 +371,13 @@ func (s *FormService) Clear(ctx context.Context, req *pb.ClearFormRequest) (*pb.
 		return nil, err
 	}
 
-	return &pb.ClearFormResponse{
+	return &pb.FormClearResponse{
 		Success: true,
 	}, nil
 }
 
 // GetItemCount gets the number of form items
-func (s *FormService) GetItemCount(ctx context.Context, req *pb.GetFormItemCountRequest) (*pb.GetFormItemCountResponse, error) {
+func (s *FormService) GetItemCount(ctx context.Context, req *pb.FormGetItemCountRequest) (*pb.FormGetItemCountResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -420,7 +420,7 @@ func (s *FormService) GetItemCount(ctx context.Context, req *pb.GetFormItemCount
 		return nil, err
 	}
 
-	return &pb.GetFormItemCountResponse{
+	return &pb.FormGetItemCountResponse{
 		Count: count,
 	}, nil
 }

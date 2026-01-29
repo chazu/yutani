@@ -77,7 +77,7 @@ func (b *ListBuilder) Build() (*List, error) {
 
 // AddItem adds an item to the list.
 func (l *List) AddItem(mainText, secondaryText string, shortcut *string) (int, error) {
-	resp, err := l.client.listClient.AddItem(l.client.ctx, &pb.AddItemRequest{
+	resp, err := l.client.listClient.AddItem(l.client.ctx, &pb.ListAddItemRequest{
 		SessionId:     l.client.sessionID,
 		WidgetId:      l.widgetID,
 		MainText:      mainText,
@@ -92,7 +92,7 @@ func (l *List) AddItem(mainText, secondaryText string, shortcut *string) (int, e
 
 // RemoveItem removes an item from the list by index.
 func (l *List) RemoveItem(index int) error {
-	_, err := l.client.listClient.RemoveItem(l.client.ctx, &pb.RemoveItemRequest{
+	_, err := l.client.listClient.RemoveItem(l.client.ctx, &pb.ListRemoveItemRequest{
 		SessionId: l.client.sessionID,
 		WidgetId:  l.widgetID,
 		Index:     int32(index),
@@ -102,7 +102,7 @@ func (l *List) RemoveItem(index int) error {
 
 // Clear removes all items from the list.
 func (l *List) Clear() error {
-	_, err := l.client.listClient.Clear(l.client.ctx, &pb.ClearListRequest{
+	_, err := l.client.listClient.Clear(l.client.ctx, &pb.ListClearRequest{
 		SessionId: l.client.sessionID,
 		WidgetId:  l.widgetID,
 	})
@@ -111,7 +111,7 @@ func (l *List) Clear() error {
 
 // GetItemCount returns the number of items in the list.
 func (l *List) GetItemCount() (int, error) {
-	resp, err := l.client.listClient.GetItemCount(l.client.ctx, &pb.GetItemCountRequest{
+	resp, err := l.client.listClient.GetItemCount(l.client.ctx, &pb.ListGetItemCountRequest{
 		SessionId: l.client.sessionID,
 		WidgetId:  l.widgetID,
 	})
@@ -121,9 +121,9 @@ func (l *List) GetItemCount() (int, error) {
 	return int(resp.Count), nil
 }
 
-// GetSelected returns the index of the currently selected item.
-func (l *List) GetSelected() (int, error) {
-	resp, err := l.client.listClient.GetSelected(l.client.ctx, &pb.GetSelectedRequest{
+// GetSelection returns the index of the currently selected item.
+func (l *List) GetSelection() (int, error) {
+	resp, err := l.client.listClient.GetSelection(l.client.ctx, &pb.ListGetSelectionRequest{
 		SessionId: l.client.sessionID,
 		WidgetId:  l.widgetID,
 	})
@@ -133,9 +133,9 @@ func (l *List) GetSelected() (int, error) {
 	return int(resp.Index), nil
 }
 
-// SetSelected sets the selected item by index.
-func (l *List) SetSelected(index int) error {
-	_, err := l.client.listClient.SetSelected(l.client.ctx, &pb.SetSelectedRequest{
+// SetSelection sets the selected item by index.
+func (l *List) SetSelection(index int) error {
+	_, err := l.client.listClient.SetSelection(l.client.ctx, &pb.ListSetSelectionRequest{
 		SessionId: l.client.sessionID,
 		WidgetId:  l.widgetID,
 		Index:     int32(index),
@@ -145,7 +145,7 @@ func (l *List) SetSelected(index int) error {
 
 // GetItem returns an item's text by index.
 func (l *List) GetItem(index int) (mainText, secondaryText, shortcut string, err error) {
-	resp, err := l.client.listClient.GetItem(l.client.ctx, &pb.GetItemRequest{
+	resp, err := l.client.listClient.GetItem(l.client.ctx, &pb.ListGetItemRequest{
 		SessionId: l.client.sessionID,
 		WidgetId:  l.widgetID,
 		Index:     int32(index),

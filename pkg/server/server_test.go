@@ -4,6 +4,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/chazu/yutani/pkg/config"
 	"github.com/gdamore/tcell/v2"
 )
 
@@ -63,7 +64,7 @@ func TestServerWithSimulationScreen(t *testing.T) {
 	simScreen.SetSize(80, 24)
 
 	// Create server
-	server, err := NewServer(10, true, true)
+	server, err := NewTestServer(10)
 	if err != nil {
 		t.Fatalf("Failed to create server: %v", err)
 	}
@@ -90,7 +91,7 @@ func TestServerWithSimulationScreen(t *testing.T) {
 
 // TestSessionRegistryIntegration tests session registry with server
 func TestSessionRegistryIntegration(t *testing.T) {
-	server, err := NewServer(2, true, true)
+	server, err := New(&config.Config{MaxSessions: 2, Mouse: true, Paste: true}, WithTestMode(true))
 	if err != nil {
 		t.Fatalf("Failed to create server: %v", err)
 	}
@@ -141,7 +142,7 @@ func TestSessionRegistryIntegration(t *testing.T) {
 
 // TestEventDispatcherIntegration tests event dispatcher with server
 func TestEventDispatcherIntegration(t *testing.T) {
-	server, err := NewServer(10, true, true)
+	server, err := NewTestServer(10)
 	if err != nil {
 		t.Fatalf("Failed to create server: %v", err)
 	}

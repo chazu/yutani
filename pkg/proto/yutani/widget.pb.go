@@ -525,222 +525,6 @@ func (x *SetRootResponse) GetSuccess() bool {
 	return false
 }
 
-type AddChildRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
-	ParentId      *WidgetId              `protobuf:"bytes,2,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
-	ChildId       *WidgetId              `protobuf:"bytes,3,opt,name=child_id,json=childId,proto3" json:"child_id,omitempty"`
-	Index         *int32                 `protobuf:"varint,4,opt,name=index,proto3,oneof" json:"index,omitempty"` // Position in parent's children, -1 or omitted for append
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AddChildRequest) Reset() {
-	*x = AddChildRequest{}
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddChildRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddChildRequest) ProtoMessage() {}
-
-func (x *AddChildRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddChildRequest.ProtoReflect.Descriptor instead.
-func (*AddChildRequest) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *AddChildRequest) GetSessionId() *SessionId {
-	if x != nil {
-		return x.SessionId
-	}
-	return nil
-}
-
-func (x *AddChildRequest) GetParentId() *WidgetId {
-	if x != nil {
-		return x.ParentId
-	}
-	return nil
-}
-
-func (x *AddChildRequest) GetChildId() *WidgetId {
-	if x != nil {
-		return x.ChildId
-	}
-	return nil
-}
-
-func (x *AddChildRequest) GetIndex() int32 {
-	if x != nil && x.Index != nil {
-		return *x.Index
-	}
-	return 0
-}
-
-type AddChildResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AddChildResponse) Reset() {
-	*x = AddChildResponse{}
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[11]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AddChildResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AddChildResponse) ProtoMessage() {}
-
-func (x *AddChildResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[11]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AddChildResponse.ProtoReflect.Descriptor instead.
-func (*AddChildResponse) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *AddChildResponse) GetSuccess() bool {
-	if x != nil {
-		return x.Success
-	}
-	return false
-}
-
-type RemoveChildRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
-	ParentId      *WidgetId              `protobuf:"bytes,2,opt,name=parent_id,json=parentId,proto3" json:"parent_id,omitempty"`
-	ChildId       *WidgetId              `protobuf:"bytes,3,opt,name=child_id,json=childId,proto3" json:"child_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RemoveChildRequest) Reset() {
-	*x = RemoveChildRequest{}
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[12]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RemoveChildRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RemoveChildRequest) ProtoMessage() {}
-
-func (x *RemoveChildRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[12]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RemoveChildRequest.ProtoReflect.Descriptor instead.
-func (*RemoveChildRequest) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *RemoveChildRequest) GetSessionId() *SessionId {
-	if x != nil {
-		return x.SessionId
-	}
-	return nil
-}
-
-func (x *RemoveChildRequest) GetParentId() *WidgetId {
-	if x != nil {
-		return x.ParentId
-	}
-	return nil
-}
-
-func (x *RemoveChildRequest) GetChildId() *WidgetId {
-	if x != nil {
-		return x.ChildId
-	}
-	return nil
-}
-
-type RemoveChildResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *RemoveChildResponse) Reset() {
-	*x = RemoveChildResponse{}
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *RemoveChildResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*RemoveChildResponse) ProtoMessage() {}
-
-func (x *RemoveChildResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use RemoveChildResponse.ProtoReflect.Descriptor instead.
-func (*RemoveChildResponse) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *RemoveChildResponse) GetSuccess() bool {
-	if x != nil {
-		return x.Success
-	}
-	return false
-}
-
 type SetFocusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
@@ -751,7 +535,7 @@ type SetFocusRequest struct {
 
 func (x *SetFocusRequest) Reset() {
 	*x = SetFocusRequest{}
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[14]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -763,7 +547,7 @@ func (x *SetFocusRequest) String() string {
 func (*SetFocusRequest) ProtoMessage() {}
 
 func (x *SetFocusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[14]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -776,7 +560,7 @@ func (x *SetFocusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetFocusRequest.ProtoReflect.Descriptor instead.
 func (*SetFocusRequest) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{14}
+	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SetFocusRequest) GetSessionId() *SessionId {
@@ -802,7 +586,7 @@ type SetFocusResponse struct {
 
 func (x *SetFocusResponse) Reset() {
 	*x = SetFocusResponse{}
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[15]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -814,7 +598,7 @@ func (x *SetFocusResponse) String() string {
 func (*SetFocusResponse) ProtoMessage() {}
 
 func (x *SetFocusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[15]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -827,7 +611,7 @@ func (x *SetFocusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SetFocusResponse.ProtoReflect.Descriptor instead.
 func (*SetFocusResponse) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{15}
+	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *SetFocusResponse) GetSuccess() bool {
@@ -846,7 +630,7 @@ type GetFocusRequest struct {
 
 func (x *GetFocusRequest) Reset() {
 	*x = GetFocusRequest{}
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[16]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -858,7 +642,7 @@ func (x *GetFocusRequest) String() string {
 func (*GetFocusRequest) ProtoMessage() {}
 
 func (x *GetFocusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[16]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -871,7 +655,7 @@ func (x *GetFocusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFocusRequest.ProtoReflect.Descriptor instead.
 func (*GetFocusRequest) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{16}
+	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetFocusRequest) GetSessionId() *SessionId {
@@ -890,7 +674,7 @@ type GetFocusResponse struct {
 
 func (x *GetFocusResponse) Reset() {
 	*x = GetFocusResponse{}
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[17]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -902,7 +686,7 @@ func (x *GetFocusResponse) String() string {
 func (*GetFocusResponse) ProtoMessage() {}
 
 func (x *GetFocusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[17]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -915,7 +699,7 @@ func (x *GetFocusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFocusResponse.ProtoReflect.Descriptor instead.
 func (*GetFocusResponse) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{17}
+	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetFocusResponse) GetWidgetId() *WidgetId {
@@ -934,7 +718,7 @@ type ListWidgetsRequest struct {
 
 func (x *ListWidgetsRequest) Reset() {
 	*x = ListWidgetsRequest{}
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[18]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -946,7 +730,7 @@ func (x *ListWidgetsRequest) String() string {
 func (*ListWidgetsRequest) ProtoMessage() {}
 
 func (x *ListWidgetsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[18]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -959,7 +743,7 @@ func (x *ListWidgetsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListWidgetsRequest.ProtoReflect.Descriptor instead.
 func (*ListWidgetsRequest) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{18}
+	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ListWidgetsRequest) GetSessionId() *SessionId {
@@ -978,7 +762,7 @@ type ListWidgetsResponse struct {
 
 func (x *ListWidgetsResponse) Reset() {
 	*x = ListWidgetsResponse{}
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[19]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -990,7 +774,7 @@ func (x *ListWidgetsResponse) String() string {
 func (*ListWidgetsResponse) ProtoMessage() {}
 
 func (x *ListWidgetsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[19]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1003,7 +787,7 @@ func (x *ListWidgetsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListWidgetsResponse.ProtoReflect.Descriptor instead.
 func (*ListWidgetsResponse) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{19}
+	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ListWidgetsResponse) GetWidgets() []*WidgetInfo {
@@ -1025,7 +809,7 @@ type WidgetInfo struct {
 
 func (x *WidgetInfo) Reset() {
 	*x = WidgetInfo{}
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[20]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1037,7 +821,7 @@ func (x *WidgetInfo) String() string {
 func (*WidgetInfo) ProtoMessage() {}
 
 func (x *WidgetInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[20]
+	mi := &file_industries_loosh_yutani_v1_widget_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1050,7 +834,7 @@ func (x *WidgetInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WidgetInfo.ProtoReflect.Descriptor instead.
 func (*WidgetInfo) Descriptor() ([]byte, []int) {
-	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{20}
+	return file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *WidgetInfo) GetWidgetId() *WidgetId {
@@ -1125,22 +909,6 @@ const file_industries_loosh_yutani_v1_widget_proto_rawDesc = "" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"+\n" +
 	"\x0fSetRootResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x80\x02\n" +
-	"\x0fAddChildRequest\x12D\n" +
-	"\n" +
-	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
-	"\tparent_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bparentId\x12?\n" +
-	"\bchild_id\x18\x03 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\achildId\x12\x19\n" +
-	"\x05index\x18\x04 \x01(\x05H\x00R\x05index\x88\x01\x01B\b\n" +
-	"\x06_index\",\n" +
-	"\x10AddChildResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xde\x01\n" +
-	"\x12RemoveChildRequest\x12D\n" +
-	"\n" +
-	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
-	"\tparent_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bparentId\x12?\n" +
-	"\bchild_id\x18\x03 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\achildId\"/\n" +
-	"\x13RemoveChildResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x9a\x01\n" +
 	"\x0fSetFocusRequest\x12D\n" +
 	"\n" +
@@ -1167,15 +935,13 @@ const file_industries_loosh_yutani_v1_widget_proto_rawDesc = "" +
 	"\tparent_id\x18\x03 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdH\x00R\bparentId\x88\x01\x01\x12@\n" +
 	"\bchildren\x18\x04 \x03(\v2$.industries.loosh.yutani.v1.WidgetIdR\bchildrenB\f\n" +
 	"\n" +
-	"_parent_id2\xda\b\n" +
+	"_parent_id2\x83\a\n" +
 	"\rWidgetService\x12q\n" +
 	"\fCreateWidget\x12/.industries.loosh.yutani.v1.CreateWidgetRequest\x1a0.industries.loosh.yutani.v1.CreateWidgetResponse\x12q\n" +
 	"\fDeleteWidget\x12/.industries.loosh.yutani.v1.DeleteWidgetRequest\x1a0.industries.loosh.yutani.v1.DeleteWidgetResponse\x12t\n" +
 	"\rSetProperties\x120.industries.loosh.yutani.v1.SetPropertiesRequest\x1a1.industries.loosh.yutani.v1.SetPropertiesResponse\x12t\n" +
 	"\rGetProperties\x120.industries.loosh.yutani.v1.GetPropertiesRequest\x1a1.industries.loosh.yutani.v1.GetPropertiesResponse\x12b\n" +
 	"\aSetRoot\x12*.industries.loosh.yutani.v1.SetRootRequest\x1a+.industries.loosh.yutani.v1.SetRootResponse\x12e\n" +
-	"\bAddChild\x12+.industries.loosh.yutani.v1.AddChildRequest\x1a,.industries.loosh.yutani.v1.AddChildResponse\x12n\n" +
-	"\vRemoveChild\x12..industries.loosh.yutani.v1.RemoveChildRequest\x1a/.industries.loosh.yutani.v1.RemoveChildResponse\x12e\n" +
 	"\bSetFocus\x12+.industries.loosh.yutani.v1.SetFocusRequest\x1a,.industries.loosh.yutani.v1.SetFocusResponse\x12e\n" +
 	"\bGetFocus\x12+.industries.loosh.yutani.v1.GetFocusRequest\x1a,.industries.loosh.yutani.v1.GetFocusResponse\x12n\n" +
 	"\vListWidgets\x12..industries.loosh.yutani.v1.ListWidgetsRequest\x1a/.industries.loosh.yutani.v1.ListWidgetsResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
@@ -1192,7 +958,7 @@ func file_industries_loosh_yutani_v1_widget_proto_rawDescGZIP() []byte {
 	return file_industries_loosh_yutani_v1_widget_proto_rawDescData
 }
 
-var file_industries_loosh_yutani_v1_widget_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_industries_loosh_yutani_v1_widget_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_industries_loosh_yutani_v1_widget_proto_goTypes = []any{
 	(*CreateWidgetRequest)(nil),   // 0: industries.loosh.yutani.v1.CreateWidgetRequest
 	(*CreateWidgetResponse)(nil),  // 1: industries.loosh.yutani.v1.CreateWidgetResponse
@@ -1204,78 +970,64 @@ var file_industries_loosh_yutani_v1_widget_proto_goTypes = []any{
 	(*GetPropertiesResponse)(nil), // 7: industries.loosh.yutani.v1.GetPropertiesResponse
 	(*SetRootRequest)(nil),        // 8: industries.loosh.yutani.v1.SetRootRequest
 	(*SetRootResponse)(nil),       // 9: industries.loosh.yutani.v1.SetRootResponse
-	(*AddChildRequest)(nil),       // 10: industries.loosh.yutani.v1.AddChildRequest
-	(*AddChildResponse)(nil),      // 11: industries.loosh.yutani.v1.AddChildResponse
-	(*RemoveChildRequest)(nil),    // 12: industries.loosh.yutani.v1.RemoveChildRequest
-	(*RemoveChildResponse)(nil),   // 13: industries.loosh.yutani.v1.RemoveChildResponse
-	(*SetFocusRequest)(nil),       // 14: industries.loosh.yutani.v1.SetFocusRequest
-	(*SetFocusResponse)(nil),      // 15: industries.loosh.yutani.v1.SetFocusResponse
-	(*GetFocusRequest)(nil),       // 16: industries.loosh.yutani.v1.GetFocusRequest
-	(*GetFocusResponse)(nil),      // 17: industries.loosh.yutani.v1.GetFocusResponse
-	(*ListWidgetsRequest)(nil),    // 18: industries.loosh.yutani.v1.ListWidgetsRequest
-	(*ListWidgetsResponse)(nil),   // 19: industries.loosh.yutani.v1.ListWidgetsResponse
-	(*WidgetInfo)(nil),            // 20: industries.loosh.yutani.v1.WidgetInfo
-	(*SessionId)(nil),             // 21: industries.loosh.yutani.v1.SessionId
-	(WidgetType)(0),               // 22: industries.loosh.yutani.v1.WidgetType
-	(*WidgetProperties)(nil),      // 23: industries.loosh.yutani.v1.WidgetProperties
-	(*WidgetId)(nil),              // 24: industries.loosh.yutani.v1.WidgetId
+	(*SetFocusRequest)(nil),       // 10: industries.loosh.yutani.v1.SetFocusRequest
+	(*SetFocusResponse)(nil),      // 11: industries.loosh.yutani.v1.SetFocusResponse
+	(*GetFocusRequest)(nil),       // 12: industries.loosh.yutani.v1.GetFocusRequest
+	(*GetFocusResponse)(nil),      // 13: industries.loosh.yutani.v1.GetFocusResponse
+	(*ListWidgetsRequest)(nil),    // 14: industries.loosh.yutani.v1.ListWidgetsRequest
+	(*ListWidgetsResponse)(nil),   // 15: industries.loosh.yutani.v1.ListWidgetsResponse
+	(*WidgetInfo)(nil),            // 16: industries.loosh.yutani.v1.WidgetInfo
+	(*SessionId)(nil),             // 17: industries.loosh.yutani.v1.SessionId
+	(WidgetType)(0),               // 18: industries.loosh.yutani.v1.WidgetType
+	(*WidgetProperties)(nil),      // 19: industries.loosh.yutani.v1.WidgetProperties
+	(*WidgetId)(nil),              // 20: industries.loosh.yutani.v1.WidgetId
 }
 var file_industries_loosh_yutani_v1_widget_proto_depIdxs = []int32{
-	21, // 0: industries.loosh.yutani.v1.CreateWidgetRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	22, // 1: industries.loosh.yutani.v1.CreateWidgetRequest.type:type_name -> industries.loosh.yutani.v1.WidgetType
-	23, // 2: industries.loosh.yutani.v1.CreateWidgetRequest.properties:type_name -> industries.loosh.yutani.v1.WidgetProperties
-	24, // 3: industries.loosh.yutani.v1.CreateWidgetResponse.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 4: industries.loosh.yutani.v1.DeleteWidgetRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	24, // 5: industries.loosh.yutani.v1.DeleteWidgetRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 6: industries.loosh.yutani.v1.SetPropertiesRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	24, // 7: industries.loosh.yutani.v1.SetPropertiesRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	23, // 8: industries.loosh.yutani.v1.SetPropertiesRequest.properties:type_name -> industries.loosh.yutani.v1.WidgetProperties
-	21, // 9: industries.loosh.yutani.v1.GetPropertiesRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	24, // 10: industries.loosh.yutani.v1.GetPropertiesRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	23, // 11: industries.loosh.yutani.v1.GetPropertiesResponse.properties:type_name -> industries.loosh.yutani.v1.WidgetProperties
-	21, // 12: industries.loosh.yutani.v1.SetRootRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	24, // 13: industries.loosh.yutani.v1.SetRootRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 14: industries.loosh.yutani.v1.AddChildRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	24, // 15: industries.loosh.yutani.v1.AddChildRequest.parent_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	24, // 16: industries.loosh.yutani.v1.AddChildRequest.child_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 17: industries.loosh.yutani.v1.RemoveChildRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	24, // 18: industries.loosh.yutani.v1.RemoveChildRequest.parent_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	24, // 19: industries.loosh.yutani.v1.RemoveChildRequest.child_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 20: industries.loosh.yutani.v1.SetFocusRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	24, // 21: industries.loosh.yutani.v1.SetFocusRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 22: industries.loosh.yutani.v1.GetFocusRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	24, // 23: industries.loosh.yutani.v1.GetFocusResponse.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 24: industries.loosh.yutani.v1.ListWidgetsRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	20, // 25: industries.loosh.yutani.v1.ListWidgetsResponse.widgets:type_name -> industries.loosh.yutani.v1.WidgetInfo
-	24, // 26: industries.loosh.yutani.v1.WidgetInfo.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	22, // 27: industries.loosh.yutani.v1.WidgetInfo.type:type_name -> industries.loosh.yutani.v1.WidgetType
-	24, // 28: industries.loosh.yutani.v1.WidgetInfo.parent_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	24, // 29: industries.loosh.yutani.v1.WidgetInfo.children:type_name -> industries.loosh.yutani.v1.WidgetId
-	0,  // 30: industries.loosh.yutani.v1.WidgetService.CreateWidget:input_type -> industries.loosh.yutani.v1.CreateWidgetRequest
-	2,  // 31: industries.loosh.yutani.v1.WidgetService.DeleteWidget:input_type -> industries.loosh.yutani.v1.DeleteWidgetRequest
-	4,  // 32: industries.loosh.yutani.v1.WidgetService.SetProperties:input_type -> industries.loosh.yutani.v1.SetPropertiesRequest
-	6,  // 33: industries.loosh.yutani.v1.WidgetService.GetProperties:input_type -> industries.loosh.yutani.v1.GetPropertiesRequest
-	8,  // 34: industries.loosh.yutani.v1.WidgetService.SetRoot:input_type -> industries.loosh.yutani.v1.SetRootRequest
-	10, // 35: industries.loosh.yutani.v1.WidgetService.AddChild:input_type -> industries.loosh.yutani.v1.AddChildRequest
-	12, // 36: industries.loosh.yutani.v1.WidgetService.RemoveChild:input_type -> industries.loosh.yutani.v1.RemoveChildRequest
-	14, // 37: industries.loosh.yutani.v1.WidgetService.SetFocus:input_type -> industries.loosh.yutani.v1.SetFocusRequest
-	16, // 38: industries.loosh.yutani.v1.WidgetService.GetFocus:input_type -> industries.loosh.yutani.v1.GetFocusRequest
-	18, // 39: industries.loosh.yutani.v1.WidgetService.ListWidgets:input_type -> industries.loosh.yutani.v1.ListWidgetsRequest
-	1,  // 40: industries.loosh.yutani.v1.WidgetService.CreateWidget:output_type -> industries.loosh.yutani.v1.CreateWidgetResponse
-	3,  // 41: industries.loosh.yutani.v1.WidgetService.DeleteWidget:output_type -> industries.loosh.yutani.v1.DeleteWidgetResponse
-	5,  // 42: industries.loosh.yutani.v1.WidgetService.SetProperties:output_type -> industries.loosh.yutani.v1.SetPropertiesResponse
-	7,  // 43: industries.loosh.yutani.v1.WidgetService.GetProperties:output_type -> industries.loosh.yutani.v1.GetPropertiesResponse
-	9,  // 44: industries.loosh.yutani.v1.WidgetService.SetRoot:output_type -> industries.loosh.yutani.v1.SetRootResponse
-	11, // 45: industries.loosh.yutani.v1.WidgetService.AddChild:output_type -> industries.loosh.yutani.v1.AddChildResponse
-	13, // 46: industries.loosh.yutani.v1.WidgetService.RemoveChild:output_type -> industries.loosh.yutani.v1.RemoveChildResponse
-	15, // 47: industries.loosh.yutani.v1.WidgetService.SetFocus:output_type -> industries.loosh.yutani.v1.SetFocusResponse
-	17, // 48: industries.loosh.yutani.v1.WidgetService.GetFocus:output_type -> industries.loosh.yutani.v1.GetFocusResponse
-	19, // 49: industries.loosh.yutani.v1.WidgetService.ListWidgets:output_type -> industries.loosh.yutani.v1.ListWidgetsResponse
-	40, // [40:50] is the sub-list for method output_type
-	30, // [30:40] is the sub-list for method input_type
-	30, // [30:30] is the sub-list for extension type_name
-	30, // [30:30] is the sub-list for extension extendee
-	0,  // [0:30] is the sub-list for field type_name
+	17, // 0: industries.loosh.yutani.v1.CreateWidgetRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	18, // 1: industries.loosh.yutani.v1.CreateWidgetRequest.type:type_name -> industries.loosh.yutani.v1.WidgetType
+	19, // 2: industries.loosh.yutani.v1.CreateWidgetRequest.properties:type_name -> industries.loosh.yutani.v1.WidgetProperties
+	20, // 3: industries.loosh.yutani.v1.CreateWidgetResponse.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	17, // 4: industries.loosh.yutani.v1.DeleteWidgetRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	20, // 5: industries.loosh.yutani.v1.DeleteWidgetRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	17, // 6: industries.loosh.yutani.v1.SetPropertiesRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	20, // 7: industries.loosh.yutani.v1.SetPropertiesRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	19, // 8: industries.loosh.yutani.v1.SetPropertiesRequest.properties:type_name -> industries.loosh.yutani.v1.WidgetProperties
+	17, // 9: industries.loosh.yutani.v1.GetPropertiesRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	20, // 10: industries.loosh.yutani.v1.GetPropertiesRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	19, // 11: industries.loosh.yutani.v1.GetPropertiesResponse.properties:type_name -> industries.loosh.yutani.v1.WidgetProperties
+	17, // 12: industries.loosh.yutani.v1.SetRootRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	20, // 13: industries.loosh.yutani.v1.SetRootRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	17, // 14: industries.loosh.yutani.v1.SetFocusRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	20, // 15: industries.loosh.yutani.v1.SetFocusRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	17, // 16: industries.loosh.yutani.v1.GetFocusRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	20, // 17: industries.loosh.yutani.v1.GetFocusResponse.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	17, // 18: industries.loosh.yutani.v1.ListWidgetsRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	16, // 19: industries.loosh.yutani.v1.ListWidgetsResponse.widgets:type_name -> industries.loosh.yutani.v1.WidgetInfo
+	20, // 20: industries.loosh.yutani.v1.WidgetInfo.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	18, // 21: industries.loosh.yutani.v1.WidgetInfo.type:type_name -> industries.loosh.yutani.v1.WidgetType
+	20, // 22: industries.loosh.yutani.v1.WidgetInfo.parent_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	20, // 23: industries.loosh.yutani.v1.WidgetInfo.children:type_name -> industries.loosh.yutani.v1.WidgetId
+	0,  // 24: industries.loosh.yutani.v1.WidgetService.CreateWidget:input_type -> industries.loosh.yutani.v1.CreateWidgetRequest
+	2,  // 25: industries.loosh.yutani.v1.WidgetService.DeleteWidget:input_type -> industries.loosh.yutani.v1.DeleteWidgetRequest
+	4,  // 26: industries.loosh.yutani.v1.WidgetService.SetProperties:input_type -> industries.loosh.yutani.v1.SetPropertiesRequest
+	6,  // 27: industries.loosh.yutani.v1.WidgetService.GetProperties:input_type -> industries.loosh.yutani.v1.GetPropertiesRequest
+	8,  // 28: industries.loosh.yutani.v1.WidgetService.SetRoot:input_type -> industries.loosh.yutani.v1.SetRootRequest
+	10, // 29: industries.loosh.yutani.v1.WidgetService.SetFocus:input_type -> industries.loosh.yutani.v1.SetFocusRequest
+	12, // 30: industries.loosh.yutani.v1.WidgetService.GetFocus:input_type -> industries.loosh.yutani.v1.GetFocusRequest
+	14, // 31: industries.loosh.yutani.v1.WidgetService.ListWidgets:input_type -> industries.loosh.yutani.v1.ListWidgetsRequest
+	1,  // 32: industries.loosh.yutani.v1.WidgetService.CreateWidget:output_type -> industries.loosh.yutani.v1.CreateWidgetResponse
+	3,  // 33: industries.loosh.yutani.v1.WidgetService.DeleteWidget:output_type -> industries.loosh.yutani.v1.DeleteWidgetResponse
+	5,  // 34: industries.loosh.yutani.v1.WidgetService.SetProperties:output_type -> industries.loosh.yutani.v1.SetPropertiesResponse
+	7,  // 35: industries.loosh.yutani.v1.WidgetService.GetProperties:output_type -> industries.loosh.yutani.v1.GetPropertiesResponse
+	9,  // 36: industries.loosh.yutani.v1.WidgetService.SetRoot:output_type -> industries.loosh.yutani.v1.SetRootResponse
+	11, // 37: industries.loosh.yutani.v1.WidgetService.SetFocus:output_type -> industries.loosh.yutani.v1.SetFocusResponse
+	13, // 38: industries.loosh.yutani.v1.WidgetService.GetFocus:output_type -> industries.loosh.yutani.v1.GetFocusResponse
+	15, // 39: industries.loosh.yutani.v1.WidgetService.ListWidgets:output_type -> industries.loosh.yutani.v1.ListWidgetsResponse
+	32, // [32:40] is the sub-list for method output_type
+	24, // [24:32] is the sub-list for method input_type
+	24, // [24:24] is the sub-list for extension type_name
+	24, // [24:24] is the sub-list for extension extendee
+	0,  // [0:24] is the sub-list for field type_name
 }
 
 func init() { file_industries_loosh_yutani_v1_widget_proto_init() }
@@ -1285,16 +1037,15 @@ func file_industries_loosh_yutani_v1_widget_proto_init() {
 	}
 	file_industries_loosh_yutani_v1_types_proto_init()
 	file_industries_loosh_yutani_v1_widget_proto_msgTypes[0].OneofWrappers = []any{}
-	file_industries_loosh_yutani_v1_widget_proto_msgTypes[10].OneofWrappers = []any{}
-	file_industries_loosh_yutani_v1_widget_proto_msgTypes[17].OneofWrappers = []any{}
-	file_industries_loosh_yutani_v1_widget_proto_msgTypes[20].OneofWrappers = []any{}
+	file_industries_loosh_yutani_v1_widget_proto_msgTypes[13].OneofWrappers = []any{}
+	file_industries_loosh_yutani_v1_widget_proto_msgTypes[16].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_industries_loosh_yutani_v1_widget_proto_rawDesc), len(file_industries_loosh_yutani_v1_widget_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   21,
+			NumMessages:   17,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -83,7 +83,7 @@ func (f *Form) AddDropdown(label string, options []string, initialValue string) 
 
 // addField is a helper for adding fields.
 func (f *Form) addField(label string, fieldType pb.FormFieldType, fieldWidth int, initialValue *string, options []string) (int, error) {
-	req := &pb.AddFieldRequest{
+	req := &pb.FormAddFieldRequest{
 		SessionId: f.client.sessionID,
 		WidgetId:  f.widgetID,
 		Label:     label,
@@ -109,7 +109,7 @@ func (f *Form) addField(label string, fieldType pb.FormFieldType, fieldWidth int
 
 // AddButton adds a button to the form.
 func (f *Form) AddButton(label string) error {
-	_, err := f.client.formClient.AddButton(f.client.ctx, &pb.AddButtonRequest{
+	_, err := f.client.formClient.AddButton(f.client.ctx, &pb.FormAddButtonRequest{
 		SessionId: f.client.sessionID,
 		WidgetId:  f.widgetID,
 		Label:     label,
@@ -119,7 +119,7 @@ func (f *Form) AddButton(label string) error {
 
 // GetFieldValue gets a field's current value.
 func (f *Form) GetFieldValue(fieldIndex int) (string, error) {
-	resp, err := f.client.formClient.GetFieldValue(f.client.ctx, &pb.GetFieldValueRequest{
+	resp, err := f.client.formClient.GetFieldValue(f.client.ctx, &pb.FormGetFieldValueRequest{
 		SessionId:  f.client.sessionID,
 		WidgetId:   f.widgetID,
 		FieldIndex: int32(fieldIndex),
@@ -132,7 +132,7 @@ func (f *Form) GetFieldValue(fieldIndex int) (string, error) {
 
 // SetFieldValue sets a field's value.
 func (f *Form) SetFieldValue(fieldIndex int, value string) error {
-	_, err := f.client.formClient.SetFieldValue(f.client.ctx, &pb.SetFieldValueRequest{
+	_, err := f.client.formClient.SetFieldValue(f.client.ctx, &pb.FormSetFieldValueRequest{
 		SessionId:  f.client.sessionID,
 		WidgetId:   f.widgetID,
 		FieldIndex: int32(fieldIndex),
@@ -143,7 +143,7 @@ func (f *Form) SetFieldValue(fieldIndex int, value string) error {
 
 // Clear clears all form fields.
 func (f *Form) Clear() error {
-	_, err := f.client.formClient.Clear(f.client.ctx, &pb.ClearFormRequest{
+	_, err := f.client.formClient.Clear(f.client.ctx, &pb.FormClearRequest{
 		SessionId: f.client.sessionID,
 		WidgetId:  f.widgetID,
 	})
@@ -152,7 +152,7 @@ func (f *Form) Clear() error {
 
 // GetItemCount returns the number of form items.
 func (f *Form) GetItemCount() (int, error) {
-	resp, err := f.client.formClient.GetItemCount(f.client.ctx, &pb.GetFormItemCountRequest{
+	resp, err := f.client.formClient.GetItemCount(f.client.ctx, &pb.FormGetItemCountRequest{
 		SessionId: f.client.sessionID,
 		WidgetId:  f.widgetID,
 	})

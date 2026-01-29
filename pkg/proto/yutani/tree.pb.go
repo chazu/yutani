@@ -479,7 +479,7 @@ func (x *RemoveTreeNodeResponse) GetSuccess() bool {
 	return false
 }
 
-type SetExpandedRequest struct {
+type TreeSetExpandedRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -489,20 +489,20 @@ type SetExpandedRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetExpandedRequest) Reset() {
-	*x = SetExpandedRequest{}
+func (x *TreeSetExpandedRequest) Reset() {
+	*x = TreeSetExpandedRequest{}
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetExpandedRequest) String() string {
+func (x *TreeSetExpandedRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetExpandedRequest) ProtoMessage() {}
+func (*TreeSetExpandedRequest) ProtoMessage() {}
 
-func (x *SetExpandedRequest) ProtoReflect() protoreflect.Message {
+func (x *TreeSetExpandedRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -514,60 +514,60 @@ func (x *SetExpandedRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetExpandedRequest.ProtoReflect.Descriptor instead.
-func (*SetExpandedRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TreeSetExpandedRequest.ProtoReflect.Descriptor instead.
+func (*TreeSetExpandedRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_tree_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *SetExpandedRequest) GetSessionId() *SessionId {
+func (x *TreeSetExpandedRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *SetExpandedRequest) GetWidgetId() *WidgetId {
+func (x *TreeSetExpandedRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *SetExpandedRequest) GetNodeId() *TreeNodeId {
+func (x *TreeSetExpandedRequest) GetNodeId() *TreeNodeId {
 	if x != nil {
 		return x.NodeId
 	}
 	return nil
 }
 
-func (x *SetExpandedRequest) GetExpanded() bool {
+func (x *TreeSetExpandedRequest) GetExpanded() bool {
 	if x != nil {
 		return x.Expanded
 	}
 	return false
 }
 
-type SetExpandedResponse struct {
+type TreeSetExpandedResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetExpandedResponse) Reset() {
-	*x = SetExpandedResponse{}
+func (x *TreeSetExpandedResponse) Reset() {
+	*x = TreeSetExpandedResponse{}
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetExpandedResponse) String() string {
+func (x *TreeSetExpandedResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetExpandedResponse) ProtoMessage() {}
+func (*TreeSetExpandedResponse) ProtoMessage() {}
 
-func (x *SetExpandedResponse) ProtoReflect() protoreflect.Message {
+func (x *TreeSetExpandedResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -579,19 +579,19 @@ func (x *SetExpandedResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetExpandedResponse.ProtoReflect.Descriptor instead.
-func (*SetExpandedResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use TreeSetExpandedResponse.ProtoReflect.Descriptor instead.
+func (*TreeSetExpandedResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_tree_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *SetExpandedResponse) GetSuccess() bool {
+func (x *TreeSetExpandedResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type GetTreeSelectedRequest struct {
+type TreeGetSelectionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -599,20 +599,20 @@ type GetTreeSelectedRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetTreeSelectedRequest) Reset() {
-	*x = GetTreeSelectedRequest{}
+func (x *TreeGetSelectionRequest) Reset() {
+	*x = TreeGetSelectionRequest{}
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetTreeSelectedRequest) String() string {
+func (x *TreeGetSelectionRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetTreeSelectedRequest) ProtoMessage() {}
+func (*TreeGetSelectionRequest) ProtoMessage() {}
 
-func (x *GetTreeSelectedRequest) ProtoReflect() protoreflect.Message {
+func (x *TreeGetSelectionRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -624,26 +624,26 @@ func (x *GetTreeSelectedRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetTreeSelectedRequest.ProtoReflect.Descriptor instead.
-func (*GetTreeSelectedRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TreeGetSelectionRequest.ProtoReflect.Descriptor instead.
+func (*TreeGetSelectionRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_tree_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *GetTreeSelectedRequest) GetSessionId() *SessionId {
+func (x *TreeGetSelectionRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *GetTreeSelectedRequest) GetWidgetId() *WidgetId {
+func (x *TreeGetSelectionRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-type GetTreeSelectedResponse struct {
+type TreeGetSelectionResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	NodeId        *TreeNodeId            `protobuf:"bytes,1,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
 	Text          string                 `protobuf:"bytes,2,opt,name=text,proto3" json:"text,omitempty"`
@@ -652,20 +652,20 @@ type GetTreeSelectedResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetTreeSelectedResponse) Reset() {
-	*x = GetTreeSelectedResponse{}
+func (x *TreeGetSelectionResponse) Reset() {
+	*x = TreeGetSelectionResponse{}
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetTreeSelectedResponse) String() string {
+func (x *TreeGetSelectionResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetTreeSelectedResponse) ProtoMessage() {}
+func (*TreeGetSelectionResponse) ProtoMessage() {}
 
-func (x *GetTreeSelectedResponse) ProtoReflect() protoreflect.Message {
+func (x *TreeGetSelectionResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -677,33 +677,33 @@ func (x *GetTreeSelectedResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetTreeSelectedResponse.ProtoReflect.Descriptor instead.
-func (*GetTreeSelectedResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use TreeGetSelectionResponse.ProtoReflect.Descriptor instead.
+func (*TreeGetSelectionResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_tree_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *GetTreeSelectedResponse) GetNodeId() *TreeNodeId {
+func (x *TreeGetSelectionResponse) GetNodeId() *TreeNodeId {
 	if x != nil {
 		return x.NodeId
 	}
 	return nil
 }
 
-func (x *GetTreeSelectedResponse) GetText() string {
+func (x *TreeGetSelectionResponse) GetText() string {
 	if x != nil {
 		return x.Text
 	}
 	return ""
 }
 
-func (x *GetTreeSelectedResponse) GetReference() string {
+func (x *TreeGetSelectionResponse) GetReference() string {
 	if x != nil {
 		return x.Reference
 	}
 	return ""
 }
 
-type SetTreeSelectedRequest struct {
+type TreeSetSelectionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -712,20 +712,20 @@ type SetTreeSelectedRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetTreeSelectedRequest) Reset() {
-	*x = SetTreeSelectedRequest{}
+func (x *TreeSetSelectionRequest) Reset() {
+	*x = TreeSetSelectionRequest{}
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetTreeSelectedRequest) String() string {
+func (x *TreeSetSelectionRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetTreeSelectedRequest) ProtoMessage() {}
+func (*TreeSetSelectionRequest) ProtoMessage() {}
 
-func (x *SetTreeSelectedRequest) ProtoReflect() protoreflect.Message {
+func (x *TreeSetSelectionRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -737,53 +737,53 @@ func (x *SetTreeSelectedRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetTreeSelectedRequest.ProtoReflect.Descriptor instead.
-func (*SetTreeSelectedRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TreeSetSelectionRequest.ProtoReflect.Descriptor instead.
+func (*TreeSetSelectionRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_tree_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *SetTreeSelectedRequest) GetSessionId() *SessionId {
+func (x *TreeSetSelectionRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *SetTreeSelectedRequest) GetWidgetId() *WidgetId {
+func (x *TreeSetSelectionRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *SetTreeSelectedRequest) GetNodeId() *TreeNodeId {
+func (x *TreeSetSelectionRequest) GetNodeId() *TreeNodeId {
 	if x != nil {
 		return x.NodeId
 	}
 	return nil
 }
 
-type SetTreeSelectedResponse struct {
+type TreeSetSelectionResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetTreeSelectedResponse) Reset() {
-	*x = SetTreeSelectedResponse{}
+func (x *TreeSetSelectionResponse) Reset() {
+	*x = TreeSetSelectionResponse{}
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetTreeSelectedResponse) String() string {
+func (x *TreeSetSelectionResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetTreeSelectedResponse) ProtoMessage() {}
+func (*TreeSetSelectionResponse) ProtoMessage() {}
 
-func (x *SetTreeSelectedResponse) ProtoReflect() protoreflect.Message {
+func (x *TreeSetSelectionResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -795,19 +795,19 @@ func (x *SetTreeSelectedResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetTreeSelectedResponse.ProtoReflect.Descriptor instead.
-func (*SetTreeSelectedResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use TreeSetSelectionResponse.ProtoReflect.Descriptor instead.
+func (*TreeSetSelectionResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_tree_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *SetTreeSelectedResponse) GetSuccess() bool {
+func (x *TreeSetSelectionResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type GetChildrenRequest struct {
+type TreeGetChildrenRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -816,20 +816,20 @@ type GetChildrenRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetChildrenRequest) Reset() {
-	*x = GetChildrenRequest{}
+func (x *TreeGetChildrenRequest) Reset() {
+	*x = TreeGetChildrenRequest{}
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetChildrenRequest) String() string {
+func (x *TreeGetChildrenRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetChildrenRequest) ProtoMessage() {}
+func (*TreeGetChildrenRequest) ProtoMessage() {}
 
-func (x *GetChildrenRequest) ProtoReflect() protoreflect.Message {
+func (x *TreeGetChildrenRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -841,53 +841,53 @@ func (x *GetChildrenRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetChildrenRequest.ProtoReflect.Descriptor instead.
-func (*GetChildrenRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use TreeGetChildrenRequest.ProtoReflect.Descriptor instead.
+func (*TreeGetChildrenRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_tree_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *GetChildrenRequest) GetSessionId() *SessionId {
+func (x *TreeGetChildrenRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *GetChildrenRequest) GetWidgetId() *WidgetId {
+func (x *TreeGetChildrenRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *GetChildrenRequest) GetNodeId() *TreeNodeId {
+func (x *TreeGetChildrenRequest) GetNodeId() *TreeNodeId {
 	if x != nil {
 		return x.NodeId
 	}
 	return nil
 }
 
-type GetChildrenResponse struct {
+type TreeGetChildrenResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Children      []*TreeNodeInfo        `protobuf:"bytes,1,rep,name=children,proto3" json:"children,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetChildrenResponse) Reset() {
-	*x = GetChildrenResponse{}
+func (x *TreeGetChildrenResponse) Reset() {
+	*x = TreeGetChildrenResponse{}
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetChildrenResponse) String() string {
+func (x *TreeGetChildrenResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetChildrenResponse) ProtoMessage() {}
+func (*TreeGetChildrenResponse) ProtoMessage() {}
 
-func (x *GetChildrenResponse) ProtoReflect() protoreflect.Message {
+func (x *TreeGetChildrenResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_tree_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -899,12 +899,12 @@ func (x *GetChildrenResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetChildrenResponse.ProtoReflect.Descriptor instead.
-func (*GetChildrenResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use TreeGetChildrenResponse.ProtoReflect.Descriptor instead.
+func (*TreeGetChildrenResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_tree_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *GetChildrenResponse) GetChildren() []*TreeNodeInfo {
+func (x *TreeGetChildrenResponse) GetChildren() []*TreeNodeInfo {
 	if x != nil {
 		return x.Children
 	}
@@ -1023,51 +1023,51 @@ const file_industries_loosh_yutani_v1_tree_proto_rawDesc = "" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12?\n" +
 	"\anode_id\x18\x03 \x01(\v2&.industries.loosh.yutani.v1.TreeNodeIdR\x06nodeId\"2\n" +
 	"\x16RemoveTreeNodeResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xfa\x01\n" +
-	"\x12SetExpandedRequest\x12D\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xfe\x01\n" +
+	"\x16TreeSetExpandedRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12?\n" +
 	"\anode_id\x18\x03 \x01(\v2&.industries.loosh.yutani.v1.TreeNodeIdR\x06nodeId\x12\x1a\n" +
-	"\bexpanded\x18\x04 \x01(\bR\bexpanded\"/\n" +
-	"\x13SetExpandedResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xa1\x01\n" +
-	"\x16GetTreeSelectedRequest\x12D\n" +
+	"\bexpanded\x18\x04 \x01(\bR\bexpanded\"3\n" +
+	"\x17TreeSetExpandedResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xa2\x01\n" +
+	"\x17TreeGetSelectionRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
-	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"\x8c\x01\n" +
-	"\x17GetTreeSelectedResponse\x12?\n" +
+	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"\x8d\x01\n" +
+	"\x18TreeGetSelectionResponse\x12?\n" +
 	"\anode_id\x18\x01 \x01(\v2&.industries.loosh.yutani.v1.TreeNodeIdR\x06nodeId\x12\x12\n" +
 	"\x04text\x18\x02 \x01(\tR\x04text\x12\x1c\n" +
-	"\treference\x18\x03 \x01(\tR\treference\"\xe2\x01\n" +
-	"\x16SetTreeSelectedRequest\x12D\n" +
+	"\treference\x18\x03 \x01(\tR\treference\"\xe3\x01\n" +
+	"\x17TreeSetSelectionRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12?\n" +
-	"\anode_id\x18\x03 \x01(\v2&.industries.loosh.yutani.v1.TreeNodeIdR\x06nodeId\"3\n" +
-	"\x17SetTreeSelectedResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xde\x01\n" +
-	"\x12GetChildrenRequest\x12D\n" +
+	"\anode_id\x18\x03 \x01(\v2&.industries.loosh.yutani.v1.TreeNodeIdR\x06nodeId\"4\n" +
+	"\x18TreeSetSelectionResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xe2\x01\n" +
+	"\x16TreeGetChildrenRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12?\n" +
-	"\anode_id\x18\x03 \x01(\v2&.industries.loosh.yutani.v1.TreeNodeIdR\x06nodeId\"[\n" +
-	"\x13GetChildrenResponse\x12D\n" +
+	"\anode_id\x18\x03 \x01(\v2&.industries.loosh.yutani.v1.TreeNodeIdR\x06nodeId\"_\n" +
+	"\x17TreeGetChildrenResponse\x12D\n" +
 	"\bchildren\x18\x01 \x03(\v2(.industries.loosh.yutani.v1.TreeNodeInfoR\bchildren\"\x9d\x01\n" +
 	"\fTreeNodeInfo\x12?\n" +
 	"\anode_id\x18\x01 \x01(\v2&.industries.loosh.yutani.v1.TreeNodeIdR\x06nodeId\x12\x12\n" +
 	"\x04text\x18\x02 \x01(\tR\x04text\x12\x1c\n" +
 	"\treference\x18\x03 \x01(\tR\treference\x12\x1a\n" +
-	"\bexpanded\x18\x04 \x01(\bR\bexpanded2\xad\x06\n" +
+	"\bexpanded\x18\x04 \x01(\bR\bexpanded2\xc3\x06\n" +
 	"\vTreeService\x12j\n" +
 	"\aSetRoot\x12..industries.loosh.yutani.v1.SetTreeRootRequest\x1a/.industries.loosh.yutani.v1.SetTreeRootResponse\x12m\n" +
 	"\bAddChild\x12/.industries.loosh.yutani.v1.AddTreeChildRequest\x1a0.industries.loosh.yutani.v1.AddTreeChildResponse\x12s\n" +
 	"\n" +
-	"RemoveNode\x121.industries.loosh.yutani.v1.RemoveTreeNodeRequest\x1a2.industries.loosh.yutani.v1.RemoveTreeNodeResponse\x12n\n" +
-	"\vSetExpanded\x12..industries.loosh.yutani.v1.SetExpandedRequest\x1a/.industries.loosh.yutani.v1.SetExpandedResponse\x12v\n" +
-	"\vGetSelected\x122.industries.loosh.yutani.v1.GetTreeSelectedRequest\x1a3.industries.loosh.yutani.v1.GetTreeSelectedResponse\x12v\n" +
-	"\vSetSelected\x122.industries.loosh.yutani.v1.SetTreeSelectedRequest\x1a3.industries.loosh.yutani.v1.SetTreeSelectedResponse\x12n\n" +
-	"\vGetChildren\x12..industries.loosh.yutani.v1.GetChildrenRequest\x1a/.industries.loosh.yutani.v1.GetChildrenResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
+	"RemoveNode\x121.industries.loosh.yutani.v1.RemoveTreeNodeRequest\x1a2.industries.loosh.yutani.v1.RemoveTreeNodeResponse\x12v\n" +
+	"\vSetExpanded\x122.industries.loosh.yutani.v1.TreeSetExpandedRequest\x1a3.industries.loosh.yutani.v1.TreeSetExpandedResponse\x12y\n" +
+	"\fGetSelection\x123.industries.loosh.yutani.v1.TreeGetSelectionRequest\x1a4.industries.loosh.yutani.v1.TreeGetSelectionResponse\x12y\n" +
+	"\fSetSelection\x123.industries.loosh.yutani.v1.TreeSetSelectionRequest\x1a4.industries.loosh.yutani.v1.TreeSetSelectionResponse\x12v\n" +
+	"\vGetChildren\x122.industries.loosh.yutani.v1.TreeGetChildrenRequest\x1a3.industries.loosh.yutani.v1.TreeGetChildrenResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
 
 var (
 	file_industries_loosh_yutani_v1_tree_proto_rawDescOnce sync.Once
@@ -1083,26 +1083,26 @@ func file_industries_loosh_yutani_v1_tree_proto_rawDescGZIP() []byte {
 
 var file_industries_loosh_yutani_v1_tree_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
 var file_industries_loosh_yutani_v1_tree_proto_goTypes = []any{
-	(*TreeNodeId)(nil),              // 0: industries.loosh.yutani.v1.TreeNodeId
-	(*TreeNode)(nil),                // 1: industries.loosh.yutani.v1.TreeNode
-	(*SetTreeRootRequest)(nil),      // 2: industries.loosh.yutani.v1.SetTreeRootRequest
-	(*SetTreeRootResponse)(nil),     // 3: industries.loosh.yutani.v1.SetTreeRootResponse
-	(*AddTreeChildRequest)(nil),     // 4: industries.loosh.yutani.v1.AddTreeChildRequest
-	(*AddTreeChildResponse)(nil),    // 5: industries.loosh.yutani.v1.AddTreeChildResponse
-	(*RemoveTreeNodeRequest)(nil),   // 6: industries.loosh.yutani.v1.RemoveTreeNodeRequest
-	(*RemoveTreeNodeResponse)(nil),  // 7: industries.loosh.yutani.v1.RemoveTreeNodeResponse
-	(*SetExpandedRequest)(nil),      // 8: industries.loosh.yutani.v1.SetExpandedRequest
-	(*SetExpandedResponse)(nil),     // 9: industries.loosh.yutani.v1.SetExpandedResponse
-	(*GetTreeSelectedRequest)(nil),  // 10: industries.loosh.yutani.v1.GetTreeSelectedRequest
-	(*GetTreeSelectedResponse)(nil), // 11: industries.loosh.yutani.v1.GetTreeSelectedResponse
-	(*SetTreeSelectedRequest)(nil),  // 12: industries.loosh.yutani.v1.SetTreeSelectedRequest
-	(*SetTreeSelectedResponse)(nil), // 13: industries.loosh.yutani.v1.SetTreeSelectedResponse
-	(*GetChildrenRequest)(nil),      // 14: industries.loosh.yutani.v1.GetChildrenRequest
-	(*GetChildrenResponse)(nil),     // 15: industries.loosh.yutani.v1.GetChildrenResponse
-	(*TreeNodeInfo)(nil),            // 16: industries.loosh.yutani.v1.TreeNodeInfo
-	(*Color)(nil),                   // 17: industries.loosh.yutani.v1.Color
-	(*SessionId)(nil),               // 18: industries.loosh.yutani.v1.SessionId
-	(*WidgetId)(nil),                // 19: industries.loosh.yutani.v1.WidgetId
+	(*TreeNodeId)(nil),               // 0: industries.loosh.yutani.v1.TreeNodeId
+	(*TreeNode)(nil),                 // 1: industries.loosh.yutani.v1.TreeNode
+	(*SetTreeRootRequest)(nil),       // 2: industries.loosh.yutani.v1.SetTreeRootRequest
+	(*SetTreeRootResponse)(nil),      // 3: industries.loosh.yutani.v1.SetTreeRootResponse
+	(*AddTreeChildRequest)(nil),      // 4: industries.loosh.yutani.v1.AddTreeChildRequest
+	(*AddTreeChildResponse)(nil),     // 5: industries.loosh.yutani.v1.AddTreeChildResponse
+	(*RemoveTreeNodeRequest)(nil),    // 6: industries.loosh.yutani.v1.RemoveTreeNodeRequest
+	(*RemoveTreeNodeResponse)(nil),   // 7: industries.loosh.yutani.v1.RemoveTreeNodeResponse
+	(*TreeSetExpandedRequest)(nil),   // 8: industries.loosh.yutani.v1.TreeSetExpandedRequest
+	(*TreeSetExpandedResponse)(nil),  // 9: industries.loosh.yutani.v1.TreeSetExpandedResponse
+	(*TreeGetSelectionRequest)(nil),  // 10: industries.loosh.yutani.v1.TreeGetSelectionRequest
+	(*TreeGetSelectionResponse)(nil), // 11: industries.loosh.yutani.v1.TreeGetSelectionResponse
+	(*TreeSetSelectionRequest)(nil),  // 12: industries.loosh.yutani.v1.TreeSetSelectionRequest
+	(*TreeSetSelectionResponse)(nil), // 13: industries.loosh.yutani.v1.TreeSetSelectionResponse
+	(*TreeGetChildrenRequest)(nil),   // 14: industries.loosh.yutani.v1.TreeGetChildrenRequest
+	(*TreeGetChildrenResponse)(nil),  // 15: industries.loosh.yutani.v1.TreeGetChildrenResponse
+	(*TreeNodeInfo)(nil),             // 16: industries.loosh.yutani.v1.TreeNodeInfo
+	(*Color)(nil),                    // 17: industries.loosh.yutani.v1.Color
+	(*SessionId)(nil),                // 18: industries.loosh.yutani.v1.SessionId
+	(*WidgetId)(nil),                 // 19: industries.loosh.yutani.v1.WidgetId
 }
 var file_industries_loosh_yutani_v1_tree_proto_depIdxs = []int32{
 	17, // 0: industries.loosh.yutani.v1.TreeNode.color:type_name -> industries.loosh.yutani.v1.Color
@@ -1118,34 +1118,34 @@ var file_industries_loosh_yutani_v1_tree_proto_depIdxs = []int32{
 	18, // 10: industries.loosh.yutani.v1.RemoveTreeNodeRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
 	19, // 11: industries.loosh.yutani.v1.RemoveTreeNodeRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
 	0,  // 12: industries.loosh.yutani.v1.RemoveTreeNodeRequest.node_id:type_name -> industries.loosh.yutani.v1.TreeNodeId
-	18, // 13: industries.loosh.yutani.v1.SetExpandedRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	19, // 14: industries.loosh.yutani.v1.SetExpandedRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	0,  // 15: industries.loosh.yutani.v1.SetExpandedRequest.node_id:type_name -> industries.loosh.yutani.v1.TreeNodeId
-	18, // 16: industries.loosh.yutani.v1.GetTreeSelectedRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	19, // 17: industries.loosh.yutani.v1.GetTreeSelectedRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	0,  // 18: industries.loosh.yutani.v1.GetTreeSelectedResponse.node_id:type_name -> industries.loosh.yutani.v1.TreeNodeId
-	18, // 19: industries.loosh.yutani.v1.SetTreeSelectedRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	19, // 20: industries.loosh.yutani.v1.SetTreeSelectedRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	0,  // 21: industries.loosh.yutani.v1.SetTreeSelectedRequest.node_id:type_name -> industries.loosh.yutani.v1.TreeNodeId
-	18, // 22: industries.loosh.yutani.v1.GetChildrenRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	19, // 23: industries.loosh.yutani.v1.GetChildrenRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	0,  // 24: industries.loosh.yutani.v1.GetChildrenRequest.node_id:type_name -> industries.loosh.yutani.v1.TreeNodeId
-	16, // 25: industries.loosh.yutani.v1.GetChildrenResponse.children:type_name -> industries.loosh.yutani.v1.TreeNodeInfo
+	18, // 13: industries.loosh.yutani.v1.TreeSetExpandedRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	19, // 14: industries.loosh.yutani.v1.TreeSetExpandedRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	0,  // 15: industries.loosh.yutani.v1.TreeSetExpandedRequest.node_id:type_name -> industries.loosh.yutani.v1.TreeNodeId
+	18, // 16: industries.loosh.yutani.v1.TreeGetSelectionRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	19, // 17: industries.loosh.yutani.v1.TreeGetSelectionRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	0,  // 18: industries.loosh.yutani.v1.TreeGetSelectionResponse.node_id:type_name -> industries.loosh.yutani.v1.TreeNodeId
+	18, // 19: industries.loosh.yutani.v1.TreeSetSelectionRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	19, // 20: industries.loosh.yutani.v1.TreeSetSelectionRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	0,  // 21: industries.loosh.yutani.v1.TreeSetSelectionRequest.node_id:type_name -> industries.loosh.yutani.v1.TreeNodeId
+	18, // 22: industries.loosh.yutani.v1.TreeGetChildrenRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	19, // 23: industries.loosh.yutani.v1.TreeGetChildrenRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	0,  // 24: industries.loosh.yutani.v1.TreeGetChildrenRequest.node_id:type_name -> industries.loosh.yutani.v1.TreeNodeId
+	16, // 25: industries.loosh.yutani.v1.TreeGetChildrenResponse.children:type_name -> industries.loosh.yutani.v1.TreeNodeInfo
 	0,  // 26: industries.loosh.yutani.v1.TreeNodeInfo.node_id:type_name -> industries.loosh.yutani.v1.TreeNodeId
 	2,  // 27: industries.loosh.yutani.v1.TreeService.SetRoot:input_type -> industries.loosh.yutani.v1.SetTreeRootRequest
 	4,  // 28: industries.loosh.yutani.v1.TreeService.AddChild:input_type -> industries.loosh.yutani.v1.AddTreeChildRequest
 	6,  // 29: industries.loosh.yutani.v1.TreeService.RemoveNode:input_type -> industries.loosh.yutani.v1.RemoveTreeNodeRequest
-	8,  // 30: industries.loosh.yutani.v1.TreeService.SetExpanded:input_type -> industries.loosh.yutani.v1.SetExpandedRequest
-	10, // 31: industries.loosh.yutani.v1.TreeService.GetSelected:input_type -> industries.loosh.yutani.v1.GetTreeSelectedRequest
-	12, // 32: industries.loosh.yutani.v1.TreeService.SetSelected:input_type -> industries.loosh.yutani.v1.SetTreeSelectedRequest
-	14, // 33: industries.loosh.yutani.v1.TreeService.GetChildren:input_type -> industries.loosh.yutani.v1.GetChildrenRequest
+	8,  // 30: industries.loosh.yutani.v1.TreeService.SetExpanded:input_type -> industries.loosh.yutani.v1.TreeSetExpandedRequest
+	10, // 31: industries.loosh.yutani.v1.TreeService.GetSelection:input_type -> industries.loosh.yutani.v1.TreeGetSelectionRequest
+	12, // 32: industries.loosh.yutani.v1.TreeService.SetSelection:input_type -> industries.loosh.yutani.v1.TreeSetSelectionRequest
+	14, // 33: industries.loosh.yutani.v1.TreeService.GetChildren:input_type -> industries.loosh.yutani.v1.TreeGetChildrenRequest
 	3,  // 34: industries.loosh.yutani.v1.TreeService.SetRoot:output_type -> industries.loosh.yutani.v1.SetTreeRootResponse
 	5,  // 35: industries.loosh.yutani.v1.TreeService.AddChild:output_type -> industries.loosh.yutani.v1.AddTreeChildResponse
 	7,  // 36: industries.loosh.yutani.v1.TreeService.RemoveNode:output_type -> industries.loosh.yutani.v1.RemoveTreeNodeResponse
-	9,  // 37: industries.loosh.yutani.v1.TreeService.SetExpanded:output_type -> industries.loosh.yutani.v1.SetExpandedResponse
-	11, // 38: industries.loosh.yutani.v1.TreeService.GetSelected:output_type -> industries.loosh.yutani.v1.GetTreeSelectedResponse
-	13, // 39: industries.loosh.yutani.v1.TreeService.SetSelected:output_type -> industries.loosh.yutani.v1.SetTreeSelectedResponse
-	15, // 40: industries.loosh.yutani.v1.TreeService.GetChildren:output_type -> industries.loosh.yutani.v1.GetChildrenResponse
+	9,  // 37: industries.loosh.yutani.v1.TreeService.SetExpanded:output_type -> industries.loosh.yutani.v1.TreeSetExpandedResponse
+	11, // 38: industries.loosh.yutani.v1.TreeService.GetSelection:output_type -> industries.loosh.yutani.v1.TreeGetSelectionResponse
+	13, // 39: industries.loosh.yutani.v1.TreeService.SetSelection:output_type -> industries.loosh.yutani.v1.TreeSetSelectionResponse
+	15, // 40: industries.loosh.yutani.v1.TreeService.GetChildren:output_type -> industries.loosh.yutani.v1.TreeGetChildrenResponse
 	34, // [34:41] is the sub-list for method output_type
 	27, // [27:34] is the sub-list for method input_type
 	27, // [27:27] is the sub-list for extension type_name

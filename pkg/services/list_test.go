@@ -34,7 +34,7 @@ func TestListService_AddItem(t *testing.T) {
 	widgetID := createResp.WidgetId.Id
 
 	// Add item
-	addResp, err := listSvc.AddItem(ctx, &pb.AddItemRequest{
+	addResp, err := listSvc.AddItem(ctx, &pb.ListAddItemRequest{
 		SessionId:     &pb.SessionId{Id: sessionID},
 		WidgetId:      &pb.WidgetId{Id: widgetID},
 		MainText:      "Item 1",
@@ -52,7 +52,7 @@ func TestListService_AddItem(t *testing.T) {
 	}
 
 	// Verify item count
-	countResp, err := listSvc.GetItemCount(ctx, &pb.GetItemCountRequest{
+	countResp, err := listSvc.GetItemCount(ctx, &pb.ListGetItemCountRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
@@ -91,19 +91,19 @@ func TestListService_RemoveItem(t *testing.T) {
 	widgetID := createResp.WidgetId.Id
 
 	// Add items
-	listSvc.AddItem(ctx, &pb.AddItemRequest{
+	listSvc.AddItem(ctx, &pb.ListAddItemRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		MainText:  "Item 1",
 	})
-	listSvc.AddItem(ctx, &pb.AddItemRequest{
+	listSvc.AddItem(ctx, &pb.ListAddItemRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		MainText:  "Item 2",
 	})
 
 	// Remove first item
-	removeResp, err := listSvc.RemoveItem(ctx, &pb.RemoveItemRequest{
+	removeResp, err := listSvc.RemoveItem(ctx, &pb.ListRemoveItemRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Index:     0,
@@ -117,7 +117,7 @@ func TestListService_RemoveItem(t *testing.T) {
 	}
 
 	// Verify item count
-	countResp, err := listSvc.GetItemCount(ctx, &pb.GetItemCountRequest{
+	countResp, err := listSvc.GetItemCount(ctx, &pb.ListGetItemCountRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
@@ -156,19 +156,19 @@ func TestListService_Clear(t *testing.T) {
 	widgetID := createResp.WidgetId.Id
 
 	// Add items
-	listSvc.AddItem(ctx, &pb.AddItemRequest{
+	listSvc.AddItem(ctx, &pb.ListAddItemRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		MainText:  "Item 1",
 	})
-	listSvc.AddItem(ctx, &pb.AddItemRequest{
+	listSvc.AddItem(ctx, &pb.ListAddItemRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		MainText:  "Item 2",
 	})
 
 	// Clear list
-	clearResp, err := listSvc.Clear(ctx, &pb.ClearListRequest{
+	clearResp, err := listSvc.Clear(ctx, &pb.ListClearRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
@@ -181,7 +181,7 @@ func TestListService_Clear(t *testing.T) {
 	}
 
 	// Verify item count
-	countResp, err := listSvc.GetItemCount(ctx, &pb.GetItemCountRequest{
+	countResp, err := listSvc.GetItemCount(ctx, &pb.ListGetItemCountRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
@@ -194,7 +194,7 @@ func TestListService_Clear(t *testing.T) {
 	}
 }
 
-func TestListService_GetSetSelected(t *testing.T) {
+func TestListService_GetSetSelection(t *testing.T) {
 	srv := setupTestServer(t)
 
 	widgetSvc := NewWidgetService(srv)
@@ -220,38 +220,38 @@ func TestListService_GetSetSelected(t *testing.T) {
 	widgetID := createResp.WidgetId.Id
 
 	// Add items
-	listSvc.AddItem(ctx, &pb.AddItemRequest{
+	listSvc.AddItem(ctx, &pb.ListAddItemRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		MainText:  "Item 1",
 	})
-	listSvc.AddItem(ctx, &pb.AddItemRequest{
+	listSvc.AddItem(ctx, &pb.ListAddItemRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		MainText:  "Item 2",
 	})
 
-	// Set selected
-	setResp, err := listSvc.SetSelected(ctx, &pb.SetSelectedRequest{
+	// Set selection
+	setResp, err := listSvc.SetSelection(ctx, &pb.ListSetSelectionRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Index:     1,
 	})
 	if err != nil {
-		t.Fatalf("Failed to set selected: %v", err)
+		t.Fatalf("Failed to set selection: %v", err)
 	}
 
 	if !setResp.Success {
 		t.Error("Expected success=true")
 	}
 
-	// Get selected
-	getResp, err := listSvc.GetSelected(ctx, &pb.GetSelectedRequest{
+	// Get selection
+	getResp, err := listSvc.GetSelection(ctx, &pb.ListGetSelectionRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
 	if err != nil {
-		t.Fatalf("Failed to get selected: %v", err)
+		t.Fatalf("Failed to get selection: %v", err)
 	}
 
 	if getResp.Index != 1 {
@@ -285,7 +285,7 @@ func TestListService_GetItem(t *testing.T) {
 	widgetID := createResp.WidgetId.Id
 
 	// Add item
-	listSvc.AddItem(ctx, &pb.AddItemRequest{
+	listSvc.AddItem(ctx, &pb.ListAddItemRequest{
 		SessionId:     &pb.SessionId{Id: sessionID},
 		WidgetId:      &pb.WidgetId{Id: widgetID},
 		MainText:      "Item 1",
@@ -293,7 +293,7 @@ func TestListService_GetItem(t *testing.T) {
 	})
 
 	// Get item
-	getResp, err := listSvc.GetItem(ctx, &pb.GetItemRequest{
+	getResp, err := listSvc.GetItem(ctx, &pb.ListGetItemRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Index:     0,

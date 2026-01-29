@@ -318,7 +318,7 @@ func demoList(ctx context.Context, sessionID *pb.SessionId, widgetClient pb.Widg
 	}
 
 	for _, item := range items {
-		_, err = listClient.AddItem(ctx, &pb.AddItemRequest{
+		_, err = listClient.AddItem(ctx, &pb.ListAddItemRequest{
 			SessionId: sessionID,
 			WidgetId:  listID,
 			MainText:  item.main,
@@ -397,7 +397,7 @@ func demoTable(ctx context.Context, sessionID *pb.SessionId, widgetClient pb.Wid
 	}
 
 	// Set fixed header row
-	_, err = tableClient.SetFixed(ctx, &pb.SetFixedRequest{
+	_, err = tableClient.SetFixed(ctx, &pb.TableSetFixedRequest{
 		SessionId:   sessionID,
 		WidgetId:    tableID,
 		FixedRows:   1,
@@ -477,7 +477,7 @@ func demoForm(ctx context.Context, sessionID *pb.SessionId, widgetClient pb.Widg
 	log.Println("✓ Form added to layout")
 
 	// Add input field
-	_, err = formClient.AddField(ctx, &pb.AddFieldRequest{
+	_, err = formClient.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId: sessionID,
 		WidgetId:  formID,
 		Label:     "Username:",
@@ -488,7 +488,7 @@ func demoForm(ctx context.Context, sessionID *pb.SessionId, widgetClient pb.Widg
 	}
 
 	// Add password field
-	_, err = formClient.AddField(ctx, &pb.AddFieldRequest{
+	_, err = formClient.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId: sessionID,
 		WidgetId:  formID,
 		Label:     "Password:",
@@ -499,7 +499,7 @@ func demoForm(ctx context.Context, sessionID *pb.SessionId, widgetClient pb.Widg
 	}
 
 	// Add checkbox
-	_, err = formClient.AddField(ctx, &pb.AddFieldRequest{
+	_, err = formClient.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId: sessionID,
 		WidgetId:  formID,
 		Label:     "Remember me:",
@@ -510,7 +510,7 @@ func demoForm(ctx context.Context, sessionID *pb.SessionId, widgetClient pb.Widg
 	}
 
 	// Add dropdown
-	_, err = formClient.AddField(ctx, &pb.AddFieldRequest{
+	_, err = formClient.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId:       sessionID,
 		WidgetId:        formID,
 		Label:           "Theme:",
@@ -522,7 +522,7 @@ func demoForm(ctx context.Context, sessionID *pb.SessionId, widgetClient pb.Widg
 	}
 
 	// Add buttons
-	_, err = formClient.AddButton(ctx, &pb.AddButtonRequest{
+	_, err = formClient.AddButton(ctx, &pb.FormAddButtonRequest{
 		SessionId: sessionID,
 		WidgetId:  formID,
 		Label:     "Submit",
@@ -531,7 +531,7 @@ func demoForm(ctx context.Context, sessionID *pb.SessionId, widgetClient pb.Widg
 		return err
 	}
 
-	_, err = formClient.AddButton(ctx, &pb.AddButtonRequest{
+	_, err = formClient.AddButton(ctx, &pb.FormAddButtonRequest{
 		SessionId: sessionID,
 		WidgetId:  formID,
 		Label:     "Cancel",

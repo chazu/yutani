@@ -19,7 +19,7 @@
 //
 //	list.AddItem("New File", "Create a new file", "n")
 //	list.AddItem("Open File", "Open an existing file", "o")
-//	list.SetSelected(0)
+//	list.SetSelection(0)
 //
 //	// Handle events
 //	client.OnEvent(func(event *Event) {

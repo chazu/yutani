@@ -260,7 +260,7 @@ func TestTableService_Clear(t *testing.T) {
 	}
 
 	// Test Clear
-	resp, err := tableService.Clear(ctx, &pb.ClearTableRequest{
+	resp, err := tableService.Clear(ctx, &pb.TableClearRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
@@ -272,7 +272,7 @@ func TestTableService_Clear(t *testing.T) {
 	}
 
 	// Verify table is cleared
-	dimResp, err := tableService.GetDimensions(ctx, &pb.GetDimensionsRequest{
+	dimResp, err := tableService.GetDimensions(ctx, &pb.TableGetDimensionsRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
@@ -326,7 +326,7 @@ func TestTableService_GetDimensions(t *testing.T) {
 	}
 
 	// Test GetDimensions
-	resp, err := tableService.GetDimensions(ctx, &pb.GetDimensionsRequest{
+	resp, err := tableService.GetDimensions(ctx, &pb.TableGetDimensionsRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
@@ -381,7 +381,7 @@ func TestTableService_GetSetSelection(t *testing.T) {
 	}
 
 	// Test SetSelection
-	setResp, err := tableService.SetSelection(ctx, &pb.SetSelectionRequest{
+	setResp, err := tableService.SetSelection(ctx, &pb.TableSetSelectionRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Row:       1,
@@ -395,7 +395,7 @@ func TestTableService_GetSetSelection(t *testing.T) {
 	}
 
 	// Test GetSelection
-	getResp, err := tableService.GetSelection(ctx, &pb.GetSelectionRequest{
+	getResp, err := tableService.GetSelection(ctx, &pb.TableGetSelectionRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
@@ -436,7 +436,7 @@ func TestTableService_SetFixed(t *testing.T) {
 	widgetID := createResp.WidgetId.Id
 
 	// Test SetFixed
-	resp, err := tableService.SetFixed(ctx, &pb.SetFixedRequest{
+	resp, err := tableService.SetFixed(ctx, &pb.TableSetFixedRequest{
 		SessionId:    &pb.SessionId{Id: sessionID},
 		WidgetId:     &pb.WidgetId{Id: widgetID},
 		FixedRows:    1,

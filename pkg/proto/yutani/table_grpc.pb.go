@@ -42,15 +42,15 @@ type TableServiceClient interface {
 	// Set multiple cells (batch operation)
 	SetCells(ctx context.Context, in *SetTableCellsRequest, opts ...grpc.CallOption) (*SetTableCellsResponse, error)
 	// Clear the table
-	Clear(ctx context.Context, in *ClearTableRequest, opts ...grpc.CallOption) (*ClearTableResponse, error)
+	Clear(ctx context.Context, in *TableClearRequest, opts ...grpc.CallOption) (*TableClearResponse, error)
 	// Get table dimensions (rows, columns)
-	GetDimensions(ctx context.Context, in *GetDimensionsRequest, opts ...grpc.CallOption) (*GetDimensionsResponse, error)
+	GetDimensions(ctx context.Context, in *TableGetDimensionsRequest, opts ...grpc.CallOption) (*TableGetDimensionsResponse, error)
 	// Get current selection
-	GetSelection(ctx context.Context, in *GetSelectionRequest, opts ...grpc.CallOption) (*GetSelectionResponse, error)
+	GetSelection(ctx context.Context, in *TableGetSelectionRequest, opts ...grpc.CallOption) (*TableGetSelectionResponse, error)
 	// Set current selection
-	SetSelection(ctx context.Context, in *SetSelectionRequest, opts ...grpc.CallOption) (*SetSelectionResponse, error)
+	SetSelection(ctx context.Context, in *TableSetSelectionRequest, opts ...grpc.CallOption) (*TableSetSelectionResponse, error)
 	// Set fixed rows/columns (headers)
-	SetFixed(ctx context.Context, in *SetFixedRequest, opts ...grpc.CallOption) (*SetFixedResponse, error)
+	SetFixed(ctx context.Context, in *TableSetFixedRequest, opts ...grpc.CallOption) (*TableSetFixedResponse, error)
 }
 
 type tableServiceClient struct {
@@ -91,9 +91,9 @@ func (c *tableServiceClient) SetCells(ctx context.Context, in *SetTableCellsRequ
 	return out, nil
 }
 
-func (c *tableServiceClient) Clear(ctx context.Context, in *ClearTableRequest, opts ...grpc.CallOption) (*ClearTableResponse, error) {
+func (c *tableServiceClient) Clear(ctx context.Context, in *TableClearRequest, opts ...grpc.CallOption) (*TableClearResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ClearTableResponse)
+	out := new(TableClearResponse)
 	err := c.cc.Invoke(ctx, TableService_Clear_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -101,9 +101,9 @@ func (c *tableServiceClient) Clear(ctx context.Context, in *ClearTableRequest, o
 	return out, nil
 }
 
-func (c *tableServiceClient) GetDimensions(ctx context.Context, in *GetDimensionsRequest, opts ...grpc.CallOption) (*GetDimensionsResponse, error) {
+func (c *tableServiceClient) GetDimensions(ctx context.Context, in *TableGetDimensionsRequest, opts ...grpc.CallOption) (*TableGetDimensionsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetDimensionsResponse)
+	out := new(TableGetDimensionsResponse)
 	err := c.cc.Invoke(ctx, TableService_GetDimensions_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -111,9 +111,9 @@ func (c *tableServiceClient) GetDimensions(ctx context.Context, in *GetDimension
 	return out, nil
 }
 
-func (c *tableServiceClient) GetSelection(ctx context.Context, in *GetSelectionRequest, opts ...grpc.CallOption) (*GetSelectionResponse, error) {
+func (c *tableServiceClient) GetSelection(ctx context.Context, in *TableGetSelectionRequest, opts ...grpc.CallOption) (*TableGetSelectionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetSelectionResponse)
+	out := new(TableGetSelectionResponse)
 	err := c.cc.Invoke(ctx, TableService_GetSelection_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -121,9 +121,9 @@ func (c *tableServiceClient) GetSelection(ctx context.Context, in *GetSelectionR
 	return out, nil
 }
 
-func (c *tableServiceClient) SetSelection(ctx context.Context, in *SetSelectionRequest, opts ...grpc.CallOption) (*SetSelectionResponse, error) {
+func (c *tableServiceClient) SetSelection(ctx context.Context, in *TableSetSelectionRequest, opts ...grpc.CallOption) (*TableSetSelectionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SetSelectionResponse)
+	out := new(TableSetSelectionResponse)
 	err := c.cc.Invoke(ctx, TableService_SetSelection_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -131,9 +131,9 @@ func (c *tableServiceClient) SetSelection(ctx context.Context, in *SetSelectionR
 	return out, nil
 }
 
-func (c *tableServiceClient) SetFixed(ctx context.Context, in *SetFixedRequest, opts ...grpc.CallOption) (*SetFixedResponse, error) {
+func (c *tableServiceClient) SetFixed(ctx context.Context, in *TableSetFixedRequest, opts ...grpc.CallOption) (*TableSetFixedResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SetFixedResponse)
+	out := new(TableSetFixedResponse)
 	err := c.cc.Invoke(ctx, TableService_SetFixed_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -154,15 +154,15 @@ type TableServiceServer interface {
 	// Set multiple cells (batch operation)
 	SetCells(context.Context, *SetTableCellsRequest) (*SetTableCellsResponse, error)
 	// Clear the table
-	Clear(context.Context, *ClearTableRequest) (*ClearTableResponse, error)
+	Clear(context.Context, *TableClearRequest) (*TableClearResponse, error)
 	// Get table dimensions (rows, columns)
-	GetDimensions(context.Context, *GetDimensionsRequest) (*GetDimensionsResponse, error)
+	GetDimensions(context.Context, *TableGetDimensionsRequest) (*TableGetDimensionsResponse, error)
 	// Get current selection
-	GetSelection(context.Context, *GetSelectionRequest) (*GetSelectionResponse, error)
+	GetSelection(context.Context, *TableGetSelectionRequest) (*TableGetSelectionResponse, error)
 	// Set current selection
-	SetSelection(context.Context, *SetSelectionRequest) (*SetSelectionResponse, error)
+	SetSelection(context.Context, *TableSetSelectionRequest) (*TableSetSelectionResponse, error)
 	// Set fixed rows/columns (headers)
-	SetFixed(context.Context, *SetFixedRequest) (*SetFixedResponse, error)
+	SetFixed(context.Context, *TableSetFixedRequest) (*TableSetFixedResponse, error)
 	mustEmbedUnimplementedTableServiceServer()
 }
 
@@ -182,19 +182,19 @@ func (UnimplementedTableServiceServer) GetCell(context.Context, *GetTableCellReq
 func (UnimplementedTableServiceServer) SetCells(context.Context, *SetTableCellsRequest) (*SetTableCellsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SetCells not implemented")
 }
-func (UnimplementedTableServiceServer) Clear(context.Context, *ClearTableRequest) (*ClearTableResponse, error) {
+func (UnimplementedTableServiceServer) Clear(context.Context, *TableClearRequest) (*TableClearResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Clear not implemented")
 }
-func (UnimplementedTableServiceServer) GetDimensions(context.Context, *GetDimensionsRequest) (*GetDimensionsResponse, error) {
+func (UnimplementedTableServiceServer) GetDimensions(context.Context, *TableGetDimensionsRequest) (*TableGetDimensionsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetDimensions not implemented")
 }
-func (UnimplementedTableServiceServer) GetSelection(context.Context, *GetSelectionRequest) (*GetSelectionResponse, error) {
+func (UnimplementedTableServiceServer) GetSelection(context.Context, *TableGetSelectionRequest) (*TableGetSelectionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetSelection not implemented")
 }
-func (UnimplementedTableServiceServer) SetSelection(context.Context, *SetSelectionRequest) (*SetSelectionResponse, error) {
+func (UnimplementedTableServiceServer) SetSelection(context.Context, *TableSetSelectionRequest) (*TableSetSelectionResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SetSelection not implemented")
 }
-func (UnimplementedTableServiceServer) SetFixed(context.Context, *SetFixedRequest) (*SetFixedResponse, error) {
+func (UnimplementedTableServiceServer) SetFixed(context.Context, *TableSetFixedRequest) (*TableSetFixedResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SetFixed not implemented")
 }
 func (UnimplementedTableServiceServer) mustEmbedUnimplementedTableServiceServer() {}
@@ -273,7 +273,7 @@ func _TableService_SetCells_Handler(srv interface{}, ctx context.Context, dec fu
 }
 
 func _TableService_Clear_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ClearTableRequest)
+	in := new(TableClearRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -285,13 +285,13 @@ func _TableService_Clear_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: TableService_Clear_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TableServiceServer).Clear(ctx, req.(*ClearTableRequest))
+		return srv.(TableServiceServer).Clear(ctx, req.(*TableClearRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TableService_GetDimensions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetDimensionsRequest)
+	in := new(TableGetDimensionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -303,13 +303,13 @@ func _TableService_GetDimensions_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: TableService_GetDimensions_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TableServiceServer).GetDimensions(ctx, req.(*GetDimensionsRequest))
+		return srv.(TableServiceServer).GetDimensions(ctx, req.(*TableGetDimensionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TableService_GetSelection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetSelectionRequest)
+	in := new(TableGetSelectionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -321,13 +321,13 @@ func _TableService_GetSelection_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: TableService_GetSelection_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TableServiceServer).GetSelection(ctx, req.(*GetSelectionRequest))
+		return srv.(TableServiceServer).GetSelection(ctx, req.(*TableGetSelectionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TableService_SetSelection_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetSelectionRequest)
+	in := new(TableSetSelectionRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -339,13 +339,13 @@ func _TableService_SetSelection_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: TableService_SetSelection_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TableServiceServer).SetSelection(ctx, req.(*SetSelectionRequest))
+		return srv.(TableServiceServer).SetSelection(ctx, req.(*TableSetSelectionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _TableService_SetFixed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetFixedRequest)
+	in := new(TableSetFixedRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -357,7 +357,7 @@ func _TableService_SetFixed_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: TableService_SetFixed_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TableServiceServer).SetFixed(ctx, req.(*SetFixedRequest))
+		return srv.(TableServiceServer).SetFixed(ctx, req.(*TableSetFixedRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

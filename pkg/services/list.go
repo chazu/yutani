@@ -25,7 +25,7 @@ func NewListService(srv *server.Server) *ListService {
 }
 
 // AddItem adds an item to the list
-func (s *ListService) AddItem(ctx context.Context, req *pb.AddItemRequest) (*pb.AddItemResponse, error) {
+func (s *ListService) AddItem(ctx context.Context, req *pb.ListAddItemRequest) (*pb.ListAddItemResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -71,14 +71,14 @@ func (s *ListService) AddItem(ctx context.Context, req *pb.AddItemRequest) (*pb.
 		return nil, err
 	}
 
-	return &pb.AddItemResponse{
+	return &pb.ListAddItemResponse{
 		Success: true,
 		Index:   index,
 	}, nil
 }
 
 // RemoveItem removes an item from the list
-func (s *ListService) RemoveItem(ctx context.Context, req *pb.RemoveItemRequest) (*pb.RemoveItemResponse, error) {
+func (s *ListService) RemoveItem(ctx context.Context, req *pb.ListRemoveItemRequest) (*pb.ListRemoveItemResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -127,13 +127,13 @@ func (s *ListService) RemoveItem(ctx context.Context, req *pb.RemoveItemRequest)
 		return nil, err
 	}
 
-	return &pb.RemoveItemResponse{
+	return &pb.ListRemoveItemResponse{
 		Success: true,
 	}, nil
 }
 
 // Clear clears all items from the list
-func (s *ListService) Clear(ctx context.Context, req *pb.ClearListRequest) (*pb.ClearListResponse, error) {
+func (s *ListService) Clear(ctx context.Context, req *pb.ListClearRequest) (*pb.ListClearResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -177,13 +177,13 @@ func (s *ListService) Clear(ctx context.Context, req *pb.ClearListRequest) (*pb.
 		return nil, err
 	}
 
-	return &pb.ClearListResponse{
+	return &pb.ListClearResponse{
 		Success: true,
 	}, nil
 }
 
 // GetItemCount returns the number of items in the list
-func (s *ListService) GetItemCount(ctx context.Context, req *pb.GetItemCountRequest) (*pb.GetItemCountResponse, error) {
+func (s *ListService) GetItemCount(ctx context.Context, req *pb.ListGetItemCountRequest) (*pb.ListGetItemCountResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -226,13 +226,13 @@ func (s *ListService) GetItemCount(ctx context.Context, req *pb.GetItemCountRequ
 		return nil, err
 	}
 
-	return &pb.GetItemCountResponse{
+	return &pb.ListGetItemCountResponse{
 		Count: count,
 	}, nil
 }
 
 // GetSelected returns the currently selected item index
-func (s *ListService) GetSelected(ctx context.Context, req *pb.GetSelectedRequest) (*pb.GetSelectedResponse, error) {
+func (s *ListService) GetSelection(ctx context.Context, req *pb.ListGetSelectionRequest) (*pb.ListGetSelectionResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -275,13 +275,13 @@ func (s *ListService) GetSelected(ctx context.Context, req *pb.GetSelectedReques
 		return nil, err
 	}
 
-	return &pb.GetSelectedResponse{
+	return &pb.ListGetSelectionResponse{
 		Index: index,
 	}, nil
 }
 
 // SetSelected sets the selected item index
-func (s *ListService) SetSelected(ctx context.Context, req *pb.SetSelectedRequest) (*pb.SetSelectedResponse, error) {
+func (s *ListService) SetSelection(ctx context.Context, req *pb.ListSetSelectionRequest) (*pb.ListSetSelectionResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -330,13 +330,13 @@ func (s *ListService) SetSelected(ctx context.Context, req *pb.SetSelectedReques
 		return nil, err
 	}
 
-	return &pb.SetSelectedResponse{
+	return &pb.ListSetSelectionResponse{
 		Success: true,
 	}, nil
 }
 
 // GetItem returns an item's text
-func (s *ListService) GetItem(ctx context.Context, req *pb.GetItemRequest) (*pb.GetItemResponse, error) {
+func (s *ListService) GetItem(ctx context.Context, req *pb.ListGetItemRequest) (*pb.ListGetItemResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -384,7 +384,7 @@ func (s *ListService) GetItem(ctx context.Context, req *pb.GetItemRequest) (*pb.
 		return nil, err
 	}
 
-	return &pb.GetItemResponse{
+	return &pb.ListGetItemResponse{
 		MainText:      mainText,
 		SecondaryText: secondaryText,
 		Shortcut:      "", // tview doesn't expose shortcut text

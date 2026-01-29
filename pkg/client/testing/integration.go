@@ -67,6 +67,7 @@ func StartTestServer(t *testing.T) *TestServer {
 	treeService := services.NewTreeService(srv)
 	layoutService := services.NewLayoutService(srv)
 	debugService := services.NewDebugService(srv)
+	testService := services.NewTestService(srv)
 
 	pb.RegisterSessionServiceServer(grpcServer, sessionService)
 	pb.RegisterWidgetServiceServer(grpcServer, widgetService)
@@ -78,6 +79,7 @@ func StartTestServer(t *testing.T) *TestServer {
 	pb.RegisterTreeServiceServer(grpcServer, treeService)
 	pb.RegisterLayoutServiceServer(grpcServer, layoutService)
 	pb.RegisterDebugServiceServer(grpcServer, debugService)
+	pb.RegisterTestServiceServer(grpcServer, testService)
 
 	ts := &TestServer{
 		t:          t,

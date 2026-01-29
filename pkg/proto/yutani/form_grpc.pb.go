@@ -34,17 +34,17 @@ const (
 // FormService provides operations for Form widgets
 type FormServiceClient interface {
 	// Add a form field (InputField, Checkbox, DropDown, etc.)
-	AddField(ctx context.Context, in *AddFieldRequest, opts ...grpc.CallOption) (*AddFieldResponse, error)
+	AddField(ctx context.Context, in *FormAddFieldRequest, opts ...grpc.CallOption) (*FormAddFieldResponse, error)
 	// Add a button to the form
-	AddButton(ctx context.Context, in *AddButtonRequest, opts ...grpc.CallOption) (*AddButtonResponse, error)
+	AddButton(ctx context.Context, in *FormAddButtonRequest, opts ...grpc.CallOption) (*FormAddButtonResponse, error)
 	// Get a field's value
-	GetFieldValue(ctx context.Context, in *GetFieldValueRequest, opts ...grpc.CallOption) (*GetFieldValueResponse, error)
+	GetFieldValue(ctx context.Context, in *FormGetFieldValueRequest, opts ...grpc.CallOption) (*FormGetFieldValueResponse, error)
 	// Set a field's value
-	SetFieldValue(ctx context.Context, in *SetFieldValueRequest, opts ...grpc.CallOption) (*SetFieldValueResponse, error)
+	SetFieldValue(ctx context.Context, in *FormSetFieldValueRequest, opts ...grpc.CallOption) (*FormSetFieldValueResponse, error)
 	// Clear all form fields
-	Clear(ctx context.Context, in *ClearFormRequest, opts ...grpc.CallOption) (*ClearFormResponse, error)
+	Clear(ctx context.Context, in *FormClearRequest, opts ...grpc.CallOption) (*FormClearResponse, error)
 	// Get the number of form items
-	GetItemCount(ctx context.Context, in *GetFormItemCountRequest, opts ...grpc.CallOption) (*GetFormItemCountResponse, error)
+	GetItemCount(ctx context.Context, in *FormGetItemCountRequest, opts ...grpc.CallOption) (*FormGetItemCountResponse, error)
 }
 
 type formServiceClient struct {
@@ -55,9 +55,9 @@ func NewFormServiceClient(cc grpc.ClientConnInterface) FormServiceClient {
 	return &formServiceClient{cc}
 }
 
-func (c *formServiceClient) AddField(ctx context.Context, in *AddFieldRequest, opts ...grpc.CallOption) (*AddFieldResponse, error) {
+func (c *formServiceClient) AddField(ctx context.Context, in *FormAddFieldRequest, opts ...grpc.CallOption) (*FormAddFieldResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AddFieldResponse)
+	out := new(FormAddFieldResponse)
 	err := c.cc.Invoke(ctx, FormService_AddField_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -65,9 +65,9 @@ func (c *formServiceClient) AddField(ctx context.Context, in *AddFieldRequest, o
 	return out, nil
 }
 
-func (c *formServiceClient) AddButton(ctx context.Context, in *AddButtonRequest, opts ...grpc.CallOption) (*AddButtonResponse, error) {
+func (c *formServiceClient) AddButton(ctx context.Context, in *FormAddButtonRequest, opts ...grpc.CallOption) (*FormAddButtonResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AddButtonResponse)
+	out := new(FormAddButtonResponse)
 	err := c.cc.Invoke(ctx, FormService_AddButton_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -75,9 +75,9 @@ func (c *formServiceClient) AddButton(ctx context.Context, in *AddButtonRequest,
 	return out, nil
 }
 
-func (c *formServiceClient) GetFieldValue(ctx context.Context, in *GetFieldValueRequest, opts ...grpc.CallOption) (*GetFieldValueResponse, error) {
+func (c *formServiceClient) GetFieldValue(ctx context.Context, in *FormGetFieldValueRequest, opts ...grpc.CallOption) (*FormGetFieldValueResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetFieldValueResponse)
+	out := new(FormGetFieldValueResponse)
 	err := c.cc.Invoke(ctx, FormService_GetFieldValue_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -85,9 +85,9 @@ func (c *formServiceClient) GetFieldValue(ctx context.Context, in *GetFieldValue
 	return out, nil
 }
 
-func (c *formServiceClient) SetFieldValue(ctx context.Context, in *SetFieldValueRequest, opts ...grpc.CallOption) (*SetFieldValueResponse, error) {
+func (c *formServiceClient) SetFieldValue(ctx context.Context, in *FormSetFieldValueRequest, opts ...grpc.CallOption) (*FormSetFieldValueResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SetFieldValueResponse)
+	out := new(FormSetFieldValueResponse)
 	err := c.cc.Invoke(ctx, FormService_SetFieldValue_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -95,9 +95,9 @@ func (c *formServiceClient) SetFieldValue(ctx context.Context, in *SetFieldValue
 	return out, nil
 }
 
-func (c *formServiceClient) Clear(ctx context.Context, in *ClearFormRequest, opts ...grpc.CallOption) (*ClearFormResponse, error) {
+func (c *formServiceClient) Clear(ctx context.Context, in *FormClearRequest, opts ...grpc.CallOption) (*FormClearResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ClearFormResponse)
+	out := new(FormClearResponse)
 	err := c.cc.Invoke(ctx, FormService_Clear_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -105,9 +105,9 @@ func (c *formServiceClient) Clear(ctx context.Context, in *ClearFormRequest, opt
 	return out, nil
 }
 
-func (c *formServiceClient) GetItemCount(ctx context.Context, in *GetFormItemCountRequest, opts ...grpc.CallOption) (*GetFormItemCountResponse, error) {
+func (c *formServiceClient) GetItemCount(ctx context.Context, in *FormGetItemCountRequest, opts ...grpc.CallOption) (*FormGetItemCountResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetFormItemCountResponse)
+	out := new(FormGetItemCountResponse)
 	err := c.cc.Invoke(ctx, FormService_GetItemCount_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -122,17 +122,17 @@ func (c *formServiceClient) GetItemCount(ctx context.Context, in *GetFormItemCou
 // FormService provides operations for Form widgets
 type FormServiceServer interface {
 	// Add a form field (InputField, Checkbox, DropDown, etc.)
-	AddField(context.Context, *AddFieldRequest) (*AddFieldResponse, error)
+	AddField(context.Context, *FormAddFieldRequest) (*FormAddFieldResponse, error)
 	// Add a button to the form
-	AddButton(context.Context, *AddButtonRequest) (*AddButtonResponse, error)
+	AddButton(context.Context, *FormAddButtonRequest) (*FormAddButtonResponse, error)
 	// Get a field's value
-	GetFieldValue(context.Context, *GetFieldValueRequest) (*GetFieldValueResponse, error)
+	GetFieldValue(context.Context, *FormGetFieldValueRequest) (*FormGetFieldValueResponse, error)
 	// Set a field's value
-	SetFieldValue(context.Context, *SetFieldValueRequest) (*SetFieldValueResponse, error)
+	SetFieldValue(context.Context, *FormSetFieldValueRequest) (*FormSetFieldValueResponse, error)
 	// Clear all form fields
-	Clear(context.Context, *ClearFormRequest) (*ClearFormResponse, error)
+	Clear(context.Context, *FormClearRequest) (*FormClearResponse, error)
 	// Get the number of form items
-	GetItemCount(context.Context, *GetFormItemCountRequest) (*GetFormItemCountResponse, error)
+	GetItemCount(context.Context, *FormGetItemCountRequest) (*FormGetItemCountResponse, error)
 	mustEmbedUnimplementedFormServiceServer()
 }
 
@@ -143,22 +143,22 @@ type FormServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedFormServiceServer struct{}
 
-func (UnimplementedFormServiceServer) AddField(context.Context, *AddFieldRequest) (*AddFieldResponse, error) {
+func (UnimplementedFormServiceServer) AddField(context.Context, *FormAddFieldRequest) (*FormAddFieldResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method AddField not implemented")
 }
-func (UnimplementedFormServiceServer) AddButton(context.Context, *AddButtonRequest) (*AddButtonResponse, error) {
+func (UnimplementedFormServiceServer) AddButton(context.Context, *FormAddButtonRequest) (*FormAddButtonResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method AddButton not implemented")
 }
-func (UnimplementedFormServiceServer) GetFieldValue(context.Context, *GetFieldValueRequest) (*GetFieldValueResponse, error) {
+func (UnimplementedFormServiceServer) GetFieldValue(context.Context, *FormGetFieldValueRequest) (*FormGetFieldValueResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetFieldValue not implemented")
 }
-func (UnimplementedFormServiceServer) SetFieldValue(context.Context, *SetFieldValueRequest) (*SetFieldValueResponse, error) {
+func (UnimplementedFormServiceServer) SetFieldValue(context.Context, *FormSetFieldValueRequest) (*FormSetFieldValueResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SetFieldValue not implemented")
 }
-func (UnimplementedFormServiceServer) Clear(context.Context, *ClearFormRequest) (*ClearFormResponse, error) {
+func (UnimplementedFormServiceServer) Clear(context.Context, *FormClearRequest) (*FormClearResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Clear not implemented")
 }
-func (UnimplementedFormServiceServer) GetItemCount(context.Context, *GetFormItemCountRequest) (*GetFormItemCountResponse, error) {
+func (UnimplementedFormServiceServer) GetItemCount(context.Context, *FormGetItemCountRequest) (*FormGetItemCountResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetItemCount not implemented")
 }
 func (UnimplementedFormServiceServer) mustEmbedUnimplementedFormServiceServer() {}
@@ -183,7 +183,7 @@ func RegisterFormServiceServer(s grpc.ServiceRegistrar, srv FormServiceServer) {
 }
 
 func _FormService_AddField_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddFieldRequest)
+	in := new(FormAddFieldRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -195,13 +195,13 @@ func _FormService_AddField_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: FormService_AddField_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FormServiceServer).AddField(ctx, req.(*AddFieldRequest))
+		return srv.(FormServiceServer).AddField(ctx, req.(*FormAddFieldRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _FormService_AddButton_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddButtonRequest)
+	in := new(FormAddButtonRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -213,13 +213,13 @@ func _FormService_AddButton_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: FormService_AddButton_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FormServiceServer).AddButton(ctx, req.(*AddButtonRequest))
+		return srv.(FormServiceServer).AddButton(ctx, req.(*FormAddButtonRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _FormService_GetFieldValue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFieldValueRequest)
+	in := new(FormGetFieldValueRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -231,13 +231,13 @@ func _FormService_GetFieldValue_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: FormService_GetFieldValue_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FormServiceServer).GetFieldValue(ctx, req.(*GetFieldValueRequest))
+		return srv.(FormServiceServer).GetFieldValue(ctx, req.(*FormGetFieldValueRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _FormService_SetFieldValue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetFieldValueRequest)
+	in := new(FormSetFieldValueRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -249,13 +249,13 @@ func _FormService_SetFieldValue_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: FormService_SetFieldValue_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FormServiceServer).SetFieldValue(ctx, req.(*SetFieldValueRequest))
+		return srv.(FormServiceServer).SetFieldValue(ctx, req.(*FormSetFieldValueRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _FormService_Clear_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ClearFormRequest)
+	in := new(FormClearRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -267,13 +267,13 @@ func _FormService_Clear_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: FormService_Clear_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FormServiceServer).Clear(ctx, req.(*ClearFormRequest))
+		return srv.(FormServiceServer).Clear(ctx, req.(*FormClearRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _FormService_GetItemCount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFormItemCountRequest)
+	in := new(FormGetItemCountRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -285,7 +285,7 @@ func _FormService_GetItemCount_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: FormService_GetItemCount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FormServiceServer).GetItemCount(ctx, req.(*GetFormItemCountRequest))
+		return srv.(FormServiceServer).GetItemCount(ctx, req.(*FormGetItemCountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

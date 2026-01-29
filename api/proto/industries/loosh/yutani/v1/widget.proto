@@ -23,12 +23,6 @@ service WidgetService {
   // Set widget as root (display it)
   rpc SetRoot(SetRootRequest) returns (SetRootResponse);
 
-  // Add child to container widget
-  rpc AddChild(AddChildRequest) returns (AddChildResponse);
-
-  // Remove child from container
-  rpc RemoveChild(RemoveChildRequest) returns (RemoveChildResponse);
-
   // Set focus to widget
   rpc SetFocus(SetFocusRequest) returns (SetFocusResponse);
 
@@ -94,31 +88,6 @@ message SetRootRequest {
 }
 
 message SetRootResponse {
-  bool success = 1;
-}
-
-// AddChild messages
-
-message AddChildRequest {
-  SessionId session_id = 1;
-  WidgetId parent_id = 2;
-  WidgetId child_id = 3;
-  optional int32 index = 4;  // Position in parent's children, -1 or omitted for append
-}
-
-message AddChildResponse {
-  bool success = 1;
-}
-
-// RemoveChild messages
-
-message RemoveChildRequest {
-  SessionId session_id = 1;
-  WidgetId parent_id = 2;
-  WidgetId child_id = 3;
-}
-
-message RemoveChildResponse {
   bool success = 1;
 }
 

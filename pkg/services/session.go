@@ -123,7 +123,7 @@ func (s *SessionService) GetServerInfo(ctx context.Context, req *pb.GetServerInf
 			"Box", "TextView", "InputField", "TextArea",
 			"Button", "Checkbox", "DropDown", "List",
 			"Table", "TreeView", "Form", "Flex",
-			"Grid", "Pages", "Modal",
+			"Grid", "Pages", "Modal", "Image", "ProgressBar",
 		},
 	}
 

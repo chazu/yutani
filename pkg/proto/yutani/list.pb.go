@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type AddItemRequest struct {
+type ListAddItemRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -32,20 +32,20 @@ type AddItemRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *AddItemRequest) Reset() {
-	*x = AddItemRequest{}
+func (x *ListAddItemRequest) Reset() {
+	*x = ListAddItemRequest{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *AddItemRequest) String() string {
+func (x *ListAddItemRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AddItemRequest) ProtoMessage() {}
+func (*ListAddItemRequest) ProtoMessage() {}
 
-func (x *AddItemRequest) ProtoReflect() protoreflect.Message {
+func (x *ListAddItemRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -57,47 +57,47 @@ func (x *AddItemRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AddItemRequest.ProtoReflect.Descriptor instead.
-func (*AddItemRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListAddItemRequest.ProtoReflect.Descriptor instead.
+func (*ListAddItemRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *AddItemRequest) GetSessionId() *SessionId {
+func (x *ListAddItemRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *AddItemRequest) GetWidgetId() *WidgetId {
+func (x *ListAddItemRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *AddItemRequest) GetMainText() string {
+func (x *ListAddItemRequest) GetMainText() string {
 	if x != nil {
 		return x.MainText
 	}
 	return ""
 }
 
-func (x *AddItemRequest) GetSecondaryText() string {
+func (x *ListAddItemRequest) GetSecondaryText() string {
 	if x != nil {
 		return x.SecondaryText
 	}
 	return ""
 }
 
-func (x *AddItemRequest) GetShortcut() string {
+func (x *ListAddItemRequest) GetShortcut() string {
 	if x != nil && x.Shortcut != nil {
 		return *x.Shortcut
 	}
 	return ""
 }
 
-type AddItemResponse struct {
+type ListAddItemResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	Index         int32                  `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty"` // Index of the added item
@@ -105,20 +105,20 @@ type AddItemResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *AddItemResponse) Reset() {
-	*x = AddItemResponse{}
+func (x *ListAddItemResponse) Reset() {
+	*x = ListAddItemResponse{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *AddItemResponse) String() string {
+func (x *ListAddItemResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AddItemResponse) ProtoMessage() {}
+func (*ListAddItemResponse) ProtoMessage() {}
 
-func (x *AddItemResponse) ProtoReflect() protoreflect.Message {
+func (x *ListAddItemResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -130,26 +130,26 @@ func (x *AddItemResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AddItemResponse.ProtoReflect.Descriptor instead.
-func (*AddItemResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListAddItemResponse.ProtoReflect.Descriptor instead.
+func (*ListAddItemResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *AddItemResponse) GetSuccess() bool {
+func (x *ListAddItemResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-func (x *AddItemResponse) GetIndex() int32 {
+func (x *ListAddItemResponse) GetIndex() int32 {
 	if x != nil {
 		return x.Index
 	}
 	return 0
 }
 
-type RemoveItemRequest struct {
+type ListRemoveItemRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -158,20 +158,20 @@ type RemoveItemRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RemoveItemRequest) Reset() {
-	*x = RemoveItemRequest{}
+func (x *ListRemoveItemRequest) Reset() {
+	*x = ListRemoveItemRequest{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RemoveItemRequest) String() string {
+func (x *ListRemoveItemRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RemoveItemRequest) ProtoMessage() {}
+func (*ListRemoveItemRequest) ProtoMessage() {}
 
-func (x *RemoveItemRequest) ProtoReflect() protoreflect.Message {
+func (x *ListRemoveItemRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -183,53 +183,53 @@ func (x *RemoveItemRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RemoveItemRequest.ProtoReflect.Descriptor instead.
-func (*RemoveItemRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListRemoveItemRequest.ProtoReflect.Descriptor instead.
+func (*ListRemoveItemRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *RemoveItemRequest) GetSessionId() *SessionId {
+func (x *ListRemoveItemRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *RemoveItemRequest) GetWidgetId() *WidgetId {
+func (x *ListRemoveItemRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *RemoveItemRequest) GetIndex() int32 {
+func (x *ListRemoveItemRequest) GetIndex() int32 {
 	if x != nil {
 		return x.Index
 	}
 	return 0
 }
 
-type RemoveItemResponse struct {
+type ListRemoveItemResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *RemoveItemResponse) Reset() {
-	*x = RemoveItemResponse{}
+func (x *ListRemoveItemResponse) Reset() {
+	*x = ListRemoveItemResponse{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RemoveItemResponse) String() string {
+func (x *ListRemoveItemResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RemoveItemResponse) ProtoMessage() {}
+func (*ListRemoveItemResponse) ProtoMessage() {}
 
-func (x *RemoveItemResponse) ProtoReflect() protoreflect.Message {
+func (x *ListRemoveItemResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -241,19 +241,19 @@ func (x *RemoveItemResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RemoveItemResponse.ProtoReflect.Descriptor instead.
-func (*RemoveItemResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListRemoveItemResponse.ProtoReflect.Descriptor instead.
+func (*ListRemoveItemResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *RemoveItemResponse) GetSuccess() bool {
+func (x *ListRemoveItemResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type ClearListRequest struct {
+type ListClearRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -261,20 +261,20 @@ type ClearListRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ClearListRequest) Reset() {
-	*x = ClearListRequest{}
+func (x *ListClearRequest) Reset() {
+	*x = ListClearRequest{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ClearListRequest) String() string {
+func (x *ListClearRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ClearListRequest) ProtoMessage() {}
+func (*ListClearRequest) ProtoMessage() {}
 
-func (x *ClearListRequest) ProtoReflect() protoreflect.Message {
+func (x *ListClearRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -286,46 +286,46 @@ func (x *ClearListRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ClearListRequest.ProtoReflect.Descriptor instead.
-func (*ClearListRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListClearRequest.ProtoReflect.Descriptor instead.
+func (*ListClearRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ClearListRequest) GetSessionId() *SessionId {
+func (x *ListClearRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *ClearListRequest) GetWidgetId() *WidgetId {
+func (x *ListClearRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-type ClearListResponse struct {
+type ListClearResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ClearListResponse) Reset() {
-	*x = ClearListResponse{}
+func (x *ListClearResponse) Reset() {
+	*x = ListClearResponse{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ClearListResponse) String() string {
+func (x *ListClearResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ClearListResponse) ProtoMessage() {}
+func (*ListClearResponse) ProtoMessage() {}
 
-func (x *ClearListResponse) ProtoReflect() protoreflect.Message {
+func (x *ListClearResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -337,19 +337,19 @@ func (x *ClearListResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ClearListResponse.ProtoReflect.Descriptor instead.
-func (*ClearListResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListClearResponse.ProtoReflect.Descriptor instead.
+func (*ListClearResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ClearListResponse) GetSuccess() bool {
+func (x *ListClearResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type GetItemCountRequest struct {
+type ListGetItemCountRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -357,20 +357,20 @@ type GetItemCountRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetItemCountRequest) Reset() {
-	*x = GetItemCountRequest{}
+func (x *ListGetItemCountRequest) Reset() {
+	*x = ListGetItemCountRequest{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetItemCountRequest) String() string {
+func (x *ListGetItemCountRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetItemCountRequest) ProtoMessage() {}
+func (*ListGetItemCountRequest) ProtoMessage() {}
 
-func (x *GetItemCountRequest) ProtoReflect() protoreflect.Message {
+func (x *ListGetItemCountRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -382,46 +382,46 @@ func (x *GetItemCountRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetItemCountRequest.ProtoReflect.Descriptor instead.
-func (*GetItemCountRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListGetItemCountRequest.ProtoReflect.Descriptor instead.
+func (*ListGetItemCountRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *GetItemCountRequest) GetSessionId() *SessionId {
+func (x *ListGetItemCountRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *GetItemCountRequest) GetWidgetId() *WidgetId {
+func (x *ListGetItemCountRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-type GetItemCountResponse struct {
+type ListGetItemCountResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Count         int32                  `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetItemCountResponse) Reset() {
-	*x = GetItemCountResponse{}
+func (x *ListGetItemCountResponse) Reset() {
+	*x = ListGetItemCountResponse{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetItemCountResponse) String() string {
+func (x *ListGetItemCountResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetItemCountResponse) ProtoMessage() {}
+func (*ListGetItemCountResponse) ProtoMessage() {}
 
-func (x *GetItemCountResponse) ProtoReflect() protoreflect.Message {
+func (x *ListGetItemCountResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -433,19 +433,19 @@ func (x *GetItemCountResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetItemCountResponse.ProtoReflect.Descriptor instead.
-func (*GetItemCountResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListGetItemCountResponse.ProtoReflect.Descriptor instead.
+func (*ListGetItemCountResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *GetItemCountResponse) GetCount() int32 {
+func (x *ListGetItemCountResponse) GetCount() int32 {
 	if x != nil {
 		return x.Count
 	}
 	return 0
 }
 
-type GetSelectedRequest struct {
+type ListGetSelectionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -453,20 +453,20 @@ type GetSelectedRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetSelectedRequest) Reset() {
-	*x = GetSelectedRequest{}
+func (x *ListGetSelectionRequest) Reset() {
+	*x = ListGetSelectionRequest{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetSelectedRequest) String() string {
+func (x *ListGetSelectionRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetSelectedRequest) ProtoMessage() {}
+func (*ListGetSelectionRequest) ProtoMessage() {}
 
-func (x *GetSelectedRequest) ProtoReflect() protoreflect.Message {
+func (x *ListGetSelectionRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -478,46 +478,46 @@ func (x *GetSelectedRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetSelectedRequest.ProtoReflect.Descriptor instead.
-func (*GetSelectedRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListGetSelectionRequest.ProtoReflect.Descriptor instead.
+func (*ListGetSelectionRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *GetSelectedRequest) GetSessionId() *SessionId {
+func (x *ListGetSelectionRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *GetSelectedRequest) GetWidgetId() *WidgetId {
+func (x *ListGetSelectionRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-type GetSelectedResponse struct {
+type ListGetSelectionResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Index         int32                  `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"` // -1 if no selection
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetSelectedResponse) Reset() {
-	*x = GetSelectedResponse{}
+func (x *ListGetSelectionResponse) Reset() {
+	*x = ListGetSelectionResponse{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetSelectedResponse) String() string {
+func (x *ListGetSelectionResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetSelectedResponse) ProtoMessage() {}
+func (*ListGetSelectionResponse) ProtoMessage() {}
 
-func (x *GetSelectedResponse) ProtoReflect() protoreflect.Message {
+func (x *ListGetSelectionResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -529,19 +529,19 @@ func (x *GetSelectedResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetSelectedResponse.ProtoReflect.Descriptor instead.
-func (*GetSelectedResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListGetSelectionResponse.ProtoReflect.Descriptor instead.
+func (*ListGetSelectionResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *GetSelectedResponse) GetIndex() int32 {
+func (x *ListGetSelectionResponse) GetIndex() int32 {
 	if x != nil {
 		return x.Index
 	}
 	return 0
 }
 
-type SetSelectedRequest struct {
+type ListSetSelectionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -550,20 +550,20 @@ type SetSelectedRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetSelectedRequest) Reset() {
-	*x = SetSelectedRequest{}
+func (x *ListSetSelectionRequest) Reset() {
+	*x = ListSetSelectionRequest{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetSelectedRequest) String() string {
+func (x *ListSetSelectionRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetSelectedRequest) ProtoMessage() {}
+func (*ListSetSelectionRequest) ProtoMessage() {}
 
-func (x *SetSelectedRequest) ProtoReflect() protoreflect.Message {
+func (x *ListSetSelectionRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -575,53 +575,53 @@ func (x *SetSelectedRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetSelectedRequest.ProtoReflect.Descriptor instead.
-func (*SetSelectedRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListSetSelectionRequest.ProtoReflect.Descriptor instead.
+func (*ListSetSelectionRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *SetSelectedRequest) GetSessionId() *SessionId {
+func (x *ListSetSelectionRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *SetSelectedRequest) GetWidgetId() *WidgetId {
+func (x *ListSetSelectionRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *SetSelectedRequest) GetIndex() int32 {
+func (x *ListSetSelectionRequest) GetIndex() int32 {
 	if x != nil {
 		return x.Index
 	}
 	return 0
 }
 
-type SetSelectedResponse struct {
+type ListSetSelectionResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetSelectedResponse) Reset() {
-	*x = SetSelectedResponse{}
+func (x *ListSetSelectionResponse) Reset() {
+	*x = ListSetSelectionResponse{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetSelectedResponse) String() string {
+func (x *ListSetSelectionResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetSelectedResponse) ProtoMessage() {}
+func (*ListSetSelectionResponse) ProtoMessage() {}
 
-func (x *SetSelectedResponse) ProtoReflect() protoreflect.Message {
+func (x *ListSetSelectionResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -633,19 +633,19 @@ func (x *SetSelectedResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetSelectedResponse.ProtoReflect.Descriptor instead.
-func (*SetSelectedResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListSetSelectionResponse.ProtoReflect.Descriptor instead.
+func (*ListSetSelectionResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *SetSelectedResponse) GetSuccess() bool {
+func (x *ListSetSelectionResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type GetItemRequest struct {
+type ListGetItemRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -654,20 +654,20 @@ type GetItemRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetItemRequest) Reset() {
-	*x = GetItemRequest{}
+func (x *ListGetItemRequest) Reset() {
+	*x = ListGetItemRequest{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetItemRequest) String() string {
+func (x *ListGetItemRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetItemRequest) ProtoMessage() {}
+func (*ListGetItemRequest) ProtoMessage() {}
 
-func (x *GetItemRequest) ProtoReflect() protoreflect.Message {
+func (x *ListGetItemRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -679,33 +679,33 @@ func (x *GetItemRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetItemRequest.ProtoReflect.Descriptor instead.
-func (*GetItemRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListGetItemRequest.ProtoReflect.Descriptor instead.
+func (*ListGetItemRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *GetItemRequest) GetSessionId() *SessionId {
+func (x *ListGetItemRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *GetItemRequest) GetWidgetId() *WidgetId {
+func (x *ListGetItemRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *GetItemRequest) GetIndex() int32 {
+func (x *ListGetItemRequest) GetIndex() int32 {
 	if x != nil {
 		return x.Index
 	}
 	return 0
 }
 
-type GetItemResponse struct {
+type ListGetItemResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	MainText      string                 `protobuf:"bytes,1,opt,name=main_text,json=mainText,proto3" json:"main_text,omitempty"`
 	SecondaryText string                 `protobuf:"bytes,2,opt,name=secondary_text,json=secondaryText,proto3" json:"secondary_text,omitempty"`
@@ -714,20 +714,20 @@ type GetItemResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetItemResponse) Reset() {
-	*x = GetItemResponse{}
+func (x *ListGetItemResponse) Reset() {
+	*x = ListGetItemResponse{}
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetItemResponse) String() string {
+func (x *ListGetItemResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetItemResponse) ProtoMessage() {}
+func (*ListGetItemResponse) ProtoMessage() {}
 
-func (x *GetItemResponse) ProtoReflect() protoreflect.Message {
+func (x *ListGetItemResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_list_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -739,26 +739,26 @@ func (x *GetItemResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetItemResponse.ProtoReflect.Descriptor instead.
-func (*GetItemResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListGetItemResponse.ProtoReflect.Descriptor instead.
+func (*ListGetItemResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_list_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *GetItemResponse) GetMainText() string {
+func (x *ListGetItemResponse) GetMainText() string {
 	if x != nil {
 		return x.MainText
 	}
 	return ""
 }
 
-func (x *GetItemResponse) GetSecondaryText() string {
+func (x *ListGetItemResponse) GetSecondaryText() string {
 	if x != nil {
 		return x.SecondaryText
 	}
 	return ""
 }
 
-func (x *GetItemResponse) GetShortcut() string {
+func (x *ListGetItemResponse) GetShortcut() string {
 	if x != nil {
 		return x.Shortcut
 	}
@@ -769,68 +769,68 @@ var File_industries_loosh_yutani_v1_list_proto protoreflect.FileDescriptor
 
 const file_industries_loosh_yutani_v1_list_proto_rawDesc = "" +
 	"\n" +
-	"%industries/loosh/yutani/v1/list.proto\x12\x1aindustries.loosh.yutani.v1\x1a&industries/loosh/yutani/v1/types.proto\"\x8b\x02\n" +
-	"\x0eAddItemRequest\x12D\n" +
+	"%industries/loosh/yutani/v1/list.proto\x12\x1aindustries.loosh.yutani.v1\x1a&industries/loosh/yutani/v1/types.proto\"\x8f\x02\n" +
+	"\x12ListAddItemRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12\x1b\n" +
 	"\tmain_text\x18\x03 \x01(\tR\bmainText\x12%\n" +
 	"\x0esecondary_text\x18\x04 \x01(\tR\rsecondaryText\x12\x1f\n" +
 	"\bshortcut\x18\x05 \x01(\tH\x00R\bshortcut\x88\x01\x01B\v\n" +
-	"\t_shortcut\"A\n" +
-	"\x0fAddItemResponse\x12\x18\n" +
+	"\t_shortcut\"E\n" +
+	"\x13ListAddItemResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x14\n" +
-	"\x05index\x18\x02 \x01(\x05R\x05index\"\xb2\x01\n" +
-	"\x11RemoveItemRequest\x12D\n" +
+	"\x05index\x18\x02 \x01(\x05R\x05index\"\xb6\x01\n" +
+	"\x15ListRemoveItemRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12\x14\n" +
-	"\x05index\x18\x03 \x01(\x05R\x05index\".\n" +
-	"\x12RemoveItemResponse\x12\x18\n" +
+	"\x05index\x18\x03 \x01(\x05R\x05index\"2\n" +
+	"\x16ListRemoveItemResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x9b\x01\n" +
-	"\x10ClearListRequest\x12D\n" +
+	"\x10ListClearRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"-\n" +
-	"\x11ClearListResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x9e\x01\n" +
-	"\x13GetItemCountRequest\x12D\n" +
+	"\x11ListClearResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xa2\x01\n" +
+	"\x17ListGetItemCountRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
-	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\",\n" +
-	"\x14GetItemCountResponse\x12\x14\n" +
-	"\x05count\x18\x01 \x01(\x05R\x05count\"\x9d\x01\n" +
-	"\x12GetSelectedRequest\x12D\n" +
+	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"0\n" +
+	"\x18ListGetItemCountResponse\x12\x14\n" +
+	"\x05count\x18\x01 \x01(\x05R\x05count\"\xa2\x01\n" +
+	"\x17ListGetSelectionRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
-	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"+\n" +
-	"\x13GetSelectedResponse\x12\x14\n" +
-	"\x05index\x18\x01 \x01(\x05R\x05index\"\xb3\x01\n" +
-	"\x12SetSelectedRequest\x12D\n" +
-	"\n" +
-	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
-	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12\x14\n" +
-	"\x05index\x18\x03 \x01(\x05R\x05index\"/\n" +
-	"\x13SetSelectedResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xaf\x01\n" +
-	"\x0eGetItemRequest\x12D\n" +
+	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"0\n" +
+	"\x18ListGetSelectionResponse\x12\x14\n" +
+	"\x05index\x18\x01 \x01(\x05R\x05index\"\xb8\x01\n" +
+	"\x17ListSetSelectionRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12\x14\n" +
-	"\x05index\x18\x03 \x01(\x05R\x05index\"q\n" +
-	"\x0fGetItemResponse\x12\x1b\n" +
+	"\x05index\x18\x03 \x01(\x05R\x05index\"4\n" +
+	"\x18ListSetSelectionResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xb3\x01\n" +
+	"\x12ListGetItemRequest\x12D\n" +
+	"\n" +
+	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
+	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12\x14\n" +
+	"\x05index\x18\x03 \x01(\x05R\x05index\"u\n" +
+	"\x13ListGetItemResponse\x12\x1b\n" +
 	"\tmain_text\x18\x01 \x01(\tR\bmainText\x12%\n" +
 	"\x0esecondary_text\x18\x02 \x01(\tR\rsecondaryText\x12\x1a\n" +
-	"\bshortcut\x18\x03 \x01(\tR\bshortcut2\xfb\x05\n" +
-	"\vListService\x12b\n" +
-	"\aAddItem\x12*.industries.loosh.yutani.v1.AddItemRequest\x1a+.industries.loosh.yutani.v1.AddItemResponse\x12k\n" +
+	"\bshortcut\x18\x03 \x01(\tR\bshortcut2\xb1\x06\n" +
+	"\vListService\x12j\n" +
+	"\aAddItem\x12..industries.loosh.yutani.v1.ListAddItemRequest\x1a/.industries.loosh.yutani.v1.ListAddItemResponse\x12s\n" +
 	"\n" +
-	"RemoveItem\x12-.industries.loosh.yutani.v1.RemoveItemRequest\x1a..industries.loosh.yutani.v1.RemoveItemResponse\x12d\n" +
-	"\x05Clear\x12,.industries.loosh.yutani.v1.ClearListRequest\x1a-.industries.loosh.yutani.v1.ClearListResponse\x12q\n" +
-	"\fGetItemCount\x12/.industries.loosh.yutani.v1.GetItemCountRequest\x1a0.industries.loosh.yutani.v1.GetItemCountResponse\x12n\n" +
-	"\vGetSelected\x12..industries.loosh.yutani.v1.GetSelectedRequest\x1a/.industries.loosh.yutani.v1.GetSelectedResponse\x12n\n" +
-	"\vSetSelected\x12..industries.loosh.yutani.v1.SetSelectedRequest\x1a/.industries.loosh.yutani.v1.SetSelectedResponse\x12b\n" +
-	"\aGetItem\x12*.industries.loosh.yutani.v1.GetItemRequest\x1a+.industries.loosh.yutani.v1.GetItemResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
+	"RemoveItem\x121.industries.loosh.yutani.v1.ListRemoveItemRequest\x1a2.industries.loosh.yutani.v1.ListRemoveItemResponse\x12d\n" +
+	"\x05Clear\x12,.industries.loosh.yutani.v1.ListClearRequest\x1a-.industries.loosh.yutani.v1.ListClearResponse\x12y\n" +
+	"\fGetItemCount\x123.industries.loosh.yutani.v1.ListGetItemCountRequest\x1a4.industries.loosh.yutani.v1.ListGetItemCountResponse\x12y\n" +
+	"\fGetSelection\x123.industries.loosh.yutani.v1.ListGetSelectionRequest\x1a4.industries.loosh.yutani.v1.ListGetSelectionResponse\x12y\n" +
+	"\fSetSelection\x123.industries.loosh.yutani.v1.ListSetSelectionRequest\x1a4.industries.loosh.yutani.v1.ListSetSelectionResponse\x12j\n" +
+	"\aGetItem\x12..industries.loosh.yutani.v1.ListGetItemRequest\x1a/.industries.loosh.yutani.v1.ListGetItemResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
 
 var (
 	file_industries_loosh_yutani_v1_list_proto_rawDescOnce sync.Once
@@ -846,52 +846,52 @@ func file_industries_loosh_yutani_v1_list_proto_rawDescGZIP() []byte {
 
 var file_industries_loosh_yutani_v1_list_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_industries_loosh_yutani_v1_list_proto_goTypes = []any{
-	(*AddItemRequest)(nil),       // 0: industries.loosh.yutani.v1.AddItemRequest
-	(*AddItemResponse)(nil),      // 1: industries.loosh.yutani.v1.AddItemResponse
-	(*RemoveItemRequest)(nil),    // 2: industries.loosh.yutani.v1.RemoveItemRequest
-	(*RemoveItemResponse)(nil),   // 3: industries.loosh.yutani.v1.RemoveItemResponse
-	(*ClearListRequest)(nil),     // 4: industries.loosh.yutani.v1.ClearListRequest
-	(*ClearListResponse)(nil),    // 5: industries.loosh.yutani.v1.ClearListResponse
-	(*GetItemCountRequest)(nil),  // 6: industries.loosh.yutani.v1.GetItemCountRequest
-	(*GetItemCountResponse)(nil), // 7: industries.loosh.yutani.v1.GetItemCountResponse
-	(*GetSelectedRequest)(nil),   // 8: industries.loosh.yutani.v1.GetSelectedRequest
-	(*GetSelectedResponse)(nil),  // 9: industries.loosh.yutani.v1.GetSelectedResponse
-	(*SetSelectedRequest)(nil),   // 10: industries.loosh.yutani.v1.SetSelectedRequest
-	(*SetSelectedResponse)(nil),  // 11: industries.loosh.yutani.v1.SetSelectedResponse
-	(*GetItemRequest)(nil),       // 12: industries.loosh.yutani.v1.GetItemRequest
-	(*GetItemResponse)(nil),      // 13: industries.loosh.yutani.v1.GetItemResponse
-	(*SessionId)(nil),            // 14: industries.loosh.yutani.v1.SessionId
-	(*WidgetId)(nil),             // 15: industries.loosh.yutani.v1.WidgetId
+	(*ListAddItemRequest)(nil),       // 0: industries.loosh.yutani.v1.ListAddItemRequest
+	(*ListAddItemResponse)(nil),      // 1: industries.loosh.yutani.v1.ListAddItemResponse
+	(*ListRemoveItemRequest)(nil),    // 2: industries.loosh.yutani.v1.ListRemoveItemRequest
+	(*ListRemoveItemResponse)(nil),   // 3: industries.loosh.yutani.v1.ListRemoveItemResponse
+	(*ListClearRequest)(nil),         // 4: industries.loosh.yutani.v1.ListClearRequest
+	(*ListClearResponse)(nil),        // 5: industries.loosh.yutani.v1.ListClearResponse
+	(*ListGetItemCountRequest)(nil),  // 6: industries.loosh.yutani.v1.ListGetItemCountRequest
+	(*ListGetItemCountResponse)(nil), // 7: industries.loosh.yutani.v1.ListGetItemCountResponse
+	(*ListGetSelectionRequest)(nil),  // 8: industries.loosh.yutani.v1.ListGetSelectionRequest
+	(*ListGetSelectionResponse)(nil), // 9: industries.loosh.yutani.v1.ListGetSelectionResponse
+	(*ListSetSelectionRequest)(nil),  // 10: industries.loosh.yutani.v1.ListSetSelectionRequest
+	(*ListSetSelectionResponse)(nil), // 11: industries.loosh.yutani.v1.ListSetSelectionResponse
+	(*ListGetItemRequest)(nil),       // 12: industries.loosh.yutani.v1.ListGetItemRequest
+	(*ListGetItemResponse)(nil),      // 13: industries.loosh.yutani.v1.ListGetItemResponse
+	(*SessionId)(nil),                // 14: industries.loosh.yutani.v1.SessionId
+	(*WidgetId)(nil),                 // 15: industries.loosh.yutani.v1.WidgetId
 }
 var file_industries_loosh_yutani_v1_list_proto_depIdxs = []int32{
-	14, // 0: industries.loosh.yutani.v1.AddItemRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	15, // 1: industries.loosh.yutani.v1.AddItemRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	14, // 2: industries.loosh.yutani.v1.RemoveItemRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	15, // 3: industries.loosh.yutani.v1.RemoveItemRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	14, // 4: industries.loosh.yutani.v1.ClearListRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	15, // 5: industries.loosh.yutani.v1.ClearListRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	14, // 6: industries.loosh.yutani.v1.GetItemCountRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	15, // 7: industries.loosh.yutani.v1.GetItemCountRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	14, // 8: industries.loosh.yutani.v1.GetSelectedRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	15, // 9: industries.loosh.yutani.v1.GetSelectedRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	14, // 10: industries.loosh.yutani.v1.SetSelectedRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	15, // 11: industries.loosh.yutani.v1.SetSelectedRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	14, // 12: industries.loosh.yutani.v1.GetItemRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	15, // 13: industries.loosh.yutani.v1.GetItemRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	0,  // 14: industries.loosh.yutani.v1.ListService.AddItem:input_type -> industries.loosh.yutani.v1.AddItemRequest
-	2,  // 15: industries.loosh.yutani.v1.ListService.RemoveItem:input_type -> industries.loosh.yutani.v1.RemoveItemRequest
-	4,  // 16: industries.loosh.yutani.v1.ListService.Clear:input_type -> industries.loosh.yutani.v1.ClearListRequest
-	6,  // 17: industries.loosh.yutani.v1.ListService.GetItemCount:input_type -> industries.loosh.yutani.v1.GetItemCountRequest
-	8,  // 18: industries.loosh.yutani.v1.ListService.GetSelected:input_type -> industries.loosh.yutani.v1.GetSelectedRequest
-	10, // 19: industries.loosh.yutani.v1.ListService.SetSelected:input_type -> industries.loosh.yutani.v1.SetSelectedRequest
-	12, // 20: industries.loosh.yutani.v1.ListService.GetItem:input_type -> industries.loosh.yutani.v1.GetItemRequest
-	1,  // 21: industries.loosh.yutani.v1.ListService.AddItem:output_type -> industries.loosh.yutani.v1.AddItemResponse
-	3,  // 22: industries.loosh.yutani.v1.ListService.RemoveItem:output_type -> industries.loosh.yutani.v1.RemoveItemResponse
-	5,  // 23: industries.loosh.yutani.v1.ListService.Clear:output_type -> industries.loosh.yutani.v1.ClearListResponse
-	7,  // 24: industries.loosh.yutani.v1.ListService.GetItemCount:output_type -> industries.loosh.yutani.v1.GetItemCountResponse
-	9,  // 25: industries.loosh.yutani.v1.ListService.GetSelected:output_type -> industries.loosh.yutani.v1.GetSelectedResponse
-	11, // 26: industries.loosh.yutani.v1.ListService.SetSelected:output_type -> industries.loosh.yutani.v1.SetSelectedResponse
-	13, // 27: industries.loosh.yutani.v1.ListService.GetItem:output_type -> industries.loosh.yutani.v1.GetItemResponse
+	14, // 0: industries.loosh.yutani.v1.ListAddItemRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	15, // 1: industries.loosh.yutani.v1.ListAddItemRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	14, // 2: industries.loosh.yutani.v1.ListRemoveItemRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	15, // 3: industries.loosh.yutani.v1.ListRemoveItemRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	14, // 4: industries.loosh.yutani.v1.ListClearRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	15, // 5: industries.loosh.yutani.v1.ListClearRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	14, // 6: industries.loosh.yutani.v1.ListGetItemCountRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	15, // 7: industries.loosh.yutani.v1.ListGetItemCountRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	14, // 8: industries.loosh.yutani.v1.ListGetSelectionRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	15, // 9: industries.loosh.yutani.v1.ListGetSelectionRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	14, // 10: industries.loosh.yutani.v1.ListSetSelectionRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	15, // 11: industries.loosh.yutani.v1.ListSetSelectionRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	14, // 12: industries.loosh.yutani.v1.ListGetItemRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	15, // 13: industries.loosh.yutani.v1.ListGetItemRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	0,  // 14: industries.loosh.yutani.v1.ListService.AddItem:input_type -> industries.loosh.yutani.v1.ListAddItemRequest
+	2,  // 15: industries.loosh.yutani.v1.ListService.RemoveItem:input_type -> industries.loosh.yutani.v1.ListRemoveItemRequest
+	4,  // 16: industries.loosh.yutani.v1.ListService.Clear:input_type -> industries.loosh.yutani.v1.ListClearRequest
+	6,  // 17: industries.loosh.yutani.v1.ListService.GetItemCount:input_type -> industries.loosh.yutani.v1.ListGetItemCountRequest
+	8,  // 18: industries.loosh.yutani.v1.ListService.GetSelection:input_type -> industries.loosh.yutani.v1.ListGetSelectionRequest
+	10, // 19: industries.loosh.yutani.v1.ListService.SetSelection:input_type -> industries.loosh.yutani.v1.ListSetSelectionRequest
+	12, // 20: industries.loosh.yutani.v1.ListService.GetItem:input_type -> industries.loosh.yutani.v1.ListGetItemRequest
+	1,  // 21: industries.loosh.yutani.v1.ListService.AddItem:output_type -> industries.loosh.yutani.v1.ListAddItemResponse
+	3,  // 22: industries.loosh.yutani.v1.ListService.RemoveItem:output_type -> industries.loosh.yutani.v1.ListRemoveItemResponse
+	5,  // 23: industries.loosh.yutani.v1.ListService.Clear:output_type -> industries.loosh.yutani.v1.ListClearResponse
+	7,  // 24: industries.loosh.yutani.v1.ListService.GetItemCount:output_type -> industries.loosh.yutani.v1.ListGetItemCountResponse
+	9,  // 25: industries.loosh.yutani.v1.ListService.GetSelection:output_type -> industries.loosh.yutani.v1.ListGetSelectionResponse
+	11, // 26: industries.loosh.yutani.v1.ListService.SetSelection:output_type -> industries.loosh.yutani.v1.ListSetSelectionResponse
+	13, // 27: industries.loosh.yutani.v1.ListService.GetItem:output_type -> industries.loosh.yutani.v1.ListGetItemResponse
 	21, // [21:28] is the sub-list for method output_type
 	14, // [14:21] is the sub-list for method input_type
 	14, // [14:14] is the sub-list for extension type_name

@@ -71,17 +71,6 @@ type Server struct {
 	stopCh  chan struct{}
 }
 
-// NewServer creates a new Yutani server.
-// This is a convenience wrapper around New() for direct parameter passing.
-func NewServer(maxSessions int, mouseEnable, pasteEnable bool) (*Server, error) {
-	cfg := &config.Config{
-		MaxSessions: maxSessions,
-		Mouse:       mouseEnable,
-		Paste:       pasteEnable,
-	}
-	return New(cfg)
-}
-
 // NewTestServer creates a server for testing with simulation screen.
 // This is a convenience wrapper around New() with test mode enabled.
 func NewTestServer(maxSessions int) (*Server, error) {

@@ -9,30 +9,30 @@ import "industries/loosh/yutani/v1/types.proto";
 // ListService provides operations for List widgets
 service ListService {
   // Add an item to the list
-  rpc AddItem(AddItemRequest) returns (AddItemResponse);
+  rpc AddItem(ListAddItemRequest) returns (ListAddItemResponse);
 
   // Remove an item from the list
-  rpc RemoveItem(RemoveItemRequest) returns (RemoveItemResponse);
+  rpc RemoveItem(ListRemoveItemRequest) returns (ListRemoveItemResponse);
 
   // Clear all items from the list
-  rpc Clear(ClearListRequest) returns (ClearListResponse);
+  rpc Clear(ListClearRequest) returns (ListClearResponse);
 
   // Get the number of items in the list
-  rpc GetItemCount(GetItemCountRequest) returns (GetItemCountResponse);
+  rpc GetItemCount(ListGetItemCountRequest) returns (ListGetItemCountResponse);
 
   // Get the currently selected item index
-  rpc GetSelected(GetSelectedRequest) returns (GetSelectedResponse);
+  rpc GetSelection(ListGetSelectionRequest) returns (ListGetSelectionResponse);
 
   // Set the selected item index
-  rpc SetSelected(SetSelectedRequest) returns (SetSelectedResponse);
+  rpc SetSelection(ListSetSelectionRequest) returns (ListSetSelectionResponse);
 
   // Get an item's text
-  rpc GetItem(GetItemRequest) returns (GetItemResponse);
+  rpc GetItem(ListGetItemRequest) returns (ListGetItemResponse);
 }
 
 // AddItem
 
-message AddItemRequest {
+message ListAddItemRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   string main_text = 3;
@@ -40,79 +40,78 @@ message AddItemRequest {
   optional string shortcut = 5;
 }
 
-message AddItemResponse {
+message ListAddItemResponse {
   bool success = 1;
   int32 index = 2;  // Index of the added item
 }
 
 // RemoveItem
 
-message RemoveItemRequest {
+message ListRemoveItemRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   int32 index = 3;
 }
 
-message RemoveItemResponse {
+message ListRemoveItemResponse {
   bool success = 1;
 }
 
 // Clear
 
-message ClearListRequest {
+message ListClearRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
 }
 
-message ClearListResponse {
+message ListClearResponse {
   bool success = 1;
 }
 
 // GetItemCount
 
-message GetItemCountRequest {
+message ListGetItemCountRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
 }
 
-message GetItemCountResponse {
+message ListGetItemCountResponse {
   int32 count = 1;
 }
 
-// GetSelected
+// GetSelection
 
-message GetSelectedRequest {
+message ListGetSelectionRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
 }
 
-message GetSelectedResponse {
+message ListGetSelectionResponse {
   int32 index = 1;  // -1 if no selection
 }
 
-// SetSelected
+// SetSelection
 
-message SetSelectedRequest {
+message ListSetSelectionRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   int32 index = 3;
 }
 
-message SetSelectedResponse {
+message ListSetSelectionResponse {
   bool success = 1;
 }
 
 // GetItem
 
-message GetItemRequest {
+message ListGetItemRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   int32 index = 3;
 }
 
-message GetItemResponse {
+message ListGetItemResponse {
   string main_text = 1;
   string secondary_text = 2;
   string shortcut = 3;
 }
-

@@ -98,7 +98,7 @@ func (t *Table) SetCells(cells []*pb.TableCellUpdate) (int, error) {
 
 // Clear clears the entire table.
 func (t *Table) Clear() error {
-	_, err := t.client.tableClient.Clear(t.client.ctx, &pb.ClearTableRequest{
+	_, err := t.client.tableClient.Clear(t.client.ctx, &pb.TableClearRequest{
 		SessionId: t.client.sessionID,
 		WidgetId:  t.widgetID,
 	})
@@ -107,7 +107,7 @@ func (t *Table) Clear() error {
 
 // GetDimensions returns the table dimensions.
 func (t *Table) GetDimensions() (rows, columns int, err error) {
-	resp, err := t.client.tableClient.GetDimensions(t.client.ctx, &pb.GetDimensionsRequest{
+	resp, err := t.client.tableClient.GetDimensions(t.client.ctx, &pb.TableGetDimensionsRequest{
 		SessionId: t.client.sessionID,
 		WidgetId:  t.widgetID,
 	})
@@ -119,7 +119,7 @@ func (t *Table) GetDimensions() (rows, columns int, err error) {
 
 // GetSelection returns the current cell selection.
 func (t *Table) GetSelection() (row, column int, err error) {
-	resp, err := t.client.tableClient.GetSelection(t.client.ctx, &pb.GetSelectionRequest{
+	resp, err := t.client.tableClient.GetSelection(t.client.ctx, &pb.TableGetSelectionRequest{
 		SessionId: t.client.sessionID,
 		WidgetId:  t.widgetID,
 	})
@@ -131,7 +131,7 @@ func (t *Table) GetSelection() (row, column int, err error) {
 
 // SetSelection sets the current cell selection.
 func (t *Table) SetSelection(row, column int) error {
-	_, err := t.client.tableClient.SetSelection(t.client.ctx, &pb.SetSelectionRequest{
+	_, err := t.client.tableClient.SetSelection(t.client.ctx, &pb.TableSetSelectionRequest{
 		SessionId: t.client.sessionID,
 		WidgetId:  t.widgetID,
 		Row:       int32(row),
@@ -142,7 +142,7 @@ func (t *Table) SetSelection(row, column int) error {
 
 // SetFixed sets the number of fixed rows and columns.
 func (t *Table) SetFixed(fixedRows, fixedColumns int) error {
-	_, err := t.client.tableClient.SetFixed(t.client.ctx, &pb.SetFixedRequest{
+	_, err := t.client.tableClient.SetFixed(t.client.ctx, &pb.TableSetFixedRequest{
 		SessionId:    t.client.sessionID,
 		WidgetId:     t.widgetID,
 		FixedRows:    int32(fixedRows),

@@ -418,22 +418,6 @@ func (s *WidgetService) applyProperties(primitive tview.Primitive, widgetType pb
 }
 
 
-// AddChild adds a child widget to a container.
-// Note: For Flex, Grid, and Pages containers, use LayoutService methods instead
-// (AddFlexChild, AddGridChild, AddPage).
-func (s *WidgetService) AddChild(ctx context.Context, req *pb.AddChildRequest) (*pb.AddChildResponse, error) {
-	return nil, status.Error(codes.Unimplemented,
-		"use LayoutService for container operations: AddFlexChild, AddGridChild, or AddPage")
-}
-
-// RemoveChild removes a child widget from a container.
-// Note: For Flex, Grid, and Pages containers, use LayoutService methods instead
-// (RemoveFlexChild, RemoveGridChild, RemovePage).
-func (s *WidgetService) RemoveChild(ctx context.Context, req *pb.RemoveChildRequest) (*pb.RemoveChildResponse, error) {
-	return nil, status.Error(codes.Unimplemented,
-		"use LayoutService for container operations: RemoveFlexChild, RemoveGridChild, or RemovePage")
-}
-
 
 // SetFocus sets focus to a widget
 func (s *WidgetService) SetFocus(ctx context.Context, req *pb.SetFocusRequest) (*pb.SetFocusResponse, error) {

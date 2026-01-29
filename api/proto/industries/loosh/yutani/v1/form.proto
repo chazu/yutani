@@ -9,22 +9,22 @@ import "industries/loosh/yutani/v1/types.proto";
 // FormService provides operations for Form widgets
 service FormService {
   // Add a form field (InputField, Checkbox, DropDown, etc.)
-  rpc AddField(AddFieldRequest) returns (AddFieldResponse);
+  rpc AddField(FormAddFieldRequest) returns (FormAddFieldResponse);
 
   // Add a button to the form
-  rpc AddButton(AddButtonRequest) returns (AddButtonResponse);
+  rpc AddButton(FormAddButtonRequest) returns (FormAddButtonResponse);
 
   // Get a field's value
-  rpc GetFieldValue(GetFieldValueRequest) returns (GetFieldValueResponse);
+  rpc GetFieldValue(FormGetFieldValueRequest) returns (FormGetFieldValueResponse);
 
   // Set a field's value
-  rpc SetFieldValue(SetFieldValueRequest) returns (SetFieldValueResponse);
+  rpc SetFieldValue(FormSetFieldValueRequest) returns (FormSetFieldValueResponse);
 
   // Clear all form fields
-  rpc Clear(ClearFormRequest) returns (ClearFormResponse);
+  rpc Clear(FormClearRequest) returns (FormClearResponse);
 
   // Get the number of form items
-  rpc GetItemCount(GetFormItemCountRequest) returns (GetFormItemCountResponse);
+  rpc GetItemCount(FormGetItemCountRequest) returns (FormGetItemCountResponse);
 }
 
 // Form field types
@@ -37,7 +37,7 @@ enum FormFieldType {
 
 // AddField
 
-message AddFieldRequest {
+message FormAddFieldRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   string label = 3;
@@ -47,68 +47,67 @@ message AddFieldRequest {
   repeated string dropdown_options = 7;  // For dropdown fields
 }
 
-message AddFieldResponse {
+message FormAddFieldResponse {
   bool success = 1;
   int32 field_index = 2;
 }
 
 // AddButton
 
-message AddButtonRequest {
+message FormAddButtonRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   string label = 3;
 }
 
-message AddButtonResponse {
+message FormAddButtonResponse {
   bool success = 1;
   int32 button_index = 2;
 }
 
 // GetFieldValue
 
-message GetFieldValueRequest {
+message FormGetFieldValueRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   int32 field_index = 3;
 }
 
-message GetFieldValueResponse {
+message FormGetFieldValueResponse {
   string value = 1;
 }
 
 // SetFieldValue
 
-message SetFieldValueRequest {
+message FormSetFieldValueRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   int32 field_index = 3;
   string value = 4;
 }
 
-message SetFieldValueResponse {
+message FormSetFieldValueResponse {
   bool success = 1;
 }
 
 // Clear
 
-message ClearFormRequest {
+message FormClearRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
 }
 
-message ClearFormResponse {
+message FormClearResponse {
   bool success = 1;
 }
 
 // GetItemCount
 
-message GetFormItemCountRequest {
+message FormGetItemCountRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
 }
 
-message GetFormItemCountResponse {
+message FormGetItemCountResponse {
   int32 count = 1;
 }
-

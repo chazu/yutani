@@ -231,7 +231,7 @@ func TestTreeService_SetExpanded(t *testing.T) {
 	rootNodeID := rootResp.NodeId.Id
 
 	// Test SetExpanded - expand
-	resp, err := treeService.SetExpanded(ctx, &pb.SetExpandedRequest{
+	resp, err := treeService.SetExpanded(ctx, &pb.TreeSetExpandedRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		NodeId:    &pb.TreeNodeId{Id: rootNodeID},
@@ -245,7 +245,7 @@ func TestTreeService_SetExpanded(t *testing.T) {
 	}
 
 	// Test SetExpanded - collapse
-	resp2, err := treeService.SetExpanded(ctx, &pb.SetExpandedRequest{
+	resp2, err := treeService.SetExpanded(ctx, &pb.TreeSetExpandedRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		NodeId:    &pb.TreeNodeId{Id: rootNodeID},
@@ -259,7 +259,7 @@ func TestTreeService_SetExpanded(t *testing.T) {
 	}
 }
 
-func TestTreeService_GetSetSelected(t *testing.T) {
+func TestTreeService_GetSetSelection(t *testing.T) {
 	srv := setupTestServer(t)
 
 	treeService := NewTreeService(srv)
@@ -311,26 +311,26 @@ func TestTreeService_GetSetSelected(t *testing.T) {
 	}
 	childNodeID := childResp.NodeId.Id
 
-	// Test SetSelected
-	setResp, err := treeService.SetSelected(ctx, &pb.SetTreeSelectedRequest{
+	// Test SetSelection
+	setResp, err := treeService.SetSelection(ctx, &pb.TreeSetSelectionRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		NodeId:    &pb.TreeNodeId{Id: childNodeID},
 	})
 	if err != nil {
-		t.Fatalf("SetSelected failed: %v", err)
+		t.Fatalf("SetSelection failed: %v", err)
 	}
 	if !setResp.Success {
 		t.Error("Expected success to be true")
 	}
 
-	// Test GetSelected
-	getResp, err := treeService.GetSelected(ctx, &pb.GetTreeSelectedRequest{
+	// Test GetSelection
+	getResp, err := treeService.GetSelection(ctx, &pb.TreeGetSelectionRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
 	if err != nil {
-		t.Fatalf("GetSelected failed: %v", err)
+		t.Fatalf("GetSelection failed: %v", err)
 	}
 	if getResp.NodeId.Id != childNodeID {
 		t.Errorf("Expected selected node ID %s, got %s", childNodeID, getResp.NodeId.Id)
@@ -379,7 +379,7 @@ func TestTreeService_GetChildren(t *testing.T) {
 	rootNodeID := rootResp.NodeId.Id
 
 	// Test GetChildren with no children
-	resp, err := treeService.GetChildren(ctx, &pb.GetChildrenRequest{
+	resp, err := treeService.GetChildren(ctx, &pb.TreeGetChildrenRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		NodeId:    &pb.TreeNodeId{Id: rootNodeID},
@@ -417,7 +417,7 @@ func TestTreeService_GetChildren(t *testing.T) {
 	}
 
 	// Test GetChildren with 2 children
-	resp2, err := treeService.GetChildren(ctx, &pb.GetChildrenRequest{
+	resp2, err := treeService.GetChildren(ctx, &pb.TreeGetChildrenRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		NodeId:    &pb.TreeNodeId{Id: rootNodeID},

@@ -220,7 +220,7 @@ func (s *TableService) SetCells(ctx context.Context, req *pb.SetTableCellsReques
 }
 
 // Clear clears the table
-func (s *TableService) Clear(ctx context.Context, req *pb.ClearTableRequest) (*pb.ClearTableResponse, error) {
+func (s *TableService) Clear(ctx context.Context, req *pb.TableClearRequest) (*pb.TableClearResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -264,13 +264,13 @@ func (s *TableService) Clear(ctx context.Context, req *pb.ClearTableRequest) (*p
 		return nil, err
 	}
 
-	return &pb.ClearTableResponse{
+	return &pb.TableClearResponse{
 		Success: true,
 	}, nil
 }
 
 // GetDimensions gets table dimensions (rows, columns)
-func (s *TableService) GetDimensions(ctx context.Context, req *pb.GetDimensionsRequest) (*pb.GetDimensionsResponse, error) {
+func (s *TableService) GetDimensions(ctx context.Context, req *pb.TableGetDimensionsRequest) (*pb.TableGetDimensionsResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -314,14 +314,14 @@ func (s *TableService) GetDimensions(ctx context.Context, req *pb.GetDimensionsR
 		return nil, err
 	}
 
-	return &pb.GetDimensionsResponse{
+	return &pb.TableGetDimensionsResponse{
 		Rows:    rows,
 		Columns: columns,
 	}, nil
 }
 
 // GetSelection gets current selection
-func (s *TableService) GetSelection(ctx context.Context, req *pb.GetSelectionRequest) (*pb.GetSelectionResponse, error) {
+func (s *TableService) GetSelection(ctx context.Context, req *pb.TableGetSelectionRequest) (*pb.TableGetSelectionResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -366,14 +366,14 @@ func (s *TableService) GetSelection(ctx context.Context, req *pb.GetSelectionReq
 		return nil, err
 	}
 
-	return &pb.GetSelectionResponse{
+	return &pb.TableGetSelectionResponse{
 		Row:    row,
 		Column: column,
 	}, nil
 }
 
 // SetSelection sets current selection
-func (s *TableService) SetSelection(ctx context.Context, req *pb.SetSelectionRequest) (*pb.SetSelectionResponse, error) {
+func (s *TableService) SetSelection(ctx context.Context, req *pb.TableSetSelectionRequest) (*pb.TableSetSelectionResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -417,13 +417,13 @@ func (s *TableService) SetSelection(ctx context.Context, req *pb.SetSelectionReq
 		return nil, err
 	}
 
-	return &pb.SetSelectionResponse{
+	return &pb.TableSetSelectionResponse{
 		Success: true,
 	}, nil
 }
 
 // SetFixed sets fixed rows/columns (headers)
-func (s *TableService) SetFixed(ctx context.Context, req *pb.SetFixedRequest) (*pb.SetFixedResponse, error) {
+func (s *TableService) SetFixed(ctx context.Context, req *pb.TableSetFixedRequest) (*pb.TableSetFixedResponse, error) {
 	if req.SessionId == nil || req.WidgetId == nil {
 		return nil, status.Error(codes.InvalidArgument, "session_id and widget_id are required")
 	}
@@ -467,7 +467,7 @@ func (s *TableService) SetFixed(ctx context.Context, req *pb.SetFixedRequest) (*
 		return nil, err
 	}
 
-	return &pb.SetFixedResponse{
+	return &pb.TableSetFixedResponse{
 		Success: true,
 	}, nil
 }

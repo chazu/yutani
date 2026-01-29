@@ -36,7 +36,7 @@ func TestFormService_AddField(t *testing.T) {
 	// Test AddField - Input field
 	fieldWidth := int32(30)
 	initialValue := "test value"
-	resp, err := formService.AddField(ctx, &pb.AddFieldRequest{
+	resp, err := formService.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId:    &pb.SessionId{Id: sessionID},
 		WidgetId:     &pb.WidgetId{Id: widgetID},
 		Label:        "Username",
@@ -55,7 +55,7 @@ func TestFormService_AddField(t *testing.T) {
 	}
 
 	// Test AddField - Password field
-	resp2, err := formService.AddField(ctx, &pb.AddFieldRequest{
+	resp2, err := formService.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Label:     "Password",
@@ -69,7 +69,7 @@ func TestFormService_AddField(t *testing.T) {
 	}
 
 	// Test AddField - Checkbox
-	resp3, err := formService.AddField(ctx, &pb.AddFieldRequest{
+	resp3, err := formService.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Label:     "Remember me",
@@ -83,7 +83,7 @@ func TestFormService_AddField(t *testing.T) {
 	}
 
 	// Test AddField - Dropdown
-	resp4, err := formService.AddField(ctx, &pb.AddFieldRequest{
+	resp4, err := formService.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId:       &pb.SessionId{Id: sessionID},
 		WidgetId:        &pb.WidgetId{Id: widgetID},
 		Label:           "Country",
@@ -124,7 +124,7 @@ func TestFormService_AddButton(t *testing.T) {
 	widgetID := createResp.WidgetId.Id
 
 	// Test AddButton
-	resp, err := formService.AddButton(ctx, &pb.AddButtonRequest{
+	resp, err := formService.AddButton(ctx, &pb.FormAddButtonRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Label:     "Submit",
@@ -140,7 +140,7 @@ func TestFormService_AddButton(t *testing.T) {
 	}
 
 	// Add another button
-	resp2, err := formService.AddButton(ctx, &pb.AddButtonRequest{
+	resp2, err := formService.AddButton(ctx, &pb.FormAddButtonRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Label:     "Cancel",
@@ -180,7 +180,7 @@ func TestFormService_GetSetFieldValue(t *testing.T) {
 
 	// Add an input field
 	initialValue := "initial"
-	_, err = formService.AddField(ctx, &pb.AddFieldRequest{
+	_, err = formService.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId:    &pb.SessionId{Id: sessionID},
 		WidgetId:     &pb.WidgetId{Id: widgetID},
 		Label:        "Name",
@@ -192,7 +192,7 @@ func TestFormService_GetSetFieldValue(t *testing.T) {
 	}
 
 	// Test GetFieldValue
-	getResp, err := formService.GetFieldValue(ctx, &pb.GetFieldValueRequest{
+	getResp, err := formService.GetFieldValue(ctx, &pb.FormGetFieldValueRequest{
 		SessionId:  &pb.SessionId{Id: sessionID},
 		WidgetId:   &pb.WidgetId{Id: widgetID},
 		FieldIndex: 0,
@@ -205,7 +205,7 @@ func TestFormService_GetSetFieldValue(t *testing.T) {
 	}
 
 	// Test SetFieldValue
-	setResp, err := formService.SetFieldValue(ctx, &pb.SetFieldValueRequest{
+	setResp, err := formService.SetFieldValue(ctx, &pb.FormSetFieldValueRequest{
 		SessionId:  &pb.SessionId{Id: sessionID},
 		WidgetId:   &pb.WidgetId{Id: widgetID},
 		FieldIndex: 0,
@@ -219,7 +219,7 @@ func TestFormService_GetSetFieldValue(t *testing.T) {
 	}
 
 	// Verify the value was updated
-	getResp2, err := formService.GetFieldValue(ctx, &pb.GetFieldValueRequest{
+	getResp2, err := formService.GetFieldValue(ctx, &pb.FormGetFieldValueRequest{
 		SessionId:  &pb.SessionId{Id: sessionID},
 		WidgetId:   &pb.WidgetId{Id: widgetID},
 		FieldIndex: 0,
@@ -232,7 +232,7 @@ func TestFormService_GetSetFieldValue(t *testing.T) {
 	}
 
 	// Test checkbox field
-	_, err = formService.AddField(ctx, &pb.AddFieldRequest{
+	_, err = formService.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Label:     "Enabled",
@@ -243,7 +243,7 @@ func TestFormService_GetSetFieldValue(t *testing.T) {
 	}
 
 	// Get checkbox value (should be false)
-	getResp3, err := formService.GetFieldValue(ctx, &pb.GetFieldValueRequest{
+	getResp3, err := formService.GetFieldValue(ctx, &pb.FormGetFieldValueRequest{
 		SessionId:  &pb.SessionId{Id: sessionID},
 		WidgetId:   &pb.WidgetId{Id: widgetID},
 		FieldIndex: 1,
@@ -256,7 +256,7 @@ func TestFormService_GetSetFieldValue(t *testing.T) {
 	}
 
 	// Set checkbox to true
-	_, err = formService.SetFieldValue(ctx, &pb.SetFieldValueRequest{
+	_, err = formService.SetFieldValue(ctx, &pb.FormSetFieldValueRequest{
 		SessionId:  &pb.SessionId{Id: sessionID},
 		WidgetId:   &pb.WidgetId{Id: widgetID},
 		FieldIndex: 1,
@@ -267,7 +267,7 @@ func TestFormService_GetSetFieldValue(t *testing.T) {
 	}
 
 	// Verify checkbox is now true
-	getResp4, err := formService.GetFieldValue(ctx, &pb.GetFieldValueRequest{
+	getResp4, err := formService.GetFieldValue(ctx, &pb.FormGetFieldValueRequest{
 		SessionId:  &pb.SessionId{Id: sessionID},
 		WidgetId:   &pb.WidgetId{Id: widgetID},
 		FieldIndex: 1,
@@ -306,7 +306,7 @@ func TestFormService_Clear(t *testing.T) {
 	widgetID := createResp.WidgetId.Id
 
 	// Add some fields and buttons
-	_, err = formService.AddField(ctx, &pb.AddFieldRequest{
+	_, err = formService.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Label:     "Name",
@@ -316,7 +316,7 @@ func TestFormService_Clear(t *testing.T) {
 		t.Fatalf("AddField failed: %v", err)
 	}
 
-	_, err = formService.AddButton(ctx, &pb.AddButtonRequest{
+	_, err = formService.AddButton(ctx, &pb.FormAddButtonRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Label:     "Submit",
@@ -326,7 +326,7 @@ func TestFormService_Clear(t *testing.T) {
 	}
 
 	// Test Clear
-	resp, err := formService.Clear(ctx, &pb.ClearFormRequest{
+	resp, err := formService.Clear(ctx, &pb.FormClearRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
@@ -338,7 +338,7 @@ func TestFormService_Clear(t *testing.T) {
 	}
 
 	// Verify form is cleared
-	countResp, err := formService.GetItemCount(ctx, &pb.GetFormItemCountRequest{
+	countResp, err := formService.GetItemCount(ctx, &pb.FormGetItemCountRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
@@ -376,7 +376,7 @@ func TestFormService_GetItemCount(t *testing.T) {
 	widgetID := createResp.WidgetId.Id
 
 	// Test GetItemCount with empty form
-	resp, err := formService.GetItemCount(ctx, &pb.GetFormItemCountRequest{
+	resp, err := formService.GetItemCount(ctx, &pb.FormGetItemCountRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})
@@ -388,7 +388,7 @@ func TestFormService_GetItemCount(t *testing.T) {
 	}
 
 	// Add some fields
-	_, err = formService.AddField(ctx, &pb.AddFieldRequest{
+	_, err = formService.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Label:     "Field 1",
@@ -398,7 +398,7 @@ func TestFormService_GetItemCount(t *testing.T) {
 		t.Fatalf("AddField (1) failed: %v", err)
 	}
 
-	_, err = formService.AddField(ctx, &pb.AddFieldRequest{
+	_, err = formService.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 		Label:     "Field 2",
@@ -409,7 +409,7 @@ func TestFormService_GetItemCount(t *testing.T) {
 	}
 
 	// Test GetItemCount with 2 fields
-	resp2, err := formService.GetItemCount(ctx, &pb.GetFormItemCountRequest{
+	resp2, err := formService.GetItemCount(ctx, &pb.FormGetItemCountRequest{
 		SessionId: &pb.SessionId{Id: sessionID},
 		WidgetId:  &pb.WidgetId{Id: widgetID},
 	})

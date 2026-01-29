@@ -18,19 +18,19 @@ service TableService {
   rpc SetCells(SetTableCellsRequest) returns (SetTableCellsResponse);
 
   // Clear the table
-  rpc Clear(ClearTableRequest) returns (ClearTableResponse);
+  rpc Clear(TableClearRequest) returns (TableClearResponse);
 
   // Get table dimensions (rows, columns)
-  rpc GetDimensions(GetDimensionsRequest) returns (GetDimensionsResponse);
+  rpc GetDimensions(TableGetDimensionsRequest) returns (TableGetDimensionsResponse);
 
   // Get current selection
-  rpc GetSelection(GetSelectionRequest) returns (GetSelectionResponse);
+  rpc GetSelection(TableGetSelectionRequest) returns (TableGetSelectionResponse);
 
   // Set current selection
-  rpc SetSelection(SetSelectionRequest) returns (SetSelectionResponse);
+  rpc SetSelection(TableSetSelectionRequest) returns (TableSetSelectionResponse);
 
   // Set fixed rows/columns (headers)
-  rpc SetFixed(SetFixedRequest) returns (SetFixedResponse);
+  rpc SetFixed(TableSetFixedRequest) returns (TableSetFixedResponse);
 }
 
 // Table cell definition
@@ -90,62 +90,61 @@ message SetTableCellsResponse {
 
 // Clear
 
-message ClearTableRequest {
+message TableClearRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
 }
 
-message ClearTableResponse {
+message TableClearResponse {
   bool success = 1;
 }
 
 // GetDimensions
 
-message GetDimensionsRequest {
+message TableGetDimensionsRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
 }
 
-message GetDimensionsResponse {
+message TableGetDimensionsResponse {
   int32 rows = 1;
   int32 columns = 2;
 }
 
 // GetSelection
 
-message GetSelectionRequest {
+message TableGetSelectionRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
 }
 
-message GetSelectionResponse {
+message TableGetSelectionResponse {
   int32 row = 1;
   int32 column = 2;
 }
 
 // SetSelection
 
-message SetSelectionRequest {
+message TableSetSelectionRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   int32 row = 3;
   int32 column = 4;
 }
 
-message SetSelectionResponse {
+message TableSetSelectionResponse {
   bool success = 1;
 }
 
 // SetFixed
 
-message SetFixedRequest {
+message TableSetFixedRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   int32 fixed_rows = 3;
   int32 fixed_columns = 4;
 }
 
-message SetFixedResponse {
+message TableSetFixedResponse {
   bool success = 1;
 }
-

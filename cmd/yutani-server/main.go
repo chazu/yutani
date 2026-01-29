@@ -54,7 +54,7 @@ func main() {
 	)
 
 	// Create the Yutani server
-	yutaniServer, err := server.NewServer(cfg.MaxSessions, cfg.Mouse, cfg.Paste)
+	yutaniServer, err := server.New(cfg)
 	if err != nil {
 		slog.Error("Failed to create server", "error", err)
 		os.Exit(1)

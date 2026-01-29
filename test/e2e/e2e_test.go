@@ -71,6 +71,7 @@ func newTestServer(t *testing.T) *testServer {
 	treeSvc := services.NewTreeService(srv)
 	layoutSvc := services.NewLayoutService(srv)
 	debugSvc := services.NewDebugService(srv)
+	testSvc := services.NewTestService(srv)
 
 	pb.RegisterSessionServiceServer(grpcServer, sessionSvc)
 	pb.RegisterScreenServiceServer(grpcServer, screenSvc)
@@ -82,6 +83,7 @@ func newTestServer(t *testing.T) *testServer {
 	pb.RegisterTreeServiceServer(grpcServer, treeSvc)
 	pb.RegisterLayoutServiceServer(grpcServer, layoutSvc)
 	pb.RegisterDebugServiceServer(grpcServer, debugSvc)
+	pb.RegisterTestServiceServer(grpcServer, testSvc)
 
 	// Start gRPC server
 	go func() {
@@ -596,7 +598,7 @@ func TestE2E_ListOperations(t *testing.T) {
 	listClient := pb.NewListServiceClient(conn)
 
 	// Test AddItem
-	addResp1, err := listClient.AddItem(ctx, &pb.AddItemRequest{
+	addResp1, err := listClient.AddItem(ctx, &pb.ListAddItemRequest{
 		SessionId:     sessionID,
 		WidgetId:      listID,
 		MainText:      "Item 1",
@@ -614,7 +616,7 @@ func TestE2E_ListOperations(t *testing.T) {
 	}
 
 	// Add more items
-	addResp2, err := listClient.AddItem(ctx, &pb.AddItemRequest{
+	addResp2, err := listClient.AddItem(ctx, &pb.ListAddItemRequest{
 		SessionId:     sessionID,
 		WidgetId:      listID,
 		MainText:      "Item 2",
@@ -627,7 +629,7 @@ func TestE2E_ListOperations(t *testing.T) {
 		t.Errorf("Expected index 1, got %d", addResp2.Index)
 	}
 
-	_, err = listClient.AddItem(ctx, &pb.AddItemRequest{
+	_, err = listClient.AddItem(ctx, &pb.ListAddItemRequest{
 		SessionId:     sessionID,
 		WidgetId:      listID,
 		MainText:      "Item 3",
@@ -638,7 +640,7 @@ func TestE2E_ListOperations(t *testing.T) {
 	}
 
 	// Test GetItemCount
-	countResp, err := listClient.GetItemCount(ctx, &pb.GetItemCountRequest{
+	countResp, err := listClient.GetItemCount(ctx, &pb.ListGetItemCountRequest{
 		SessionId: sessionID,
 		WidgetId:  listID,
 	})
@@ -650,7 +652,7 @@ func TestE2E_ListOperations(t *testing.T) {
 	}
 
 	// Test GetItem
-	itemResp, err := listClient.GetItem(ctx, &pb.GetItemRequest{
+	itemResp, err := listClient.GetItem(ctx, &pb.ListGetItemRequest{
 		SessionId: sessionID,
 		WidgetId:  listID,
 		Index:     0,
@@ -670,33 +672,33 @@ func TestE2E_ListOperations(t *testing.T) {
 	// 	t.Errorf("Expected shortcut '1', got '%s'", itemResp.Shortcut)
 	// }
 
-	// Test SetSelected
-	setSelResp, err := listClient.SetSelected(ctx, &pb.SetSelectedRequest{
+	// Test SetSelection
+	setSelResp, err := listClient.SetSelection(ctx, &pb.ListSetSelectionRequest{
 		SessionId: sessionID,
 		WidgetId:  listID,
 		Index:     1,
 	})
 	if err != nil {
-		t.Fatalf("SetSelected failed: %v", err)
+		t.Fatalf("SetSelection failed: %v", err)
 	}
 	if !setSelResp.Success {
-		t.Error("Expected successful SetSelected")
+		t.Error("Expected successful SetSelection")
 	}
 
-	// Test GetSelected
-	getSelResp, err := listClient.GetSelected(ctx, &pb.GetSelectedRequest{
+	// Test GetSelection
+	getSelResp, err := listClient.GetSelection(ctx, &pb.ListGetSelectionRequest{
 		SessionId: sessionID,
 		WidgetId:  listID,
 	})
 	if err != nil {
-		t.Fatalf("GetSelected failed: %v", err)
+		t.Fatalf("GetSelection failed: %v", err)
 	}
 	if getSelResp.Index != 1 {
 		t.Errorf("Expected selected index 1, got %d", getSelResp.Index)
 	}
 
 	// Test RemoveItem
-	removeResp, err := listClient.RemoveItem(ctx, &pb.RemoveItemRequest{
+	removeResp, err := listClient.RemoveItem(ctx, &pb.ListRemoveItemRequest{
 		SessionId: sessionID,
 		WidgetId:  listID,
 		Index:     1,
@@ -709,7 +711,7 @@ func TestE2E_ListOperations(t *testing.T) {
 	}
 
 	// Verify count after removal
-	countResp2, _ := listClient.GetItemCount(ctx, &pb.GetItemCountRequest{
+	countResp2, _ := listClient.GetItemCount(ctx, &pb.ListGetItemCountRequest{
 		SessionId: sessionID,
 		WidgetId:  listID,
 	})
@@ -718,7 +720,7 @@ func TestE2E_ListOperations(t *testing.T) {
 	}
 
 	// Test Clear
-	clearResp, err := listClient.Clear(ctx, &pb.ClearListRequest{
+	clearResp, err := listClient.Clear(ctx, &pb.ListClearRequest{
 		SessionId: sessionID,
 		WidgetId:  listID,
 	})
@@ -730,7 +732,7 @@ func TestE2E_ListOperations(t *testing.T) {
 	}
 
 	// Verify count after clear
-	countResp3, _ := listClient.GetItemCount(ctx, &pb.GetItemCountRequest{
+	countResp3, _ := listClient.GetItemCount(ctx, &pb.ListGetItemCountRequest{
 		SessionId: sessionID,
 		WidgetId:  listID,
 	})
@@ -876,7 +878,7 @@ func TestE2E_TableOperations(t *testing.T) {
 	}
 
 	// Test GetDimensions
-	dimsResp, err := tableClient.GetDimensions(ctx, &pb.GetDimensionsRequest{
+	dimsResp, err := tableClient.GetDimensions(ctx, &pb.TableGetDimensionsRequest{
 		SessionId: sessionID,
 		WidgetId:  tableID,
 	})
@@ -891,7 +893,7 @@ func TestE2E_TableOperations(t *testing.T) {
 	}
 
 	// Test SetSelection
-	setSelResp, err := tableClient.SetSelection(ctx, &pb.SetSelectionRequest{
+	setSelResp, err := tableClient.SetSelection(ctx, &pb.TableSetSelectionRequest{
 		SessionId: sessionID,
 		WidgetId:  tableID,
 		Row:       1,
@@ -905,7 +907,7 @@ func TestE2E_TableOperations(t *testing.T) {
 	}
 
 	// Test GetSelection
-	getSelResp, err := tableClient.GetSelection(ctx, &pb.GetSelectionRequest{
+	getSelResp, err := tableClient.GetSelection(ctx, &pb.TableGetSelectionRequest{
 		SessionId: sessionID,
 		WidgetId:  tableID,
 	})
@@ -917,7 +919,7 @@ func TestE2E_TableOperations(t *testing.T) {
 	}
 
 	// Test SetFixed
-	setFixedResp, err := tableClient.SetFixed(ctx, &pb.SetFixedRequest{
+	setFixedResp, err := tableClient.SetFixed(ctx, &pb.TableSetFixedRequest{
 		SessionId:    sessionID,
 		WidgetId:     tableID,
 		FixedRows:    1,
@@ -931,7 +933,7 @@ func TestE2E_TableOperations(t *testing.T) {
 	}
 
 	// Test Clear
-	clearResp, err := tableClient.Clear(ctx, &pb.ClearTableRequest{
+	clearResp, err := tableClient.Clear(ctx, &pb.TableClearRequest{
 		SessionId: sessionID,
 		WidgetId:  tableID,
 	})
@@ -943,7 +945,7 @@ func TestE2E_TableOperations(t *testing.T) {
 	}
 
 	// Verify dimensions after clear
-	dimsResp2, _ := tableClient.GetDimensions(ctx, &pb.GetDimensionsRequest{
+	dimsResp2, _ := tableClient.GetDimensions(ctx, &pb.TableGetDimensionsRequest{
 		SessionId: sessionID,
 		WidgetId:  tableID,
 	})
@@ -997,7 +999,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	formClient := pb.NewFormServiceClient(conn)
 
 	// Test AddField - Input field
-	addFieldResp1, err := formClient.AddField(ctx, &pb.AddFieldRequest{
+	addFieldResp1, err := formClient.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId:    sessionID,
 		WidgetId:     formID,
 		Label:        "Username",
@@ -1016,7 +1018,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	}
 
 	// Test AddField - Password field
-	addFieldResp2, err := formClient.AddField(ctx, &pb.AddFieldRequest{
+	addFieldResp2, err := formClient.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId:  sessionID,
 		WidgetId:   formID,
 		Label:      "Password",
@@ -1031,7 +1033,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	}
 
 	// Test AddField - Checkbox
-	_, err = formClient.AddField(ctx, &pb.AddFieldRequest{
+	_, err = formClient.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId: sessionID,
 		WidgetId:  formID,
 		Label:     "Remember me",
@@ -1042,7 +1044,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	}
 
 	// Test AddField - Dropdown
-	_, err = formClient.AddField(ctx, &pb.AddFieldRequest{
+	_, err = formClient.AddField(ctx, &pb.FormAddFieldRequest{
 		SessionId:       sessionID,
 		WidgetId:        formID,
 		Label:           "Role",
@@ -1055,7 +1057,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	}
 
 	// Test GetItemCount (should include fields)
-	countResp, err := formClient.GetItemCount(ctx, &pb.GetFormItemCountRequest{
+	countResp, err := formClient.GetItemCount(ctx, &pb.FormGetItemCountRequest{
 		SessionId: sessionID,
 		WidgetId:  formID,
 	})
@@ -1067,7 +1069,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	}
 
 	// Test GetFieldValue
-	getValResp, err := formClient.GetFieldValue(ctx, &pb.GetFieldValueRequest{
+	getValResp, err := formClient.GetFieldValue(ctx, &pb.FormGetFieldValueRequest{
 		SessionId:  sessionID,
 		WidgetId:   formID,
 		FieldIndex: 0,
@@ -1080,7 +1082,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	}
 
 	// Test SetFieldValue
-	setValResp, err := formClient.SetFieldValue(ctx, &pb.SetFieldValueRequest{
+	setValResp, err := formClient.SetFieldValue(ctx, &pb.FormSetFieldValueRequest{
 		SessionId:  sessionID,
 		WidgetId:   formID,
 		FieldIndex: 0,
@@ -1094,7 +1096,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	}
 
 	// Verify value was set
-	getValResp2, _ := formClient.GetFieldValue(ctx, &pb.GetFieldValueRequest{
+	getValResp2, _ := formClient.GetFieldValue(ctx, &pb.FormGetFieldValueRequest{
 		SessionId:  sessionID,
 		WidgetId:   formID,
 		FieldIndex: 0,
@@ -1104,7 +1106,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	}
 
 	// Test AddButton
-	addBtnResp, err := formClient.AddButton(ctx, &pb.AddButtonRequest{
+	addBtnResp, err := formClient.AddButton(ctx, &pb.FormAddButtonRequest{
 		SessionId: sessionID,
 		WidgetId:  formID,
 		Label:     "Submit",
@@ -1120,7 +1122,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	// GetItemCount returns only the number of form fields, not buttons
 	// This is consistent with tview's API design
 	// Verify count remains 4 (fields only)
-	countResp2, _ := formClient.GetItemCount(ctx, &pb.GetFormItemCountRequest{
+	countResp2, _ := formClient.GetItemCount(ctx, &pb.FormGetItemCountRequest{
 		SessionId: sessionID,
 		WidgetId:  formID,
 	})
@@ -1129,7 +1131,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	}
 
 	// Test Clear
-	clearResp, err := formClient.Clear(ctx, &pb.ClearFormRequest{
+	clearResp, err := formClient.Clear(ctx, &pb.FormClearRequest{
 		SessionId: sessionID,
 		WidgetId:  formID,
 	})
@@ -1141,7 +1143,7 @@ func TestE2E_FormOperations(t *testing.T) {
 	}
 
 	// Verify count after clear
-	countResp3, _ := formClient.GetItemCount(ctx, &pb.GetFormItemCountRequest{
+	countResp3, _ := formClient.GetItemCount(ctx, &pb.FormGetItemCountRequest{
 		SessionId: sessionID,
 		WidgetId:  formID,
 	})
@@ -1263,7 +1265,7 @@ func TestE2E_TreeOperations(t *testing.T) {
 	}
 
 	// Test GetChildren
-	getChildrenResp, err := treeClient.GetChildren(ctx, &pb.GetChildrenRequest{
+	getChildrenResp, err := treeClient.GetChildren(ctx, &pb.TreeGetChildrenRequest{
 		SessionId: sessionID,
 		WidgetId:  treeID,
 		NodeId:    rootID,
@@ -1276,7 +1278,7 @@ func TestE2E_TreeOperations(t *testing.T) {
 	}
 
 	// Test SetExpanded
-	setExpandedResp, err := treeClient.SetExpanded(ctx, &pb.SetExpandedRequest{
+	setExpandedResp, err := treeClient.SetExpanded(ctx, &pb.TreeSetExpandedRequest{
 		SessionId: sessionID,
 		WidgetId:  treeID,
 		NodeId:    child2ID,
@@ -1289,26 +1291,26 @@ func TestE2E_TreeOperations(t *testing.T) {
 		t.Error("Expected successful SetExpanded")
 	}
 
-	// Test SetSelected
-	setSelResp, err := treeClient.SetSelected(ctx, &pb.SetTreeSelectedRequest{
+	// Test SetSelection
+	setSelResp, err := treeClient.SetSelection(ctx, &pb.TreeSetSelectionRequest{
 		SessionId: sessionID,
 		WidgetId:  treeID,
 		NodeId:    child1ID,
 	})
 	if err != nil {
-		t.Fatalf("SetSelected failed: %v", err)
+		t.Fatalf("SetSelection failed: %v", err)
 	}
 	if !setSelResp.Success {
-		t.Error("Expected successful SetSelected")
+		t.Error("Expected successful SetSelection")
 	}
 
-	// Test GetSelected
-	getSelResp, err := treeClient.GetSelected(ctx, &pb.GetTreeSelectedRequest{
+	// Test GetSelection
+	getSelResp, err := treeClient.GetSelection(ctx, &pb.TreeGetSelectionRequest{
 		SessionId: sessionID,
 		WidgetId:  treeID,
 	})
 	if err != nil {
-		t.Fatalf("GetSelected failed: %v", err)
+		t.Fatalf("GetSelection failed: %v", err)
 	}
 	if getSelResp.NodeId.Id != child1ID.Id {
 		t.Errorf("Expected selected node %s, got %s", child1ID.Id, getSelResp.NodeId.Id)
@@ -1336,7 +1338,7 @@ func TestE2E_TreeOperations(t *testing.T) {
 	}
 
 	// Verify child was removed
-	getChildrenResp2, _ := treeClient.GetChildren(ctx, &pb.GetChildrenRequest{
+	getChildrenResp2, _ := treeClient.GetChildren(ctx, &pb.TreeGetChildrenRequest{
 		SessionId: sessionID,
 		WidgetId:  treeID,
 		NodeId:    rootID,

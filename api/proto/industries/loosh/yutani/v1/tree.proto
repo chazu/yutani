@@ -18,16 +18,16 @@ service TreeService {
   rpc RemoveNode(RemoveTreeNodeRequest) returns (RemoveTreeNodeResponse);
 
   // Expand or collapse a node
-  rpc SetExpanded(SetExpandedRequest) returns (SetExpandedResponse);
+  rpc SetExpanded(TreeSetExpandedRequest) returns (TreeSetExpandedResponse);
 
   // Get the currently selected node
-  rpc GetSelected(GetTreeSelectedRequest) returns (GetTreeSelectedResponse);
+  rpc GetSelection(TreeGetSelectionRequest) returns (TreeGetSelectionResponse);
 
   // Set the selected node
-  rpc SetSelected(SetTreeSelectedRequest) returns (SetTreeSelectedResponse);
+  rpc SetSelection(TreeSetSelectionRequest) returns (TreeSetSelectionResponse);
 
   // Get a node's children
-  rpc GetChildren(GetChildrenRequest) returns (GetChildrenResponse);
+  rpc GetChildren(TreeGetChildrenRequest) returns (TreeGetChildrenResponse);
 }
 
 // Tree node identifier
@@ -85,51 +85,51 @@ message RemoveTreeNodeResponse {
 
 // SetExpanded
 
-message SetExpandedRequest {
+message TreeSetExpandedRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   TreeNodeId node_id = 3;
   bool expanded = 4;
 }
 
-message SetExpandedResponse {
+message TreeSetExpandedResponse {
   bool success = 1;
 }
 
-// GetSelected
+// GetSelection
 
-message GetTreeSelectedRequest {
+message TreeGetSelectionRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
 }
 
-message GetTreeSelectedResponse {
+message TreeGetSelectionResponse {
   TreeNodeId node_id = 1;
   string text = 2;
   string reference = 3;
 }
 
-// SetSelected
+// SetSelection
 
-message SetTreeSelectedRequest {
+message TreeSetSelectionRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   TreeNodeId node_id = 3;
 }
 
-message SetTreeSelectedResponse {
+message TreeSetSelectionResponse {
   bool success = 1;
 }
 
 // GetChildren
 
-message GetChildrenRequest {
+message TreeGetChildrenRequest {
   SessionId session_id = 1;
   WidgetId widget_id = 2;
   TreeNodeId node_id = 3;
 }
 
-message GetChildrenResponse {
+message TreeGetChildrenResponse {
   repeated TreeNodeInfo children = 1;
 }
 
@@ -139,4 +139,3 @@ message TreeNodeInfo {
   string reference = 3;
   bool expanded = 4;
 }
-

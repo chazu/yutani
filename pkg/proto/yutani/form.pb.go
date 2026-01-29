@@ -74,7 +74,7 @@ func (FormFieldType) EnumDescriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{0}
 }
 
-type AddFieldRequest struct {
+type FormAddFieldRequest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	SessionId       *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId        *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -87,20 +87,20 @@ type AddFieldRequest struct {
 	sizeCache       protoimpl.SizeCache
 }
 
-func (x *AddFieldRequest) Reset() {
-	*x = AddFieldRequest{}
+func (x *FormAddFieldRequest) Reset() {
+	*x = FormAddFieldRequest{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *AddFieldRequest) String() string {
+func (x *FormAddFieldRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AddFieldRequest) ProtoMessage() {}
+func (*FormAddFieldRequest) ProtoMessage() {}
 
-func (x *AddFieldRequest) ProtoReflect() protoreflect.Message {
+func (x *FormAddFieldRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -112,61 +112,61 @@ func (x *AddFieldRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AddFieldRequest.ProtoReflect.Descriptor instead.
-func (*AddFieldRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormAddFieldRequest.ProtoReflect.Descriptor instead.
+func (*FormAddFieldRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *AddFieldRequest) GetSessionId() *SessionId {
+func (x *FormAddFieldRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *AddFieldRequest) GetWidgetId() *WidgetId {
+func (x *FormAddFieldRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *AddFieldRequest) GetLabel() string {
+func (x *FormAddFieldRequest) GetLabel() string {
 	if x != nil {
 		return x.Label
 	}
 	return ""
 }
 
-func (x *AddFieldRequest) GetFieldType() FormFieldType {
+func (x *FormAddFieldRequest) GetFieldType() FormFieldType {
 	if x != nil {
 		return x.FieldType
 	}
 	return FormFieldType_FORM_FIELD_INPUT
 }
 
-func (x *AddFieldRequest) GetFieldWidth() int32 {
+func (x *FormAddFieldRequest) GetFieldWidth() int32 {
 	if x != nil && x.FieldWidth != nil {
 		return *x.FieldWidth
 	}
 	return 0
 }
 
-func (x *AddFieldRequest) GetInitialValue() string {
+func (x *FormAddFieldRequest) GetInitialValue() string {
 	if x != nil && x.InitialValue != nil {
 		return *x.InitialValue
 	}
 	return ""
 }
 
-func (x *AddFieldRequest) GetDropdownOptions() []string {
+func (x *FormAddFieldRequest) GetDropdownOptions() []string {
 	if x != nil {
 		return x.DropdownOptions
 	}
 	return nil
 }
 
-type AddFieldResponse struct {
+type FormAddFieldResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	FieldIndex    int32                  `protobuf:"varint,2,opt,name=field_index,json=fieldIndex,proto3" json:"field_index,omitempty"`
@@ -174,20 +174,20 @@ type AddFieldResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *AddFieldResponse) Reset() {
-	*x = AddFieldResponse{}
+func (x *FormAddFieldResponse) Reset() {
+	*x = FormAddFieldResponse{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *AddFieldResponse) String() string {
+func (x *FormAddFieldResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AddFieldResponse) ProtoMessage() {}
+func (*FormAddFieldResponse) ProtoMessage() {}
 
-func (x *AddFieldResponse) ProtoReflect() protoreflect.Message {
+func (x *FormAddFieldResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -199,26 +199,26 @@ func (x *AddFieldResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AddFieldResponse.ProtoReflect.Descriptor instead.
-func (*AddFieldResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormAddFieldResponse.ProtoReflect.Descriptor instead.
+func (*FormAddFieldResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *AddFieldResponse) GetSuccess() bool {
+func (x *FormAddFieldResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-func (x *AddFieldResponse) GetFieldIndex() int32 {
+func (x *FormAddFieldResponse) GetFieldIndex() int32 {
 	if x != nil {
 		return x.FieldIndex
 	}
 	return 0
 }
 
-type AddButtonRequest struct {
+type FormAddButtonRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -227,20 +227,20 @@ type AddButtonRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *AddButtonRequest) Reset() {
-	*x = AddButtonRequest{}
+func (x *FormAddButtonRequest) Reset() {
+	*x = FormAddButtonRequest{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *AddButtonRequest) String() string {
+func (x *FormAddButtonRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AddButtonRequest) ProtoMessage() {}
+func (*FormAddButtonRequest) ProtoMessage() {}
 
-func (x *AddButtonRequest) ProtoReflect() protoreflect.Message {
+func (x *FormAddButtonRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -252,33 +252,33 @@ func (x *AddButtonRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AddButtonRequest.ProtoReflect.Descriptor instead.
-func (*AddButtonRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormAddButtonRequest.ProtoReflect.Descriptor instead.
+func (*FormAddButtonRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *AddButtonRequest) GetSessionId() *SessionId {
+func (x *FormAddButtonRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *AddButtonRequest) GetWidgetId() *WidgetId {
+func (x *FormAddButtonRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *AddButtonRequest) GetLabel() string {
+func (x *FormAddButtonRequest) GetLabel() string {
 	if x != nil {
 		return x.Label
 	}
 	return ""
 }
 
-type AddButtonResponse struct {
+type FormAddButtonResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	ButtonIndex   int32                  `protobuf:"varint,2,opt,name=button_index,json=buttonIndex,proto3" json:"button_index,omitempty"`
@@ -286,20 +286,20 @@ type AddButtonResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *AddButtonResponse) Reset() {
-	*x = AddButtonResponse{}
+func (x *FormAddButtonResponse) Reset() {
+	*x = FormAddButtonResponse{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *AddButtonResponse) String() string {
+func (x *FormAddButtonResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AddButtonResponse) ProtoMessage() {}
+func (*FormAddButtonResponse) ProtoMessage() {}
 
-func (x *AddButtonResponse) ProtoReflect() protoreflect.Message {
+func (x *FormAddButtonResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -311,26 +311,26 @@ func (x *AddButtonResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AddButtonResponse.ProtoReflect.Descriptor instead.
-func (*AddButtonResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormAddButtonResponse.ProtoReflect.Descriptor instead.
+func (*FormAddButtonResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *AddButtonResponse) GetSuccess() bool {
+func (x *FormAddButtonResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-func (x *AddButtonResponse) GetButtonIndex() int32 {
+func (x *FormAddButtonResponse) GetButtonIndex() int32 {
 	if x != nil {
 		return x.ButtonIndex
 	}
 	return 0
 }
 
-type GetFieldValueRequest struct {
+type FormGetFieldValueRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -339,20 +339,20 @@ type GetFieldValueRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetFieldValueRequest) Reset() {
-	*x = GetFieldValueRequest{}
+func (x *FormGetFieldValueRequest) Reset() {
+	*x = FormGetFieldValueRequest{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetFieldValueRequest) String() string {
+func (x *FormGetFieldValueRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetFieldValueRequest) ProtoMessage() {}
+func (*FormGetFieldValueRequest) ProtoMessage() {}
 
-func (x *GetFieldValueRequest) ProtoReflect() protoreflect.Message {
+func (x *FormGetFieldValueRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -364,53 +364,53 @@ func (x *GetFieldValueRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetFieldValueRequest.ProtoReflect.Descriptor instead.
-func (*GetFieldValueRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormGetFieldValueRequest.ProtoReflect.Descriptor instead.
+func (*FormGetFieldValueRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *GetFieldValueRequest) GetSessionId() *SessionId {
+func (x *FormGetFieldValueRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *GetFieldValueRequest) GetWidgetId() *WidgetId {
+func (x *FormGetFieldValueRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *GetFieldValueRequest) GetFieldIndex() int32 {
+func (x *FormGetFieldValueRequest) GetFieldIndex() int32 {
 	if x != nil {
 		return x.FieldIndex
 	}
 	return 0
 }
 
-type GetFieldValueResponse struct {
+type FormGetFieldValueResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Value         string                 `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetFieldValueResponse) Reset() {
-	*x = GetFieldValueResponse{}
+func (x *FormGetFieldValueResponse) Reset() {
+	*x = FormGetFieldValueResponse{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetFieldValueResponse) String() string {
+func (x *FormGetFieldValueResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetFieldValueResponse) ProtoMessage() {}
+func (*FormGetFieldValueResponse) ProtoMessage() {}
 
-func (x *GetFieldValueResponse) ProtoReflect() protoreflect.Message {
+func (x *FormGetFieldValueResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -422,19 +422,19 @@ func (x *GetFieldValueResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetFieldValueResponse.ProtoReflect.Descriptor instead.
-func (*GetFieldValueResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormGetFieldValueResponse.ProtoReflect.Descriptor instead.
+func (*FormGetFieldValueResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *GetFieldValueResponse) GetValue() string {
+func (x *FormGetFieldValueResponse) GetValue() string {
 	if x != nil {
 		return x.Value
 	}
 	return ""
 }
 
-type SetFieldValueRequest struct {
+type FormSetFieldValueRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -444,20 +444,20 @@ type SetFieldValueRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetFieldValueRequest) Reset() {
-	*x = SetFieldValueRequest{}
+func (x *FormSetFieldValueRequest) Reset() {
+	*x = FormSetFieldValueRequest{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetFieldValueRequest) String() string {
+func (x *FormSetFieldValueRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetFieldValueRequest) ProtoMessage() {}
+func (*FormSetFieldValueRequest) ProtoMessage() {}
 
-func (x *SetFieldValueRequest) ProtoReflect() protoreflect.Message {
+func (x *FormSetFieldValueRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -469,60 +469,60 @@ func (x *SetFieldValueRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetFieldValueRequest.ProtoReflect.Descriptor instead.
-func (*SetFieldValueRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormSetFieldValueRequest.ProtoReflect.Descriptor instead.
+func (*FormSetFieldValueRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *SetFieldValueRequest) GetSessionId() *SessionId {
+func (x *FormSetFieldValueRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *SetFieldValueRequest) GetWidgetId() *WidgetId {
+func (x *FormSetFieldValueRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-func (x *SetFieldValueRequest) GetFieldIndex() int32 {
+func (x *FormSetFieldValueRequest) GetFieldIndex() int32 {
 	if x != nil {
 		return x.FieldIndex
 	}
 	return 0
 }
 
-func (x *SetFieldValueRequest) GetValue() string {
+func (x *FormSetFieldValueRequest) GetValue() string {
 	if x != nil {
 		return x.Value
 	}
 	return ""
 }
 
-type SetFieldValueResponse struct {
+type FormSetFieldValueResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *SetFieldValueResponse) Reset() {
-	*x = SetFieldValueResponse{}
+func (x *FormSetFieldValueResponse) Reset() {
+	*x = FormSetFieldValueResponse{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *SetFieldValueResponse) String() string {
+func (x *FormSetFieldValueResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*SetFieldValueResponse) ProtoMessage() {}
+func (*FormSetFieldValueResponse) ProtoMessage() {}
 
-func (x *SetFieldValueResponse) ProtoReflect() protoreflect.Message {
+func (x *FormSetFieldValueResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -534,19 +534,19 @@ func (x *SetFieldValueResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use SetFieldValueResponse.ProtoReflect.Descriptor instead.
-func (*SetFieldValueResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormSetFieldValueResponse.ProtoReflect.Descriptor instead.
+func (*FormSetFieldValueResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *SetFieldValueResponse) GetSuccess() bool {
+func (x *FormSetFieldValueResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type ClearFormRequest struct {
+type FormClearRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -554,20 +554,20 @@ type ClearFormRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ClearFormRequest) Reset() {
-	*x = ClearFormRequest{}
+func (x *FormClearRequest) Reset() {
+	*x = FormClearRequest{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ClearFormRequest) String() string {
+func (x *FormClearRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ClearFormRequest) ProtoMessage() {}
+func (*FormClearRequest) ProtoMessage() {}
 
-func (x *ClearFormRequest) ProtoReflect() protoreflect.Message {
+func (x *FormClearRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -579,46 +579,46 @@ func (x *ClearFormRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ClearFormRequest.ProtoReflect.Descriptor instead.
-func (*ClearFormRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormClearRequest.ProtoReflect.Descriptor instead.
+func (*FormClearRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *ClearFormRequest) GetSessionId() *SessionId {
+func (x *FormClearRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *ClearFormRequest) GetWidgetId() *WidgetId {
+func (x *FormClearRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-type ClearFormResponse struct {
+type FormClearResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ClearFormResponse) Reset() {
-	*x = ClearFormResponse{}
+func (x *FormClearResponse) Reset() {
+	*x = FormClearResponse{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ClearFormResponse) String() string {
+func (x *FormClearResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ClearFormResponse) ProtoMessage() {}
+func (*FormClearResponse) ProtoMessage() {}
 
-func (x *ClearFormResponse) ProtoReflect() protoreflect.Message {
+func (x *FormClearResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -630,19 +630,19 @@ func (x *ClearFormResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ClearFormResponse.ProtoReflect.Descriptor instead.
-func (*ClearFormResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormClearResponse.ProtoReflect.Descriptor instead.
+func (*FormClearResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *ClearFormResponse) GetSuccess() bool {
+func (x *FormClearResponse) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type GetFormItemCountRequest struct {
+type FormGetItemCountRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
 	WidgetId      *WidgetId              `protobuf:"bytes,2,opt,name=widget_id,json=widgetId,proto3" json:"widget_id,omitempty"`
@@ -650,20 +650,20 @@ type GetFormItemCountRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetFormItemCountRequest) Reset() {
-	*x = GetFormItemCountRequest{}
+func (x *FormGetItemCountRequest) Reset() {
+	*x = FormGetItemCountRequest{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetFormItemCountRequest) String() string {
+func (x *FormGetItemCountRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetFormItemCountRequest) ProtoMessage() {}
+func (*FormGetItemCountRequest) ProtoMessage() {}
 
-func (x *GetFormItemCountRequest) ProtoReflect() protoreflect.Message {
+func (x *FormGetItemCountRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -675,46 +675,46 @@ func (x *GetFormItemCountRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetFormItemCountRequest.ProtoReflect.Descriptor instead.
-func (*GetFormItemCountRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormGetItemCountRequest.ProtoReflect.Descriptor instead.
+func (*FormGetItemCountRequest) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *GetFormItemCountRequest) GetSessionId() *SessionId {
+func (x *FormGetItemCountRequest) GetSessionId() *SessionId {
 	if x != nil {
 		return x.SessionId
 	}
 	return nil
 }
 
-func (x *GetFormItemCountRequest) GetWidgetId() *WidgetId {
+func (x *FormGetItemCountRequest) GetWidgetId() *WidgetId {
 	if x != nil {
 		return x.WidgetId
 	}
 	return nil
 }
 
-type GetFormItemCountResponse struct {
+type FormGetItemCountResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Count         int32                  `protobuf:"varint,1,opt,name=count,proto3" json:"count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetFormItemCountResponse) Reset() {
-	*x = GetFormItemCountResponse{}
+func (x *FormGetItemCountResponse) Reset() {
+	*x = FormGetItemCountResponse{}
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetFormItemCountResponse) String() string {
+func (x *FormGetItemCountResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetFormItemCountResponse) ProtoMessage() {}
+func (*FormGetItemCountResponse) ProtoMessage() {}
 
-func (x *GetFormItemCountResponse) ProtoReflect() protoreflect.Message {
+func (x *FormGetItemCountResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_industries_loosh_yutani_v1_form_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -726,12 +726,12 @@ func (x *GetFormItemCountResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetFormItemCountResponse.ProtoReflect.Descriptor instead.
-func (*GetFormItemCountResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use FormGetItemCountResponse.ProtoReflect.Descriptor instead.
+func (*FormGetItemCountResponse) Descriptor() ([]byte, []int) {
 	return file_industries_loosh_yutani_v1_form_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *GetFormItemCountResponse) GetCount() int32 {
+func (x *FormGetItemCountResponse) GetCount() int32 {
 	if x != nil {
 		return x.Count
 	}
@@ -742,8 +742,8 @@ var File_industries_loosh_yutani_v1_form_proto protoreflect.FileDescriptor
 
 const file_industries_loosh_yutani_v1_form_proto_rawDesc = "" +
 	"\n" +
-	"%industries/loosh/yutani/v1/form.proto\x12\x1aindustries.loosh.yutani.v1\x1a&industries/loosh/yutani/v1/types.proto\"\x97\x03\n" +
-	"\x0fAddFieldRequest\x12D\n" +
+	"%industries/loosh/yutani/v1/form.proto\x12\x1aindustries.loosh.yutani.v1\x1a&industries/loosh/yutani/v1/types.proto\"\x9b\x03\n" +
+	"\x13FormAddFieldRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12\x14\n" +
@@ -755,60 +755,60 @@ const file_industries_loosh_yutani_v1_form_proto_rawDesc = "" +
 	"\rinitial_value\x18\x06 \x01(\tH\x01R\finitialValue\x88\x01\x01\x12)\n" +
 	"\x10dropdown_options\x18\a \x03(\tR\x0fdropdownOptionsB\x0e\n" +
 	"\f_field_widthB\x10\n" +
-	"\x0e_initial_value\"M\n" +
-	"\x10AddFieldResponse\x12\x18\n" +
+	"\x0e_initial_value\"Q\n" +
+	"\x14FormAddFieldResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x1f\n" +
 	"\vfield_index\x18\x02 \x01(\x05R\n" +
-	"fieldIndex\"\xb1\x01\n" +
-	"\x10AddButtonRequest\x12D\n" +
+	"fieldIndex\"\xb5\x01\n" +
+	"\x14FormAddButtonRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12\x14\n" +
-	"\x05label\x18\x03 \x01(\tR\x05label\"P\n" +
-	"\x11AddButtonResponse\x12\x18\n" +
+	"\x05label\x18\x03 \x01(\tR\x05label\"T\n" +
+	"\x15FormAddButtonResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12!\n" +
-	"\fbutton_index\x18\x02 \x01(\x05R\vbuttonIndex\"\xc0\x01\n" +
-	"\x14GetFieldValueRequest\x12D\n" +
+	"\fbutton_index\x18\x02 \x01(\x05R\vbuttonIndex\"\xc4\x01\n" +
+	"\x18FormGetFieldValueRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12\x1f\n" +
 	"\vfield_index\x18\x03 \x01(\x05R\n" +
-	"fieldIndex\"-\n" +
-	"\x15GetFieldValueResponse\x12\x14\n" +
-	"\x05value\x18\x01 \x01(\tR\x05value\"\xd6\x01\n" +
-	"\x14SetFieldValueRequest\x12D\n" +
+	"fieldIndex\"1\n" +
+	"\x19FormGetFieldValueResponse\x12\x14\n" +
+	"\x05value\x18\x01 \x01(\tR\x05value\"\xda\x01\n" +
+	"\x18FormSetFieldValueRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\x12\x1f\n" +
 	"\vfield_index\x18\x03 \x01(\x05R\n" +
 	"fieldIndex\x12\x14\n" +
-	"\x05value\x18\x04 \x01(\tR\x05value\"1\n" +
-	"\x15SetFieldValueResponse\x12\x18\n" +
+	"\x05value\x18\x04 \x01(\tR\x05value\"5\n" +
+	"\x19FormSetFieldValueResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x9b\x01\n" +
-	"\x10ClearFormRequest\x12D\n" +
+	"\x10FormClearRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"-\n" +
-	"\x11ClearFormResponse\x12\x18\n" +
+	"\x11FormClearResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xa2\x01\n" +
-	"\x17GetFormItemCountRequest\x12D\n" +
+	"\x17FormGetItemCountRequest\x12D\n" +
 	"\n" +
 	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
 	"\twidget_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwidgetId\"0\n" +
-	"\x18GetFormItemCountResponse\x12\x14\n" +
+	"\x18FormGetItemCountResponse\x12\x14\n" +
 	"\x05count\x18\x01 \x01(\x05R\x05count*p\n" +
 	"\rFormFieldType\x12\x14\n" +
 	"\x10FORM_FIELD_INPUT\x10\x00\x12\x17\n" +
 	"\x13FORM_FIELD_PASSWORD\x10\x01\x12\x17\n" +
 	"\x13FORM_FIELD_CHECKBOX\x10\x02\x12\x17\n" +
-	"\x13FORM_FIELD_DROPDOWN\x10\x032\xab\x05\n" +
-	"\vFormService\x12e\n" +
-	"\bAddField\x12+.industries.loosh.yutani.v1.AddFieldRequest\x1a,.industries.loosh.yutani.v1.AddFieldResponse\x12h\n" +
-	"\tAddButton\x12,.industries.loosh.yutani.v1.AddButtonRequest\x1a-.industries.loosh.yutani.v1.AddButtonResponse\x12t\n" +
-	"\rGetFieldValue\x120.industries.loosh.yutani.v1.GetFieldValueRequest\x1a1.industries.loosh.yutani.v1.GetFieldValueResponse\x12t\n" +
-	"\rSetFieldValue\x120.industries.loosh.yutani.v1.SetFieldValueRequest\x1a1.industries.loosh.yutani.v1.SetFieldValueResponse\x12d\n" +
-	"\x05Clear\x12,.industries.loosh.yutani.v1.ClearFormRequest\x1a-.industries.loosh.yutani.v1.ClearFormResponse\x12y\n" +
-	"\fGetItemCount\x123.industries.loosh.yutani.v1.GetFormItemCountRequest\x1a4.industries.loosh.yutani.v1.GetFormItemCountResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
+	"\x13FORM_FIELD_DROPDOWN\x10\x032\xcb\x05\n" +
+	"\vFormService\x12m\n" +
+	"\bAddField\x12/.industries.loosh.yutani.v1.FormAddFieldRequest\x1a0.industries.loosh.yutani.v1.FormAddFieldResponse\x12p\n" +
+	"\tAddButton\x120.industries.loosh.yutani.v1.FormAddButtonRequest\x1a1.industries.loosh.yutani.v1.FormAddButtonResponse\x12|\n" +
+	"\rGetFieldValue\x124.industries.loosh.yutani.v1.FormGetFieldValueRequest\x1a5.industries.loosh.yutani.v1.FormGetFieldValueResponse\x12|\n" +
+	"\rSetFieldValue\x124.industries.loosh.yutani.v1.FormSetFieldValueRequest\x1a5.industries.loosh.yutani.v1.FormSetFieldValueResponse\x12d\n" +
+	"\x05Clear\x12,.industries.loosh.yutani.v1.FormClearRequest\x1a-.industries.loosh.yutani.v1.FormClearResponse\x12y\n" +
+	"\fGetItemCount\x123.industries.loosh.yutani.v1.FormGetItemCountRequest\x1a4.industries.loosh.yutani.v1.FormGetItemCountResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
 
 var (
 	file_industries_loosh_yutani_v1_form_proto_rawDescOnce sync.Once
@@ -825,48 +825,48 @@ func file_industries_loosh_yutani_v1_form_proto_rawDescGZIP() []byte {
 var file_industries_loosh_yutani_v1_form_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_industries_loosh_yutani_v1_form_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_industries_loosh_yutani_v1_form_proto_goTypes = []any{
-	(FormFieldType)(0),               // 0: industries.loosh.yutani.v1.FormFieldType
-	(*AddFieldRequest)(nil),          // 1: industries.loosh.yutani.v1.AddFieldRequest
-	(*AddFieldResponse)(nil),         // 2: industries.loosh.yutani.v1.AddFieldResponse
-	(*AddButtonRequest)(nil),         // 3: industries.loosh.yutani.v1.AddButtonRequest
-	(*AddButtonResponse)(nil),        // 4: industries.loosh.yutani.v1.AddButtonResponse
-	(*GetFieldValueRequest)(nil),     // 5: industries.loosh.yutani.v1.GetFieldValueRequest
-	(*GetFieldValueResponse)(nil),    // 6: industries.loosh.yutani.v1.GetFieldValueResponse
-	(*SetFieldValueRequest)(nil),     // 7: industries.loosh.yutani.v1.SetFieldValueRequest
-	(*SetFieldValueResponse)(nil),    // 8: industries.loosh.yutani.v1.SetFieldValueResponse
-	(*ClearFormRequest)(nil),         // 9: industries.loosh.yutani.v1.ClearFormRequest
-	(*ClearFormResponse)(nil),        // 10: industries.loosh.yutani.v1.ClearFormResponse
-	(*GetFormItemCountRequest)(nil),  // 11: industries.loosh.yutani.v1.GetFormItemCountRequest
-	(*GetFormItemCountResponse)(nil), // 12: industries.loosh.yutani.v1.GetFormItemCountResponse
-	(*SessionId)(nil),                // 13: industries.loosh.yutani.v1.SessionId
-	(*WidgetId)(nil),                 // 14: industries.loosh.yutani.v1.WidgetId
+	(FormFieldType)(0),                // 0: industries.loosh.yutani.v1.FormFieldType
+	(*FormAddFieldRequest)(nil),       // 1: industries.loosh.yutani.v1.FormAddFieldRequest
+	(*FormAddFieldResponse)(nil),      // 2: industries.loosh.yutani.v1.FormAddFieldResponse
+	(*FormAddButtonRequest)(nil),      // 3: industries.loosh.yutani.v1.FormAddButtonRequest
+	(*FormAddButtonResponse)(nil),     // 4: industries.loosh.yutani.v1.FormAddButtonResponse
+	(*FormGetFieldValueRequest)(nil),  // 5: industries.loosh.yutani.v1.FormGetFieldValueRequest
+	(*FormGetFieldValueResponse)(nil), // 6: industries.loosh.yutani.v1.FormGetFieldValueResponse
+	(*FormSetFieldValueRequest)(nil),  // 7: industries.loosh.yutani.v1.FormSetFieldValueRequest
+	(*FormSetFieldValueResponse)(nil), // 8: industries.loosh.yutani.v1.FormSetFieldValueResponse
+	(*FormClearRequest)(nil),          // 9: industries.loosh.yutani.v1.FormClearRequest
+	(*FormClearResponse)(nil),         // 10: industries.loosh.yutani.v1.FormClearResponse
+	(*FormGetItemCountRequest)(nil),   // 11: industries.loosh.yutani.v1.FormGetItemCountRequest
+	(*FormGetItemCountResponse)(nil),  // 12: industries.loosh.yutani.v1.FormGetItemCountResponse
+	(*SessionId)(nil),                 // 13: industries.loosh.yutani.v1.SessionId
+	(*WidgetId)(nil),                  // 14: industries.loosh.yutani.v1.WidgetId
 }
 var file_industries_loosh_yutani_v1_form_proto_depIdxs = []int32{
-	13, // 0: industries.loosh.yutani.v1.AddFieldRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	14, // 1: industries.loosh.yutani.v1.AddFieldRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	0,  // 2: industries.loosh.yutani.v1.AddFieldRequest.field_type:type_name -> industries.loosh.yutani.v1.FormFieldType
-	13, // 3: industries.loosh.yutani.v1.AddButtonRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	14, // 4: industries.loosh.yutani.v1.AddButtonRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	13, // 5: industries.loosh.yutani.v1.GetFieldValueRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	14, // 6: industries.loosh.yutani.v1.GetFieldValueRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	13, // 7: industries.loosh.yutani.v1.SetFieldValueRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	14, // 8: industries.loosh.yutani.v1.SetFieldValueRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	13, // 9: industries.loosh.yutani.v1.ClearFormRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	14, // 10: industries.loosh.yutani.v1.ClearFormRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	13, // 11: industries.loosh.yutani.v1.GetFormItemCountRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	14, // 12: industries.loosh.yutani.v1.GetFormItemCountRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	1,  // 13: industries.loosh.yutani.v1.FormService.AddField:input_type -> industries.loosh.yutani.v1.AddFieldRequest
-	3,  // 14: industries.loosh.yutani.v1.FormService.AddButton:input_type -> industries.loosh.yutani.v1.AddButtonRequest
-	5,  // 15: industries.loosh.yutani.v1.FormService.GetFieldValue:input_type -> industries.loosh.yutani.v1.GetFieldValueRequest
-	7,  // 16: industries.loosh.yutani.v1.FormService.SetFieldValue:input_type -> industries.loosh.yutani.v1.SetFieldValueRequest
-	9,  // 17: industries.loosh.yutani.v1.FormService.Clear:input_type -> industries.loosh.yutani.v1.ClearFormRequest
-	11, // 18: industries.loosh.yutani.v1.FormService.GetItemCount:input_type -> industries.loosh.yutani.v1.GetFormItemCountRequest
-	2,  // 19: industries.loosh.yutani.v1.FormService.AddField:output_type -> industries.loosh.yutani.v1.AddFieldResponse
-	4,  // 20: industries.loosh.yutani.v1.FormService.AddButton:output_type -> industries.loosh.yutani.v1.AddButtonResponse
-	6,  // 21: industries.loosh.yutani.v1.FormService.GetFieldValue:output_type -> industries.loosh.yutani.v1.GetFieldValueResponse
-	8,  // 22: industries.loosh.yutani.v1.FormService.SetFieldValue:output_type -> industries.loosh.yutani.v1.SetFieldValueResponse
-	10, // 23: industries.loosh.yutani.v1.FormService.Clear:output_type -> industries.loosh.yutani.v1.ClearFormResponse
-	12, // 24: industries.loosh.yutani.v1.FormService.GetItemCount:output_type -> industries.loosh.yutani.v1.GetFormItemCountResponse
+	13, // 0: industries.loosh.yutani.v1.FormAddFieldRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	14, // 1: industries.loosh.yutani.v1.FormAddFieldRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	0,  // 2: industries.loosh.yutani.v1.FormAddFieldRequest.field_type:type_name -> industries.loosh.yutani.v1.FormFieldType
+	13, // 3: industries.loosh.yutani.v1.FormAddButtonRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	14, // 4: industries.loosh.yutani.v1.FormAddButtonRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	13, // 5: industries.loosh.yutani.v1.FormGetFieldValueRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	14, // 6: industries.loosh.yutani.v1.FormGetFieldValueRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	13, // 7: industries.loosh.yutani.v1.FormSetFieldValueRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	14, // 8: industries.loosh.yutani.v1.FormSetFieldValueRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	13, // 9: industries.loosh.yutani.v1.FormClearRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	14, // 10: industries.loosh.yutani.v1.FormClearRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	13, // 11: industries.loosh.yutani.v1.FormGetItemCountRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	14, // 12: industries.loosh.yutani.v1.FormGetItemCountRequest.widget_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	1,  // 13: industries.loosh.yutani.v1.FormService.AddField:input_type -> industries.loosh.yutani.v1.FormAddFieldRequest
+	3,  // 14: industries.loosh.yutani.v1.FormService.AddButton:input_type -> industries.loosh.yutani.v1.FormAddButtonRequest
+	5,  // 15: industries.loosh.yutani.v1.FormService.GetFieldValue:input_type -> industries.loosh.yutani.v1.FormGetFieldValueRequest
+	7,  // 16: industries.loosh.yutani.v1.FormService.SetFieldValue:input_type -> industries.loosh.yutani.v1.FormSetFieldValueRequest
+	9,  // 17: industries.loosh.yutani.v1.FormService.Clear:input_type -> industries.loosh.yutani.v1.FormClearRequest
+	11, // 18: industries.loosh.yutani.v1.FormService.GetItemCount:input_type -> industries.loosh.yutani.v1.FormGetItemCountRequest
+	2,  // 19: industries.loosh.yutani.v1.FormService.AddField:output_type -> industries.loosh.yutani.v1.FormAddFieldResponse
+	4,  // 20: industries.loosh.yutani.v1.FormService.AddButton:output_type -> industries.loosh.yutani.v1.FormAddButtonResponse
+	6,  // 21: industries.loosh.yutani.v1.FormService.GetFieldValue:output_type -> industries.loosh.yutani.v1.FormGetFieldValueResponse
+	8,  // 22: industries.loosh.yutani.v1.FormService.SetFieldValue:output_type -> industries.loosh.yutani.v1.FormSetFieldValueResponse
+	10, // 23: industries.loosh.yutani.v1.FormService.Clear:output_type -> industries.loosh.yutani.v1.FormClearResponse
+	12, // 24: industries.loosh.yutani.v1.FormService.GetItemCount:output_type -> industries.loosh.yutani.v1.FormGetItemCountResponse
 	19, // [19:25] is the sub-list for method output_type
 	13, // [13:19] is the sub-list for method input_type
 	13, // [13:13] is the sub-list for extension type_name

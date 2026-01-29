@@ -88,7 +88,7 @@ func main() {
 
 		// Handle selection changes
 		if event.Widget.Type == "WIDGET_SELECTED" {
-			nodeID, text, ref, err := tree.GetSelected()
+			nodeID, text, ref, err := tree.GetSelection()
 			if err != nil {
 				log.Printf("Failed to get selection: %v", err)
 				return
