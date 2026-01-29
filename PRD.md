@@ -86,6 +86,8 @@ Widgets are UI elements with unique IDs. The server maintains a registry mapping
 | Modal | Modal | Dialog overlay |
 | Image | Image | Terminal image display |
 | ProgressBar | ProgressBar | Progress indicator |
+| Window | WindowPrimitive | Draggable/resizable window frame |
+| WindowManager | WindowManagerPrimitive | Floating window container with z-ordering |
 
 ### 3.3 Events
 Events flow from server to client via gRPC streaming:
@@ -93,7 +95,7 @@ Events flow from server to client via gRPC streaming:
 - **MouseEvent** - Mouse actions (click, drag, scroll, position)
 - **ResizeEvent** - Terminal resize
 - **FocusEvent** - Widget focus changes
-- **WidgetEvent** - Widget-specific (selection, change, submit)
+- **WidgetEvent** - Widget-specific (selection, change, submit, window moved/resized/state changed/closed/activated)
 
 ### 3.4 Styles
 Styling uses tcell's color and attribute system:
@@ -359,6 +361,43 @@ service LayoutService {
 }
 ```
 
+### 4.11 WindowService
+Operations for window management (move, resize, state, z-order).
+
+```protobuf
+service WindowService {
+  // Add a window to a window manager
+  rpc WindowManagerAddWindow(WindowManagerAddWindowRequest) returns (WindowManagerAddWindowResponse);
+
+  // Remove a window from a window manager
+  rpc WindowManagerRemoveWindow(WindowManagerRemoveWindowRequest) returns (WindowManagerRemoveWindowResponse);
+
+  // Move a window to a new position
+  rpc WindowMove(WindowMoveRequest) returns (WindowMoveResponse);
+
+  // Resize a window
+  rpc WindowResize(WindowResizeRequest) returns (WindowResizeResponse);
+
+  // Set window state (normal, maximized, minimized)
+  rpc WindowSetState(WindowSetStateRequest) returns (WindowSetStateResponse);
+
+  // Get window state and geometry
+  rpc WindowGetState(WindowGetStateRequest) returns (WindowGetStateResponse);
+
+  // Bring a window to the front of the z-order
+  rpc WindowBringToFront(WindowBringToFrontRequest) returns (WindowBringToFrontResponse);
+
+  // Send a window to the back of the z-order
+  rpc WindowSendToBack(WindowSendToBackRequest) returns (WindowSendToBackResponse);
+
+  // Get the z-order of windows in a manager (front to back)
+  rpc WindowManagerGetZOrder(WindowManagerGetZOrderRequest) returns (WindowManagerGetZOrderResponse);
+
+  // Set window constraints (resizable, movable, min/max size)
+  rpc WindowSetConstraints(WindowSetConstraintsRequest) returns (WindowSetConstraintsResponse);
+}
+```
+
 ---
 
 ## 5. Message Types
@@ -448,6 +487,15 @@ enum WidgetType {
   WIDGET_PAGES = 13;
   WIDGET_MODAL = 14;
   WIDGET_IMAGE = 15;
+  WIDGET_PROGRESS_BAR = 16;
+  WIDGET_WINDOW = 17;
+  WIDGET_WINDOW_MANAGER = 18;
+}
+
+enum WindowState {
+  WINDOW_NORMAL = 0;
+  WINDOW_MAXIMIZED = 1;
+  WINDOW_MINIMIZED = 2;
 }
 
 message WidgetProperties {
@@ -471,7 +519,40 @@ message WidgetProperties {
     TableProperties table = 25;
     FlexProperties flex = 26;
     GridProperties grid = 27;
+    WindowProperties window = 36;
+    WindowManagerProperties window_manager = 37;
   }
+}
+
+message WindowProperties {
+  optional Rect initial_rect = 1;
+  optional WindowState state = 2;
+  optional bool resizable = 3;
+  optional bool movable = 4;
+  optional bool closable = 5;
+  optional bool minimizable = 6;
+  optional bool maximizable = 7;
+  optional int32 min_width = 8;
+  optional int32 min_height = 9;
+  optional int32 max_width = 10;
+  optional int32 max_height = 11;
+  optional Color title_bar_color = 12;
+  optional Color title_bar_text_color = 13;
+  optional Color active_border_color = 14;
+  optional Color inactive_border_color = 15;
+}
+
+message WindowManagerProperties {
+  optional Color background_color = 1;
+}
+
+message WindowConstraints {
+  optional bool resizable = 1;
+  optional bool movable = 2;
+  optional int32 min_width = 3;
+  optional int32 min_height = 4;
+  optional int32 max_width = 5;
+  optional int32 max_height = 6;
 }
 
 message Padding {
@@ -582,6 +663,11 @@ enum WidgetEventType {
   WIDGET_SUBMITTED = 2;     // Form submitted, button pressed
   WIDGET_CANCELLED = 3;     // Escape pressed
   WIDGET_DONE = 4;          // Input complete (Enter pressed)
+  WIDGET_WINDOW_MOVED = 5;          // Window was moved
+  WIDGET_WINDOW_RESIZED = 6;        // Window was resized
+  WIDGET_WINDOW_STATE_CHANGED = 7;  // Window state changed (normal/max/min)
+  WIDGET_WINDOW_CLOSED = 8;         // Window close button clicked
+  WIDGET_WINDOW_ACTIVATED = 9;      // Window brought to front / activated
 }
 ```
 
@@ -606,7 +692,9 @@ yutani/
 │   │   ├── session.go        # Session management
 │   │   ├── registry.go       # Widget registry
 │   │   ├── events.go         # Event dispatcher
-│   │   └── event_convert.go  # tcell-to-protobuf conversion
+│   │   ├── event_convert.go  # tcell-to-protobuf conversion
+│   │   ├── window.go         # WindowPrimitive (custom tview primitive)
+│   │   └── window_manager.go # WindowManagerPrimitive (z-order, drag)
 │   ├── services/
 │   │   ├── session.go        # SessionService impl
 │   │   ├── screen.go         # ScreenService impl
@@ -619,9 +707,11 @@ yutani/
 │   │   ├── tree.go           # TreeService impl
 │   │   ├── layout.go         # LayoutService impl
 │   │   ├── debug.go          # DebugService impl
-│   │   └── test.go           # TestService impl
+│   │   ├── test.go           # TestService impl
+│   │   └── window.go         # WindowService impl
 │   ├── client/
 │   │   ├── client.go         # Go client library
+│   │   ├── window.go         # Window/WindowManager builders
 │   │   └── testing/          # Integration test helpers
 │   ├── cli/
 │   │   ├── root.go           # CLI entry point (cobra)
@@ -649,10 +739,11 @@ yutani/
 │                       ├── layout.proto
 │                       ├── debug.proto
 │                       ├── test.proto
+│                       ├── window.proto
 │                       └── types.proto
 ├── test/
 │   └── e2e/                  # E2E, acceptance, and contract tests
-├── examples/                 # 8 example applications
+├── examples/                 # Example applications
 ├── go.mod
 └── go.sum
 ```
@@ -786,6 +877,8 @@ func (c *Client) NewList() (*List, error)
 func (c *Client) NewTable() (*Table, error)
 func (c *Client) NewForm() (*Form, error)
 func (c *Client) NewFlex() (*Flex, error)
+func (c *Client) NewWindow() *WindowBuilder
+func (c *Client) NewWindowManager() *WindowManagerBuilder
 // ... etc
 
 // Event handling
@@ -923,6 +1016,17 @@ Environment variables use the `YUTANI_` prefix and match the flag names in upper
 - [x] Comprehensive tutorial (5 lessons)
 - [x] Full API documentation
 
+### Phase 5.5: Window Management ✅ **COMPLETE**
+- [x] WindowPrimitive custom tview primitive (title bar, borders, buttons, hit zones)
+- [x] WindowManagerPrimitive (z-ordering, drag-to-move, drag-to-resize)
+- [x] WindowService gRPC service (10 RPCs: add/remove, move, resize, state, z-order, constraints)
+- [x] Window/WindowManager widget factory integration
+- [x] Mouse event enhancement (drag/release detection)
+- [x] Client library builders (Window, WindowManager) with fluent API
+- [x] Window event dispatch (moved, resized, state changed, closed, activated)
+- [x] Unit tests, service tests, and e2e tests
+- [x] Interactive window-demo example
+
 ### Phase 6: Advanced Features and Optimization (Future)
 
 #### 6.1 Additional Widget Builders ✅ **COMPLETE**
@@ -1021,6 +1125,8 @@ Environment variables use the `YUTANI_` prefix and match the flag names in upper
 11. **Widget Event Emission**: Interactive widgets (Button, Checkbox, InputField) automatically emit events through the EventDispatcher when user interactions occur.
 
 12. **Widget Hierarchy**: Parent-child relationships tracked in WidgetRegistry. Container widgets (Flex, Grid) will be implemented in Phase 4.
+
+13. **Window Management**: Windows are custom tview primitives (not standard tview widgets). The WindowManager handles all mouse dispatch via hit-zone testing. Drag state is mutated in tview's goroutine (mouse handler); RPCs go through `QueueUpdateDraw()`, serializing onto the same goroutine. Windows are positioned absolutely within the WindowManager's rect. Minimize collapses to a single title-bar row. Close removes the window from the manager.
 
 ---
 

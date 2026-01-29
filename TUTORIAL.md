@@ -275,7 +275,163 @@ c.OnEvent(func(event *client.Event) {
 })
 ```
 
-## Tutorial 5: Best Practices
+## Tutorial 5: Window Management
+
+Yutani provides a floating window management system. Windows can be dragged, resized, minimized, maximized, and closed — all rendered in the terminal.
+
+### Step 1: Create a Window Manager
+
+The window manager is a container that holds windows and handles their positioning, z-ordering, and mouse interactions. Set it as the root widget.
+
+```go
+wm, err := c.NewWindowManager().
+    Title("Desktop").
+    Build()
+if err != nil {
+    log.Fatal(err)
+}
+
+if err := c.SetRoot(wm); err != nil {
+    log.Fatal(err)
+}
+```
+
+### Step 2: Create Windows
+
+Each window wraps a child content widget. Specify position, size, and behavior constraints.
+
+```go
+win1, err := c.NewWindow().
+    Title("Editor").
+    Rect(2, 2, 40, 15).       // x, y, width, height
+    Resizable(true).
+    Movable(true).
+    MinSize(20, 8).            // minimum width, height
+    MaxSize(80, 30).           // maximum width, height
+    Build()
+if err != nil {
+    log.Fatal(err)
+}
+
+win2, err := c.NewWindow().
+    Title("Output").
+    Rect(25, 8, 35, 12).
+    Resizable(true).
+    Movable(true).
+    Build()
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+### Step 3: Add Windows to the Manager
+
+```go
+if err := wm.AddWindow(win1); err != nil {
+    log.Fatal(err)
+}
+if err := wm.AddWindow(win2); err != nil {
+    log.Fatal(err)
+}
+```
+
+Windows are stacked in the order they are added — the last window added is on top.
+
+### Step 4: Control Windows Programmatically
+
+```go
+// Move a window
+win1.Move(10, 5)
+
+// Resize a window
+win1.Resize(50, 20)
+
+// Minimize, maximize, restore
+win1.Minimize()
+win1.Maximize()
+win1.Restore()
+
+// Query current state and geometry
+state, err := win1.GetState()
+if err == nil {
+    fmt.Printf("State: %v, Rect: (%d,%d,%d,%d)\n",
+        state.State, state.Rect.X, state.Rect.Y,
+        state.Rect.Width, state.Rect.Height)
+}
+
+// Set constraints after creation
+win1.SetConstraints(&pb.WindowConstraints{
+    Resizable: testutil.BoolPtr(false),
+    Movable:   testutil.BoolPtr(true),
+    MinWidth:  testutil.Int32Ptr(15),
+    MinHeight: testutil.Int32Ptr(8),
+})
+```
+
+### Step 5: Z-Order Control
+
+```go
+// Bring a window to the front
+wm.BringToFront(win1)
+
+// Send a window to the back
+wm.SendToBack(win2)
+
+// Get the current z-order (front to back)
+order, err := wm.GetZOrder()
+if err == nil {
+    fmt.Println("Z-order (front to back):", order)
+}
+```
+
+### Step 6: Handle Window Events
+
+Windows emit events when moved, resized, or state-changed.
+
+```go
+c.OnEventType(client.EventTypeWidget, func(event *client.Event) {
+    if event.Widget == nil {
+        return
+    }
+    switch event.Widget.Type {
+    case client.WidgetEventWindowMoved:
+        fmt.Printf("Window %s moved\n", event.Widget.WidgetID)
+    case client.WidgetEventWindowResized:
+        fmt.Printf("Window %s resized\n", event.Widget.WidgetID)
+    case client.WidgetEventWindowStateChanged:
+        fmt.Printf("Window %s state changed\n", event.Widget.WidgetID)
+    case client.WidgetEventWindowClosed:
+        fmt.Printf("Window %s closed\n", event.Widget.WidgetID)
+    case client.WidgetEventWindowActivated:
+        fmt.Printf("Window %s activated\n", event.Widget.WidgetID)
+    }
+})
+```
+
+### Mouse Interactions
+
+The window manager handles all mouse interactions automatically:
+
+- **Title bar**: Drag to move the window
+- **`[_]` button**: Minimize (collapse to title bar) or restore
+- **`[^]` button**: Maximize (fill manager area) or restore
+- **`[X]` button**: Close and remove the window
+- **Edges/corners**: Drag to resize
+- **Click a window**: Brings it to front
+
+### Run the Demo
+
+A complete working example is in `examples/window-demo/`:
+
+```bash
+# Terminal 1: Start server
+./bin/yutani server
+
+# Terminal 2: Run demo
+go run ./examples/window-demo
+```
+
+## Tutorial 6: Best Practices
 
 ### 1. Always Close the Client
 
