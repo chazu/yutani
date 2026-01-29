@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	pb "github.com/chazu/yutani/pkg/proto/yutani"
+	"github.com/chazu/yutani/pkg/server"
 	"github.com/rivo/tview"
 )
 
@@ -871,6 +872,110 @@ func (s *WidgetService) applyProgressBarProperties(pbar *ProgressBar, props *pb.
 		pbar.emptyColor = colorToString(pbarProps.ProgressBar.EmptyColor)
 	}
 	pbar.update()
+
+	return nil
+}
+
+// Window widget
+
+func (s *WidgetService) createWindow(props *pb.WidgetProperties) *server.WindowPrimitive {
+	win := server.NewWindowPrimitive(nil)
+	if props != nil {
+		if props.Title != nil {
+			win.SetTitle(*props.Title)
+		}
+		s.applyWindowProperties(win, props)
+	}
+	return win
+}
+
+func (s *WidgetService) applyWindowProperties(win *server.WindowPrimitive, props *pb.WidgetProperties) error {
+	if props.TypeProperties == nil {
+		return nil
+	}
+
+	wProps, ok := props.TypeProperties.(*pb.WidgetProperties_Window)
+	if !ok || wProps.Window == nil {
+		return nil
+	}
+
+	wp := wProps.Window
+	if wp.InitialRect != nil {
+		win.SetRect(int(wp.InitialRect.X), int(wp.InitialRect.Y), int(wp.InitialRect.Width), int(wp.InitialRect.Height))
+		win.SetRestoredRect(server.Rect{
+			X: int(wp.InitialRect.X), Y: int(wp.InitialRect.Y),
+			Width: int(wp.InitialRect.Width), Height: int(wp.InitialRect.Height),
+		})
+	}
+	if wp.Resizable != nil {
+		win.SetResizable(*wp.Resizable)
+	}
+	if wp.Movable != nil {
+		win.SetMovable(*wp.Movable)
+	}
+	if wp.Closable != nil {
+		win.SetClosable(*wp.Closable)
+	}
+	if wp.Minimizable != nil {
+		win.SetMinimizable(*wp.Minimizable)
+	}
+	if wp.Maximizable != nil {
+		win.SetMaximizable(*wp.Maximizable)
+	}
+	if wp.MinWidth != nil {
+		win.SetMinWidth(int(*wp.MinWidth))
+	}
+	if wp.MinHeight != nil {
+		win.SetMinHeight(int(*wp.MinHeight))
+	}
+	if wp.MaxWidth != nil {
+		win.SetMaxWidth(int(*wp.MaxWidth))
+	}
+	if wp.MaxHeight != nil {
+		win.SetMaxHeight(int(*wp.MaxHeight))
+	}
+	if wp.TitleBarColor != nil {
+		win.SetTitleBarColor(convertColor(wp.TitleBarColor))
+	}
+	if wp.TitleBarTextColor != nil {
+		win.SetTitleBarTextColor(convertColor(wp.TitleBarTextColor))
+	}
+	if wp.ActiveBorderColor != nil {
+		win.SetActiveBorderColor(convertColor(wp.ActiveBorderColor))
+	}
+	if wp.InactiveBorderColor != nil {
+		win.SetInactiveBorderColor(convertColor(wp.InactiveBorderColor))
+	}
+
+	return nil
+}
+
+// WindowManager widget
+
+func (s *WidgetService) createWindowManager(props *pb.WidgetProperties) *server.WindowManagerPrimitive {
+	wm := server.NewWindowManagerPrimitive()
+	if props != nil {
+		if props.Title != nil {
+			wm.SetTitle(*props.Title)
+		}
+		s.applyWindowManagerProperties(wm, props)
+	}
+	return wm
+}
+
+func (s *WidgetService) applyWindowManagerProperties(wm *server.WindowManagerPrimitive, props *pb.WidgetProperties) error {
+	if props.TypeProperties == nil {
+		return nil
+	}
+
+	wmProps, ok := props.TypeProperties.(*pb.WidgetProperties_WindowManager)
+	if !ok || wmProps.WindowManager == nil {
+		return nil
+	}
+
+	if wmProps.WindowManager.BackgroundColor != nil {
+		wm.SetBgColor(convertColor(wmProps.WindowManager.BackgroundColor))
+	}
 
 	return nil
 }

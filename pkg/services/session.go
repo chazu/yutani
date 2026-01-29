@@ -124,6 +124,7 @@ func (s *SessionService) GetServerInfo(ctx context.Context, req *pb.GetServerInf
 			"Button", "Checkbox", "DropDown", "List",
 			"Table", "TreeView", "Form", "Flex",
 			"Grid", "Pages", "Modal", "Image", "ProgressBar",
+			"Window", "WindowManager",
 		},
 	}
 

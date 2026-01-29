@@ -16,14 +16,29 @@ func (s *Server) convertKeyEvent(sessionID string, event *tcell.EventKey) *pb.Ev
 	return CreateEvent(sessionID, keyEvent)
 }
 
-// convertMouseEvent converts a tcell mouse event to protobuf
+// convertMouseEvent converts a tcell mouse event to protobuf.
+// It tracks button-down state to distinguish click, drag, and release.
 func (s *Server) convertMouseEvent(sessionID string, event *tcell.EventMouse) *pb.Event {
 	x, y := event.Position()
 	buttons := event.Buttons()
 
 	action := pb.MouseAction_MOUSE_MOVE
+
 	if buttons&tcell.Button1 != 0 {
-		action = pb.MouseAction_MOUSE_CLICK
+		if s.lastButton1Down {
+			// Button was already down — this is a drag
+			action = pb.MouseAction_MOUSE_DRAG
+		} else {
+			// Button just went down — this is a click
+			action = pb.MouseAction_MOUSE_CLICK
+			s.lastButton1Down = true
+			s.lastButton1X = x
+			s.lastButton1Y = y
+		}
+	} else if s.lastButton1Down {
+		// Button1 was down but now it's not — release
+		action = pb.MouseAction_MOUSE_RELEASE
+		s.lastButton1Down = false
 	} else if buttons&tcell.Button2 != 0 {
 		action = pb.MouseAction_MOUSE_MIDDLE_CLICK
 	} else if buttons&tcell.Button3 != 0 {

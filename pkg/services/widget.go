@@ -359,6 +359,10 @@ func (s *WidgetService) createPrimitive(widgetType pb.WidgetType, props *pb.Widg
 		return s.createImage(props), nil
 	case pb.WidgetType_WIDGET_PROGRESS_BAR:
 		return s.createProgressBar(props), nil
+	case pb.WidgetType_WIDGET_WINDOW:
+		return s.createWindow(props), nil
+	case pb.WidgetType_WIDGET_WINDOW_MANAGER:
+		return s.createWindowManager(props), nil
 	default:
 		return nil, fmt.Errorf("unsupported widget type: %v", widgetType)
 	}
@@ -411,6 +415,14 @@ func (s *WidgetService) applyProperties(primitive tview.Primitive, widgetType pb
 	case pb.WidgetType_WIDGET_PROGRESS_BAR:
 		if pb, ok := primitive.(*ProgressBar); ok {
 			return s.applyProgressBarProperties(pb, props)
+		}
+	case pb.WidgetType_WIDGET_WINDOW:
+		if win, ok := primitive.(*server.WindowPrimitive); ok {
+			return s.applyWindowProperties(win, props)
+		}
+	case pb.WidgetType_WIDGET_WINDOW_MANAGER:
+		if wm, ok := primitive.(*server.WindowManagerPrimitive); ok {
+			return s.applyWindowManagerProperties(wm, props)
 		}
 	}
 
@@ -553,6 +565,40 @@ func (s *WidgetService) wireWidgetEvents(sessionID, widgetID string, widgetType 
 					"button_label": buttonLabel,
 				}
 				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_SUBMITTED, data)
+			})
+		}
+	case pb.WidgetType_WIDGET_WINDOW:
+		if win, ok := primitive.(*server.WindowPrimitive); ok {
+			win.SetOnMoved(func(x, y int) {
+				data := map[string]string{
+					"x": fmt.Sprintf("%d", x),
+					"y": fmt.Sprintf("%d", y),
+				}
+				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_WINDOW_MOVED, data)
+			})
+			win.SetOnResized(func(w, h int) {
+				data := map[string]string{
+					"width":  fmt.Sprintf("%d", w),
+					"height": fmt.Sprintf("%d", h),
+				}
+				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_WINDOW_RESIZED, data)
+			})
+			win.SetOnStateChanged(func(state server.WindowState) {
+				stateStr := "normal"
+				switch state {
+				case server.WindowStateMaximized:
+					stateStr = "maximized"
+				case server.WindowStateMinimized:
+					stateStr = "minimized"
+				}
+				data := map[string]string{"state": stateStr}
+				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_WINDOW_STATE_CHANGED, data)
+			})
+			win.SetOnClosed(func() {
+				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_WINDOW_CLOSED, nil)
+			})
+			win.SetOnActivated(func() {
+				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_WINDOW_ACTIVATED, nil)
 			})
 		}
 	}

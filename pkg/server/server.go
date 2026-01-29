@@ -65,6 +65,11 @@ type Server struct {
 	widgets  *WidgetRegistry
 	events   *EventDispatcher
 
+	// Mouse button tracking for drag/release detection
+	lastButton1Down bool
+	lastButton1X    int
+	lastButton1Y    int
+
 	// Synchronization
 	mu      sync.RWMutex
 	running bool

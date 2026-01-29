@@ -1,0 +1,175 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+import "industries/loosh/yutani/v1/types.proto";
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+// WindowService manages window primitives within a WindowManager
+service WindowService {
+  // Add a window to a window manager
+  rpc WindowManagerAddWindow(WindowManagerAddWindowRequest) returns (WindowManagerAddWindowResponse);
+
+  // Remove a window from a window manager
+  rpc WindowManagerRemoveWindow(WindowManagerRemoveWindowRequest) returns (WindowManagerRemoveWindowResponse);
+
+  // Move a window programmatically
+  rpc WindowMove(WindowMoveRequest) returns (WindowMoveResponse);
+
+  // Resize a window programmatically
+  rpc WindowResize(WindowResizeRequest) returns (WindowResizeResponse);
+
+  // Set window state (normal, maximized, minimized)
+  rpc WindowSetState(WindowSetStateRequest) returns (WindowSetStateResponse);
+
+  // Get window state and geometry
+  rpc WindowGetState(WindowGetStateRequest) returns (WindowGetStateResponse);
+
+  // Bring a window to the front of the z-order
+  rpc WindowBringToFront(WindowBringToFrontRequest) returns (WindowBringToFrontResponse);
+
+  // Send a window to the back of the z-order
+  rpc WindowSendToBack(WindowSendToBackRequest) returns (WindowSendToBackResponse);
+
+  // Get the z-order of all windows in a manager
+  rpc WindowManagerGetZOrder(WindowManagerGetZOrderRequest) returns (WindowManagerGetZOrderResponse);
+
+  // Set window constraints (resizable, movable, min/max size)
+  rpc WindowSetConstraints(WindowSetConstraintsRequest) returns (WindowSetConstraintsResponse);
+}
+
+// WindowConstraints for SetConstraints RPC
+message WindowConstraints {
+  optional bool resizable = 1;
+  optional bool movable = 2;
+  optional bool closable = 3;
+  optional bool minimizable = 4;
+  optional bool maximizable = 5;
+  optional int32 min_width = 6;
+  optional int32 min_height = 7;
+  optional int32 max_width = 8;
+  optional int32 max_height = 9;
+}
+
+// WindowManagerAddWindow
+
+message WindowManagerAddWindowRequest {
+  SessionId session_id = 1;
+  WidgetId manager_id = 2;
+  WidgetId window_id = 3;
+}
+
+message WindowManagerAddWindowResponse {
+  bool success = 1;
+}
+
+// WindowManagerRemoveWindow
+
+message WindowManagerRemoveWindowRequest {
+  SessionId session_id = 1;
+  WidgetId manager_id = 2;
+  WidgetId window_id = 3;
+}
+
+message WindowManagerRemoveWindowResponse {
+  bool success = 1;
+}
+
+// WindowMove
+
+message WindowMoveRequest {
+  SessionId session_id = 1;
+  WidgetId window_id = 2;
+  int32 x = 3;
+  int32 y = 4;
+}
+
+message WindowMoveResponse {
+  bool success = 1;
+}
+
+// WindowResize
+
+message WindowResizeRequest {
+  SessionId session_id = 1;
+  WidgetId window_id = 2;
+  int32 width = 3;
+  int32 height = 4;
+}
+
+message WindowResizeResponse {
+  bool success = 1;
+}
+
+// WindowSetState
+
+message WindowSetStateRequest {
+  SessionId session_id = 1;
+  WidgetId window_id = 2;
+  WindowState state = 3;
+}
+
+message WindowSetStateResponse {
+  bool success = 1;
+}
+
+// WindowGetState
+
+message WindowGetStateRequest {
+  SessionId session_id = 1;
+  WidgetId window_id = 2;
+}
+
+message WindowGetStateResponse {
+  WindowState state = 1;
+  Rect rect = 2;
+  Rect restored_rect = 3;
+}
+
+// WindowBringToFront
+
+message WindowBringToFrontRequest {
+  SessionId session_id = 1;
+  WidgetId manager_id = 2;
+  WidgetId window_id = 3;
+}
+
+message WindowBringToFrontResponse {
+  bool success = 1;
+}
+
+// WindowSendToBack
+
+message WindowSendToBackRequest {
+  SessionId session_id = 1;
+  WidgetId manager_id = 2;
+  WidgetId window_id = 3;
+}
+
+message WindowSendToBackResponse {
+  bool success = 1;
+}
+
+// WindowManagerGetZOrder
+
+message WindowManagerGetZOrderRequest {
+  SessionId session_id = 1;
+  WidgetId manager_id = 2;
+}
+
+message WindowManagerGetZOrderResponse {
+  repeated WidgetId window_ids = 1;  // Front-to-back order
+}
+
+// WindowSetConstraints
+
+message WindowSetConstraintsRequest {
+  SessionId session_id = 1;
+  WidgetId window_id = 2;
+  WindowConstraints constraints = 3;
+}
+
+message WindowSetConstraintsResponse {
+  bool success = 1;
+}

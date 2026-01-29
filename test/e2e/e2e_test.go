@@ -31,6 +31,7 @@ type testServer struct {
 	formSvc      *services.FormService
 	treeSvc      *services.TreeService
 	layoutSvc    *services.LayoutService
+	windowSvc    *services.WindowService
 }
 
 // newTestServer creates a test server with in-memory connection
@@ -73,6 +74,7 @@ func newTestServer(t *testing.T) *testServer {
 	layoutSvc := services.NewLayoutService(srv)
 	debugSvc := services.NewDebugService(srv)
 	testSvc := services.NewTestService(srv)
+	windowSvc := services.NewWindowService(srv)
 
 	pb.RegisterSessionServiceServer(grpcServer, sessionSvc)
 	pb.RegisterScreenServiceServer(grpcServer, screenSvc)
@@ -85,6 +87,7 @@ func newTestServer(t *testing.T) *testServer {
 	pb.RegisterLayoutServiceServer(grpcServer, layoutSvc)
 	pb.RegisterDebugServiceServer(grpcServer, debugSvc)
 	pb.RegisterTestServiceServer(grpcServer, testSvc)
+	pb.RegisterWindowServiceServer(grpcServer, windowSvc)
 
 	// Start gRPC server
 	go func() {
@@ -106,6 +109,7 @@ func newTestServer(t *testing.T) *testServer {
 		formSvc:    formSvc,
 		treeSvc:    treeSvc,
 		layoutSvc:  layoutSvc,
+		windowSvc:  windowSvc,
 	}
 }
 

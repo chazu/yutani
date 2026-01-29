@@ -60,6 +60,20 @@ type WidgetEvent struct {
 	Data     map[string]string
 }
 
+// Widget event type string constants for convenience.
+const (
+	WidgetEventSelected           = "WIDGET_SELECTED"
+	WidgetEventChanged            = "WIDGET_CHANGED"
+	WidgetEventSubmitted          = "WIDGET_SUBMITTED"
+	WidgetEventCancelled          = "WIDGET_CANCELLED"
+	WidgetEventDone               = "WIDGET_DONE"
+	WidgetEventWindowMoved        = "WIDGET_WINDOW_MOVED"
+	WidgetEventWindowResized      = "WIDGET_WINDOW_RESIZED"
+	WidgetEventWindowStateChanged = "WIDGET_WINDOW_STATE_CHANGED"
+	WidgetEventWindowClosed       = "WIDGET_WINDOW_CLOSED"
+	WidgetEventWindowActivated    = "WIDGET_WINDOW_ACTIVATED"
+)
+
 // convertEvent converts a protobuf event to a client event.
 func convertEvent(pbEvent *pb.Event) *Event {
 	event := &Event{}

@@ -91,6 +91,8 @@ enum WidgetType {
   WIDGET_MODAL = 14;
   WIDGET_IMAGE = 15;
   WIDGET_PROGRESS_BAR = 16;
+  WIDGET_WINDOW = 17;
+  WIDGET_WINDOW_MANAGER = 18;
 }
 
 enum Alignment {
@@ -137,6 +139,8 @@ message WidgetProperties {
     ModalProperties modal = 33;
     ImageProperties image = 34;
     ProgressBarProperties progress_bar = 35;
+    WindowProperties window = 36;
+    WindowManagerProperties window_manager = 37;
   }
 }
 
@@ -284,6 +288,37 @@ message ProgressBarProperties {
   optional Color empty_color = 6;
   optional string filled_char = 7;     // Character for filled portion
   optional string empty_char = 8;      // Character for empty portion
+}
+
+// Window state enum
+enum WindowState {
+  WINDOW_NORMAL = 0;
+  WINDOW_MAXIMIZED = 1;
+  WINDOW_MINIMIZED = 2;
+}
+
+// WindowProperties configures a Window widget
+message WindowProperties {
+  optional Rect initial_rect = 1;
+  optional WindowState state = 2;
+  optional bool resizable = 3;
+  optional bool movable = 4;
+  optional bool closable = 5;
+  optional bool minimizable = 6;
+  optional bool maximizable = 7;
+  optional int32 min_width = 8;
+  optional int32 min_height = 9;
+  optional int32 max_width = 10;
+  optional int32 max_height = 11;
+  optional Color title_bar_color = 12;
+  optional Color title_bar_text_color = 13;
+  optional Color active_border_color = 14;
+  optional Color inactive_border_color = 15;
+}
+
+// WindowManagerProperties configures a WindowManager widget
+message WindowManagerProperties {
+  optional Color background_color = 1;
 }
 
 // Key and modifier enums for events (Phase 2)

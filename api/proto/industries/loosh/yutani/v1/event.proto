@@ -121,5 +121,10 @@ enum WidgetEventType {
   WIDGET_SUBMITTED = 2;     // Form submitted, button pressed
   WIDGET_CANCELLED = 3;     // Escape pressed
   WIDGET_DONE = 4;          // Input complete (Enter pressed)
+  WIDGET_WINDOW_MOVED = 5;          // Window was moved
+  WIDGET_WINDOW_RESIZED = 6;        // Window was resized
+  WIDGET_WINDOW_STATE_CHANGED = 7;  // Window state changed (normal/max/min)
+  WIDGET_WINDOW_CLOSED = 8;         // Window close button clicked
+  WIDGET_WINDOW_ACTIVATED = 9;      // Window brought to front / activated
 }
 

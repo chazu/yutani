@@ -254,6 +254,18 @@ func (r *WidgetRegistry) ListBySession(sessionID string) []*WidgetInfo {
 	return infos
 }
 
+// FindByPrimitive returns the widget ID for a given primitive, or "" if not found.
+func (r *WidgetRegistry) FindByPrimitive(p tview.Primitive) string {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+	for id, info := range r.widgets {
+		if info.Primitive == p {
+			return id
+		}
+	}
+	return ""
+}
+
 // Count returns the total number of widgets
 func (r *WidgetRegistry) Count() int {
 	r.mu.RLock()
