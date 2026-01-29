@@ -5,7 +5,7 @@ This tutorial will guide you through building terminal user interfaces with the 
 ## Prerequisites
 
 - Go 1.21 or later
-- Yutani server running (see [RUN_SERVER.md](RUN_SERVER.md))
+- Yutani server running (see [QUICKSTART.md](QUICKSTART.md))
 - Basic understanding of Go programming
 
 ## Tutorial 1: Your First Widget

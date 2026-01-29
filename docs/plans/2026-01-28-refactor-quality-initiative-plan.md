@@ -357,75 +357,75 @@ All existing and new tests must pass.
 Review each file individually. Recommended disposition:
 
 **DELETE** (git history preserves content):
-- [ ] `CHANGES_SUMMARY.md` -- historical session artifact
-- [ ] `BUILD_FIXES_SUMMARY.md` -- historical session artifact
-- [ ] `DISPLAY_FIX.md` -- historical fix, resolved
-- [ ] `FINAL_FIX_SUMMARY.md` -- historical session artifact
-- [ ] `COMPLETION_SUMMARY.md` -- historical session artifact
-- [ ] `EVENT_HANDLING_FIXES.md` -- historical fix, resolved
-- [ ] `TROUBLESHOOTING_SUMMARY.md` -- historical session artifact
-- [ ] `AUDIT_SUMMARY.md` -- historical audit, resolved
-- [ ] `PORT_FIX.md` -- historical fix, resolved
-- [ ] `SETROOT_FIX.md` -- historical fix, resolved
-- [ ] `E2E_TESTS_SUMMARY.md` -- historical session artifact
-- [ ] `UNIT_TESTS_SUMMARY.md` -- historical session artifact
-- [ ] `MAKEFILE_UPDATE.md` -- historical session artifact
+- [x] `CHANGES_SUMMARY.md` -- historical session artifact
+- [x] `BUILD_FIXES_SUMMARY.md` -- historical session artifact
+- [x] `DISPLAY_FIX.md` -- historical fix, resolved
+- [x] `FINAL_FIX_SUMMARY.md` -- historical session artifact
+- [x] `COMPLETION_SUMMARY.md` -- historical session artifact
+- [x] `EVENT_HANDLING_FIXES.md` -- historical fix, resolved
+- [x] `TROUBLESHOOTING_SUMMARY.md` -- historical session artifact
+- [x] `AUDIT_SUMMARY.md` -- historical audit, resolved
+- [x] `PORT_FIX.md` -- historical fix, resolved
+- [x] `SETROOT_FIX.md` -- historical fix, resolved
+- [x] `E2E_TESTS_SUMMARY.md` -- historical session artifact
+- [x] `UNIT_TESTS_SUMMARY.md` -- historical session artifact
+- [x] `MAKEFILE_UPDATE.md` -- historical session artifact
 
 **MERGE then delete source:**
-- [ ] `RUN_SERVER.md` -- merge relevant content into `QUICKSTART.md`
-- [ ] `MAKEFILE_USAGE.md` -- merge relevant content into `README.md` (Contributing section) or new `CONTRIBUTING.md`
-- [ ] `DEBUG_GUIDE.md` -- merge into `DEBUGGING.md`
-- [ ] `GRPCURL_GUIDE.md` -- merge into `DEBUGGING.md`
+- [x] `RUN_SERVER.md` -- merge relevant content into `QUICKSTART.md`
+- [x] `MAKEFILE_USAGE.md` -- merge relevant content into `README.md` (Contributing section) or new `CONTRIBUTING.md`
+- [x] `DEBUG_GUIDE.md` -- merge into `DEBUGGING.md`
+- [x] `GRPCURL_GUIDE.md` -- merge into `DEBUGGING.md`
 
 **KEEP and UPDATE:**
-- [ ] `README.md` -- update Contributing section, add License
-- [ ] `PRD.md` -- update Phase 6 checkboxes, directory structure, widget type list
-- [ ] `QUICKSTART.md` -- verify accuracy after renames
-- [ ] `TUTORIAL.md` -- verify accuracy after renames
-- [ ] `DEBUGGING.md` -- merge in DEBUG_GUIDE and GRPCURL_GUIDE content
-- [ ] `KEYBOARD_NAVIGATION.md` -- verify accuracy
-- [ ] `bugs.md` -- keep as active tracking
-- [ ] `wish_report.md` -- keep as active tracking
+- [x] `README.md` -- update Contributing section, add License
+- [x] `PRD.md` -- update Phase 6 checkboxes, directory structure, widget type list
+- [x] `QUICKSTART.md` -- verify accuracy after renames
+- [x] `TUTORIAL.md` -- verify accuracy after renames
+- [x] `DEBUGGING.md` -- merge in DEBUG_GUIDE and GRPCURL_GUIDE content
+- [x] `KEYBOARD_NAVIGATION.md` -- verify accuracy
+- [x] `bugs.md` -- keep as active tracking
+- [x] `wish_report.md` -- keep as active tracking
 
 ### 3.2 Expand AGENTS.md
 
 Add the following sections to `AGENTS.md`:
 
-- [ ] **Architecture Overview:** Server/services/proto layers, session-widget ownership model, tview thread safety
-- [ ] **Technology Stack:** Go 1.24.5, gRPC, protobuf, tview, tcell, cobra
-- [ ] **Coding Conventions:**
+- [x] **Architecture Overview:** Server/services/proto layers, session-widget ownership model, tview thread safety
+- [x] **Technology Stack:** Go 1.24.5, gRPC, protobuf, tview, tcell, cobra
+- [x] **Coding Conventions:**
   - Service constructor pattern: `NewXxxService(srv *server.Server)`
   - Request validation pattern: nil check -> existence check -> ownership check
   - tview thread safety: `QueueUpdateDraw` with done channel for mutations, `QueueUpdate` for reads
   - Error codes: `InvalidArgument` for nil/missing, `NotFound` for doesn't exist, `PermissionDenied` for wrong owner
-- [ ] **Proto Workflow:** edit `.proto` -> `make proto` -> update Go -> `make build` -> `go test ./...`
-- [ ] **Testing Requirements:** describe test harnesses, where to add tests, test patterns
-- [ ] **How to Add a Widget Type:** proto enum + properties message -> widget_factory.go createXxx + applyXxxProperties -> update ServerCapabilities
+- [x] **Proto Workflow:** edit `.proto` -> `make proto` -> update Go -> `make build` -> `go test ./...`
+- [x] **Testing Requirements:** describe test harnesses, where to add tests, test patterns
+- [x] **How to Add a Widget Type:** proto enum + properties message -> widget_factory.go createXxx + applyXxxProperties -> update ServerCapabilities
 
 ### 3.3 Create CLAUDE.md
 
 Project-level guidance for Claude Code sessions:
 
-- [ ] Project overview (1 paragraph)
-- [ ] Key directories and their purposes
-- [ ] Build commands (`make proto`, `make build`, `go test ./...`)
-- [ ] Common pitfalls (tview thread safety, proto regeneration after changes)
-- [ ] Reference to AGENTS.md for detailed conventions
+- [x] Project overview (1 paragraph)
+- [x] Key directories and their purposes
+- [x] Build commands (`make proto`, `make build`, `go test ./...`)
+- [x] Common pitfalls (tview thread safety, proto regeneration after changes)
+- [x] Reference to AGENTS.md for detailed conventions
 
 ### 3.4 Update PRD.md
 
-- [ ] Update Phase 6 checklist to reflect current implementation status
-- [ ] Update directory structure (Section 6.1) to include `debug.go`, `test.go`, `cli/`, etc.
-- [ ] Update widget type list to include Image and ProgressBar
-- [ ] Mark proto naming conventions as "standardized as of Phase 7"
+- [x] Update Phase 6 checklist to reflect current implementation status
+- [x] Update directory structure (Section 6.1) to include `debug.go`, `test.go`, `cli/`, etc.
+- [x] Update widget type list to include Image and ProgressBar
+- [x] Mark proto naming conventions as "standardized as of Phase 7"
 
 ### 3.5 Create CONTRIBUTING.md
 
-- [ ] Prerequisites (Go 1.24.5, protoc, grpc tools)
-- [ ] Setup instructions (clone, `make install-tools`, `make proto`, `make build`)
-- [ ] Development workflow (make proto after proto changes, run tests before committing)
-- [ ] Code style (Go standard, refer to AGENTS.md for project-specific patterns)
-- [ ] PR process
+- [x] Prerequisites (Go 1.24.5, protoc, grpc tools)
+- [x] Setup instructions (clone, `make install-tools`, `make proto`, `make build`)
+- [x] Development workflow (make proto after proto changes, run tests before committing)
+- [x] Code style (Go standard, refer to AGENTS.md for project-specific patterns)
+- [x] PR process
 
 ### 3.6 Verify
 
@@ -434,6 +434,8 @@ Project-level guidance for Claude Code sessions:
 # Verify build still works
 make build && go test ./...
 ```
+
+**Verified:** `make build` and `go test ./...` pass.
 
 ---
 
@@ -473,13 +475,13 @@ These open questions from the brainstorm are resolved in this plan:
 - [ ] `go test ./... -count=1` passes
 
 ### Phase 3
-- [ ] 13 stale markdown files deleted
-- [ ] 4 docs merged into their targets
-- [ ] AGENTS.md expanded with architecture, conventions, proto workflow, testing sections
-- [ ] CLAUDE.md created with project context
-- [ ] PRD.md updated to reflect current state
-- [ ] CONTRIBUTING.md created
-- [ ] `make build && go test ./...` still passes
+- [x] 13 stale markdown files deleted
+- [x] 4 docs merged into their targets
+- [x] AGENTS.md expanded with architecture, conventions, proto workflow, testing sections
+- [x] CLAUDE.md created with project context
+- [x] PRD.md updated to reflect current state
+- [x] CONTRIBUTING.md created
+- [x] `make build && go test ./...` still passes
 
 ## Dependencies & Risks
 

@@ -85,6 +85,7 @@ Widgets are UI elements with unique IDs. The server maintains a registry mapping
 | Pages | Pages | Stacked pages/tabs |
 | Modal | Modal | Dialog overlay |
 | Image | Image | Terminal image display |
+| ProgressBar | ProgressBar | Progress indicator |
 
 ### 3.3 Events
 Events flow from server to client via gRPC streaming:
@@ -176,12 +177,6 @@ service WidgetService {
   // Set widget as root (display it)
   rpc SetRoot(SetRootRequest) returns (SetRootResponse);
 
-  // Add child to container widget
-  rpc AddChild(AddChildRequest) returns (AddChildResponse);
-
-  // Remove child from container
-  rpc RemoveChild(RemoveChildRequest) returns (RemoveChildResponse);
-
   // Set focus to widget
   rpc SetFocus(SetFocusRequest) returns (SetFocusResponse);
 
@@ -251,12 +246,12 @@ service ListService {
   // Get item count
   rpc GetItemCount(GetItemCountRequest) returns (GetItemCountResponse);
 
-  // Get/set selected item
-  rpc GetSelected(GetSelectedRequest) returns (GetSelectedResponse);
-  rpc SetSelected(SetSelectedRequest) returns (SetSelectedResponse);
+  // Get/set selection
+  rpc GetSelection(ListGetSelectionRequest) returns (ListGetSelectionResponse);
+  rpc SetSelection(ListSetSelectionRequest) returns (ListSetSelectionResponse);
 
   // Get item text
-  rpc GetItem(GetItemRequest) returns (GetItemResponse);
+  rpc GetItem(ListGetItemRequest) returns (ListGetItemResponse);
 }
 ```
 
@@ -331,12 +326,12 @@ service TreeService {
   // Expand/collapse node
   rpc SetExpanded(SetExpandedRequest) returns (SetExpandedResponse);
 
-  // Get/set selected node
-  rpc GetSelected(GetSelectedRequest) returns (GetSelectedResponse);
-  rpc SetSelected(SetSelectedRequest) returns (SetSelectedResponse);
+  // Get/set selection
+  rpc GetSelection(TreeGetSelectionRequest) returns (TreeGetSelectionResponse);
+  rpc SetSelection(TreeSetSelectionRequest) returns (TreeSetSelectionResponse);
 
   // Get node children
-  rpc GetChildren(GetChildrenRequest) returns (GetChildrenResponse);
+  rpc GetChildren(TreeGetChildrenRequest) returns (TreeGetChildrenResponse);
 }
 ```
 
@@ -599,27 +594,42 @@ enum WidgetEventType {
 ```
 yutani/
 ├── cmd/
-│   └── yutani-server/
-│       └── main.go           # Server entry point
+│   ├── yutani-server/
+│   │   └── main.go           # Server entry point
+│   ├── test-client/
+│   │   └── main.go           # Test client
+│   └── phase4-demo/
+│       └── main.go           # Phase 4 demo
 ├── pkg/
 │   ├── server/
-│   │   ├── server.go         # gRPC server setup
+│   │   ├── server.go         # Core server (tview app, screen)
 │   │   ├── session.go        # Session management
-│   │   └── registry.go       # Widget registry
+│   │   ├── registry.go       # Widget registry
+│   │   ├── events.go         # Event dispatcher
+│   │   └── event_convert.go  # tcell-to-protobuf conversion
 │   ├── services/
 │   │   ├── session.go        # SessionService impl
 │   │   ├── screen.go         # ScreenService impl
 │   │   ├── widget.go         # WidgetService impl
+│   │   ├── widget_factory.go # Widget creation and properties
 │   │   ├── event.go          # EventService impl
-│   │   ├── textview.go       # TextViewService impl
 │   │   ├── list.go           # ListService impl
 │   │   ├── table.go          # TableService impl
 │   │   ├── form.go           # FormService impl
 │   │   ├── tree.go           # TreeService impl
-│   │   └── layout.go         # LayoutService impl
-│   ├── bridge/
-│   │   ├── tcell.go          # tcell adapter
-│   │   └── tview.go          # tview adapter
+│   │   ├── layout.go         # LayoutService impl
+│   │   ├── debug.go          # DebugService impl
+│   │   └── test.go           # TestService impl
+│   ├── client/
+│   │   ├── client.go         # Go client library
+│   │   └── testing/          # Integration test helpers
+│   ├── cli/
+│   │   ├── root.go           # CLI entry point (cobra)
+│   │   ├── debug.go          # Debug commands
+│   │   ├── session.go        # Session commands
+│   │   └── ...               # Other CLI commands
+│   ├── config/               # Configuration loading
+│   ├── testutil/             # Shared test utilities
 │   └── proto/
 │       └── yutani/           # Generated Go code
 ├── api/
@@ -632,7 +642,17 @@ yutani/
 │                       ├── screen.proto
 │                       ├── widget.proto
 │                       ├── event.proto
+│                       ├── list.proto
+│                       ├── table.proto
+│                       ├── form.proto
+│                       ├── tree.proto
+│                       ├── layout.proto
+│                       ├── debug.proto
+│                       ├── test.proto
 │                       └── types.proto
+├── test/
+│   └── e2e/                  # E2E, acceptance, and contract tests
+├── examples/                 # 8 example applications
 ├── go.mod
 └── go.sum
 ```
@@ -913,19 +933,19 @@ Environment variables use the `YUTANI_` prefix and match the flag names in upper
 - [x] InputField and Button widget builders
 - [x] Checkbox widget builder
 
-#### 6.2 Advanced Event Handling
-- [ ] Event filtering by widget ID or type
-- [ ] Event middleware/interceptors
-- [ ] Event batching for high-frequency events
-- [ ] Custom event types and handlers
-- [ ] Event replay/history for debugging
+#### 6.2 Advanced Event Handling ✅ **COMPLETE**
+- [x] Event filtering by widget ID or type
+- [x] Event middleware/interceptors
+- [x] Event batching for high-frequency events
+- [x] Custom event types and handlers
+- [x] Event replay/history for debugging
 
-#### 6.3 Connection Management
-- [ ] Automatic reconnection on disconnect
-- [ ] Connection pooling for multiple concurrent clients
-- [ ] Connection health checks and monitoring
-- [ ] Graceful degradation on connection loss
-- [ ] Connection state callbacks
+#### 6.3 Connection Management ✅ **COMPLETE**
+- [x] Automatic reconnection on disconnect
+- [x] Connection pooling for multiple concurrent clients
+- [x] Connection health checks and monitoring
+- [x] Graceful degradation on connection loss
+- [x] Connection state callbacks
 
 #### 6.4 Performance Optimization
 - [ ] Benchmarking suite for all operations
@@ -934,24 +954,24 @@ Environment variables use the `YUTANI_` prefix and match the flag names in upper
 - [ ] Memory usage optimization
 - [ ] Rendering performance improvements
 
-#### 6.5 Additional Examples
-- [ ] File browser application
-- [ ] System dashboard with real-time metrics
-- [ ] Chat application with multiple users
-- [ ] Text editor with syntax highlighting
-- [ ] Process monitor/task manager
+#### 6.5 Additional Examples ✅ **COMPLETE**
+- [x] File browser application
+- [x] System dashboard with real-time metrics
+- [x] Chat application with multiple users
+- [x] Text editor with syntax highlighting
+- [x] Process monitor/task manager
 
-#### 6.6 Testing Utilities
-- [ ] Mock client for unit testing
-- [ ] Test helpers for common scenarios
-- [ ] Integration test framework
+#### 6.6 Testing Utilities ✅ **COMPLETE**
+- [x] Mock client for unit testing
+- [x] Test helpers for common scenarios
+- [x] Integration test framework
 - [ ] Performance regression tests
 
-#### 6.7 Developer Tools
-- [ ] CLI tool for quick prototyping
-- [ ] Widget inspector/debugger
-- [ ] Event monitor/logger
-- [ ] Performance profiler
+#### 6.7 Developer Tools ✅ **COMPLETE**
+- [x] CLI tool for quick prototyping
+- [x] Widget inspector/debugger
+- [x] Event monitor/logger
+- [x] Performance profiler
 
 #### 6.8 Additional Features
 - [ ] Widget templates/presets
@@ -988,7 +1008,7 @@ Environment variables use the `YUTANI_` prefix and match the flag names in upper
 
 5. **Error handling**: Keep it simple - per-operation errors. More granular error reporting can be added later if needed.
 
-6. **Proto package naming**: Use `industries.loosh.yutani.v1` for protobuf package namespace.
+6. **Proto package naming**: Use `industries.loosh.yutani.v1` for protobuf package namespace. All messages follow `{Service}{Action}Request/Response` naming (standardized in Phase 7 quality initiative).
 
 7. **Default port**: gRPC server listens on `:7755` by default.
 

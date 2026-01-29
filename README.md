@@ -10,118 +10,12 @@ Yutani is a Go-based terminal display server that provides networked, widget-bas
 - **Multiple Clients**: Support for concurrent client sessions
 - **gRPC Reflection**: Easy introspection with tools like `grpcurl` and `grpcui`
 
-## Current Status: Phase 5 Complete ✅
+## Current Status
 
-**Phase 1** - Foundation ✅
-- ✅ Project structure and build system
-- ✅ Proto definitions for core types
-- ✅ SessionService implementation
-- ✅ Basic ScreenService (GetSize, Clear, Sync)
-- ✅ gRPC server with reflection
-- ✅ Configuration system (file → env → flags)
+Yutani implements a complete terminal display server with 11 gRPC services, 17 widget types, a Go client library with fluent builders, 8 example applications, and comprehensive test coverage including acceptance and API contract tests.
 
-**Phase 2** - Low-Level API ✅
-- ✅ Extended ScreenService (SetCell, SetCells, Fill, DrawText, DrawBox, GetCell)
-- ✅ EventService with streaming support
-- ✅ Event types (Key, Mouse, Resize, Focus, Widget)
-- ✅ Event dispatcher with filtering
-- ✅ Event capture from tview/tcell
-- ✅ Unit tests for business logic
-
-**Phase 3** - Widget System ✅
-- ✅ WidgetService with 10 RPCs (Create, Delete, SetProperties, GetProperties, etc.)
-- ✅ 5 widget types: Box, TextView, InputField, Button, Checkbox
-- ✅ Comprehensive property system (common + type-specific)
-- ✅ Widget hierarchy infrastructure (parent-child relationships)
-- ✅ Focus management (SetFocus, GetFocus)
-- ✅ Automatic widget event emission (CHANGED, SUBMITTED, DONE)
-- ✅ Enhanced widget registry with metadata
-
-**Phase 4** - Complex Widgets ✅ **COMPLETE**
-- ✅ Protocol buffer definitions for all complex widgets
-- ✅ Widget factory support for List, Table, TreeView, Form, Flex, Grid, Pages
-- ✅ ListService fully implemented (7 RPCs) with unit tests
-- ✅ TableService fully implemented (8 RPCs) with unit tests
-- ✅ FormService fully implemented (6 RPCs) with unit tests
-- ✅ TreeService fully implemented (7 RPCs) with unit tests
-- ✅ LayoutService fully implemented (11 RPCs) with unit tests
-- ✅ Comprehensive end-to-end tests for all complex widgets
-
-**Phase 5** - Client Library, Documentation, and Examples ✅ **COMPLETE**
-- ✅ Go client library with fluent builder pattern
-- ✅ Widget builders for Box, TextView, List, Table, Form
-- ✅ Event handling with callbacks and type-safe events
-- ✅ 3 complete example applications (list, table, form)
-- ✅ Comprehensive tutorial with 5 lessons
-- ✅ Full API documentation for client library
-- ✅ Helper functions for colors and common operations
-
-**Phase 6.1** - Additional Widget Builders ✅ **COMPLETE**
-- ✅ TreeView widget builder with fluent API
-- ✅ Flex layout widget builder
-- ✅ Grid layout widget builder
-- ✅ Pages layout widget builder
-- ✅ InputField widget builder
-- ✅ Button widget builder
-- ✅ Checkbox widget builder
-- ✅ Comprehensive tests for all new builders
-- ✅ Updated documentation with examples
-
-**Phase 6.2** - Advanced Event Handling ✅ **COMPLETE**
-- ✅ Event filtering by widget ID
-- ✅ Event filtering by event type
-- ✅ Custom event filters with predicates
-- ✅ Event middleware/interceptor pipeline
-- ✅ Event batching for high-frequency events
-- ✅ Event recording and replay for debugging
-- ✅ Server-side event filtering
-- ✅ Comprehensive tests (10 test cases)
-- ✅ Updated documentation with examples
-
-**Phase 6.5** - Additional Examples ✅ **COMPLETE**
-- ✅ File Browser - TreeView navigation example
-- ✅ Dashboard - Grid layout with system stats
-- ✅ Process Monitor - Real-time table updates
-- ✅ Chat Application - Multi-page messaging app
-- ✅ Text Editor - Syntax highlighting and file I/O
-- ✅ Comprehensive examples README
-- ✅ All examples compile and run
-- ✅ Common patterns documented
-
-**Phase 6.6** - Testing Utilities ✅ **COMPLETE**
-- ✅ Mock client for unit testing
-- ✅ Event simulation (keyboard, mouse, resize)
-- ✅ Test helper utilities and assertions
-- ✅ Widget-specific assertions (List, Table)
-- ✅ Integration test helpers with test server
-- ✅ Server options pattern
-- ✅ Comprehensive tests (13 test cases)
-- ✅ Complete documentation with examples
-
-**Phase 6.3** - Connection Management ✅ **COMPLETE**
-- ✅ Auto-reconnection with backoff strategies
-- ✅ Three backoff strategies (Constant, Linear, Exponential)
-- ✅ Connection pooling with lifecycle management
-- ✅ State preservation framework
-- ✅ Health checks and monitoring
-- ✅ Connection state callbacks
-- ✅ Comprehensive tests (8 test cases)
-- ✅ Complete documentation
-
-**Phase 6.7** - Developer Tools ✅ **COMPLETE**
-- ✅ CLI tool with server management
-- ✅ Project scaffolding (4 templates)
-- ✅ Performance profiling (5 profile types)
-- ✅ Server inspection command
-- ✅ Debug utilities framework
-- ✅ Help and documentation system
-- ✅ Build verification
-- ✅ Comprehensive CLI documentation
-
-See [PHASE3_COMPLETE.md](PHASE3_COMPLETE.md) for Phase 3 documentation.
-See [PHASE4_COMPLETE.md](PHASE4_COMPLETE.md) for Phase 4 documentation and usage examples.
-See [PHASE5_COMPLETE.md](PHASE5_COMPLETE.md) for Phase 5 client library documentation.
-See [DEBUG_GUIDE.md](DEBUG_GUIDE.md) for debugging TUI applications (useful for LLM agents).
+See [PRD.md](PRD.md) for the full product requirements and API specification.
+See [DEBUGGING.md](DEBUGGING.md) for debugging TUI applications (useful for LLM agents).
 
 ## Quick Start
 
@@ -208,7 +102,7 @@ The graphical UI will appear in the server terminal (Terminal 1).
 - ✅ Press **Ctrl+C** to exit gracefully
 - ✅ Enable logging with `YUTANI_LOG_FILE=server.log ./bin/yutani-server`
 
-**Note:** If you have display issues, see [DISPLAY_FIX.md](DISPLAY_FIX.md) for troubleshooting.
+**Note:** If you have display issues, see [DEBUGGING.md](DEBUGGING.md) for troubleshooting.
 
 ## Configuration
 
@@ -315,18 +209,10 @@ go test ./pkg/server/... -v -run TestServerLifecycle
 ```
 
 **Test Coverage:**
-- **Unit Tests**: 74 tests covering all services and components
-  - 17 server tests (registry, events, lifecycle)
-  - 20 widget factory tests (basic + complex widgets)
-  - 33 service tests (List, Table, Form, Tree, Layout)
-  - 4 other service tests
-- **E2E Tests**: 11 comprehensive tests using in-memory gRPC (bufconn)
-  - 4 core tests (session, screen, events, widgets)
-  - 7 complex widget tests (List, Table, Form, Tree, Flex, Grid, Pages)
-- **All tests pass** in under 2 seconds
-- **100% coverage** of Phase 4 RPCs
-
-See `E2E_TESTS_SUMMARY.md` and `UNIT_TESTS_SUMMARY.md` for details.
+- **Unit tests** in `pkg/services/` and `pkg/server/`
+- **E2E tests** using in-memory gRPC (bufconn) in `test/e2e/`
+- **Acceptance tests** covering realistic user workflow scenarios
+- **API contract tests** validating all 11 gRPC services (happy paths + error cases)
 
 ### Manual Testing with Test Client
 
@@ -397,7 +283,7 @@ list, _ := c.NewList().
 // Add items
 list.AddItem("New File", "Create a new file", strPtr("n"))
 list.AddItem("Open File", "Open an existing file", strPtr("o"))
-list.SetSelected(0)
+list.SetSelection(0)
 ```
 
 ### Creating a Table Widget
@@ -448,20 +334,11 @@ c.StartEventStream()
 
 For more examples, see [TUTORIAL.md](TUTORIAL.md) and [examples/](examples/).
 
-## Roadmap
+## Contributing
 
-- ✅ **Phase 1**: Foundation (SessionService, basic ScreenService, configuration)
-- ✅ **Phase 2**: Low-Level API (complete ScreenService, EventService, event streaming)
-- ✅ **Phase 3**: Widget system with basic widgets (Box, TextView, InputField, Button, Checkbox)
-- ✅ **Phase 4**: Complex widgets (List, Table, TreeView, Form, Flex, Grid, Pages)
-- ✅ **Phase 5**: Client library, documentation, and examples
-- **Phase 6** (Future): Advanced features, performance optimization, additional widgets
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, development workflow, and coding conventions.
 
 ## License
-
-TBD
-
-## Contributing
 
 TBD
 

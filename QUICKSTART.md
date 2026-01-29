@@ -1,6 +1,6 @@
 # Yutani Quick Start Guide
 
-## 🚀 Getting Started in 3 Steps
+## Getting Started in 3 Steps
 
 ### Step 1: Build Everything
 
@@ -27,7 +27,26 @@ Or directly:
 ./bin/yutani-server
 ```
 
-**Important:** Keep this terminal open - the graphical UI will appear here!
+**Important:** Keep this terminal open -- the graphical UI will appear here!
+
+When the server starts, you should see a TUI welcome screen:
+
+```
++----------------------------------------------------------+
+|                   Yutani v0.1.0-alpha                    |
++----------------------------------------------------------+
+|                                                          |
+|               Yutani Display Server                      |
+|                                                          |
+|           Waiting for client connections...               |
+|                                                          |
+|         Server is running on localhost:7755               |
+|               Press Ctrl+C to exit                       |
+|                                                          |
++----------------------------------------------------------+
+```
+
+The title text is displayed in yellow/bold and the server address information is centered and bordered.
 
 ### Step 3: Run the Demo
 
@@ -43,69 +62,92 @@ Or directly:
 ./bin/phase4-demo
 ```
 
-## 🎨 What You'll See
+## What You Will See
 
-In the **server terminal** (Terminal 1), you'll see a beautiful TUI layout:
+In the **server terminal** (Terminal 1), you will see a TUI layout with widgets:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│ Yutani Phase 4 Demo - Complex Widgets                      │
-├──────────────────────┬──────────────────────────────────────┤
-│ ┌─ Task List ──────┐ │ ┌─ Service Stats ───────────────┐  │
-│ │ ✓ Phase 1: Core  │ │ │ Service    │ RPCs │ Status   │  │
-│ │ ✓ Phase 2: Widge │ │ │ ListServ.. │  5   │    ✓     │  │
-│ │ ✓ Phase 3: Basic │ │ │ TableSer.. │  8   │    ✓     │  │
-│ │ ✓ Phase 4: Compl │ │ │ FormServ.. │  6   │    ✓     │  │
-│ │ ⏳ Phase 5: Adva │ │ │ TreeServ.. │  7   │    ✓     │  │
-│ └──────────────────┘ │ │ LayoutSe.. │ 11   │    ✓     │  │
-│                      │ └───────────────────────────────┘  │
-├──────────────────────┼──────────────────────────────────────┤
-│ ┌─ User Settings ─┐ │ ┌─ Project Structure ────────────┐  │
-│ │ Username: ______ │ │ │ ▼ yutani/                     │  │
-│ │ Password: ______ │ │ │   ▼ pkg/                      │  │
-│ │ ☐ Remember me   │ │ │     • server/                 │  │
-│ │ Theme: [Dark ▼] │ │ │     • services/               │  │
-│ │ [Submit][Cancel]│ │ │     • proto/                  │  │
-│ └─────────────────┘ │ │   • cmd/                      │  │
-│                      │ └───────────────────────────────┘  │
-└──────────────────────┴──────────────────────────────────────┘
++--------------------------------------------------------------+
+| Yutani Phase 4 Demo - Complex Widgets                        |
++----------------------+---------------------------------------+
+| +-- Task List -----+ | +-- Service Stats ----------------+  |
+| | Phase 1: Core    | | | Service    | RPCs | Status       |  |
+| | Phase 2: Widge   | | | ListServ.. |  5   |    ok        |  |
+| | Phase 3: Basic   | | | TableSer.. |  8   |    ok        |  |
+| | Phase 4: Compl   | | | FormServ.. |  6   |    ok        |  |
+| | Phase 5: Adva    | | | TreeServ.. |  7   |    ok        |  |
+| +------------------+ | | LayoutSe.. | 11   |    ok        |  |
+|                      | +--------------------------------+   |
++----------------------+---------------------------------------+
+| +-- User Settings -+ | +-- Project Structure -------------+  |
+| | Username: ______ | | | > yutani/                        |  |
+| | Password: ______ | | |   > pkg/                         |  |
+| | [ ] Remember me  | | |     server/                     |  |
+| | Theme: [Dark]    | | |     services/                   |  |
+| | [Submit][Cancel] | | |     proto/                      |  |
+| +-----------------+  | |   cmd/                           |  |
+|                      | +----------------------------------+  |
++----------------------+---------------------------------------+
 ```
 
-In the **demo terminal** (Terminal 2), you'll see log output:
+In the **demo terminal** (Terminal 2), you will see log output:
 
 ```
 Creating session...
-✓ Session created: abc-123-def
-✓ Main flex container created
-✓ Title created
-✓ List widget created
-✓ Table widget created
+Session created: abc-123-def
+Main flex container created
+Title created
+List widget created
+Table widget created
 ...
 ```
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Problem: Only seeing log messages in server terminal
 
-**Solution:** This was fixed! Make sure you've rebuilt after the fix:
+**Solution:** Make sure you have rebuilt after the latest changes:
 
 ```bash
 make clean
 make build
 ```
 
-Logs are now disabled by default. The TUI should display cleanly.
+Logs are disabled by default. The TUI should display cleanly.
+
+### Problem: Nothing appears, terminal is blank
+
+**Possible causes:**
+1. The terminal does not support the required features
+2. The TERM environment variable is not set correctly
+3. Running in a non-interactive environment
+
+**Solutions:**
+```bash
+# Check your TERM variable
+echo $TERM
+
+# Try setting it explicitly
+export TERM=xterm-256color
+./bin/yutani-server
+
+# Or try screen-256color
+export TERM=screen-256color
+./bin/yutani-server
+```
+
+The server must run in an interactive terminal to display the TUI. It will not work when run in the background with `&`.
 
 ### Problem: Can't exit server with Ctrl+C
 
-**Solution:** This was fixed! Ctrl+C now works properly to exit the server.
-
-If you're still having issues, make sure you've rebuilt:
+**Solution:** Make sure you have rebuilt:
 
 ```bash
 make clean
 make build-server
 ```
+
+If it still does not work, try pressing Ctrl+C multiple times, and verify you are running the correct binary (`./bin/yutani-server`).
 
 ### Problem: "Failed to connect" error
 
@@ -121,7 +163,17 @@ pkill yutani-server
 
 Then restart the server.
 
-## 📚 Next Steps
+### Problem: Want to see logs
+
+```bash
+# Enable logging to a file
+YUTANI_LOG_FILE=server.log ./bin/yutani-server
+
+# In another terminal, watch the logs
+tail -f server.log
+```
+
+## Next Steps
 
 ### Run the Basic Test Client
 
@@ -145,12 +197,12 @@ This tests all Phase 1-3 features including:
 
 ### Read the Documentation
 
-- `README.md` - Project overview and architecture
-- `DISPLAY_FIX.md` - Details about the display fix
-- `PHASE4_PROGRESS.md` - Phase 4 implementation status
-- `PRD.md` - Product requirements and design
+- [README.md](README.md) - Project overview and architecture
+- [DEBUGGING.md](DEBUGGING.md) - Debugging tools and troubleshooting
+- [TUTORIAL.md](TUTORIAL.md) - Client library tutorial
+- [PRD.md](PRD.md) - Product requirements and design
 
-## 🎯 Common Use Cases
+## Common Use Cases
 
 ### Development Workflow
 
@@ -184,7 +236,7 @@ go test ./...
 make dev
 ```
 
-## 💡 Tips
+## Tips
 
 1. **Logs are disabled by default** - Enable with `YUTANI_LOG_FILE=server.log ./bin/yutani-server`
 2. **Server must run first** - Always start the server before clients
@@ -192,14 +244,10 @@ make dev
 4. **Multiple clients supported** - You can run multiple demo clients simultaneously
 5. **Ctrl+C to exit** - Gracefully shuts down the server
 6. **Welcome screen** - Server shows a placeholder until a client connects
+7. **Check your TERM variable** - If the TUI is blank, try `export TERM=xterm-256color`
 
-## 🐛 Known Issues
+## Getting Help
 
-None currently! The display issue has been fixed.
-
-## 📞 Getting Help
-
-- Check `DISPLAY_FIX.md` for display-related issues
-- Review `README.md` for architecture details
-- Run `make help` to see all available targets (coming soon)
-
+- See [DEBUGGING.md](DEBUGGING.md) for debugging tools and common issues
+- Review [README.md](README.md) for architecture details
+- Run `make list-examples` to see all available example applications
