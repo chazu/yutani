@@ -60,7 +60,8 @@ type Client struct {
 	formClient    pb.FormServiceClient
 	treeClient    pb.TreeServiceClient
 	layoutClient  pb.LayoutServiceClient
-	windowClient  pb.WindowServiceClient
+	windowClient   pb.WindowServiceClient
+	textAreaClient pb.TextAreaServiceClient
 
 	// Event handling
 	eventHandlers   []EventHandler
@@ -156,6 +157,7 @@ func ConnectWithConn(conn *grpc.ClientConn) (*Client, error) {
 		treeClient:      pb.NewTreeServiceClient(conn),
 		layoutClient:    pb.NewLayoutServiceClient(conn),
 		windowClient:    pb.NewWindowServiceClient(conn),
+		textAreaClient:  pb.NewTextAreaServiceClient(conn),
 		eventDone:       make(chan struct{}),
 		widgets:         make(map[string]Widget),
 		connectionState: StateConnected,
@@ -531,6 +533,7 @@ func (c *Client) Reconnect() error {
 	c.treeClient = newClient.treeClient
 	c.layoutClient = newClient.layoutClient
 	c.windowClient = newClient.windowClient
+	c.textAreaClient = newClient.textAreaClient
 	c.mu.Unlock()
 
 	c.setConnectionState(StateConnected)

@@ -2551,8 +2551,11 @@ type TextAreaProperties struct {
 	WordWrap         *bool                  `protobuf:"varint,4,opt,name=word_wrap,json=wordWrap,proto3,oneof" json:"word_wrap,omitempty"`
 	TextColor        *Color                 `protobuf:"bytes,5,opt,name=text_color,json=textColor,proto3,oneof" json:"text_color,omitempty"`
 	PlaceholderColor *Color                 `protobuf:"bytes,6,opt,name=placeholder_color,json=placeholderColor,proto3,oneof" json:"placeholder_color,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// Keys that should be suppressed from widget processing but still emitted as events.
+	// Format: "ctrl+d", "ctrl+p", "ctrl+i", "ctrl+space", etc.
+	SuppressedKeys []string `protobuf:"bytes,7,rep,name=suppressed_keys,json=suppressedKeys,proto3" json:"suppressed_keys,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *TextAreaProperties) Reset() {
@@ -2623,6 +2626,13 @@ func (x *TextAreaProperties) GetTextColor() *Color {
 func (x *TextAreaProperties) GetPlaceholderColor() *Color {
 	if x != nil {
 		return x.PlaceholderColor
+	}
+	return nil
+}
+
+func (x *TextAreaProperties) GetSuppressedKeys() []string {
+	if x != nil {
+		return x.SuppressedKeys
 	}
 	return nil
 }
@@ -3333,7 +3343,7 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\x0fshow_page_names\x18\x01 \x01(\bH\x00R\rshowPageNames\x88\x01\x01\x12N\n" +
 	"\x0fpage_name_color\x18\x02 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x01R\rpageNameColor\x88\x01\x01B\x12\n" +
 	"\x10_show_page_namesB\x12\n" +
-	"\x10_page_name_color\"\x91\x03\n" +
+	"\x10_page_name_color\"\xba\x03\n" +
 	"\x12TextAreaProperties\x12\x17\n" +
 	"\x04text\x18\x01 \x01(\tH\x00R\x04text\x88\x01\x01\x12%\n" +
 	"\vplaceholder\x18\x02 \x01(\tH\x01R\vplaceholder\x88\x01\x01\x12\"\n" +
@@ -3342,7 +3352,8 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\tword_wrap\x18\x04 \x01(\bH\x03R\bwordWrap\x88\x01\x01\x12E\n" +
 	"\n" +
 	"text_color\x18\x05 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x04R\ttextColor\x88\x01\x01\x12S\n" +
-	"\x11placeholder_color\x18\x06 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x05R\x10placeholderColor\x88\x01\x01B\a\n" +
+	"\x11placeholder_color\x18\x06 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x05R\x10placeholderColor\x88\x01\x01\x12'\n" +
+	"\x0fsuppressed_keys\x18\a \x03(\tR\x0esuppressedKeysB\a\n" +
 	"\x05_textB\x0e\n" +
 	"\f_placeholderB\r\n" +
 	"\v_max_lengthB\f\n" +

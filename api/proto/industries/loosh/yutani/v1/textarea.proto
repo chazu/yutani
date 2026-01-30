@@ -1,0 +1,128 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+import "industries/loosh/yutani/v1/types.proto";
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+// TextAreaService provides cursor, selection, and text manipulation
+// operations for TextArea widgets.
+service TextAreaService {
+  // Get the current cursor position (row/column)
+  rpc GetCursorPosition(TextAreaGetCursorRequest) returns (TextAreaGetCursorResponse);
+
+  // Set the cursor position
+  rpc SetCursorPosition(TextAreaSetCursorRequest) returns (TextAreaSetCursorResponse);
+
+  // Get the current selection range (row/column pairs)
+  rpc GetSelection(TextAreaGetSelectionRequest) returns (TextAreaGetSelectionResponse);
+
+  // Set the selection range (byte offsets into the text)
+  rpc SetSelection(TextAreaSetSelectionRequest) returns (TextAreaSetSelectionResponse);
+
+  // Check if text is currently selected
+  rpc HasSelection(TextAreaHasSelectionRequest) returns (TextAreaHasSelectionResponse);
+
+  // Get the currently selected text content
+  rpc GetSelectedText(TextAreaGetSelectedTextRequest) returns (TextAreaGetSelectedTextResponse);
+
+  // Insert text at the current cursor position (or replace selection)
+  rpc InsertTextAtCursor(TextAreaInsertTextRequest) returns (TextAreaInsertTextResponse);
+}
+
+// GetCursorPosition
+
+message TextAreaGetCursorRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message TextAreaGetCursorResponse {
+  int32 row = 1;
+  int32 column = 2;
+  // If there is a selection, these are the "to" end of the cursor
+  int32 to_row = 3;
+  int32 to_column = 4;
+  bool has_selection = 5;
+}
+
+// SetCursorPosition
+
+message TextAreaSetCursorRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  int32 row = 3;
+  int32 column = 4;
+}
+
+message TextAreaSetCursorResponse {
+  bool success = 1;
+}
+
+// GetSelection
+
+message TextAreaGetSelectionRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message TextAreaGetSelectionResponse {
+  bool has_selection = 1;
+  string selected_text = 2;
+  int32 start = 3;   // byte offset into text
+  int32 end = 4;     // byte offset into text
+  // Row/column positions for the selection range
+  int32 from_row = 5;
+  int32 from_column = 6;
+  int32 to_row = 7;
+  int32 to_column = 8;
+}
+
+// SetSelection
+
+message TextAreaSetSelectionRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  int32 start = 3;   // byte offset into text
+  int32 end = 4;     // byte offset into text
+}
+
+message TextAreaSetSelectionResponse {
+  bool success = 1;
+}
+
+// HasSelection
+
+message TextAreaHasSelectionRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message TextAreaHasSelectionResponse {
+  bool has_selection = 1;
+}
+
+// GetSelectedText
+
+message TextAreaGetSelectedTextRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+}
+
+message TextAreaGetSelectedTextResponse {
+  string text = 1;
+  bool has_selection = 2;
+}
+
+// InsertTextAtCursor
+
+message TextAreaInsertTextRequest {
+  SessionId session_id = 1;
+  WidgetId widget_id = 2;
+  string text = 3;
+}
+
+message TextAreaInsertTextResponse {
+  bool success = 1;
+}

@@ -21,4 +21,5 @@ func RegisterAllServices(grpcServer *grpc.Server, srv *server.Server) {
 	pb.RegisterDebugServiceServer(grpcServer, NewDebugService(srv))
 	pb.RegisterTestServiceServer(grpcServer, NewTestService(srv))
 	pb.RegisterWindowServiceServer(grpcServer, NewWindowService(srv))
+	pb.RegisterTextAreaServiceServer(grpcServer, NewTextAreaService(srv))
 }

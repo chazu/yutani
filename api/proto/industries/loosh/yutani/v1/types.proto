@@ -255,6 +255,9 @@ message TextAreaProperties {
   optional bool word_wrap = 4;
   optional Color text_color = 5;
   optional Color placeholder_color = 6;
+  // Keys that should be suppressed from widget processing but still emitted as events.
+  // Format: "ctrl+d", "ctrl+p", "ctrl+i", "ctrl+space", etc.
+  repeated string suppressed_keys = 7;
 }
 
 message ModalProperties {

@@ -2,6 +2,9 @@ package services
 
 import (
 	"fmt"
+	"strings"
+
+	"github.com/gdamore/tcell/v2"
 
 	pb "github.com/chazu/yutani/pkg/proto/yutani"
 	"github.com/chazu/yutani/pkg/server"
@@ -536,6 +539,9 @@ func (s *WidgetService) createTextArea(props *pb.WidgetProperties) *tview.TextAr
 				if taProps.TextArea.PlaceholderColor != nil {
 					ta.SetPlaceholderStyle(ta.GetPlaceholderStyle().Foreground(convertColor(taProps.TextArea.PlaceholderColor)))
 				}
+				if len(taProps.TextArea.SuppressedKeys) > 0 {
+					applyKeySuppression(ta, taProps.TextArea.SuppressedKeys)
+				}
 			}
 		}
 	}
@@ -569,6 +575,9 @@ func (s *WidgetService) applyTextAreaProperties(ta *tview.TextArea, props *pb.Wi
 	}
 	if taProps.TextArea.PlaceholderColor != nil {
 		ta.SetPlaceholderStyle(ta.GetPlaceholderStyle().Foreground(convertColor(taProps.TextArea.PlaceholderColor)))
+	}
+	if len(taProps.TextArea.SuppressedKeys) > 0 {
+		applyKeySuppression(ta, taProps.TextArea.SuppressedKeys)
 	}
 
 	return nil
@@ -978,6 +987,104 @@ func (s *WidgetService) applyWindowManagerProperties(wm *server.WindowManagerPri
 	}
 
 	return nil
+}
+
+// applyKeySuppression sets up an InputCapture on a TextArea that suppresses
+// specified key combinations from widget processing. The suppressed keys are
+// still dispatched as events to Yutani clients (via the app-level InputCapture),
+// but the TextArea widget itself won't process them.
+//
+// Key format: "ctrl+d", "ctrl+p", "ctrl+i", "ctrl+space", "ctrl+n", etc.
+func applyKeySuppression(ta *tview.TextArea, suppressedKeys []string) {
+	suppressed := parseSuppressedKeys(suppressedKeys)
+	if len(suppressed) == 0 {
+		return
+	}
+
+	ta.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
+		for _, sk := range suppressed {
+			if sk.matches(event) {
+				return nil // Suppress: don't let widget process this key
+			}
+		}
+		return event // Allow normal widget processing
+	})
+}
+
+// suppressedKey represents a parsed key combination to suppress.
+type suppressedKey struct {
+	key  tcell.Key
+	rune rune
+	mod  tcell.ModMask
+}
+
+func (sk suppressedKey) matches(event *tcell.EventKey) bool {
+	if sk.key != tcell.KeyRune {
+		// Non-rune key (Ctrl+letter maps to specific tcell.Key values)
+		return event.Key() == sk.key
+	}
+	// Rune-based match with modifier
+	return event.Key() == tcell.KeyRune && event.Rune() == sk.rune && event.Modifiers()&sk.mod != 0
+}
+
+// parseSuppressedKeys converts string key descriptions to suppressedKey structs.
+func parseSuppressedKeys(keys []string) []suppressedKey {
+	var result []suppressedKey
+	for _, k := range keys {
+		if sk, ok := parseKeyString(k); ok {
+			result = append(result, sk)
+		}
+	}
+	return result
+}
+
+// parseKeyString parses a key string like "ctrl+d" into a suppressedKey.
+func parseKeyString(s string) (suppressedKey, bool) {
+	s = strings.TrimSpace(strings.ToLower(s))
+
+	// Map of ctrl+letter to tcell key values
+	ctrlKeys := map[string]tcell.Key{
+		"ctrl+a": tcell.KeyCtrlA,
+		"ctrl+b": tcell.KeyCtrlB,
+		"ctrl+c": tcell.KeyCtrlC,
+		"ctrl+d": tcell.KeyCtrlD,
+		"ctrl+e": tcell.KeyCtrlE,
+		"ctrl+f": tcell.KeyCtrlF,
+		"ctrl+g": tcell.KeyCtrlG,
+		"ctrl+h": tcell.KeyCtrlH,
+		"ctrl+i": tcell.KeyCtrlI,
+		"ctrl+j": tcell.KeyCtrlJ,
+		"ctrl+k": tcell.KeyCtrlK,
+		"ctrl+l": tcell.KeyCtrlL,
+		"ctrl+m": tcell.KeyCtrlM,
+		"ctrl+n": tcell.KeyCtrlN,
+		"ctrl+o": tcell.KeyCtrlO,
+		"ctrl+p": tcell.KeyCtrlP,
+		"ctrl+q": tcell.KeyCtrlQ,
+		"ctrl+r": tcell.KeyCtrlR,
+		"ctrl+s": tcell.KeyCtrlS,
+		"ctrl+t": tcell.KeyCtrlT,
+		"ctrl+u": tcell.KeyCtrlU,
+		"ctrl+v": tcell.KeyCtrlV,
+		"ctrl+w": tcell.KeyCtrlW,
+		"ctrl+x": tcell.KeyCtrlX,
+		"ctrl+y": tcell.KeyCtrlY,
+		"ctrl+z": tcell.KeyCtrlZ,
+		"ctrl+space":     tcell.KeyCtrlSpace,
+		"ctrl+backslash": tcell.KeyCtrlBackslash,
+	}
+
+	if key, ok := ctrlKeys[s]; ok {
+		return suppressedKey{key: key}, true
+	}
+
+	// Handle alt+letter as rune-based with Alt modifier
+	if strings.HasPrefix(s, "alt+") && len(s) == 5 {
+		r := rune(s[4])
+		return suppressedKey{key: tcell.KeyRune, rune: r, mod: tcell.ModAlt}, true
+	}
+
+	return suppressedKey{}, false
 }
 
 // colorToString converts a proto Color to a tview color string
