@@ -363,6 +363,12 @@ func (s *WidgetService) createPrimitive(widgetType pb.WidgetType, props *pb.Widg
 		return s.createWindow(props), nil
 	case pb.WidgetType_WIDGET_WINDOW_MANAGER:
 		return s.createWindowManager(props), nil
+	case pb.WidgetType_WIDGET_MENU_BAR:
+		return s.createMenuBar(props), nil
+	case pb.WidgetType_WIDGET_MENU:
+		return s.createMenu(props), nil
+	case pb.WidgetType_WIDGET_MENU_ITEM:
+		return s.createMenuItem(props), nil
 	default:
 		return nil, fmt.Errorf("unsupported widget type: %v", widgetType)
 	}
@@ -424,6 +430,16 @@ func (s *WidgetService) applyProperties(primitive tview.Primitive, widgetType pb
 		if wm, ok := primitive.(*server.WindowManagerPrimitive); ok {
 			return s.applyWindowManagerProperties(wm, props)
 		}
+	case pb.WidgetType_WIDGET_MENU_BAR:
+		if mb, ok := primitive.(*server.MenuBarPrimitive); ok {
+			return s.applyMenuBarProperties(mb, props)
+		}
+	case pb.WidgetType_WIDGET_MENU:
+		// Menu is data-only, no properties to apply to primitive
+		return nil
+	case pb.WidgetType_WIDGET_MENU_ITEM:
+		// MenuItem is data-only, no properties to apply to primitive
+		return nil
 	}
 
 	return nil
@@ -565,6 +581,18 @@ func (s *WidgetService) wireWidgetEvents(sessionID, widgetID string, widgetType 
 					"button_label": buttonLabel,
 				}
 				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_SUBMITTED, data)
+			})
+		}
+	case pb.WidgetType_WIDGET_MENU_BAR:
+		if mb, ok := primitive.(*server.MenuBarPrimitive); ok {
+			mb.SetOnItemSelected(func(menuBarID, menuID, menuItemID, label string) {
+				data := map[string]string{
+					"menu_bar_id":  widgetID,
+					"menu_id":      menuID,
+					"menu_item_id": menuItemID,
+					"label":        label,
+				}
+				s.emitWidgetEvent(sessionID, widgetID, pb.WidgetEventType_WIDGET_MENU_ITEM_SELECTED, data)
 			})
 		}
 	case pb.WidgetType_WIDGET_WINDOW:

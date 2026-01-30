@@ -107,6 +107,9 @@ const (
 	WidgetType_WIDGET_PROGRESS_BAR   WidgetType = 16
 	WidgetType_WIDGET_WINDOW         WidgetType = 17
 	WidgetType_WIDGET_WINDOW_MANAGER WidgetType = 18
+	WidgetType_WIDGET_MENU_BAR       WidgetType = 20
+	WidgetType_WIDGET_MENU           WidgetType = 21
+	WidgetType_WIDGET_MENU_ITEM      WidgetType = 22
 )
 
 // Enum value maps for WidgetType.
@@ -131,6 +134,9 @@ var (
 		16: "WIDGET_PROGRESS_BAR",
 		17: "WIDGET_WINDOW",
 		18: "WIDGET_WINDOW_MANAGER",
+		20: "WIDGET_MENU_BAR",
+		21: "WIDGET_MENU",
+		22: "WIDGET_MENU_ITEM",
 	}
 	WidgetType_value = map[string]int32{
 		"WIDGET_BOX":            0,
@@ -152,6 +158,9 @@ var (
 		"WIDGET_PROGRESS_BAR":   16,
 		"WIDGET_WINDOW":         17,
 		"WIDGET_WINDOW_MANAGER": 18,
+		"WIDGET_MENU_BAR":       20,
+		"WIDGET_MENU":           21,
+		"WIDGET_MENU_ITEM":      22,
 	}
 )
 
@@ -1251,6 +1260,9 @@ type WidgetProperties struct {
 	//	*WidgetProperties_ProgressBar
 	//	*WidgetProperties_Window
 	//	*WidgetProperties_WindowManager
+	//	*WidgetProperties_MenuBar
+	//	*WidgetProperties_Menu
+	//	*WidgetProperties_MenuItem
 	TypeProperties isWidgetProperties_TypeProperties `protobuf_oneof:"type_properties"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -1511,6 +1523,33 @@ func (x *WidgetProperties) GetWindowManager() *WindowManagerProperties {
 	return nil
 }
 
+func (x *WidgetProperties) GetMenuBar() *MenuBarProperties {
+	if x != nil {
+		if x, ok := x.TypeProperties.(*WidgetProperties_MenuBar); ok {
+			return x.MenuBar
+		}
+	}
+	return nil
+}
+
+func (x *WidgetProperties) GetMenu() *MenuProperties {
+	if x != nil {
+		if x, ok := x.TypeProperties.(*WidgetProperties_Menu); ok {
+			return x.Menu
+		}
+	}
+	return nil
+}
+
+func (x *WidgetProperties) GetMenuItem() *MenuItemProperties {
+	if x != nil {
+		if x, ok := x.TypeProperties.(*WidgetProperties_MenuItem); ok {
+			return x.MenuItem
+		}
+	}
+	return nil
+}
+
 type isWidgetProperties_TypeProperties interface {
 	isWidgetProperties_TypeProperties()
 }
@@ -1587,6 +1626,18 @@ type WidgetProperties_WindowManager struct {
 	WindowManager *WindowManagerProperties `protobuf:"bytes,37,opt,name=window_manager,json=windowManager,proto3,oneof"`
 }
 
+type WidgetProperties_MenuBar struct {
+	MenuBar *MenuBarProperties `protobuf:"bytes,40,opt,name=menu_bar,json=menuBar,proto3,oneof"`
+}
+
+type WidgetProperties_Menu struct {
+	Menu *MenuProperties `protobuf:"bytes,41,opt,name=menu,proto3,oneof"`
+}
+
+type WidgetProperties_MenuItem struct {
+	MenuItem *MenuItemProperties `protobuf:"bytes,42,opt,name=menu_item,json=menuItem,proto3,oneof"`
+}
+
 func (*WidgetProperties_TextView) isWidgetProperties_TypeProperties() {}
 
 func (*WidgetProperties_InputField) isWidgetProperties_TypeProperties() {}
@@ -1622,6 +1673,12 @@ func (*WidgetProperties_ProgressBar) isWidgetProperties_TypeProperties() {}
 func (*WidgetProperties_Window) isWidgetProperties_TypeProperties() {}
 
 func (*WidgetProperties_WindowManager) isWidgetProperties_TypeProperties() {}
+
+func (*WidgetProperties_MenuBar) isWidgetProperties_TypeProperties() {}
+
+func (*WidgetProperties_Menu) isWidgetProperties_TypeProperties() {}
+
+func (*WidgetProperties_MenuItem) isWidgetProperties_TypeProperties() {}
 
 type TextViewProperties struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -3099,6 +3156,186 @@ func (x *WindowManagerProperties) GetBackgroundColor() *Color {
 	return nil
 }
 
+type MenuBarProperties struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	BackgroundColor       *Color                 `protobuf:"bytes,1,opt,name=background_color,json=backgroundColor,proto3,oneof" json:"background_color,omitempty"`
+	TextColor             *Color                 `protobuf:"bytes,2,opt,name=text_color,json=textColor,proto3,oneof" json:"text_color,omitempty"`
+	ActiveBackgroundColor *Color                 `protobuf:"bytes,3,opt,name=active_background_color,json=activeBackgroundColor,proto3,oneof" json:"active_background_color,omitempty"`
+	ActiveTextColor       *Color                 `protobuf:"bytes,4,opt,name=active_text_color,json=activeTextColor,proto3,oneof" json:"active_text_color,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *MenuBarProperties) Reset() {
+	*x = MenuBarProperties{}
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MenuBarProperties) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MenuBarProperties) ProtoMessage() {}
+
+func (x *MenuBarProperties) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MenuBarProperties.ProtoReflect.Descriptor instead.
+func (*MenuBarProperties) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *MenuBarProperties) GetBackgroundColor() *Color {
+	if x != nil {
+		return x.BackgroundColor
+	}
+	return nil
+}
+
+func (x *MenuBarProperties) GetTextColor() *Color {
+	if x != nil {
+		return x.TextColor
+	}
+	return nil
+}
+
+func (x *MenuBarProperties) GetActiveBackgroundColor() *Color {
+	if x != nil {
+		return x.ActiveBackgroundColor
+	}
+	return nil
+}
+
+func (x *MenuBarProperties) GetActiveTextColor() *Color {
+	if x != nil {
+		return x.ActiveTextColor
+	}
+	return nil
+}
+
+type MenuProperties struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Title         *string                `protobuf:"bytes,1,opt,name=title,proto3,oneof" json:"title,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MenuProperties) Reset() {
+	*x = MenuProperties{}
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MenuProperties) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MenuProperties) ProtoMessage() {}
+
+func (x *MenuProperties) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MenuProperties.ProtoReflect.Descriptor instead.
+func (*MenuProperties) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *MenuProperties) GetTitle() string {
+	if x != nil && x.Title != nil {
+		return *x.Title
+	}
+	return ""
+}
+
+type MenuItemProperties struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Label           *string                `protobuf:"bytes,1,opt,name=label,proto3,oneof" json:"label,omitempty"`
+	ShortcutDisplay *string                `protobuf:"bytes,2,opt,name=shortcut_display,json=shortcutDisplay,proto3,oneof" json:"shortcut_display,omitempty"` // e.g., "Ctrl+N" — display only, not functional
+	Separator       *bool                  `protobuf:"varint,3,opt,name=separator,proto3,oneof" json:"separator,omitempty"`                                   // if true, renders as a divider line
+	Disabled        *bool                  `protobuf:"varint,4,opt,name=disabled,proto3,oneof" json:"disabled,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *MenuItemProperties) Reset() {
+	*x = MenuItemProperties{}
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MenuItemProperties) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MenuItemProperties) ProtoMessage() {}
+
+func (x *MenuItemProperties) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_types_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MenuItemProperties.ProtoReflect.Descriptor instead.
+func (*MenuItemProperties) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_types_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *MenuItemProperties) GetLabel() string {
+	if x != nil && x.Label != nil {
+		return *x.Label
+	}
+	return ""
+}
+
+func (x *MenuItemProperties) GetShortcutDisplay() string {
+	if x != nil && x.ShortcutDisplay != nil {
+		return *x.ShortcutDisplay
+	}
+	return ""
+}
+
+func (x *MenuItemProperties) GetSeparator() bool {
+	if x != nil && x.Separator != nil {
+		return *x.Separator
+	}
+	return false
+}
+
+func (x *MenuItemProperties) GetDisabled() bool {
+	if x != nil && x.Disabled != nil {
+		return *x.Disabled
+	}
+	return false
+}
+
 var File_industries_loosh_yutani_v1_types_proto protoreflect.FileDescriptor
 
 const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
@@ -3145,7 +3382,7 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\x03top\x18\x01 \x01(\x05R\x03top\x12\x16\n" +
 	"\x06bottom\x18\x02 \x01(\x05R\x06bottom\x12\x12\n" +
 	"\x04left\x18\x03 \x01(\x05R\x04left\x12\x14\n" +
-	"\x05right\x18\x04 \x01(\x05R\x05right\"\xb3\x0f\n" +
+	"\x05right\x18\x04 \x01(\x05R\x05right\"\x90\x11\n" +
 	"\x10WidgetProperties\x129\n" +
 	"\x04rect\x18\x01 \x01(\v2 .industries.loosh.yutani.v1.RectH\x01R\x04rect\x88\x01\x01\x12\x1b\n" +
 	"\x06border\x18\x02 \x01(\bH\x02R\x06border\x88\x01\x01\x12\x19\n" +
@@ -3175,7 +3412,10 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\x05image\x18\" \x01(\v2+.industries.loosh.yutani.v1.ImagePropertiesH\x00R\x05image\x12V\n" +
 	"\fprogress_bar\x18# \x01(\v21.industries.loosh.yutani.v1.ProgressBarPropertiesH\x00R\vprogressBar\x12F\n" +
 	"\x06window\x18$ \x01(\v2,.industries.loosh.yutani.v1.WindowPropertiesH\x00R\x06window\x12\\\n" +
-	"\x0ewindow_manager\x18% \x01(\v23.industries.loosh.yutani.v1.WindowManagerPropertiesH\x00R\rwindowManagerB\x11\n" +
+	"\x0ewindow_manager\x18% \x01(\v23.industries.loosh.yutani.v1.WindowManagerPropertiesH\x00R\rwindowManager\x12J\n" +
+	"\bmenu_bar\x18( \x01(\v2-.industries.loosh.yutani.v1.MenuBarPropertiesH\x00R\amenuBar\x12@\n" +
+	"\x04menu\x18) \x01(\v2*.industries.loosh.yutani.v1.MenuPropertiesH\x00R\x04menu\x12M\n" +
+	"\tmenu_item\x18* \x01(\v2..industries.loosh.yutani.v1.MenuItemPropertiesH\x00R\bmenuItemB\x11\n" +
 	"\x0ftype_propertiesB\a\n" +
 	"\x05_rectB\t\n" +
 	"\a_borderB\b\n" +
@@ -3449,7 +3689,30 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\x16_inactive_border_color\"\x81\x01\n" +
 	"\x17WindowManagerProperties\x12Q\n" +
 	"\x10background_color\x18\x01 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x00R\x0fbackgroundColor\x88\x01\x01B\x13\n" +
-	"\x11_background_color*\x96\x01\n" +
+	"\x11_background_color\"\xb7\x03\n" +
+	"\x11MenuBarProperties\x12Q\n" +
+	"\x10background_color\x18\x01 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x00R\x0fbackgroundColor\x88\x01\x01\x12E\n" +
+	"\n" +
+	"text_color\x18\x02 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x01R\ttextColor\x88\x01\x01\x12^\n" +
+	"\x17active_background_color\x18\x03 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x02R\x15activeBackgroundColor\x88\x01\x01\x12R\n" +
+	"\x11active_text_color\x18\x04 \x01(\v2!.industries.loosh.yutani.v1.ColorH\x03R\x0factiveTextColor\x88\x01\x01B\x13\n" +
+	"\x11_background_colorB\r\n" +
+	"\v_text_colorB\x1a\n" +
+	"\x18_active_background_colorB\x14\n" +
+	"\x12_active_text_color\"5\n" +
+	"\x0eMenuProperties\x12\x19\n" +
+	"\x05title\x18\x01 \x01(\tH\x00R\x05title\x88\x01\x01B\b\n" +
+	"\x06_title\"\xdd\x01\n" +
+	"\x12MenuItemProperties\x12\x19\n" +
+	"\x05label\x18\x01 \x01(\tH\x00R\x05label\x88\x01\x01\x12.\n" +
+	"\x10shortcut_display\x18\x02 \x01(\tH\x01R\x0fshortcutDisplay\x88\x01\x01\x12!\n" +
+	"\tseparator\x18\x03 \x01(\bH\x02R\tseparator\x88\x01\x01\x12\x1f\n" +
+	"\bdisabled\x18\x04 \x01(\bH\x03R\bdisabled\x88\x01\x01B\b\n" +
+	"\x06_labelB\x13\n" +
+	"\x11_shortcut_displayB\f\n" +
+	"\n" +
+	"_separatorB\v\n" +
+	"\t_disabled*\x96\x01\n" +
 	"\tAttribute\x12\r\n" +
 	"\tATTR_NONE\x10\x00\x12\r\n" +
 	"\tATTR_BOLD\x10\x01\x12\x0f\n" +
@@ -3459,7 +3722,7 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\n" +
 	"ATTR_BLINK\x10\x05\x12\f\n" +
 	"\bATTR_DIM\x10\x06\x12\x16\n" +
-	"\x12ATTR_STRIKETHROUGH\x10\a*\x86\x03\n" +
+	"\x12ATTR_STRIKETHROUGH\x10\a*\xc2\x03\n" +
 	"\n" +
 	"WidgetType\x12\x0e\n" +
 	"\n" +
@@ -3482,7 +3745,10 @@ const file_industries_loosh_yutani_v1_types_proto_rawDesc = "" +
 	"\fWIDGET_IMAGE\x10\x0f\x12\x17\n" +
 	"\x13WIDGET_PROGRESS_BAR\x10\x10\x12\x11\n" +
 	"\rWIDGET_WINDOW\x10\x11\x12\x19\n" +
-	"\x15WIDGET_WINDOW_MANAGER\x10\x12*>\n" +
+	"\x15WIDGET_WINDOW_MANAGER\x10\x12\x12\x13\n" +
+	"\x0fWIDGET_MENU_BAR\x10\x14\x12\x0f\n" +
+	"\vWIDGET_MENU\x10\x15\x12\x14\n" +
+	"\x10WIDGET_MENU_ITEM\x10\x16*>\n" +
 	"\tAlignment\x12\x0e\n" +
 	"\n" +
 	"ALIGN_LEFT\x10\x00\x12\x10\n" +
@@ -3572,7 +3838,7 @@ func file_industries_loosh_yutani_v1_types_proto_rawDescGZIP() []byte {
 }
 
 var file_industries_loosh_yutani_v1_types_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
-var file_industries_loosh_yutani_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
+var file_industries_loosh_yutani_v1_types_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
 var file_industries_loosh_yutani_v1_types_proto_goTypes = []any{
 	(Attribute)(0),                  // 0: industries.loosh.yutani.v1.Attribute
 	(WidgetType)(0),                 // 1: industries.loosh.yutani.v1.WidgetType
@@ -3612,6 +3878,9 @@ var file_industries_loosh_yutani_v1_types_proto_goTypes = []any{
 	(*ProgressBarProperties)(nil),   // 35: industries.loosh.yutani.v1.ProgressBarProperties
 	(*WindowProperties)(nil),        // 36: industries.loosh.yutani.v1.WindowProperties
 	(*WindowManagerProperties)(nil), // 37: industries.loosh.yutani.v1.WindowManagerProperties
+	(*MenuBarProperties)(nil),       // 38: industries.loosh.yutani.v1.MenuBarProperties
+	(*MenuProperties)(nil),          // 39: industries.loosh.yutani.v1.MenuProperties
+	(*MenuItemProperties)(nil),      // 40: industries.loosh.yutani.v1.MenuItemProperties
 }
 var file_industries_loosh_yutani_v1_types_proto_depIdxs = []int32{
 	13, // 0: industries.loosh.yutani.v1.Color.rgb:type_name -> industries.loosh.yutani.v1.RGB
@@ -3643,54 +3912,61 @@ var file_industries_loosh_yutani_v1_types_proto_depIdxs = []int32{
 	35, // 26: industries.loosh.yutani.v1.WidgetProperties.progress_bar:type_name -> industries.loosh.yutani.v1.ProgressBarProperties
 	36, // 27: industries.loosh.yutani.v1.WidgetProperties.window:type_name -> industries.loosh.yutani.v1.WindowProperties
 	37, // 28: industries.loosh.yutani.v1.WidgetProperties.window_manager:type_name -> industries.loosh.yutani.v1.WindowManagerProperties
-	12, // 29: industries.loosh.yutani.v1.TextViewProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 30: industries.loosh.yutani.v1.InputFieldProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 31: industries.loosh.yutani.v1.InputFieldProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 32: industries.loosh.yutani.v1.InputFieldProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 33: industries.loosh.yutani.v1.ButtonProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 34: industries.loosh.yutani.v1.ButtonProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 35: industries.loosh.yutani.v1.ButtonProperties.activated_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 36: industries.loosh.yutani.v1.CheckboxProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 37: industries.loosh.yutani.v1.CheckboxProperties.checked_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 38: industries.loosh.yutani.v1.DropdownProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 39: industries.loosh.yutani.v1.DropdownProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 40: industries.loosh.yutani.v1.DropdownProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 41: industries.loosh.yutani.v1.ListProperties.main_text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 42: industries.loosh.yutani.v1.ListProperties.secondary_text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 43: industries.loosh.yutani.v1.ListProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 44: industries.loosh.yutani.v1.ListProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 45: industries.loosh.yutani.v1.TableProperties.borders_color:type_name -> industries.loosh.yutani.v1.Color
-	3,  // 46: industries.loosh.yutani.v1.FlexProperties.direction:type_name -> industries.loosh.yutani.v1.FlexDirection
-	12, // 47: industries.loosh.yutani.v1.TreeProperties.node_text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 48: industries.loosh.yutani.v1.TreeProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 49: industries.loosh.yutani.v1.TreeProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 50: industries.loosh.yutani.v1.FormProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 51: industries.loosh.yutani.v1.FormProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 52: industries.loosh.yutani.v1.FormProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 53: industries.loosh.yutani.v1.FormProperties.button_background_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 54: industries.loosh.yutani.v1.FormProperties.button_text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 55: industries.loosh.yutani.v1.PagesProperties.page_name_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 56: industries.loosh.yutani.v1.TextAreaProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 57: industries.loosh.yutani.v1.TextAreaProperties.placeholder_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 58: industries.loosh.yutani.v1.ModalProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 59: industries.loosh.yutani.v1.ModalProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 60: industries.loosh.yutani.v1.ModalProperties.button_background_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 61: industries.loosh.yutani.v1.ModalProperties.button_text_color:type_name -> industries.loosh.yutani.v1.Color
-	4,  // 62: industries.loosh.yutani.v1.ImageProperties.aspect_ratio:type_name -> industries.loosh.yutani.v1.ImageAspectRatio
-	12, // 63: industries.loosh.yutani.v1.ProgressBarProperties.filled_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 64: industries.loosh.yutani.v1.ProgressBarProperties.empty_color:type_name -> industries.loosh.yutani.v1.Color
-	11, // 65: industries.loosh.yutani.v1.WindowProperties.initial_rect:type_name -> industries.loosh.yutani.v1.Rect
-	5,  // 66: industries.loosh.yutani.v1.WindowProperties.state:type_name -> industries.loosh.yutani.v1.WindowState
-	12, // 67: industries.loosh.yutani.v1.WindowProperties.title_bar_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 68: industries.loosh.yutani.v1.WindowProperties.title_bar_text_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 69: industries.loosh.yutani.v1.WindowProperties.active_border_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 70: industries.loosh.yutani.v1.WindowProperties.inactive_border_color:type_name -> industries.loosh.yutani.v1.Color
-	12, // 71: industries.loosh.yutani.v1.WindowManagerProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
-	72, // [72:72] is the sub-list for method output_type
-	72, // [72:72] is the sub-list for method input_type
-	72, // [72:72] is the sub-list for extension type_name
-	72, // [72:72] is the sub-list for extension extendee
-	0,  // [0:72] is the sub-list for field type_name
+	38, // 29: industries.loosh.yutani.v1.WidgetProperties.menu_bar:type_name -> industries.loosh.yutani.v1.MenuBarProperties
+	39, // 30: industries.loosh.yutani.v1.WidgetProperties.menu:type_name -> industries.loosh.yutani.v1.MenuProperties
+	40, // 31: industries.loosh.yutani.v1.WidgetProperties.menu_item:type_name -> industries.loosh.yutani.v1.MenuItemProperties
+	12, // 32: industries.loosh.yutani.v1.TextViewProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 33: industries.loosh.yutani.v1.InputFieldProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 34: industries.loosh.yutani.v1.InputFieldProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 35: industries.loosh.yutani.v1.InputFieldProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 36: industries.loosh.yutani.v1.ButtonProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 37: industries.loosh.yutani.v1.ButtonProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 38: industries.loosh.yutani.v1.ButtonProperties.activated_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 39: industries.loosh.yutani.v1.CheckboxProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 40: industries.loosh.yutani.v1.CheckboxProperties.checked_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 41: industries.loosh.yutani.v1.DropdownProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 42: industries.loosh.yutani.v1.DropdownProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 43: industries.loosh.yutani.v1.DropdownProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 44: industries.loosh.yutani.v1.ListProperties.main_text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 45: industries.loosh.yutani.v1.ListProperties.secondary_text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 46: industries.loosh.yutani.v1.ListProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 47: industries.loosh.yutani.v1.ListProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 48: industries.loosh.yutani.v1.TableProperties.borders_color:type_name -> industries.loosh.yutani.v1.Color
+	3,  // 49: industries.loosh.yutani.v1.FlexProperties.direction:type_name -> industries.loosh.yutani.v1.FlexDirection
+	12, // 50: industries.loosh.yutani.v1.TreeProperties.node_text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 51: industries.loosh.yutani.v1.TreeProperties.selected_text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 52: industries.loosh.yutani.v1.TreeProperties.selected_background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 53: industries.loosh.yutani.v1.FormProperties.label_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 54: industries.loosh.yutani.v1.FormProperties.field_text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 55: industries.loosh.yutani.v1.FormProperties.field_background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 56: industries.loosh.yutani.v1.FormProperties.button_background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 57: industries.loosh.yutani.v1.FormProperties.button_text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 58: industries.loosh.yutani.v1.PagesProperties.page_name_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 59: industries.loosh.yutani.v1.TextAreaProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 60: industries.loosh.yutani.v1.TextAreaProperties.placeholder_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 61: industries.loosh.yutani.v1.ModalProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 62: industries.loosh.yutani.v1.ModalProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 63: industries.loosh.yutani.v1.ModalProperties.button_background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 64: industries.loosh.yutani.v1.ModalProperties.button_text_color:type_name -> industries.loosh.yutani.v1.Color
+	4,  // 65: industries.loosh.yutani.v1.ImageProperties.aspect_ratio:type_name -> industries.loosh.yutani.v1.ImageAspectRatio
+	12, // 66: industries.loosh.yutani.v1.ProgressBarProperties.filled_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 67: industries.loosh.yutani.v1.ProgressBarProperties.empty_color:type_name -> industries.loosh.yutani.v1.Color
+	11, // 68: industries.loosh.yutani.v1.WindowProperties.initial_rect:type_name -> industries.loosh.yutani.v1.Rect
+	5,  // 69: industries.loosh.yutani.v1.WindowProperties.state:type_name -> industries.loosh.yutani.v1.WindowState
+	12, // 70: industries.loosh.yutani.v1.WindowProperties.title_bar_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 71: industries.loosh.yutani.v1.WindowProperties.title_bar_text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 72: industries.loosh.yutani.v1.WindowProperties.active_border_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 73: industries.loosh.yutani.v1.WindowProperties.inactive_border_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 74: industries.loosh.yutani.v1.WindowManagerProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 75: industries.loosh.yutani.v1.MenuBarProperties.background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 76: industries.loosh.yutani.v1.MenuBarProperties.text_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 77: industries.loosh.yutani.v1.MenuBarProperties.active_background_color:type_name -> industries.loosh.yutani.v1.Color
+	12, // 78: industries.loosh.yutani.v1.MenuBarProperties.active_text_color:type_name -> industries.loosh.yutani.v1.Color
+	79, // [79:79] is the sub-list for method output_type
+	79, // [79:79] is the sub-list for method input_type
+	79, // [79:79] is the sub-list for extension type_name
+	79, // [79:79] is the sub-list for extension extendee
+	0,  // [0:79] is the sub-list for field type_name
 }
 
 func init() { file_industries_loosh_yutani_v1_types_proto_init() }
@@ -3722,6 +3998,9 @@ func file_industries_loosh_yutani_v1_types_proto_init() {
 		(*WidgetProperties_ProgressBar)(nil),
 		(*WidgetProperties_Window)(nil),
 		(*WidgetProperties_WindowManager)(nil),
+		(*WidgetProperties_MenuBar)(nil),
+		(*WidgetProperties_Menu)(nil),
+		(*WidgetProperties_MenuItem)(nil),
 	}
 	file_industries_loosh_yutani_v1_types_proto_msgTypes[11].OneofWrappers = []any{}
 	file_industries_loosh_yutani_v1_types_proto_msgTypes[12].OneofWrappers = []any{}
@@ -3741,13 +4020,16 @@ func file_industries_loosh_yutani_v1_types_proto_init() {
 	file_industries_loosh_yutani_v1_types_proto_msgTypes[26].OneofWrappers = []any{}
 	file_industries_loosh_yutani_v1_types_proto_msgTypes[27].OneofWrappers = []any{}
 	file_industries_loosh_yutani_v1_types_proto_msgTypes[28].OneofWrappers = []any{}
+	file_industries_loosh_yutani_v1_types_proto_msgTypes[29].OneofWrappers = []any{}
+	file_industries_loosh_yutani_v1_types_proto_msgTypes[30].OneofWrappers = []any{}
+	file_industries_loosh_yutani_v1_types_proto_msgTypes[31].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_industries_loosh_yutani_v1_types_proto_rawDesc), len(file_industries_loosh_yutani_v1_types_proto_rawDesc)),
 			NumEnums:      9,
-			NumMessages:   29,
+			NumMessages:   32,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

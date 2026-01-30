@@ -22,4 +22,5 @@ func RegisterAllServices(grpcServer *grpc.Server, srv *server.Server) {
 	pb.RegisterTestServiceServer(grpcServer, NewTestService(srv))
 	pb.RegisterWindowServiceServer(grpcServer, NewWindowService(srv))
 	pb.RegisterTextAreaServiceServer(grpcServer, NewTextAreaService(srv))
+	pb.RegisterMenuServiceServer(grpcServer, NewMenuService(srv))
 }

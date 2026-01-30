@@ -93,6 +93,9 @@ enum WidgetType {
   WIDGET_PROGRESS_BAR = 16;
   WIDGET_WINDOW = 17;
   WIDGET_WINDOW_MANAGER = 18;
+  WIDGET_MENU_BAR = 20;
+  WIDGET_MENU = 21;
+  WIDGET_MENU_ITEM = 22;
 }
 
 enum Alignment {
@@ -141,6 +144,9 @@ message WidgetProperties {
     ProgressBarProperties progress_bar = 35;
     WindowProperties window = 36;
     WindowManagerProperties window_manager = 37;
+    MenuBarProperties menu_bar = 40;
+    MenuProperties menu = 41;
+    MenuItemProperties menu_item = 42;
   }
 }
 
@@ -322,6 +328,26 @@ message WindowProperties {
 // WindowManagerProperties configures a WindowManager widget
 message WindowManagerProperties {
   optional Color background_color = 1;
+}
+
+// Menu widget properties
+
+message MenuBarProperties {
+  optional Color background_color = 1;
+  optional Color text_color = 2;
+  optional Color active_background_color = 3;
+  optional Color active_text_color = 4;
+}
+
+message MenuProperties {
+  optional string title = 1;
+}
+
+message MenuItemProperties {
+  optional string label = 1;
+  optional string shortcut_display = 2;  // e.g., "Ctrl+N" — display only, not functional
+  optional bool separator = 3;           // if true, renders as a divider line
+  optional bool disabled = 4;
 }
 
 // Key and modifier enums for events (Phase 2)

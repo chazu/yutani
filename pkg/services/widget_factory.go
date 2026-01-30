@@ -989,6 +989,72 @@ func (s *WidgetService) applyWindowManagerProperties(wm *server.WindowManagerPri
 	return nil
 }
 
+// MenuBar widget
+
+func (s *WidgetService) createMenuBar(props *pb.WidgetProperties) *server.MenuBarPrimitive {
+	mb := server.NewMenuBarPrimitive()
+	if props != nil {
+		if props.Title != nil {
+			mb.SetTitle(*props.Title)
+		}
+		s.applyMenuBarProperties(mb, props)
+	}
+	return mb
+}
+
+func (s *WidgetService) applyMenuBarProperties(mb *server.MenuBarPrimitive, props *pb.WidgetProperties) error {
+	if props.TypeProperties == nil {
+		return nil
+	}
+
+	mbProps, ok := props.TypeProperties.(*pb.WidgetProperties_MenuBar)
+	if !ok || mbProps.MenuBar == nil {
+		return nil
+	}
+
+	if mbProps.MenuBar.BackgroundColor != nil {
+		mb.SetBarBackgroundColor(convertColor(mbProps.MenuBar.BackgroundColor))
+	}
+	if mbProps.MenuBar.TextColor != nil {
+		mb.SetBarTextColor(convertColor(mbProps.MenuBar.TextColor))
+	}
+	if mbProps.MenuBar.ActiveBackgroundColor != nil {
+		mb.SetActiveBackgroundColor(convertColor(mbProps.MenuBar.ActiveBackgroundColor))
+	}
+	if mbProps.MenuBar.ActiveTextColor != nil {
+		mb.SetActiveTextColor(convertColor(mbProps.MenuBar.ActiveTextColor))
+	}
+
+	return nil
+}
+
+// Menu widget (container for MenuItems, no visual - used as data holder)
+
+func (s *WidgetService) createMenu(props *pb.WidgetProperties) *tview.Box {
+	// Menu is a data-only widget; the MenuBarPrimitive handles rendering.
+	// We use a tview.Box as placeholder primitive.
+	box := tview.NewBox()
+	if props != nil {
+		if props.Title != nil {
+			box.SetTitle(*props.Title)
+		}
+	}
+	return box
+}
+
+// MenuItem widget (data-only, rendered by MenuBarPrimitive)
+
+func (s *WidgetService) createMenuItem(props *pb.WidgetProperties) *tview.Box {
+	// MenuItem is data-only; rendered by the MenuBarPrimitive dropdown.
+	box := tview.NewBox()
+	if props != nil {
+		if props.Title != nil {
+			box.SetTitle(*props.Title)
+		}
+	}
+	return box
+}
+
 // applyKeySuppression sets up an InputCapture on a TextArea that suppresses
 // specified key combinations from widget processing. The suppressed keys are
 // still dispatched as events to Yutani clients (via the app-level InputCapture),

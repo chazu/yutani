@@ -91,31 +91,33 @@ func (MouseAction) EnumDescriptor() ([]byte, []int) {
 type WidgetEventType int32
 
 const (
-	WidgetEventType_WIDGET_SELECTED             WidgetEventType = 0 // Item selected (List, Table, Tree)
-	WidgetEventType_WIDGET_CHANGED              WidgetEventType = 1 // Value changed (Input, Checkbox)
-	WidgetEventType_WIDGET_SUBMITTED            WidgetEventType = 2 // Form submitted, button pressed
-	WidgetEventType_WIDGET_CANCELLED            WidgetEventType = 3 // Escape pressed
-	WidgetEventType_WIDGET_DONE                 WidgetEventType = 4 // Input complete (Enter pressed)
-	WidgetEventType_WIDGET_WINDOW_MOVED         WidgetEventType = 5 // Window was moved
-	WidgetEventType_WIDGET_WINDOW_RESIZED       WidgetEventType = 6 // Window was resized
-	WidgetEventType_WIDGET_WINDOW_STATE_CHANGED WidgetEventType = 7 // Window state changed (normal/max/min)
-	WidgetEventType_WIDGET_WINDOW_CLOSED        WidgetEventType = 8 // Window close button clicked
-	WidgetEventType_WIDGET_WINDOW_ACTIVATED     WidgetEventType = 9 // Window brought to front / activated
+	WidgetEventType_WIDGET_SELECTED             WidgetEventType = 0  // Item selected (List, Table, Tree)
+	WidgetEventType_WIDGET_CHANGED              WidgetEventType = 1  // Value changed (Input, Checkbox)
+	WidgetEventType_WIDGET_SUBMITTED            WidgetEventType = 2  // Form submitted, button pressed
+	WidgetEventType_WIDGET_CANCELLED            WidgetEventType = 3  // Escape pressed
+	WidgetEventType_WIDGET_DONE                 WidgetEventType = 4  // Input complete (Enter pressed)
+	WidgetEventType_WIDGET_WINDOW_MOVED         WidgetEventType = 5  // Window was moved
+	WidgetEventType_WIDGET_WINDOW_RESIZED       WidgetEventType = 6  // Window was resized
+	WidgetEventType_WIDGET_WINDOW_STATE_CHANGED WidgetEventType = 7  // Window state changed (normal/max/min)
+	WidgetEventType_WIDGET_WINDOW_CLOSED        WidgetEventType = 8  // Window close button clicked
+	WidgetEventType_WIDGET_WINDOW_ACTIVATED     WidgetEventType = 9  // Window brought to front / activated
+	WidgetEventType_WIDGET_MENU_ITEM_SELECTED   WidgetEventType = 20 // Menu item selected (data: menu_bar_id, menu_id, label)
 )
 
 // Enum value maps for WidgetEventType.
 var (
 	WidgetEventType_name = map[int32]string{
-		0: "WIDGET_SELECTED",
-		1: "WIDGET_CHANGED",
-		2: "WIDGET_SUBMITTED",
-		3: "WIDGET_CANCELLED",
-		4: "WIDGET_DONE",
-		5: "WIDGET_WINDOW_MOVED",
-		6: "WIDGET_WINDOW_RESIZED",
-		7: "WIDGET_WINDOW_STATE_CHANGED",
-		8: "WIDGET_WINDOW_CLOSED",
-		9: "WIDGET_WINDOW_ACTIVATED",
+		0:  "WIDGET_SELECTED",
+		1:  "WIDGET_CHANGED",
+		2:  "WIDGET_SUBMITTED",
+		3:  "WIDGET_CANCELLED",
+		4:  "WIDGET_DONE",
+		5:  "WIDGET_WINDOW_MOVED",
+		6:  "WIDGET_WINDOW_RESIZED",
+		7:  "WIDGET_WINDOW_STATE_CHANGED",
+		8:  "WIDGET_WINDOW_CLOSED",
+		9:  "WIDGET_WINDOW_ACTIVATED",
+		20: "WIDGET_MENU_ITEM_SELECTED",
 	}
 	WidgetEventType_value = map[string]int32{
 		"WIDGET_SELECTED":             0,
@@ -128,6 +130,7 @@ var (
 		"WIDGET_WINDOW_STATE_CHANGED": 7,
 		"WIDGET_WINDOW_CLOSED":        8,
 		"WIDGET_WINDOW_ACTIVATED":     9,
+		"WIDGET_MENU_ITEM_SELECTED":   20,
 	}
 )
 
@@ -1018,7 +1021,7 @@ const file_industries_loosh_yutani_v1_event_proto_rawDesc = "" +
 	"MOUSE_DRAG\x10\x06\x12\x11\n" +
 	"\rMOUSE_RELEASE\x10\a\x12\x0e\n" +
 	"\n" +
-	"MOUSE_MOVE\x10\b*\x83\x02\n" +
+	"MOUSE_MOVE\x10\b*\xa2\x02\n" +
 	"\x0fWidgetEventType\x12\x13\n" +
 	"\x0fWIDGET_SELECTED\x10\x00\x12\x12\n" +
 	"\x0eWIDGET_CHANGED\x10\x01\x12\x14\n" +
@@ -1029,7 +1032,8 @@ const file_industries_loosh_yutani_v1_event_proto_rawDesc = "" +
 	"\x15WIDGET_WINDOW_RESIZED\x10\x06\x12\x1f\n" +
 	"\x1bWIDGET_WINDOW_STATE_CHANGED\x10\a\x12\x18\n" +
 	"\x14WIDGET_WINDOW_CLOSED\x10\b\x12\x1b\n" +
-	"\x17WIDGET_WINDOW_ACTIVATED\x10\t2\xd7\x02\n" +
+	"\x17WIDGET_WINDOW_ACTIVATED\x10\t\x12\x1d\n" +
+	"\x19WIDGET_MENU_ITEM_SELECTED\x10\x142\xd7\x02\n" +
 	"\fEventService\x12^\n" +
 	"\tSubscribe\x12,.industries.loosh.yutani.v1.SubscribeRequest\x1a!.industries.loosh.yutani.v1.Event0\x01\x12n\n" +
 	"\vInjectEvent\x12..industries.loosh.yutani.v1.InjectEventRequest\x1a/.industries.loosh.yutani.v1.InjectEventResponse\x12w\n" +

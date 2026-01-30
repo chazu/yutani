@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package industries.loosh.yutani.v1;
+
+import "industries/loosh/yutani/v1/types.proto";
+
+option go_package = "github.com/chazu/yutani/pkg/proto/yutani";
+
+// MenuService manages menu bar, menu, and menu item relationships
+service MenuService {
+  // Add a menu to a menu bar
+  rpc AddMenu(MenuAddMenuRequest) returns (MenuAddMenuResponse);
+
+  // Add a menu item to a menu
+  rpc AddMenuItem(MenuAddMenuItemRequest) returns (MenuAddMenuItemResponse);
+
+  // Remove a menu item from a menu
+  rpc RemoveMenuItem(MenuRemoveMenuItemRequest) returns (MenuRemoveMenuItemResponse);
+}
+
+// AddMenu
+
+message MenuAddMenuRequest {
+  SessionId session_id = 1;
+  WidgetId menu_bar_id = 2;
+  WidgetId menu_id = 3;
+}
+
+message MenuAddMenuResponse {
+  bool success = 1;
+}
+
+// AddMenuItem
+
+message MenuAddMenuItemRequest {
+  SessionId session_id = 1;
+  WidgetId menu_id = 2;
+  WidgetId menu_item_id = 3;
+}
+
+message MenuAddMenuItemResponse {
+  bool success = 1;
+}
+
+// RemoveMenuItem
+
+message MenuRemoveMenuItemRequest {
+  SessionId session_id = 1;
+  WidgetId menu_id = 2;
+  WidgetId menu_item_id = 3;
+}
+
+message MenuRemoveMenuItemResponse {
+  bool success = 1;
+}
