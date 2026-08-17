@@ -435,6 +435,53 @@ func (s *WindowService) WindowSetConstraints(ctx context.Context, req *pb.Window
 	return &pb.WindowSetConstraintsResponse{Success: true}, nil
 }
 
+// WindowSetContent sets the child widget content of a window.
+func (s *WindowService) WindowSetContent(ctx context.Context, req *pb.WindowSetContentRequest) (*pb.WindowSetContentResponse, error) {
+	if req.SessionId == nil || req.WindowId == nil || req.ChildId == nil {
+		return nil, status.Error(codes.InvalidArgument, "session_id, window_id, and child_id are required")
+	}
+
+	sessionID := req.SessionId.Id
+	windowID := req.WindowId.Id
+	childID := req.ChildId.Id
+
+	if err := s.verifyOwnership(sessionID, windowID); err != nil {
+		return nil, err
+	}
+	if err := s.verifyOwnership(sessionID, childID); err != nil {
+		return nil, err
+	}
+
+	var retErr error
+	done := make(chan struct{})
+	s.server.App().QueueUpdateDraw(func() {
+		defer close(done)
+
+		win, err := s.getWindow(windowID)
+		if err != nil {
+			retErr = err
+			return
+		}
+
+		childPrimitive, ok := s.server.Widgets().Get(childID)
+		if !ok {
+			retErr = status.Error(codes.NotFound, "child widget not found")
+			return
+		}
+
+		win.SetChild(childPrimitive)
+		s.server.Widgets().AddChild(windowID, childID)
+		slog.Info("Window content set", "window_id", windowID, "child_id", childID)
+	})
+	<-done
+
+	if retErr != nil {
+		return nil, retErr
+	}
+
+	return &pb.WindowSetContentResponse{Success: true}, nil
+}
+
 // Helper methods
 
 func (s *WindowService) verifyOwnership(sessionID, widgetID string) error {

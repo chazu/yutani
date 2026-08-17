@@ -188,6 +188,16 @@ func (w *Window) GetState() (*pb.WindowGetStateResponse, error) {
 	})
 }
 
+// SetContent sets the child widget content of the window.
+func (w *Window) SetContent(child *baseWidget) error {
+	_, err := w.client.windowClient.WindowSetContent(w.client.ctx, &pb.WindowSetContentRequest{
+		SessionId: w.client.sessionID,
+		WindowId:  w.widgetID,
+		ChildId:   child.widgetID,
+	})
+	return err
+}
+
 // SetConstraints sets window constraints.
 func (w *Window) SetConstraints(constraints *pb.WindowConstraints) error {
 	_, err := w.client.windowClient.WindowSetConstraints(w.client.ctx, &pb.WindowSetConstraintsRequest{
