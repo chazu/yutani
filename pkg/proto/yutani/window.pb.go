@@ -1186,6 +1186,110 @@ func (x *WindowSetConstraintsResponse) GetSuccess() bool {
 	return false
 }
 
+type WindowSetContentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SessionId     *SessionId             `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"`
+	WindowId      *WidgetId              `protobuf:"bytes,2,opt,name=window_id,json=windowId,proto3" json:"window_id,omitempty"`
+	ChildId       *WidgetId              `protobuf:"bytes,3,opt,name=child_id,json=childId,proto3" json:"child_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WindowSetContentRequest) Reset() {
+	*x = WindowSetContentRequest{}
+	mi := &file_industries_loosh_yutani_v1_window_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WindowSetContentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WindowSetContentRequest) ProtoMessage() {}
+
+func (x *WindowSetContentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_window_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WindowSetContentRequest.ProtoReflect.Descriptor instead.
+func (*WindowSetContentRequest) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_window_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *WindowSetContentRequest) GetSessionId() *SessionId {
+	if x != nil {
+		return x.SessionId
+	}
+	return nil
+}
+
+func (x *WindowSetContentRequest) GetWindowId() *WidgetId {
+	if x != nil {
+		return x.WindowId
+	}
+	return nil
+}
+
+func (x *WindowSetContentRequest) GetChildId() *WidgetId {
+	if x != nil {
+		return x.ChildId
+	}
+	return nil
+}
+
+type WindowSetContentResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WindowSetContentResponse) Reset() {
+	*x = WindowSetContentResponse{}
+	mi := &file_industries_loosh_yutani_v1_window_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WindowSetContentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WindowSetContentResponse) ProtoMessage() {}
+
+func (x *WindowSetContentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_industries_loosh_yutani_v1_window_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WindowSetContentResponse.ProtoReflect.Descriptor instead.
+func (*WindowSetContentResponse) Descriptor() ([]byte, []int) {
+	return file_industries_loosh_yutani_v1_window_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *WindowSetContentResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
 var File_industries_loosh_yutani_v1_window_proto protoreflect.FileDescriptor
 
 const file_industries_loosh_yutani_v1_window_proto_rawDesc = "" +
@@ -1293,8 +1397,14 @@ const file_industries_loosh_yutani_v1_window_proto_rawDesc = "" +
 	"\twindow_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwindowId\x12O\n" +
 	"\vconstraints\x18\x03 \x01(\v2-.industries.loosh.yutani.v1.WindowConstraintsR\vconstraints\"8\n" +
 	"\x1cWindowSetConstraintsResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\xb1\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xe3\x01\n" +
+	"\x17WindowSetContentRequest\x12D\n" +
 	"\n" +
+	"session_id\x18\x01 \x01(\v2%.industries.loosh.yutani.v1.SessionIdR\tsessionId\x12A\n" +
+	"\twindow_id\x18\x02 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\bwindowId\x12?\n" +
+	"\bchild_id\x18\x03 \x01(\v2$.industries.loosh.yutani.v1.WidgetIdR\achildId\"4\n" +
+	"\x18WindowSetContentResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\xb0\v\n" +
 	"\rWindowService\x12\x8f\x01\n" +
 	"\x16WindowManagerAddWindow\x129.industries.loosh.yutani.v1.WindowManagerAddWindowRequest\x1a:.industries.loosh.yutani.v1.WindowManagerAddWindowResponse\x12\x98\x01\n" +
 	"\x19WindowManagerRemoveWindow\x12<.industries.loosh.yutani.v1.WindowManagerRemoveWindowRequest\x1a=.industries.loosh.yutani.v1.WindowManagerRemoveWindowResponse\x12k\n" +
@@ -1306,7 +1416,8 @@ const file_industries_loosh_yutani_v1_window_proto_rawDesc = "" +
 	"\x12WindowBringToFront\x125.industries.loosh.yutani.v1.WindowBringToFrontRequest\x1a6.industries.loosh.yutani.v1.WindowBringToFrontResponse\x12}\n" +
 	"\x10WindowSendToBack\x123.industries.loosh.yutani.v1.WindowSendToBackRequest\x1a4.industries.loosh.yutani.v1.WindowSendToBackResponse\x12\x8f\x01\n" +
 	"\x16WindowManagerGetZOrder\x129.industries.loosh.yutani.v1.WindowManagerGetZOrderRequest\x1a:.industries.loosh.yutani.v1.WindowManagerGetZOrderResponse\x12\x89\x01\n" +
-	"\x14WindowSetConstraints\x127.industries.loosh.yutani.v1.WindowSetConstraintsRequest\x1a8.industries.loosh.yutani.v1.WindowSetConstraintsResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
+	"\x14WindowSetConstraints\x127.industries.loosh.yutani.v1.WindowSetConstraintsRequest\x1a8.industries.loosh.yutani.v1.WindowSetConstraintsResponse\x12}\n" +
+	"\x10WindowSetContent\x123.industries.loosh.yutani.v1.WindowSetContentRequest\x1a4.industries.loosh.yutani.v1.WindowSetContentResponseB*Z(github.com/chazu/yutani/pkg/proto/yutanib\x06proto3"
 
 var (
 	file_industries_loosh_yutani_v1_window_proto_rawDescOnce sync.Once
@@ -1320,7 +1431,7 @@ func file_industries_loosh_yutani_v1_window_proto_rawDescGZIP() []byte {
 	return file_industries_loosh_yutani_v1_window_proto_rawDescData
 }
 
-var file_industries_loosh_yutani_v1_window_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_industries_loosh_yutani_v1_window_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_industries_loosh_yutani_v1_window_proto_goTypes = []any{
 	(*WindowConstraints)(nil),                 // 0: industries.loosh.yutani.v1.WindowConstraints
 	(*WindowManagerAddWindowRequest)(nil),     // 1: industries.loosh.yutani.v1.WindowManagerAddWindowRequest
@@ -1343,67 +1454,74 @@ var file_industries_loosh_yutani_v1_window_proto_goTypes = []any{
 	(*WindowManagerGetZOrderResponse)(nil),    // 18: industries.loosh.yutani.v1.WindowManagerGetZOrderResponse
 	(*WindowSetConstraintsRequest)(nil),       // 19: industries.loosh.yutani.v1.WindowSetConstraintsRequest
 	(*WindowSetConstraintsResponse)(nil),      // 20: industries.loosh.yutani.v1.WindowSetConstraintsResponse
-	(*SessionId)(nil),                         // 21: industries.loosh.yutani.v1.SessionId
-	(*WidgetId)(nil),                          // 22: industries.loosh.yutani.v1.WidgetId
-	(WindowState)(0),                          // 23: industries.loosh.yutani.v1.WindowState
-	(*Rect)(nil),                              // 24: industries.loosh.yutani.v1.Rect
+	(*WindowSetContentRequest)(nil),           // 21: industries.loosh.yutani.v1.WindowSetContentRequest
+	(*WindowSetContentResponse)(nil),          // 22: industries.loosh.yutani.v1.WindowSetContentResponse
+	(*SessionId)(nil),                         // 23: industries.loosh.yutani.v1.SessionId
+	(*WidgetId)(nil),                          // 24: industries.loosh.yutani.v1.WidgetId
+	(WindowState)(0),                          // 25: industries.loosh.yutani.v1.WindowState
+	(*Rect)(nil),                              // 26: industries.loosh.yutani.v1.Rect
 }
 var file_industries_loosh_yutani_v1_window_proto_depIdxs = []int32{
-	21, // 0: industries.loosh.yutani.v1.WindowManagerAddWindowRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	22, // 1: industries.loosh.yutani.v1.WindowManagerAddWindowRequest.manager_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	22, // 2: industries.loosh.yutani.v1.WindowManagerAddWindowRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 3: industries.loosh.yutani.v1.WindowManagerRemoveWindowRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	22, // 4: industries.loosh.yutani.v1.WindowManagerRemoveWindowRequest.manager_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	22, // 5: industries.loosh.yutani.v1.WindowManagerRemoveWindowRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 6: industries.loosh.yutani.v1.WindowMoveRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	22, // 7: industries.loosh.yutani.v1.WindowMoveRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 8: industries.loosh.yutani.v1.WindowResizeRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	22, // 9: industries.loosh.yutani.v1.WindowResizeRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 10: industries.loosh.yutani.v1.WindowSetStateRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	22, // 11: industries.loosh.yutani.v1.WindowSetStateRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	23, // 12: industries.loosh.yutani.v1.WindowSetStateRequest.state:type_name -> industries.loosh.yutani.v1.WindowState
-	21, // 13: industries.loosh.yutani.v1.WindowGetStateRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	22, // 14: industries.loosh.yutani.v1.WindowGetStateRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	23, // 15: industries.loosh.yutani.v1.WindowGetStateResponse.state:type_name -> industries.loosh.yutani.v1.WindowState
-	24, // 16: industries.loosh.yutani.v1.WindowGetStateResponse.rect:type_name -> industries.loosh.yutani.v1.Rect
-	24, // 17: industries.loosh.yutani.v1.WindowGetStateResponse.restored_rect:type_name -> industries.loosh.yutani.v1.Rect
-	21, // 18: industries.loosh.yutani.v1.WindowBringToFrontRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	22, // 19: industries.loosh.yutani.v1.WindowBringToFrontRequest.manager_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	22, // 20: industries.loosh.yutani.v1.WindowBringToFrontRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 21: industries.loosh.yutani.v1.WindowSendToBackRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	22, // 22: industries.loosh.yutani.v1.WindowSendToBackRequest.manager_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	22, // 23: industries.loosh.yutani.v1.WindowSendToBackRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 24: industries.loosh.yutani.v1.WindowManagerGetZOrderRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	22, // 25: industries.loosh.yutani.v1.WindowManagerGetZOrderRequest.manager_id:type_name -> industries.loosh.yutani.v1.WidgetId
-	22, // 26: industries.loosh.yutani.v1.WindowManagerGetZOrderResponse.window_ids:type_name -> industries.loosh.yutani.v1.WidgetId
-	21, // 27: industries.loosh.yutani.v1.WindowSetConstraintsRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
-	22, // 28: industries.loosh.yutani.v1.WindowSetConstraintsRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	23, // 0: industries.loosh.yutani.v1.WindowManagerAddWindowRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	24, // 1: industries.loosh.yutani.v1.WindowManagerAddWindowRequest.manager_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	24, // 2: industries.loosh.yutani.v1.WindowManagerAddWindowRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	23, // 3: industries.loosh.yutani.v1.WindowManagerRemoveWindowRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	24, // 4: industries.loosh.yutani.v1.WindowManagerRemoveWindowRequest.manager_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	24, // 5: industries.loosh.yutani.v1.WindowManagerRemoveWindowRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	23, // 6: industries.loosh.yutani.v1.WindowMoveRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	24, // 7: industries.loosh.yutani.v1.WindowMoveRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	23, // 8: industries.loosh.yutani.v1.WindowResizeRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	24, // 9: industries.loosh.yutani.v1.WindowResizeRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	23, // 10: industries.loosh.yutani.v1.WindowSetStateRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	24, // 11: industries.loosh.yutani.v1.WindowSetStateRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	25, // 12: industries.loosh.yutani.v1.WindowSetStateRequest.state:type_name -> industries.loosh.yutani.v1.WindowState
+	23, // 13: industries.loosh.yutani.v1.WindowGetStateRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	24, // 14: industries.loosh.yutani.v1.WindowGetStateRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	25, // 15: industries.loosh.yutani.v1.WindowGetStateResponse.state:type_name -> industries.loosh.yutani.v1.WindowState
+	26, // 16: industries.loosh.yutani.v1.WindowGetStateResponse.rect:type_name -> industries.loosh.yutani.v1.Rect
+	26, // 17: industries.loosh.yutani.v1.WindowGetStateResponse.restored_rect:type_name -> industries.loosh.yutani.v1.Rect
+	23, // 18: industries.loosh.yutani.v1.WindowBringToFrontRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	24, // 19: industries.loosh.yutani.v1.WindowBringToFrontRequest.manager_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	24, // 20: industries.loosh.yutani.v1.WindowBringToFrontRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	23, // 21: industries.loosh.yutani.v1.WindowSendToBackRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	24, // 22: industries.loosh.yutani.v1.WindowSendToBackRequest.manager_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	24, // 23: industries.loosh.yutani.v1.WindowSendToBackRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	23, // 24: industries.loosh.yutani.v1.WindowManagerGetZOrderRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	24, // 25: industries.loosh.yutani.v1.WindowManagerGetZOrderRequest.manager_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	24, // 26: industries.loosh.yutani.v1.WindowManagerGetZOrderResponse.window_ids:type_name -> industries.loosh.yutani.v1.WidgetId
+	23, // 27: industries.loosh.yutani.v1.WindowSetConstraintsRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	24, // 28: industries.loosh.yutani.v1.WindowSetConstraintsRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
 	0,  // 29: industries.loosh.yutani.v1.WindowSetConstraintsRequest.constraints:type_name -> industries.loosh.yutani.v1.WindowConstraints
-	1,  // 30: industries.loosh.yutani.v1.WindowService.WindowManagerAddWindow:input_type -> industries.loosh.yutani.v1.WindowManagerAddWindowRequest
-	3,  // 31: industries.loosh.yutani.v1.WindowService.WindowManagerRemoveWindow:input_type -> industries.loosh.yutani.v1.WindowManagerRemoveWindowRequest
-	5,  // 32: industries.loosh.yutani.v1.WindowService.WindowMove:input_type -> industries.loosh.yutani.v1.WindowMoveRequest
-	7,  // 33: industries.loosh.yutani.v1.WindowService.WindowResize:input_type -> industries.loosh.yutani.v1.WindowResizeRequest
-	9,  // 34: industries.loosh.yutani.v1.WindowService.WindowSetState:input_type -> industries.loosh.yutani.v1.WindowSetStateRequest
-	11, // 35: industries.loosh.yutani.v1.WindowService.WindowGetState:input_type -> industries.loosh.yutani.v1.WindowGetStateRequest
-	13, // 36: industries.loosh.yutani.v1.WindowService.WindowBringToFront:input_type -> industries.loosh.yutani.v1.WindowBringToFrontRequest
-	15, // 37: industries.loosh.yutani.v1.WindowService.WindowSendToBack:input_type -> industries.loosh.yutani.v1.WindowSendToBackRequest
-	17, // 38: industries.loosh.yutani.v1.WindowService.WindowManagerGetZOrder:input_type -> industries.loosh.yutani.v1.WindowManagerGetZOrderRequest
-	19, // 39: industries.loosh.yutani.v1.WindowService.WindowSetConstraints:input_type -> industries.loosh.yutani.v1.WindowSetConstraintsRequest
-	2,  // 40: industries.loosh.yutani.v1.WindowService.WindowManagerAddWindow:output_type -> industries.loosh.yutani.v1.WindowManagerAddWindowResponse
-	4,  // 41: industries.loosh.yutani.v1.WindowService.WindowManagerRemoveWindow:output_type -> industries.loosh.yutani.v1.WindowManagerRemoveWindowResponse
-	6,  // 42: industries.loosh.yutani.v1.WindowService.WindowMove:output_type -> industries.loosh.yutani.v1.WindowMoveResponse
-	8,  // 43: industries.loosh.yutani.v1.WindowService.WindowResize:output_type -> industries.loosh.yutani.v1.WindowResizeResponse
-	10, // 44: industries.loosh.yutani.v1.WindowService.WindowSetState:output_type -> industries.loosh.yutani.v1.WindowSetStateResponse
-	12, // 45: industries.loosh.yutani.v1.WindowService.WindowGetState:output_type -> industries.loosh.yutani.v1.WindowGetStateResponse
-	14, // 46: industries.loosh.yutani.v1.WindowService.WindowBringToFront:output_type -> industries.loosh.yutani.v1.WindowBringToFrontResponse
-	16, // 47: industries.loosh.yutani.v1.WindowService.WindowSendToBack:output_type -> industries.loosh.yutani.v1.WindowSendToBackResponse
-	18, // 48: industries.loosh.yutani.v1.WindowService.WindowManagerGetZOrder:output_type -> industries.loosh.yutani.v1.WindowManagerGetZOrderResponse
-	20, // 49: industries.loosh.yutani.v1.WindowService.WindowSetConstraints:output_type -> industries.loosh.yutani.v1.WindowSetConstraintsResponse
-	40, // [40:50] is the sub-list for method output_type
-	30, // [30:40] is the sub-list for method input_type
-	30, // [30:30] is the sub-list for extension type_name
-	30, // [30:30] is the sub-list for extension extendee
-	0,  // [0:30] is the sub-list for field type_name
+	23, // 30: industries.loosh.yutani.v1.WindowSetContentRequest.session_id:type_name -> industries.loosh.yutani.v1.SessionId
+	24, // 31: industries.loosh.yutani.v1.WindowSetContentRequest.window_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	24, // 32: industries.loosh.yutani.v1.WindowSetContentRequest.child_id:type_name -> industries.loosh.yutani.v1.WidgetId
+	1,  // 33: industries.loosh.yutani.v1.WindowService.WindowManagerAddWindow:input_type -> industries.loosh.yutani.v1.WindowManagerAddWindowRequest
+	3,  // 34: industries.loosh.yutani.v1.WindowService.WindowManagerRemoveWindow:input_type -> industries.loosh.yutani.v1.WindowManagerRemoveWindowRequest
+	5,  // 35: industries.loosh.yutani.v1.WindowService.WindowMove:input_type -> industries.loosh.yutani.v1.WindowMoveRequest
+	7,  // 36: industries.loosh.yutani.v1.WindowService.WindowResize:input_type -> industries.loosh.yutani.v1.WindowResizeRequest
+	9,  // 37: industries.loosh.yutani.v1.WindowService.WindowSetState:input_type -> industries.loosh.yutani.v1.WindowSetStateRequest
+	11, // 38: industries.loosh.yutani.v1.WindowService.WindowGetState:input_type -> industries.loosh.yutani.v1.WindowGetStateRequest
+	13, // 39: industries.loosh.yutani.v1.WindowService.WindowBringToFront:input_type -> industries.loosh.yutani.v1.WindowBringToFrontRequest
+	15, // 40: industries.loosh.yutani.v1.WindowService.WindowSendToBack:input_type -> industries.loosh.yutani.v1.WindowSendToBackRequest
+	17, // 41: industries.loosh.yutani.v1.WindowService.WindowManagerGetZOrder:input_type -> industries.loosh.yutani.v1.WindowManagerGetZOrderRequest
+	19, // 42: industries.loosh.yutani.v1.WindowService.WindowSetConstraints:input_type -> industries.loosh.yutani.v1.WindowSetConstraintsRequest
+	21, // 43: industries.loosh.yutani.v1.WindowService.WindowSetContent:input_type -> industries.loosh.yutani.v1.WindowSetContentRequest
+	2,  // 44: industries.loosh.yutani.v1.WindowService.WindowManagerAddWindow:output_type -> industries.loosh.yutani.v1.WindowManagerAddWindowResponse
+	4,  // 45: industries.loosh.yutani.v1.WindowService.WindowManagerRemoveWindow:output_type -> industries.loosh.yutani.v1.WindowManagerRemoveWindowResponse
+	6,  // 46: industries.loosh.yutani.v1.WindowService.WindowMove:output_type -> industries.loosh.yutani.v1.WindowMoveResponse
+	8,  // 47: industries.loosh.yutani.v1.WindowService.WindowResize:output_type -> industries.loosh.yutani.v1.WindowResizeResponse
+	10, // 48: industries.loosh.yutani.v1.WindowService.WindowSetState:output_type -> industries.loosh.yutani.v1.WindowSetStateResponse
+	12, // 49: industries.loosh.yutani.v1.WindowService.WindowGetState:output_type -> industries.loosh.yutani.v1.WindowGetStateResponse
+	14, // 50: industries.loosh.yutani.v1.WindowService.WindowBringToFront:output_type -> industries.loosh.yutani.v1.WindowBringToFrontResponse
+	16, // 51: industries.loosh.yutani.v1.WindowService.WindowSendToBack:output_type -> industries.loosh.yutani.v1.WindowSendToBackResponse
+	18, // 52: industries.loosh.yutani.v1.WindowService.WindowManagerGetZOrder:output_type -> industries.loosh.yutani.v1.WindowManagerGetZOrderResponse
+	20, // 53: industries.loosh.yutani.v1.WindowService.WindowSetConstraints:output_type -> industries.loosh.yutani.v1.WindowSetConstraintsResponse
+	22, // 54: industries.loosh.yutani.v1.WindowService.WindowSetContent:output_type -> industries.loosh.yutani.v1.WindowSetContentResponse
+	44, // [44:55] is the sub-list for method output_type
+	33, // [33:44] is the sub-list for method input_type
+	33, // [33:33] is the sub-list for extension type_name
+	33, // [33:33] is the sub-list for extension extendee
+	0,  // [0:33] is the sub-list for field type_name
 }
 
 func init() { file_industries_loosh_yutani_v1_window_proto_init() }
@@ -1419,7 +1537,7 @@ func file_industries_loosh_yutani_v1_window_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_industries_loosh_yutani_v1_window_proto_rawDesc), len(file_industries_loosh_yutani_v1_window_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   21,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

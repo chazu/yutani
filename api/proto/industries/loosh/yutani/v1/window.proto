@@ -37,6 +37,9 @@ service WindowService {
 
   // Set window constraints (resizable, movable, min/max size)
   rpc WindowSetConstraints(WindowSetConstraintsRequest) returns (WindowSetConstraintsResponse);
+
+  // Set the content (child widget) of a window
+  rpc WindowSetContent(WindowSetContentRequest) returns (WindowSetContentResponse);
 }
 
 // WindowConstraints for SetConstraints RPC
@@ -171,5 +174,17 @@ message WindowSetConstraintsRequest {
 }
 
 message WindowSetConstraintsResponse {
+  bool success = 1;
+}
+
+// WindowSetContent
+
+message WindowSetContentRequest {
+  SessionId session_id = 1;
+  WidgetId window_id = 2;
+  WidgetId child_id = 3;
+}
+
+message WindowSetContentResponse {
   bool success = 1;
 }

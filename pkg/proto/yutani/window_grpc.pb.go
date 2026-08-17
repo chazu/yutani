@@ -29,6 +29,7 @@ const (
 	WindowService_WindowSendToBack_FullMethodName          = "/industries.loosh.yutani.v1.WindowService/WindowSendToBack"
 	WindowService_WindowManagerGetZOrder_FullMethodName    = "/industries.loosh.yutani.v1.WindowService/WindowManagerGetZOrder"
 	WindowService_WindowSetConstraints_FullMethodName      = "/industries.loosh.yutani.v1.WindowService/WindowSetConstraints"
+	WindowService_WindowSetContent_FullMethodName          = "/industries.loosh.yutani.v1.WindowService/WindowSetContent"
 )
 
 // WindowServiceClient is the client API for WindowService service.
@@ -57,6 +58,8 @@ type WindowServiceClient interface {
 	WindowManagerGetZOrder(ctx context.Context, in *WindowManagerGetZOrderRequest, opts ...grpc.CallOption) (*WindowManagerGetZOrderResponse, error)
 	// Set window constraints (resizable, movable, min/max size)
 	WindowSetConstraints(ctx context.Context, in *WindowSetConstraintsRequest, opts ...grpc.CallOption) (*WindowSetConstraintsResponse, error)
+	// Set the content (child widget) of a window
+	WindowSetContent(ctx context.Context, in *WindowSetContentRequest, opts ...grpc.CallOption) (*WindowSetContentResponse, error)
 }
 
 type windowServiceClient struct {
@@ -167,6 +170,16 @@ func (c *windowServiceClient) WindowSetConstraints(ctx context.Context, in *Wind
 	return out, nil
 }
 
+func (c *windowServiceClient) WindowSetContent(ctx context.Context, in *WindowSetContentRequest, opts ...grpc.CallOption) (*WindowSetContentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WindowSetContentResponse)
+	err := c.cc.Invoke(ctx, WindowService_WindowSetContent_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WindowServiceServer is the server API for WindowService service.
 // All implementations must embed UnimplementedWindowServiceServer
 // for forward compatibility.
@@ -193,6 +206,8 @@ type WindowServiceServer interface {
 	WindowManagerGetZOrder(context.Context, *WindowManagerGetZOrderRequest) (*WindowManagerGetZOrderResponse, error)
 	// Set window constraints (resizable, movable, min/max size)
 	WindowSetConstraints(context.Context, *WindowSetConstraintsRequest) (*WindowSetConstraintsResponse, error)
+	// Set the content (child widget) of a window
+	WindowSetContent(context.Context, *WindowSetContentRequest) (*WindowSetContentResponse, error)
 	mustEmbedUnimplementedWindowServiceServer()
 }
 
@@ -232,6 +247,9 @@ func (UnimplementedWindowServiceServer) WindowManagerGetZOrder(context.Context, 
 }
 func (UnimplementedWindowServiceServer) WindowSetConstraints(context.Context, *WindowSetConstraintsRequest) (*WindowSetConstraintsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method WindowSetConstraints not implemented")
+}
+func (UnimplementedWindowServiceServer) WindowSetContent(context.Context, *WindowSetContentRequest) (*WindowSetContentResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method WindowSetContent not implemented")
 }
 func (UnimplementedWindowServiceServer) mustEmbedUnimplementedWindowServiceServer() {}
 func (UnimplementedWindowServiceServer) testEmbeddedByValue()                       {}
@@ -434,6 +452,24 @@ func _WindowService_WindowSetConstraints_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WindowService_WindowSetContent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WindowSetContentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WindowServiceServer).WindowSetContent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WindowService_WindowSetContent_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WindowServiceServer).WindowSetContent(ctx, req.(*WindowSetContentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WindowService_ServiceDesc is the grpc.ServiceDesc for WindowService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -480,6 +516,10 @@ var WindowService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "WindowSetConstraints",
 			Handler:    _WindowService_WindowSetConstraints_Handler,
+		},
+		{
+			MethodName: "WindowSetContent",
+			Handler:    _WindowService_WindowSetContent_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
